@@ -1,4 +1,4 @@
-package Model;
+package model;
 
 public class PrescriptionFree extends Medicine {
     private PrescriptionFree prescriptionFreeObject;
