@@ -8,17 +8,21 @@ public abstract class Medicine {
     private String producer;
     private String packageSize;
     private String description;
-    private String[] activeIngredients;
+    private int quantity;
+    private double price;
+    private String[] searchTerms;
 
     public Medicine(){}
 
-    public Medicine(int articleNo, String name, String producer, String packageSize, String description, String[] activeIngredients){
+    public Medicine(int articleNo, String name, String producer, String packageSize, String description, int quantity, double price, String... searchTerms){
         setArticleNo(articleNo);
         setName(name);
         setProducer(producer);
         setPackageSize(packageSize);
         setDescription(description);
-        setActiveIngredients(activeIngredients);
+        setQuantity(quantity);
+        setPrice(price);
+        setSearchTerms(searchTerms);
     }
 
     public void setArticleNo(int articleNo) {
@@ -41,8 +45,16 @@ public abstract class Medicine {
         this.description = description;
     }
 
-    public void setActiveIngredients(String[] activeIngredients) {
-        this.activeIngredients = activeIngredients;
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public void setSearchTerms(String... searchTerms) {
+       this.searchTerms = searchTerms;
     }
 
     public int getArticleNo() {
@@ -65,8 +77,16 @@ public abstract class Medicine {
         return description;
     }
 
-    public String[] getActiveIngredients() {
-        return activeIngredients;
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public String[] getSearchTerms() {
+        return searchTerms;
     }
 
     @Override
@@ -77,6 +97,8 @@ public abstract class Medicine {
                 ", producer='" + getProducer() + '\'' +
                 ", packageSize='" + getPackageSize() + '\'' +
                 ", description='" + getDescription() + '\'' +
-                ", activeIngredients=" + Arrays.toString(getActiveIngredients()) + ", ";
+                ", quantity='" + getQuantity() + '\'' +
+                ", price='" + getPrice() + '\'' +
+                ", activeIngredients=" + Arrays.toString(getSearchTerms()) + ", ";
     }
 }

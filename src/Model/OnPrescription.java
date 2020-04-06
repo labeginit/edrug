@@ -6,8 +6,8 @@ public class OnPrescription extends Medicine {
 
     public OnPrescription(){}
 
-    public OnPrescription(int articleNo, String name, String producer, String packageSize, String description, String[] activeIngredients){
-        super(articleNo, name, producer, packageSize, description, activeIngredients);
+    public OnPrescription(int articleNo, String name, String producer, String packageSize, String description, int quantity, double price, String... searchTerms){
+        super(articleNo, name, producer, packageSize, description, quantity , price , searchTerms);
         onPrescription = true;
     }
 
