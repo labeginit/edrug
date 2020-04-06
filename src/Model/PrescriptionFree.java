@@ -15,7 +15,10 @@ public class PrescriptionFree extends Medicine {
 
     public PrescriptionFree getPrescriptionFreeObject(int articleNo){
         //request to the DB
-        return prescriptionFreeObject;
+        if (prescriptionFreeObject != null) {
+            return prescriptionFreeObject;
+        }
+        return null;
     }
 
     @Override
