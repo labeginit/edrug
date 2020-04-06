@@ -18,13 +18,13 @@
     <children>
       <TabPane layoutX="7.0" layoutY="7.0" prefHeight="585.0" prefWidth="784.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="Shop drugs">
+          <Tab closable="false" text="Store">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="379.0" prefWidth="586.0">
                      <children>
                         <ButtonBar layoutX="6.0" layoutY="514.0" prefHeight="40.0" prefWidth="771.0">
                           <buttons>
-                            <Button mnemonicParsing="false" text="Button" />
+                            <Button fx:id="buy_button" mnemonicParsing="false" text="Buy" />
                           </buttons>
                         </ButtonBar>
                         <TableView layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0">
@@ -33,8 +33,8 @@
                             <TableColumn prefWidth="75.0" text="C2" />
                           </columns>
                         </TableView>
-                        <ComboBox fx:id="filter_combo" layoutX="627.0" layoutY="22.0" prefWidth="150.0" />
-                        <ComboBox fx:id="sort_combo" layoutX="465.0" layoutY="22.0" prefWidth="150.0" />
+                        <ComboBox fx:id="filter_combo" layoutX="607.0" layoutY="22.0" prefHeight="25.0" prefWidth="170.0" />
+                        <ComboBox fx:id="sort_combo" layoutX="429.0" layoutY="22.0" prefHeight="25.0" prefWidth="170.0" />
                         <Label layoutX="14.0" layoutY="26.0" prefHeight="17.0" prefWidth="84.0" text="Search terms:">
                            <font>
                               <Font size="13.0" />
@@ -45,7 +45,7 @@
                      </children></AnchorPane>
             </content>
           </Tab>
-          <Tab text="My Prescriptions">
+          <Tab closable="false" text="My Prescriptions">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="425.0" prefWidth="586.0">
                      <children>
@@ -58,7 +58,7 @@
                      </children></AnchorPane>
             </content>
           </Tab>
-          <Tab text="My Profile">
+          <Tab closable="false" text="My Profile">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="200.0" />
             </content>
