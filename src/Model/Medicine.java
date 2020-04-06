@@ -10,6 +10,8 @@ public abstract class Medicine {
     private String description;
     private String[] activeIngredients;
 
+    public Medicine(){}
+
     public Medicine(int articleNo, String name, String producer, String packageSize, String description, String[] activeIngredients){
         setArticleNo(articleNo);
         setName(name);

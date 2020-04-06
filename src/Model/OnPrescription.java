@@ -4,6 +4,7 @@ public class OnPrescription extends Medicine {
     private OnPrescription onPrescriptionObject;
     private boolean onPrescription;
 
+    public OnPrescription(){}
 
     public OnPrescription(int articleNo, String name, String producer, String packageSize, String description, String[] activeIngredients){
         super(articleNo, name, producer, packageSize, description, activeIngredients);
@@ -16,7 +17,10 @@ public class OnPrescription extends Medicine {
 
     public OnPrescription getOnPrescriptionObject(int articleNo){
         //request to the DB
-        return onPrescriptionObject;
+        if (onPrescriptionObject != null) {
+            return onPrescriptionObject;
+        }
+        return null;
     }
 
     @Override
