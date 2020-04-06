@@ -4,6 +4,7 @@
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -29,8 +30,13 @@
                         </ButtonBar>
                         <TableView layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="C1" />
-                            <TableColumn prefWidth="75.0" text="C2" />
+                            <TableColumn fx:id="c1" prefWidth="93.33324909210205" text="Article" />
+                            <TableColumn fx:id="c2" minWidth="4.0" prefWidth="284.66674041748047" text="Name" />
+                              <TableColumn fx:id="c3" prefWidth="58.6666259765625" text="Size" />
+                              <TableColumn fx:id="c4" prefWidth="93.33328247070312" text="Price" />
+                              <TableColumn fx:id="c5" prefWidth="85.3333740234375" text="Availability" />
+                              <TableColumn fx:id="c6" prefWidth="74.0" text="Description" />
+                              <TableColumn fx:id="c7" prefWidth="81.333251953125" text="Producer" />
                           </columns>
                         </TableView>
                         <ComboBox fx:id="filter_combo" layoutX="607.0" layoutY="22.0" prefHeight="25.0" prefWidth="170.0" />
@@ -51,16 +57,82 @@
                      <children>
                         <TreeTableView layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0">
                           <columns>
-                            <TreeTableColumn prefWidth="75.0" text="C1" />
-                            <TreeTableColumn prefWidth="75.0" text="C2" />
+                            <TreeTableColumn fx:id="c8" prefWidth="75.0" text="Date" />
+                            <TreeTableColumn fx:id="c9" prefWidth="156.00000762939453" text="Doctor" />
+                              <TreeTableColumn fx:id="c10" prefWidth="93.0" text="Article" />
+                              <TreeTableColumn fx:id="c11" prefWidth="299.9999084472656" text="Name" />
+                              <TreeTableColumn fx:id="c12" prefWidth="70.0" text="Quantity" />
+                              <TreeTableColumn fx:id="c13" prefWidth="75.0" text="Status" />
                           </columns>
                         </TreeTableView>
+                        <ComboBox fx:id="filter2_combo" layoutX="607.0" layoutY="22.0" prefHeight="25.0" prefWidth="170.0" />
+                        <Label layoutX="10.0" layoutY="26.0" prefHeight="17.0" prefWidth="577.0" text="Here you can see all the prescriptions ever issued to you">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
                      </children></AnchorPane>
             </content>
           </Tab>
           <Tab closable="false" text="My Profile">
             <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="200.0" />
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <ButtonBar layoutX="6.0" layoutY="514.0" prefHeight="40.0" prefWidth="771.0">
+                          <buttons>
+                            <Button fx:id="save_button" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" text="Save" />
+                          </buttons>
+                        </ButtonBar>
+                        <ListView focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0" />
+                        <TextField fx:id="ssn_text" layoutX="200.0" layoutY="73.0" prefHeight="25.0" prefWidth="220.0" />
+                        <TextField fx:id="lastName_text" layoutX="200.0" layoutY="208.0" prefHeight="25.0" prefWidth="220.0" />
+                        <TextField fx:id="address_text" layoutX="200.0" layoutY="249.0" prefHeight="25.0" prefWidth="432.0" />
+                        <TextField fx:id="phone_text" layoutX="200.0" layoutY="291.0" prefHeight="25.0" prefWidth="220.0" />
+                        <Label layoutX="54.0" layoutY="77.0" text="Social Security Number">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="54.0" layoutY="212.0" prefHeight="17.0" prefWidth="139.0" text="Family name">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="54.0" layoutY="253.0" prefHeight="17.0" prefWidth="135.0" text="Address">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="54.0" layoutY="295.0" prefHeight="17.0" prefWidth="139.0" text="Phone">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="54.0" layoutY="342.0" prefHeight="17.0" prefWidth="138.0" text="e-mail address">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="email_text" layoutX="200.0" layoutY="338.0" prefHeight="25.0" prefWidth="220.0" />
+                        <TextField fx:id="firstName_text" layoutX="200.0" layoutY="164.0" prefHeight="25.0" prefWidth="220.0" />
+                        <Label layoutX="54.0" layoutY="168.0" prefHeight="17.0" prefWidth="137.0" text="First name">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="54.0" layoutY="120.0" prefHeight="17.0" prefWidth="127.0" text="Birth date">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="birth_text" layoutX="200.0" layoutY="116.0" prefHeight="25.0" prefWidth="220.0" />
+                        <TextField fx:id="pass_text" layoutX="200.0" layoutY="384.0" prefHeight="25.0" prefWidth="220.0" text=" * * * * * * * * * * * " />
+                        <Label layoutX="54.0" layoutY="388.0" prefHeight="17.0" prefWidth="136.0" text="Password">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                     </children></AnchorPane>
             </content>
           </Tab>
         </tabs>

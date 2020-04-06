@@ -13,31 +13,67 @@ import java.util.ResourceBundle;
 
 public class Controller implements Initializable {
     @FXML
-    ComboBox<String> filter_combo;
+    private ComboBox<String> filter_combo;
 
     @FXML
-    ComboBox<String> sort_combo;
+    private ComboBox<String> sort_combo;
 
     @FXML
-    TextField search_textField;
+    private TextField search_textField;
 
     @FXML
-    Button go_Button;
+    private Button go_Button;
+
+    @FXML
+    private ComboBox<String> filter2_combo;
+
+    @FXML
+    private Button save_button;
+
+    @FXML
+    private TextField ssn_text;
+
+    @FXML
+    private TextField lastName_text;
+
+    @FXML
+    private TextField address_text;
+
+    @FXML
+    private TextField phone_text;
+
+    @FXML
+    private TextField email_text;
+
+    @FXML
+    private TextField firstName_text;
+
+    @FXML
+    private TextField birth_text;
+
+    @FXML
+    private TextField pass_text;
 
     ObservableList<String> sortings = FXCollections.observableArrayList("Prescribed first", "A-Z", "Z-A", "Price ascending", "Price descending");
-    ObservableList<String> filters = FXCollections.observableArrayList("Only Prescribed", "Only Prescription-free");
+    ObservableList<String> filters1 = FXCollections.observableArrayList("All", "Only Prescribed", "Only Prescription-free");
+    ObservableList<String> filters2 = FXCollections.observableArrayList("All", "Only Current", "Only Consumed");
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         sort_combo.setItems(sortings);
-        filter_combo.setItems(filters);
+        filter_combo.setItems(filters1);
+        filter2_combo.setItems(filters2);
     }
 
     public ObservableList<String> getSortings() {
         return sortings;
     }
 
-    public ObservableList<String> getFilters() {
-        return filters;
+    public ObservableList<String> getFilters1() {
+        return filters1;
+    }
+
+    public ObservableList<String> getFilters2() {
+        return filters2;
     }
 }
