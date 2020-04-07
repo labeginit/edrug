@@ -80,13 +80,14 @@
                      <children>
                         <ButtonBar layoutX="6.0" layoutY="514.0" prefHeight="40.0" prefWidth="771.0">
                           <buttons>
+                              <Button fx:id="cancel_button" mnemonicParsing="false" text="Cancel" />
                             <Button fx:id="save_button" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" text="Save" />
                           </buttons>
                         </ButtonBar>
                         <ListView focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0" />
-                        <TextField fx:id="ssn_text" layoutX="200.0" layoutY="73.0" prefHeight="25.0" prefWidth="220.0" />
+                        <TextField fx:id="ssn_text" editable="false" layoutX="200.0" layoutY="73.0" prefHeight="25.0" prefWidth="220.0" />
                         <TextField fx:id="lastName_text" layoutX="200.0" layoutY="208.0" prefHeight="25.0" prefWidth="220.0" />
-                        <TextField fx:id="address_text" layoutX="200.0" layoutY="249.0" prefHeight="25.0" prefWidth="432.0" />
+                        <TextField fx:id="address_text" layoutX="342.0" layoutY="250.0" prefHeight="25.0" prefWidth="414.0" />
                         <TextField fx:id="phone_text" layoutX="200.0" layoutY="291.0" prefHeight="25.0" prefWidth="220.0" />
                         <Label layoutX="54.0" layoutY="77.0" text="Social Security Number">
                            <font>
@@ -98,7 +99,7 @@
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <Label layoutX="54.0" layoutY="253.0" prefHeight="17.0" prefWidth="135.0" text="Address">
+                        <Label layoutX="54.0" layoutY="253.0" prefHeight="17.0" prefWidth="135.0" text="Zip Code">
                            <font>
                               <Font size="13.0" />
                            </font>
@@ -125,9 +126,21 @@
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="birth_text" layoutX="200.0" layoutY="116.0" prefHeight="25.0" prefWidth="220.0" />
-                        <TextField fx:id="pass_text" layoutX="200.0" layoutY="384.0" prefHeight="25.0" prefWidth="220.0" text=" * * * * * * * * * * * " />
-                        <Label layoutX="54.0" layoutY="388.0" prefHeight="17.0" prefWidth="136.0" text="Password">
+                        <TextField fx:id="birth_text" editable="false" layoutX="200.0" layoutY="116.0" prefHeight="25.0" prefWidth="220.0" />
+                        <TextField fx:id="pass1_text" layoutX="200.0" layoutY="384.0" prefHeight="25.0" prefWidth="220.0" text=" * * * * * * * * * * * " />
+                        <Label layoutX="54.0" layoutY="388.0" prefHeight="17.0" prefWidth="136.0" text="New password">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="53.0" layoutY="437.0" prefHeight="17.0" prefWidth="136.0" text="Repeat password">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="pass2_text" layoutX="200.0" layoutY="431.0" prefHeight="25.0" prefWidth="220.0" text=" * * * * * * * * * * * " />
+                        <TextField fx:id="zip_text" layoutX="200.0" layoutY="250.0" prefHeight="25.0" prefWidth="67.0" />
+                        <Label layoutX="284.0" layoutY="253.0" prefHeight="19.0" prefWidth="84.0" text="Address">
                            <font>
                               <Font size="13.0" />
                            </font>
