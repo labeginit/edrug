@@ -39,8 +39,6 @@
                               <TableColumn fx:id="c7" prefWidth="81.333251953125" text="Producer" />
                           </columns>
                         </TableView>
-                        <ComboBox fx:id="filter_combo" layoutX="607.0" layoutY="22.0" prefHeight="25.0" prefWidth="170.0" />
-                        <ComboBox fx:id="sort_combo" layoutX="429.0" layoutY="22.0" prefHeight="25.0" prefWidth="170.0" />
                         <Label layoutX="14.0" layoutY="26.0" prefHeight="17.0" prefWidth="84.0" text="Search terms:">
                            <font>
                               <Font size="13.0" />
@@ -48,6 +46,8 @@
                         </Label>
                         <TextField fx:id="search_textField" layoutX="100.0" layoutY="22.0" prefHeight="25.0" prefWidth="272.0" promptText="enter active ingredient etc. here" />
                         <Button fx:id="go_Button" layoutX="383.0" layoutY="22.0" mnemonicParsing="false" text="Go!" />
+                        <ComboBox fx:id="sort_combo" layoutX="429.0" layoutY="22.0" prefHeight="25.0" prefWidth="170.0" />
+                        <ComboBox fx:id="filter_combo" layoutX="607.0" layoutY="22.0" prefHeight="25.0" prefWidth="170.0" />
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -86,9 +86,15 @@
                         </ButtonBar>
                         <ListView focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0" />
                         <TextField fx:id="ssn_text" editable="false" layoutX="200.0" layoutY="73.0" prefHeight="25.0" prefWidth="220.0" />
+                        <TextField fx:id="birth_text" editable="false" layoutX="200.0" layoutY="116.0" prefHeight="25.0" prefWidth="220.0" />
+                        <TextField fx:id="firstName_text" layoutX="200.0" layoutY="164.0" prefHeight="25.0" prefWidth="220.0" />
                         <TextField fx:id="lastName_text" layoutX="200.0" layoutY="208.0" prefHeight="25.0" prefWidth="220.0" />
+                        <TextField fx:id="zip_text" layoutX="200.0" layoutY="250.0" prefHeight="25.0" prefWidth="67.0" />
                         <TextField fx:id="address_text" layoutX="342.0" layoutY="250.0" prefHeight="25.0" prefWidth="414.0" />
                         <TextField fx:id="phone_text" layoutX="200.0" layoutY="291.0" prefHeight="25.0" prefWidth="220.0" />
+                        <TextField fx:id="email_text" layoutX="200.0" layoutY="338.0" prefHeight="25.0" prefWidth="220.0" />
+                        <TextField fx:id="pass1_text" layoutX="200.0" layoutY="384.0" prefHeight="25.0" prefWidth="220.0" text=" * * * * * * * * * * * " />
+                        <TextField fx:id="pass2_text" layoutX="200.0" layoutY="431.0" prefHeight="25.0" prefWidth="220.0" text=" * * * * * * * * * * * " />
                         <Label layoutX="54.0" layoutY="77.0" text="Social Security Number">
                            <font>
                               <Font size="13.0" />
@@ -114,8 +120,6 @@
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="email_text" layoutX="200.0" layoutY="338.0" prefHeight="25.0" prefWidth="220.0" />
-                        <TextField fx:id="firstName_text" layoutX="200.0" layoutY="164.0" prefHeight="25.0" prefWidth="220.0" />
                         <Label layoutX="54.0" layoutY="168.0" prefHeight="17.0" prefWidth="137.0" text="First name">
                            <font>
                               <Font size="13.0" />
@@ -126,8 +130,6 @@
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="birth_text" editable="false" layoutX="200.0" layoutY="116.0" prefHeight="25.0" prefWidth="220.0" />
-                        <TextField fx:id="pass1_text" layoutX="200.0" layoutY="384.0" prefHeight="25.0" prefWidth="220.0" text=" * * * * * * * * * * * " />
                         <Label layoutX="54.0" layoutY="388.0" prefHeight="17.0" prefWidth="136.0" text="New password">
                            <font>
                               <Font size="13.0" />
@@ -138,8 +140,6 @@
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="pass2_text" layoutX="200.0" layoutY="431.0" prefHeight="25.0" prefWidth="220.0" text=" * * * * * * * * * * * " />
-                        <TextField fx:id="zip_text" layoutX="200.0" layoutY="250.0" prefHeight="25.0" prefWidth="67.0" />
                         <Label layoutX="284.0" layoutY="253.0" prefHeight="19.0" prefWidth="84.0" text="Address">
                            <font>
                               <Font size="13.0" />

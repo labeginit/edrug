@@ -10,11 +10,11 @@ public abstract class Medicine {
     private String description;
     private int quantity;
     private double price;
-    private String[] searchTerms;
+    private String searchTerms;
 
     public Medicine(){}
 
-    public Medicine(int articleNo, String name, String producer, String packageSize, String description, int quantity, double price, String... searchTerms){
+    public Medicine(int articleNo, String name, String producer, String packageSize, String description, int quantity, double price, String searchTerms){
         setArticleNo(articleNo);
         setName(name);
         setProducer(producer);
@@ -53,7 +53,7 @@ public abstract class Medicine {
         this.price = price;
     }
 
-    public void setSearchTerms(String... searchTerms) {
+    public void setSearchTerms(String searchTerms) {
        this.searchTerms = searchTerms;
     }
 
@@ -85,7 +85,7 @@ public abstract class Medicine {
         return price;
     }
 
-    public String[] getSearchTerms() {
+    public String getSearchTerms() {
         return searchTerms;
     }
 
@@ -99,6 +99,6 @@ public abstract class Medicine {
                 ", description='" + getDescription() + '\'' +
                 ", quantity='" + getQuantity() + '\'' +
                 ", price='" + getPrice() + '\'' +
-                ", activeIngredients=" + Arrays.toString(getSearchTerms()) + ", ";
+                ", activeIngredients=" + getSearchTerms() + ", ";
     }
 }

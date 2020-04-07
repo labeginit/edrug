@@ -4,7 +4,7 @@ public class PrescriptionFree extends Medicine {
     private PrescriptionFree prescriptionFreeObject;
     private boolean onPrescription;
 
-    public PrescriptionFree(int articleNo, String name, String producer, String packageSize, String description,int quantity, double price, String... searchTerms) {
+    public PrescriptionFree(int articleNo, String name, String producer, String packageSize, String description,int quantity, double price, String searchTerms) {
         super(articleNo, name, producer, packageSize, description, quantity, price, searchTerms);
         onPrescription = false;
     }
