@@ -3,7 +3,7 @@ package model.dBConnection;
 import java.sql.*;
 
 public class DBConnection {
-   static String url= "jdbc:mysql://192.168.22.21:3306/edrugs_test";
+   static String url= "jdbc:mysql://ro03.beginit.se:23306/edrugs_test";
    static String username = "ap";
    static String password="BNXVEvRY#9R^";
 
@@ -22,6 +22,7 @@ public class DBConnection {
             try {
                 dbConnection = DriverManager.getConnection(url, username, password);
             } catch (SQLException e) {
+                System.out.println("Failed to connect");
                 e.printStackTrace();
             }
         }

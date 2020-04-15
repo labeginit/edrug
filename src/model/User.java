@@ -3,18 +3,18 @@ package model;
 import java.util.Date;
 
 public abstract class User {
-    protected long sSN;
-    protected int userType;  //   1 = Patient, 2 = Doctor, 3 = Admin
-    protected String firstName;
-    protected String lastName;
-    protected Date bDate;
-    protected int zipCode;
-    protected String address;
-    protected String email;
-    protected String phoneNumber;
-    protected String password;
+    private String sSN;
+    private int userType;  //   1 = Patient, 2 = Doctor, 3 = Admin
+    private String firstName;
+    private String lastName;
+    private Date bDate;
+    private String zipCode;
+    private String address;
+    private String email;
+    private String phoneNumber;
+    private String password;
 
-    public User(long sSN, int userType, String firstName, String lastName, Date birthDate, int zipCode, String address, String email, String phoneNumber, String password) {
+    public User(String sSN, int userType, String firstName, String lastName, Date birthDate, String zipCode, String address, String email, String phoneNumber, String password) {
         setSsn(sSN);
         setUserType(userType);
         setFirstName(firstName);
@@ -27,11 +27,11 @@ public abstract class User {
         setPassword(password);
     }
 
-    public long getSsn() {
+    public String getSsn() {
         return sSN;
     }
 
-    public void setSsn(long sSN) {
+    public void setSsn(String sSN) {
         this.sSN = sSN;
     }
 
@@ -67,11 +67,11 @@ public abstract class User {
         this.bDate = bDate;
     }
 
-    public int getZipCode() {
+    public String getZipCode() {
         return zipCode;
     }
 
-    public void setZipCode(int zipCode) {
+    public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
     }
 

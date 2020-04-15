@@ -1,6 +1,5 @@
 package model.dBConnection;
 
-import controller.Validation;
 import model.Admin;
 import model.Doctor;
 import model.Patient;
@@ -18,12 +17,12 @@ public class DAOUser {
     User user;
     DAOCommon common = new DAOCommon();
 
-    private long sSN;
+    private String sSN;
     private int userType;  //   1 = Patient, 2 = Doctor, 3 = Admin
     private String firstName;
     private String lastName;
     private Date birthDate;
-    private int zipCode;
+    private String zipCode;
     private String address;
     private String email;
     private String phoneNumber;
@@ -35,19 +34,17 @@ public class DAOUser {
                 resultSet = common.retrieveSet(query);
                 if (resultSet != null) {
                     while (resultSet.next()) {
-                        sSN = resultSet.getLong("ssn");
+                        sSN = resultSet.getString("ssn");
                         userType = resultSet.getInt("type");
                         firstName = resultSet.getString("first_name");
                         lastName = resultSet.getString("last_name");
                         birthDate = resultSet.getDate("birth_date");
-                        zipCode = resultSet.getInt("zip_code");
+                        zipCode = resultSet.getString("zip_code");
                         address = resultSet.getString("address");
                         email = resultSet.getString("email");
                         phoneNumber = resultSet.getString("phone_number");
                         password = resultSet.getString("password");
-                       // System.out.println(sSN + " " + userType + " " + firstName + " " + lastName + " " + birthDate + " " + zipCode + " " + address + " " + email + " " + phoneNumber + " " + password);
 
-                        User user;
                         if (userType == 1) {
                             user = new Patient(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password);
                         } else if (userType == 2) {
@@ -73,29 +70,27 @@ public class DAOUser {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 resultSet = common.retrieveSet(query);
-
                 if (resultSet != null) {
-                    while (resultSet.next()) {
-                        sSN = resultSet.getLong("ssn");
-                        userType = resultSet.getInt("type");
-                        firstName = resultSet.getString("first_name");
-                        lastName = resultSet.getString("last_name");
-                        birthDate = resultSet.getDate("birth_date");
-                        zipCode = resultSet.getInt("zip_code");
-                        address = resultSet.getString("address");
-                        email = resultSet.getString("email");
-                        phoneNumber = resultSet.getString("phone_number");
-                        password = resultSet.getString("password");
-                        //System.out.println(sSN + " " + userType + " " + firstName + " " + lastName + " " + birthDate + " " + zipCode + " " + address + " " + email + " " + phoneNumber + " " + password);
+                    if (resultSet.first()){
+                    sSN = resultSet.getString("ssn");
+                    userType = resultSet.getInt("type");
+                    firstName = resultSet.getString("first_name");
+                    lastName = resultSet.getString("last_name");
+                    birthDate = resultSet.getDate("birth_date");
+                    zipCode = resultSet.getString("zip_code");
+                    address = resultSet.getString("address");
+                    email = resultSet.getString("email");
+                    phoneNumber = resultSet.getString("phone_number");
+                    password = resultSet.getString("password");
 
-                        if (userType == 1) {
-                            return user = new Patient(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password);
-                        } else if (userType == 2) {
-                            return user = new Doctor(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password);
-                        } else {
-                            return user = new Admin(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password);
-                        }
+                    if (userType == 1) {
+                        return user = new Patient(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password);
+                    } else if (userType == 2) {
+                        return user = new Doctor(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password);
+                    } else {
+                        return user = new Admin(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password);
                     }
+                }
                 } else {
                     System.out.println("empty resultSet");
                     return user = null;
@@ -112,15 +107,12 @@ public class DAOUser {
 
     }
 
-    public List<User> getUserList(String userType){ // 0 - all users will be shown; values 1-3 - a corresponding type of users.
+    public List<User> getUserList(String userType) { // 0 - all users will be shown; values 1-3 - a corresponding type of users.
         if (userType.matches("[0-3]")) {
-            switch (userType) {
-                case "0":
-                    userList = retrieveUserList("SELECT * FROM User;");
-                    break;
-                default:
-                    userList = retrieveUserList("SELECT * FROM User where type = " + userType + ";");
-                    break;
+            if (userType.compareTo("0") == 0) {
+                userList = retrieveUserList("SELECT * FROM User;");
+            } else {
+                userList = retrieveUserList("SELECT * FROM User where type = " + userType + ";");
             }
         } else {
             System.out.println("Illegal argument. Possible values are 0, 1, 2, 3");
@@ -129,10 +121,12 @@ public class DAOUser {
         return userList;
     }
 
-    public User getUser(String sSN){
+    public User getUser(String sSN) {
         User temp = retrieveUser("SELECT * FROM User where ssn = " + sSN + ";");
         if (temp != null) {
             return temp;
-        } else {return null;}
+        } else {
+            return null;
+        }
     }
 }

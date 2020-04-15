@@ -19,20 +19,21 @@ public class Main extends Application {
         DBConnection.getInstance();
         DAOUser dbUser = new DAOUser();
         DAOMedicine dbMedicine = new DAOMedicine();
-        List<User> list1 = dbUser.getUserList("1");
+        List<User> list1 = dbUser.getUserList("0");
 
         User user = dbUser.getUser("8603050731");
         if (user instanceof Doctor) {
             System.out.println(user);
+            System.out.println(user.getClass().toString());
         }
 
-     //   List<Medicine> list2 = dbMedicine.retrieveMedicineList("SELECT * FROM Medicine;");
+
         if (list1 != null) {
             for (User element : list1) {
-                System.out.println(element);
+                System.out.println(element + " " + element.getClass().toString());
             }
         } else System.out.println("empty list1");
-
+        //   List<Medicine> list2 = dbMedicine.retrieveMedicineList("SELECT * FROM Medicine;");
   /*      if (list2 != null) {
             for (Medicine element : list2) {
                 System.out.println(element);
