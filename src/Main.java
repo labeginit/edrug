@@ -33,9 +33,11 @@ public class Main extends Application {
             }
         } else System.out.println("empty list2");
 */
-        Parent root = FXMLLoader.load(getClass().getResource("view/main.fxml"));
+
+        Parent root = FXMLLoader.load(getClass().getResource("view/login.fxml"));
         primaryStage.setTitle("e-DRUGS");
         primaryStage.setScene(new Scene(root));
+        
         primaryStage.show();
 
         if(DBConnection.getInstance() != null)

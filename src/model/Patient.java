@@ -8,4 +8,10 @@ public class Patient extends User {
         super(sSN, 1, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password);
     }
 
+
+    @Override
+    public String toString() {
+        return "Patient: " + getSsn() + " " + getFirstName() + " " + getLastName();
+    }
+
 }

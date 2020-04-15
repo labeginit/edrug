@@ -25,12 +25,16 @@ public abstract class Medicine {
         setPrice(price);
         setSearchTerms(searchTerms);
         setGroup(groupId);
-        this.onPrescription = onPrescription;
+        setOnPrescription(onPrescription);
 
     }
 
     public void setArticleNo(int articleNo) {
         this.articleNo = articleNo;
+    }
+
+    public void setOnPrescription(boolean onPrescription) {
+        this.onPrescription = onPrescription;
     }
 
     public void setName(String name) {
