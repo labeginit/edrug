@@ -1,9 +1,9 @@
 package model;
 
-import java.util.Arrays;
 
 public abstract class Medicine {
     private int articleNo;
+    private boolean onPrescription;
     private String name;
     private String producer;
     private String packageSize;
@@ -11,10 +11,11 @@ public abstract class Medicine {
     private int quantity;
     private double price;
     private String searchTerms;
+    private int groupId;
 
     public Medicine(){}
 
-    public Medicine(int articleNo, String name, String producer, String packageSize, String description, int quantity, double price, String searchTerms){
+    public Medicine(int articleNo, boolean onPrescription, String name, String producer, String packageSize, String description, int quantity, double price, String searchTerms, int groupId){
         setArticleNo(articleNo);
         setName(name);
         setProducer(producer);
@@ -23,6 +24,9 @@ public abstract class Medicine {
         setQuantity(quantity);
         setPrice(price);
         setSearchTerms(searchTerms);
+        setGroup(groupId);
+        this.onPrescription = onPrescription;
+
     }
 
     public void setArticleNo(int articleNo) {
@@ -57,8 +61,16 @@ public abstract class Medicine {
        this.searchTerms = searchTerms;
     }
 
+    public void setGroup(int group) {
+        this.groupId = groupId;
+    }
+
     public int getArticleNo() {
         return articleNo;
+    }
+
+    public boolean isOnPrescription() {
+        return onPrescription;
     }
 
     public String getName() {
@@ -87,6 +99,10 @@ public abstract class Medicine {
 
     public String getSearchTerms() {
         return searchTerms;
+    }
+
+    public int getGroup() {
+        return groupId;
     }
 
     @Override
