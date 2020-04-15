@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #2D3460;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
+   <children>
+      <Button fx:id="loginButton" layoutX="358.0" layoutY="223.0" mnemonicParsing="false" style="-fx-background-color: #2196F3;" text="Login" textFill="WHITE" />
+      <Label layoutX="234.0" layoutY="85.0" text="Welcome to e-Drugs" textFill="#a0a2ab" />
+      <TextField fx:id="ssnTextField" layoutX="215.0" layoutY="130.0" promptText="SSN" />
+      <PasswordField fx:id="passwordField" layoutX="215.0" layoutY="168.0" promptText="Password" />
+      <Button fx:id="registerButton" layoutX="502.0" layoutY="30.0" mnemonicParsing="false" style="-fx-background-color: #151928; -fx-border-color: #a0a2ab;" text="Sign-up" textFill="#a0a2ab" />
+      <Label fx:id="forgotPasswordLabel" layoutX="243.0" layoutY="299.0" text="Forgot Password?" textFill="#3e82f8" />
+      <CheckBox fx:id="rememberMeCheckBox" layoutX="174.0" layoutY="227.0" mnemonicParsing="false" text="Remember Me" textFill="#a0a2ab" />
+      <ImageView fitHeight="26.0" fitWidth="22.0" layoutX="167.0" layoutY="132.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/iconfinder_41-User_2123927.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="28.0" fitWidth="37.0" layoutX="164.0" layoutY="167.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/iconfinder_Lock_4473012.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="258.0" fitWidth="374.0" layoutX="172.0" layoutY="-71.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/Logo.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="progress" fitHeight="150.0" fitWidth="200.0" layoutX="194.0" layoutY="326.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/30.gif" />
+         </image>
+      </ImageView>
+   </children>
+</AnchorPane>
