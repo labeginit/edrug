@@ -3,6 +3,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.Doctor;
 import model.User;
 import model.dBConnection.DBConnection;
 import model.dBConnection.DAOMedicine;
@@ -18,7 +19,12 @@ public class Main extends Application {
         DBConnection.getInstance();
         DAOUser dbUser = new DAOUser();
         DAOMedicine dbMedicine = new DAOMedicine();
-        List<User> list1 = dbUser.retrieveUserList("SELECT * FROM User;");
+        List<User> list1 = dbUser.getUserList("1");
+
+        User user = dbUser.getUser("8603050731");
+        if (user instanceof Doctor) {
+            System.out.println(user);
+        }
 
      //   List<Medicine> list2 = dbMedicine.retrieveMedicineList("SELECT * FROM Medicine;");
         if (list1 != null) {

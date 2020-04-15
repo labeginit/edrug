@@ -1,5 +1,6 @@
 package model.dBConnection;
 
+import controller.Validation;
 import model.Admin;
 import model.Doctor;
 import model.Patient;
@@ -14,6 +15,7 @@ public class DAOUser {
     private Statement statement;
     private ResultSet resultSet;
     private List<User> userList = new ArrayList<>();
+    User user;
     DAOCommon common = new DAOCommon();
 
     private long sSN;
@@ -71,6 +73,7 @@ public class DAOUser {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 resultSet = common.retrieveSet(query);
+
                 if (resultSet != null) {
                     while (resultSet.next()) {
                         sSN = resultSet.getLong("ssn");
@@ -83,17 +86,20 @@ public class DAOUser {
                         email = resultSet.getString("email");
                         phoneNumber = resultSet.getString("phone_number");
                         password = resultSet.getString("password");
-                        System.out.println(sSN + " " + userType + " " + firstName + " " + lastName + " " + birthDate + " " + zipCode + " " + address + " " + email + " " + phoneNumber + " " + password);
+                        //System.out.println(sSN + " " + userType + " " + firstName + " " + lastName + " " + birthDate + " " + zipCode + " " + address + " " + email + " " + phoneNumber + " " + password);
 
                         if (userType == 1) {
-                            return new Patient(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password);
+                            return user = new Patient(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password);
                         } else if (userType == 2) {
-                            return new Doctor(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password);
+                            return user = new Doctor(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password);
                         } else {
-                            return new Admin(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password);
+                            return user = new Admin(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password);
                         }
                     }
-                } else System.out.println("empty resultSet");
+                } else {
+                    System.out.println("empty resultSet");
+                    return user = null;
+                }
             }
         } catch (SQLException ex) {
             System.out.println("Error while working with ResultSet!");
@@ -101,7 +107,32 @@ public class DAOUser {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         } finally {
-            return null;
+            return user;
         }
+
+    }
+
+    public List<User> getUserList(String userType){ // 0 - all users will be shown; values 1-3 - a corresponding type of users.
+        if (userType.matches("[0-3]")) {
+            switch (userType) {
+                case "0":
+                    userList = retrieveUserList("SELECT * FROM User;");
+                    break;
+                default:
+                    userList = retrieveUserList("SELECT * FROM User where type = " + userType + ";");
+                    break;
+            }
+        } else {
+            System.out.println("Illegal argument. Possible values are 0, 1, 2, 3");
+            userList = null;
+        }
+        return userList;
+    }
+
+    public User getUser(String sSN){
+        User temp = retrieveUser("SELECT * FROM User where ssn = " + sSN + ";");
+        if (temp != null) {
+            return temp;
+        } else {return null;}
     }
 }
