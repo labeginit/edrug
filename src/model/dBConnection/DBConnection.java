@@ -3,7 +3,7 @@ package model.dBConnection;
 import java.sql.*;
 
 public class DBConnection {
-   static String url= "jdbc:mysql://ro03.beginit.se:23306/edrugs_test";
+   static String url= "jdbc:mysql://ro03.beginit.se:23306/edrugs_test?verifyServerCertificate=false&useSSL=true";
    static String username = "ap";
    static String password="BNXVEvRY#9R^";
 
