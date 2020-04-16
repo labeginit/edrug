@@ -122,15 +122,15 @@ public class DAOUser {
         return userList;
     }
 
-    public User getUser(String sSN) {
+  /*  public User getUser(String sSN) {
         User temp = retrieveUser("SELECT * FROM User where ssn = " + sSN + ";");
         if (temp != null) {
             return temp;
         } else {
             return null;
         }
-    }
-    /*   WIP
+    }*/
+    //   WIP
     private User retrieveUser(String query, String sSN) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
@@ -171,7 +171,7 @@ public class DAOUser {
         }
 
     }
-
+/*
     public List<User> getUserList(String userType) { // 0 - all users will be shown; values 1-3 - a corresponding type of users.
         if (userType.matches("[0-3]")) {
             if (userType.compareTo("0") == 0) {
@@ -185,7 +185,7 @@ public class DAOUser {
         }
         return userList;
     }
-
+*/
     public User getUser(String sSN) {
         User temp = null;
         String query = "SELECT * FROM User where ssn = ?;";
@@ -201,5 +201,5 @@ public class DAOUser {
         } else {
             return null;
         }
-    }*/
+    }
 }

@@ -19,7 +19,7 @@ public class Main extends Application {
         DBConnection.getInstance();
         DAOUser dbUser = new DAOUser();
         DAOMedicine dbMedicine = new DAOMedicine();
-     //   List<User> list1 = dbUser.getUserList("0");
+        List<User> list1 = dbUser.getUserList("0");
 
         User user = dbUser.getUser("8603050731");
         if (user instanceof Doctor) {
