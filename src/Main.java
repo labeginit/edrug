@@ -4,6 +4,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.Doctor;
+import model.Patient;
 import model.User;
 import model.dBConnection.DBConnection;
 import model.dBConnection.DAOMedicine;
@@ -16,10 +17,25 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
 
+        //examples of use of methods getUser() and getUserList()
         DBConnection.getInstance();
         DAOUser dbUser = new DAOUser();
         DAOMedicine dbMedicine = new DAOMedicine();
-        List<User> list1 = dbUser.getUserList("0");
+
+        Doctor doctor = new Doctor();
+        List<User> list1 = doctor.getDoctorList();
+        if (list1 != null) {
+            for (User element : list1) {
+                System.out.println(element + " list1 doctors");
+            }
+        }
+        Patient patient = new Patient();
+        List<User> list2 = patient.getPatientList();
+        if (list2 != null) {
+            for (User element : list2) {
+                System.out.println(element + " list2 patients");
+            }
+        }
 
         User user = dbUser.getUser("8603050731");
         if (user instanceof Doctor) {
@@ -27,20 +43,20 @@ public class Main extends Application {
             System.out.println(user.getClass().toString());
         }
 
-        User doctor = new Doctor();
-        System.out.println(doctor.getUser("8603050731"));
+        List<User> list3  = dbUser.getUserList("0");
+        if (list3 != null) {
+            for (User element : list3) {
+                System.out.println(element + " list3 patients");
+            }
+        }
 
-  //      if (list1 != null) {
-  //          for (User element : list1) {
-  //              System.out.println(element + " " + element.getClass().toString());
-  //          }
-  //      } else System.out.println("empty list1");
-        //   List<Medicine> list2 = dbMedicine.retrieveMedicineList("SELECT * FROM Medicine;");
-  /*      if (list2 != null) {
-            for (Medicine element : list2) {
+
+        //   List<Medicine> list3 = dbMedicine.retrieveMedicineList("SELECT * FROM Medicine;");
+  /*      if (list3 != null) {
+            for (Medicine element : list3) {
                 System.out.println(element);
             }
-        } else System.out.println("empty list2");
+        } else System.out.println("empty list3");
 */
 
         Parent root = FXMLLoader.load(getClass().getResource("view/login.fxml"));

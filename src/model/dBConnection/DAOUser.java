@@ -14,7 +14,7 @@ public class DAOUser {
     private Statement statement;
     private ResultSet resultSet;
     private List<User> userList = new ArrayList<>();
-    User user;
+    private static User user;
     DAOCommon common = new DAOCommon();
     Connection connection = DBConnection.getConnection();
 
@@ -29,33 +29,28 @@ public class DAOUser {
     private String phoneNumber;
     private String password;
 
-    private List<User> retrieveUserList(String query) {
+    // to be used to retrieve a specific user list (types 1-3) (internal use)
+    private List<User> retrieveUserList(String usType) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
-                resultSet = common.retrieveSet(query);
-                if (resultSet != null) {
-                    while (resultSet.next()) {
-                        sSN = resultSet.getString("ssn");
-                        userType = resultSet.getInt("type");
-                        firstName = resultSet.getString("first_name");
-                        lastName = resultSet.getString("last_name");
-                        birthDate = resultSet.getDate("birth_date");
-                        zipCode = resultSet.getString("zip_code");
-                        address = resultSet.getString("address");
-                        email = resultSet.getString("email");
-                        phoneNumber = resultSet.getString("phone_number");
-                        password = resultSet.getString("password");
-
-                        if (userType == 1) {
-                            user = new Patient(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password);
-                        } else if (userType == 2) {
-                            user = new Doctor(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password);
-                        } else {
-                            user = new Admin(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password);
-                        }
-                        userList.add(user);
-                    }
-                } else System.out.println("Empty resultSet");
+                resultSet = common.retrieveSet("SELECT * FROM User where type = ?;", usType);
+                createObjects(resultSet);
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error while working with ResultSet!");
+            System.out.println(ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            return userList;
+        }
+    }
+    // to be used to retrieve the whole user list (internal use)
+    private List<User> retrieveUserList() {
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                resultSet = common.retrieveSet("SELECT * FROM User;");
+                createObjects(resultSet);
             }
         } catch (SQLException ex) {
             System.out.println("Error while working with ResultSet!");
@@ -67,77 +62,53 @@ public class DAOUser {
         }
     }
 
-    public User retrieveUser(String query) {
-        try {
-            if (!DBConnection.dbConnection.isClosed()) {
-                resultSet = common.retrieveSet(query);
-                if (resultSet != null) {
-                    if (resultSet.first()){
-                        sSN = resultSet.getString("ssn");
-                        userType = resultSet.getInt("type");
-                        firstName = resultSet.getString("first_name");
-                        lastName = resultSet.getString("last_name");
-                        birthDate = resultSet.getDate("birth_date");
-                        zipCode = resultSet.getString("zip_code");
-                        address = resultSet.getString("address");
-                        email = resultSet.getString("email");
-                        phoneNumber = resultSet.getString("phone_number");
-                        password = resultSet.getString("password");
+    private void createObjects(ResultSet resultSet) throws Exception{
+        if (resultSet != null) {
+            while (resultSet.next()) {
+                sSN = resultSet.getString("ssn");
+                userType = resultSet.getInt("type");
+                firstName = resultSet.getString("first_name");
+                lastName = resultSet.getString("last_name");
+                birthDate = resultSet.getDate("birth_date");
+                zipCode = resultSet.getString("zip_code");
+                address = resultSet.getString("address");
+                email = resultSet.getString("email");
+                phoneNumber = resultSet.getString("phone_number");
+                password = resultSet.getString("password");
 
-                        if (userType == 1) {
-                            return user = new Patient(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password);
-                        } else if (userType == 2) {
-                            return user = new Doctor(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password);
-                        } else {
-                            return user = new Admin(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password);
-                        }
-                    }
+                if (userType == 1) {
+                    user = new Patient(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password);
+                } else if (userType == 2) {
+                    user = new Doctor(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password);
                 } else {
-                    System.out.println("empty resultSet");
-                    return user = null;
+                    user = new Admin(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password);
                 }
+                userList.add(user);
             }
-        } catch (SQLException ex) {
-            System.out.println("Error while working with ResultSet!");
-            System.out.println(ex.getMessage());
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        } finally {
-            return user;
-        }
-
+        } else throw new Exception("Empty resultSet");
     }
 
-    public List<User> getUserList(String userType) { // 0 - all users will be shown; values 1-3 - a corresponding type of users.
+    public List<User> getUserList(String userType) throws IllegalArgumentException{ // 0 - all users will be shown; values 1-3 - a corresponding type of users.
         if (userType.matches("[0-3]")) {
             if (userType.compareTo("0") == 0) {
-                userList = retrieveUserList("SELECT * FROM User;");
+                userList = retrieveUserList();
             } else {
-                userList = retrieveUserList("SELECT * FROM User where type = " + userType + ";");
+                userList = retrieveUserList(userType);
             }
         } else {
-            System.out.println("Illegal argument. Possible values are 0, 1, 2, 3");
             userList = null;
+            throw new IllegalArgumentException("Illegal argument. Possible values are 0, 1, 2, 3");
         }
         return userList;
     }
 
-  /*  public User getUser(String sSN) {
-        User temp = retrieveUser("SELECT * FROM User where ssn = " + sSN + ";");
-        if (temp != null) {
-            return temp;
-        } else {
-            return null;
-        }
-    }*/
-    //   WIP
     private User retrieveUser(String query, String sSN) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 resultSet = common.retrieveSet(query, sSN);
                 if (resultSet != null) {
                     if (resultSet.first()){
-                  //  sSN = resultSet.getString("ssn");
+                    this.sSN = resultSet.getString("ssn");
                     userType = resultSet.getInt("type");
                     firstName = resultSet.getString("first_name");
                     lastName = resultSet.getString("last_name");
@@ -157,7 +128,7 @@ public class DAOUser {
                     }
                 }
                 } else {
-                    System.out.println("empty resultSet");
+                    System.out.println("Empty resultSet");
                     return user = null;
                 }
             }
@@ -171,35 +142,15 @@ public class DAOUser {
         }
 
     }
-/*
-    public List<User> getUserList(String userType) { // 0 - all users will be shown; values 1-3 - a corresponding type of users.
-        if (userType.matches("[0-3]")) {
-            if (userType.compareTo("0") == 0) {
-                userList = retrieveUserList("SELECT * FROM User;");
-            } else {
-                userList = retrieveUserList("SELECT * FROM User where type ?;");
-            }
-        } else {
-            System.out.println("Illegal argument. Possible values are 0, 1, 2, 3");
-            userList = null;
-        }
-        return userList;
-    }
-*/
+
     public User getUser(String sSN) {
         User temp = null;
         String query = "SELECT * FROM User where ssn = ?;";
         try {
-
             temp = retrieveUser(query, sSN);
-
         } catch (Exception ex){
             ex.printStackTrace();
         }
-        if (temp != null) {
-            return temp;
-        } else {
-            return null;
-        }
+        return temp;
     }
 }

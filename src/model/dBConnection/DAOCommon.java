@@ -3,26 +3,9 @@ package model.dBConnection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 public class DAOCommon {
-    private Statement statement;
     private ResultSet resultSet;
-
-//    public ResultSet retrieveSet(String queryString) {
-//        try {
-//            if (!DBConnection.dbConnection.isClosed()) {
-//                statement = DBConnection.getConnection().createStatement();
-//                resultSet = statement.executeQuery(queryString);
-//            }
-//        } catch (SQLException | NullPointerException ex) {
-//            System.out.println("Error when executing statement!");
-//            System.out.println(ex.getMessage());
-//        } catch (Exception ex) {
-//            System.out.println(ex.getMessage());
-//        }
-//        return resultSet;
-//    }
 
     public ResultSet retrieveSet(String queryString, String... params) {
         try {
@@ -33,6 +16,22 @@ public class DAOCommon {
                 }
                 resultSet = prepStmt.executeQuery();
               //  prepStmt.close();  this makes the resultSet close prematurely and empty it
+            }
+        } catch (SQLException | NullPointerException ex) {
+            System.out.println("Error when executing statement!");
+            System.out.println(ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return resultSet;
+    }
+
+    public ResultSet retrieveSet(String queryString) {
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
+                resultSet = prepStmt.executeQuery();
+                //  prepStmt.close();  this makes the resultSet close prematurely and empty it
             }
         } catch (SQLException | NullPointerException ex) {
             System.out.println("Error when executing statement!");
