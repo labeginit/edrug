@@ -1,5 +1,7 @@
 package model;
 
+import model.dBConnection.DAOUser;
+
 import java.util.Date;
 
 public abstract class User {
@@ -13,6 +15,8 @@ public abstract class User {
     private String email;
     private String phoneNumber;
     private String password;
+
+    public User(){}
 
     public User(String sSN, int userType, String firstName, String lastName, Date birthDate, String zipCode, String address, String email, String phoneNumber, String password) {
         setSsn(sSN);
@@ -105,6 +109,16 @@ public abstract class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public User getUser(String sSN){
+        DAOUser daoUser = new DAOUser();
+        User user = daoUser.getUser(sSN);
+        if (user != null) {
+            return user;
+        } else {
+            return null;
+        }
     }
 
     @Override
