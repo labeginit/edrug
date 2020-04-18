@@ -160,6 +160,7 @@ public class DAOUser {
                 if (user != null) {
                 sSN = user.getSsn();
                 userType = user.getUserType();
+                firstName = user.getFirstName();
                 lastName = user.getLastName();
                 birthDate = user.getBDate();
                 zipCode = user.getZipCode();
