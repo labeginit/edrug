@@ -80,8 +80,9 @@ public class Main extends Application {
         
         primaryStage.show();
 
-    //    if(DBConnection.getInstance() != null)  this code to be used when we are exiting program
-    //        DBConnection.getInstance().disconnect();
+       // if(DBConnection.getInstance() != null)
+        //    DBConnection.getInstance().disconnect();
+
 
 
 //  THIS IS JUST A TEST CODE

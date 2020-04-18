@@ -8,7 +8,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane prefHeight="649.0" prefWidth="757.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RegistrationController">
    <children>
       <Button fx:id="registerButton" layoutX="236.0" layoutY="556.0" mnemonicParsing="false" text="Register" />
@@ -34,7 +33,7 @@
       <TextField fx:id="firstName" layoutX="293.0" layoutY="154.0" promptText="First Name" />
       <TextField fx:id="lastName" layoutX="293.0" layoutY="189.0" promptText="Last Name" />
       <TextField fx:id="ssn" layoutX="293.0" layoutY="227.0" promptText="SSN" />
-      <TextField fx:id="birthDate" layoutX="293.0" layoutY="262.0" promptText="Birth Date" />
+      <TextField fx:id="birthDate" layoutX="293.0" layoutY="262.0" promptText="YYYY-MM-DD" />
       <TextField fx:id="address" layoutX="293.0" layoutY="297.0" promptText="Address" />
       <TextField fx:id="zipcode" layoutX="293.0" layoutY="333.0" promptText="Zipcode" />
       <TextField fx:id="phoneNumber" layoutX="293.0" layoutY="369.0" promptText="Phone Number" />
@@ -45,5 +44,15 @@
       <Label layoutX="155.0" layoutY="267.0" text="Birth Date:" />
       <TextField fx:id="email" layoutX="294.0" layoutY="404.0" promptText="Email" />
       <Label fx:id="passwordCheckLabel" layoutX="291.0" layoutY="513.0" text="The Password must match*" textFill="#f20202" />
+      <Label fx:id="firstNameStar" layoutX="277.0" layoutY="159.0" text="*" textFill="#f20101" />
+      <Label fx:id="lastNameStar" layoutX="277.0" layoutY="194.0" text="*" textFill="#f20101" />
+      <Label fx:id="birthDateStar" layoutX="277.0" layoutY="267.0" text="*" textFill="#f20101" />
+      <Label fx:id="ssnStar" layoutX="277.0" layoutY="232.0" text="*" textFill="#f20101" />
+      <Label fx:id="addressStar" layoutX="277.0" layoutY="302.0" text="*" textFill="#f20101" />
+      <Label fx:id="zipcodeStar" layoutX="277.0" layoutY="338.0" text="*" textFill="#f20101" />
+      <Label fx:id="phoneNumberStar" layoutX="277.0" layoutY="374.0" text="*" textFill="#f20101" />
+      <Label fx:id="emailStar" layoutX="277.0" layoutY="409.0" text="*" textFill="#f20101" />
+      <Label fx:id="passwordStar" layoutX="277.0" layoutY="444.0" text="*" textFill="#f20101" />
+      <Label fx:id="confirmPasswordStar" layoutX="277.0" layoutY="482.0" text="*" textFill="#f20101" />
    </children>
 </AnchorPane>
