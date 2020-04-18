@@ -10,12 +10,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import model.Patient;
 import model.User;
 import model.dBConnection.DAOUser;
-import model.dBConnection.DBConnection;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -48,6 +47,7 @@ public class LoginController implements Initializable {
         progress.setVisible(false);
         loginButton.setOnAction(event -> loginButtonPressed(event));
         registerButton.setOnAction(event -> registerButtonPressed(event));
+        forgotPasswordLabel.setOnMouseClicked(event -> onForgotPasswordPressed(event));
     }
     @FXML public void loginButtonPressed(ActionEvent ae) {
         if (checkFields() == true) {
@@ -66,7 +66,7 @@ public class LoginController implements Initializable {
                             Scene scene = node.getScene();
                             Stage stage = (Stage) scene.getWindow();
 
-                            Parent root = FXMLLoader.load(getClass().getResource("/view/main.fxml"));
+                            Parent root = FXMLLoader.load(getClass().getResource("/view/patient.fxml"));
                             Scene newScene = new Scene(root);
 
                             stage.setTitle("e-Drugs");
@@ -77,7 +77,8 @@ public class LoginController implements Initializable {
                         }
                     });
                     pt.play();
-                }
+                } else
+                    Validation.alertPopup("Incorrect SSN or Password ", "Invalid Login", "Invalid Login");
             }
         }
     }
@@ -115,5 +116,15 @@ public class LoginController implements Initializable {
             return false;
         } else
             return true;
+    }
+    @FXML public void onForgotPasswordPressed(MouseEvent me) {
+        if (!ssnTextField.getText().isEmpty()) {
+            DAOUser DBUser = new DAOUser();
+            User user = DBUser.getUser(ssnTextField.getText());
+            if (user != null) {
+                Validation.alertPopup("A temporary password has been sent to your email", "Forgot Password", "Forgot Password");
+            }
+        } else
+            Validation.alertPopup("Please enter your SSN to get a new password sent to your email address", "SSN Empty", "Need to supply SSN");
     }
 }
