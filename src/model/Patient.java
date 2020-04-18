@@ -10,8 +10,8 @@ public class Patient extends User {
 
     public Patient(){}
 
-    public Patient(String sSN, String firstName, String lastName, Date birthDate, String zipCode, String address, String email, String phoneNumber, String password) {
-        super(sSN, 1, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password);
+    public Patient(String sSN, String firstName, String lastName, Date birthDate, String zipCode, String address, String email, String phoneNumber, String password, Boolean isActive) {
+        super(sSN, 1, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, isActive);
     }
 
     public List<User> getPatientList(){
@@ -34,6 +34,10 @@ public class Patient extends User {
 
     public int updatePatient(){
         return daoUser.updateUser(this);
+    }
+
+    public int removePatient(){
+        return daoUser.removeUser(this);
     }
 
     @Override

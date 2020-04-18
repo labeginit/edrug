@@ -22,7 +22,7 @@ public class Main extends Application {
         DBConnection.getInstance();
         DAOUser dbUser = new DAOUser();
 // Important!
-/*        Patient patient = new Patient("2", "2", "3", java.sql.Date.valueOf("1995-12-10"), "5", "6", "7", "8", "9");
+        Patient patient = new Patient("2", "2", "3", java.sql.Date.valueOf("1995-12-10"), "5", "6", "7", "8", "9", true);
         patient.addPatient();
         patient.setFirstName("Liliia");
         patient.setLastName("Allansson");
@@ -33,7 +33,9 @@ public class Main extends Application {
         patient.setPhoneNumber("+467777777");
         patient.updatePatient();  // SSN, Type and Password are not being changed by this. For Password - another method (i think its more secure to do so, plus there we need to hash and validate it twice).
         System.out.println(patient.getUser("2"));
-*/
+        patient.removePatient();
+
+
 
         /*DAOMedicine dbMedicine = new DAOMedicine();
 

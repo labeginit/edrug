@@ -10,8 +10,8 @@ public class Admin extends User {
 
     public Admin(){}
 
-    public Admin(String sSN, String firstName, String lastName, Date birthDate, String zipCode, String address, String email, String phoneNumber, String password) {
-        super(sSN, 3, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password);
+    public Admin(String sSN, String firstName, String lastName, Date birthDate, String zipCode, String address, String email, String phoneNumber, String password, Boolean isActive) {
+        super(sSN, 3, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, isActive);
     }
 
     public List<User> getAdminList(){
@@ -33,6 +33,10 @@ public class Admin extends User {
 
     public int updateAdmin(){
         return daoUser.updateUser(this);
+    }
+
+    public int removeDoctor(){
+        return daoUser.removeUser(this);
     }
 
     @Override

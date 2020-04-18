@@ -16,10 +16,11 @@ public abstract class User {
     private String email;
     private String phoneNumber;
     private String password;
+    private Boolean isActive;
 
     public User(){}
 
-    public User(String sSN, int userType, String firstName, String lastName, java.sql.Date birthDate, String zipCode, String address, String email, String phoneNumber, String password) {
+    public User(String sSN, int userType, String firstName, String lastName, java.sql.Date birthDate, String zipCode, String address, String email, String phoneNumber, String password, Boolean isActive) {
         setSsn(sSN);
         setUserType(userType);
         setFirstName(firstName);
@@ -30,6 +31,7 @@ public abstract class User {
         setEmail(email);
         setPhoneNumber(phoneNumber);
         setPassword(password);
+        setActive(isActive);
     }
 
     public String getSsn() {
@@ -110,6 +112,14 @@ public abstract class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
+
+    public Boolean getActive() {
+        return isActive;
     }
 
     // use this method carefully ('instance of' will LIE. getClass().toString() will show the truth)

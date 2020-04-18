@@ -7,6 +7,7 @@ import java.sql.SQLException;
 
 public class DAOCommon {
     private ResultSet resultSet;
+    private int linesAffected = 0;
 
     public ResultSet retrieveSet(String queryString, String... params) {
         try {
@@ -42,7 +43,6 @@ public class DAOCommon {
     }
 
     public int insertUser(String queryString, String ssn, int type, String firstName, String lastName, Date birthDate, String zipCode, String address, String email, String phoneNumber, String password) {
-        int linesAdded = 0;
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
@@ -57,7 +57,7 @@ public class DAOCommon {
                 prepStmt.setString(9, phoneNumber);
                 prepStmt.setString(10, password);
 
-                linesAdded = prepStmt.executeUpdate();
+                linesAffected = prepStmt.executeUpdate();
                 prepStmt.close();
             }
         } catch (SQLException | NullPointerException ex) {
@@ -66,11 +66,10 @@ public class DAOCommon {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
-        return linesAdded;
+        return linesAffected;
     }
 
-    public int updateUser(String queryString, String ssn, String firstName, String lastName, Date birthDate, String zipCode, String address, String email, String phoneNumber) {
-        int linesAdded = 0;
+    public int updateUser(String queryString, String ssn, String firstName, String lastName, Date birthDate, String zipCode, String address, String email, String phoneNumber, Boolean isActive) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
@@ -81,8 +80,9 @@ public class DAOCommon {
                 prepStmt.setString(5, address);
                 prepStmt.setString(6, email);
                 prepStmt.setString(7, phoneNumber);
-                prepStmt.setString(8, ssn);
-                linesAdded = prepStmt.executeUpdate();
+                prepStmt.setBoolean(8, isActive);
+                prepStmt.setString(9, ssn);
+                linesAffected = prepStmt.executeUpdate();
                 prepStmt.close();
             }
         } catch (SQLException | NullPointerException ex) {
@@ -91,8 +91,43 @@ public class DAOCommon {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
-        return linesAdded;
+        return linesAffected;
     }
 
     //DELETE FROM `edrugs_test`.`User` WHERE (`ssn` = '2');
+    public int updateRecordStr(String queryString, String... params) {
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
+                for (int i = 0; i < params.length; i++) {
+                    prepStmt.setString(i+1, params[i]);
+                }
+                linesAffected = prepStmt.executeUpdate();
+            }
+        } catch (SQLException | NullPointerException ex) {
+            System.out.println("Error when executing statement!");
+            System.out.println(ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return linesAffected;
+    }
+
+    public int updateRecordBool(String queryString, Boolean... params) {
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
+                for (int i = 0; i < params.length; i++) {
+                    prepStmt.setBoolean(i+1, params[i]);
+                }
+                linesAffected = prepStmt.executeUpdate();
+            }
+        } catch (SQLException | NullPointerException ex) {
+            System.out.println("Error when executing statement!");
+            System.out.println(ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return linesAffected;
+    }
 }

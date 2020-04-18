@@ -118,7 +118,7 @@ public class RegistrationController implements Initializable {
                 Date dob = Date.valueOf(birthDate.getText());
                 Patient patient = new Patient(ssn.getText(), firstName.getText(), lastName.getText(), dob,
                         zipcode.getText(), address.getText(), email.getText(),
-                        phoneNumber.getText(), password.getText());
+                        phoneNumber.getText(), password.getText(), true);
                 DAOUser dbUser = new DAOUser();
                 dbUser.addUser(patient);
             } catch (IllegalArgumentException illegalArgumentException) {
