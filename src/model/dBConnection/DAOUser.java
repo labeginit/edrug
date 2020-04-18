@@ -160,6 +160,7 @@ public class DAOUser {
                 if (user != null) {
                 sSN = user.getSsn();
                 userType = user.getUserType();
+                firstName = user.getFirstName();
                 lastName = user.getLastName();
                 birthDate = user.getBDate();
                 zipCode = user.getZipCode();
@@ -181,5 +182,12 @@ public class DAOUser {
         } finally {
             return linesAdded;
         }
+    }
+
+
+
+    private void updateUser(User user){//
+     //   updateUser(user, "UPDATE `edrugs_test`.`User` SET `first_name` = ?, `last_name` = ?, `birth_date` = ?, `zip_code` = ?, `address` = ?, `email` = ?, `phone_number` = ? WHERE (`ssn` = ?);");
+                //UPDATE `edrugs_test`.`User` SET `first_name` = 'Bill', `last_name` = 'Smith1', `birth_date` = '1999-10-24 00:00:00', `zip_code` = '55401', `address` = 'Sveagatan 1', `email` = 'johnsmit@yahoo.com', `phone_number` = '+46712327331' WHERE (`ssn` = '199912251111');
     }
 }
