@@ -1,5 +1,6 @@
 package model.dBConnection;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,7 +16,6 @@ public class DAOCommon {
                     prepStmt.setString(i+1, params[i]);
                 }
                 resultSet = prepStmt.executeQuery();
-              //  prepStmt.close();  this makes the resultSet close prematurely and empty it
             }
         } catch (SQLException | NullPointerException ex) {
             System.out.println("Error when executing statement!");
@@ -31,7 +31,6 @@ public class DAOCommon {
             if (!DBConnection.dbConnection.isClosed()) {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
                 resultSet = prepStmt.executeQuery();
-                //  prepStmt.close();  this makes the resultSet close prematurely and empty it
             }
         } catch (SQLException | NullPointerException ex) {
             System.out.println("Error when executing statement!");
@@ -40,5 +39,33 @@ public class DAOCommon {
             System.out.println(ex.getMessage());
         }
         return resultSet;
+    }
+
+    public int insertUser(String queryString, String ssn, int type, String firstName, String lastName, Date birthDate, String zipCode, String address, String email, String phoneNumber, String password) {
+        int linesAdded = 0;
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
+                prepStmt.setString(1, ssn);
+                prepStmt.setInt(2, type);
+                prepStmt.setString(3, firstName);
+                prepStmt.setString(4, lastName);
+                prepStmt.setDate(5, birthDate);
+                prepStmt.setString(6, zipCode);
+                prepStmt.setString(7, address);
+                prepStmt.setString(8, email);
+                prepStmt.setString(9, phoneNumber);
+                prepStmt.setString(10, password);
+
+                linesAdded = prepStmt.executeUpdate();
+                prepStmt.close();
+            }
+        } catch (SQLException | NullPointerException ex) {
+            System.out.println("Error when executing statement!");
+            System.out.println(ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return linesAdded;
     }
 }
