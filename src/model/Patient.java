@@ -2,7 +2,7 @@ package model;
 
 import model.dBConnection.DAOUser;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 public class Patient extends User {
@@ -16,6 +16,16 @@ public class Patient extends User {
     public List<User> getPatientList(){
         DAOUser daoUser = new DAOUser();
         return daoUser.getUserList("1");
+    }
+
+    public int addPatient(User user){
+        int linesAdded = 0;
+        DAOUser daoUser = new DAOUser();
+        if (user instanceof Patient) {
+            return linesAdded = daoUser.addUser(user);
+        }
+        System.out.println("records added: " + linesAdded);
+        return linesAdded;
     }
 
     @Override

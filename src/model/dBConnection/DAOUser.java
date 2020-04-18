@@ -7,7 +7,6 @@ import model.User;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class DAOUser {
@@ -152,5 +151,35 @@ public class DAOUser {
             ex.printStackTrace();
         }
         return temp;
+    }
+
+    public int addUser(User user) {
+        int linesAdded=0;
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                if (user != null) {
+                sSN = user.getSsn();
+                userType = user.getUserType();
+                lastName = user.getLastName();
+                birthDate = user.getBDate();
+                zipCode = user.getZipCode();
+                address = user.getAddress();
+                email = user.getEmail();
+                phoneNumber = user.getPhoneNumber();
+                password = user.getPassword();
+                String query = "INSERT INTO `edrugs_test`.`User` (`ssn`, `type`, `first_name`, `last_name`, `birth_date`, `zip_code`, `address`, `email`, `phone_number`, `password`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                linesAdded = common.insertUser(query, sSN, userType, firstName, lastName, (java.sql.Date) birthDate, zipCode, address, email, phoneNumber, password);
+                } else {
+                    throw new NullPointerException("The user object is null");
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error while working with statement!");
+            System.out.println(ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            return linesAdded;
+        }
     }
 }

@@ -10,6 +10,7 @@ import model.dBConnection.DBConnection;
 import model.dBConnection.DAOMedicine;
 import model.dBConnection.DAOUser;
 
+import java.sql.Date;
 import java.util.List;
 
 public class Main extends Application {
@@ -19,8 +20,13 @@ public class Main extends Application {
 
         //examples of use of methods getUser() and getUserList()
         DBConnection.getInstance();
-        DAOUser dbUser = new DAOUser();
-        DAOMedicine dbMedicine = new DAOMedicine();
+   //     DAOUser dbUser = new DAOUser();
+   //     Patient patient = new Patient("1", "2", "3", new Date(2010-10-10), "5", "6", "7", "8", "9");
+
+    //    patient.addPatient(patient);
+
+        
+        /*DAOMedicine dbMedicine = new DAOMedicine();
 
         Doctor doctor = new Doctor();
         List<User> list1 = doctor.getDoctorList();
@@ -37,10 +43,10 @@ public class Main extends Application {
             }
         }
 
-        User user = dbUser.getUser("8603050731");
-        if (user instanceof Doctor) {
-            System.out.println(user);
-            System.out.println(user.getClass().toString());
+        User user = dbUser.getUser("2009103168");
+        if (user instanceof Patient) {
+            System.out.println(user + " patient test");
+            System.out.println(user.getClass().toString() + " patient test");
         }
 
         List<User> list3  = dbUser.getUserList("0");
@@ -49,7 +55,7 @@ public class Main extends Application {
                 System.out.println(element + " list3 patients");
             }
         }
-
+*/
 
         //   List<Medicine> list3 = dbMedicine.retrieveMedicineList("SELECT * FROM Medicine;");
   /*      if (list3 != null) {
@@ -65,8 +71,8 @@ public class Main extends Application {
         
         primaryStage.show();
 
-        if(DBConnection.getInstance() != null)
-            DBConnection.getInstance().disconnect();
+    //    if(DBConnection.getInstance() != null)  this code to be used when we are exiting program
+    //        DBConnection.getInstance().disconnect();
 
 
 //  THIS IS JUST A TEST CODE
