@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.util.List;
 
 public class Patient extends User {
+    DAOUser daoUser = new DAOUser();
 
     public Patient(){}
 
@@ -20,7 +21,6 @@ public class Patient extends User {
 
     public int addPatient(User user){
         int linesAdded = 0;
-        DAOUser daoUser = new DAOUser();
         if (user instanceof Patient) {
             return linesAdded = daoUser.addUser(user);
         }
@@ -28,9 +28,17 @@ public class Patient extends User {
         return linesAdded;
     }
 
+    public int addPatient(){
+        return addPatient(this);
+    }
+
+    public int updatePatient(){
+        return daoUser.updateUser(this);
+    }
+
     @Override
     public String toString() {
-        return "Patient: " + getSsn() + " " + getFirstName() + " " + getLastName();
+        return super.toString();
     }
 
 }

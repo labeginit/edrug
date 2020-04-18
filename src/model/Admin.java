@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.util.List;
 
 public class Admin extends User {
+    DAOUser daoUser = new DAOUser();
 
     public Admin(){}
 
@@ -14,13 +15,11 @@ public class Admin extends User {
     }
 
     public List<User> getAdminList(){
-        DAOUser daoUser = new DAOUser();
         return daoUser.getUserList("3");
     }
 
     public int addAdmin(User user){
         int linesAdded = 0;
-        DAOUser daoUser = new DAOUser();
         if (user instanceof Admin) {
             return linesAdded = daoUser.addUser(user);
         }
@@ -28,8 +27,16 @@ public class Admin extends User {
         return linesAdded;
     }
 
+    public int addAdmin(){
+        return addAdmin(this);
+    }
+
+    public int updateAdmin(){
+        return daoUser.updateUser(this);
+    }
+
     @Override
     public String toString(){
-        return "Admin: " + getSsn() + " " + getFirstName() + " " + getLastName();
+        return super.toString();
     }
 }

@@ -68,4 +68,31 @@ public class DAOCommon {
         }
         return linesAdded;
     }
+
+    public int updateUser(String queryString, String ssn, String firstName, String lastName, Date birthDate, String zipCode, String address, String email, String phoneNumber) {
+        int linesAdded = 0;
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
+                prepStmt.setString(1, firstName);
+                prepStmt.setString(2, lastName);
+                prepStmt.setDate(3, birthDate);
+                prepStmt.setString(4, zipCode);
+                prepStmt.setString(5, address);
+                prepStmt.setString(6, email);
+                prepStmt.setString(7, phoneNumber);
+                prepStmt.setString(8, ssn);
+                linesAdded = prepStmt.executeUpdate();
+                prepStmt.close();
+            }
+        } catch (SQLException | NullPointerException ex) {
+            System.out.println("Error when executing statement!");
+            System.out.println(ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return linesAdded;
+    }
+
+    //DELETE FROM `edrugs_test`.`User` WHERE (`ssn` = '2');
 }

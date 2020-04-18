@@ -6,6 +6,7 @@ import java.sql.Date;
 import java.util.List;
 
 public class Doctor extends User{
+    DAOUser daoUser = new DAOUser();
 
     public Doctor(){}
 
@@ -14,13 +15,11 @@ public class Doctor extends User{
     }
 
     public List<User> getDoctorList(){
-        DAOUser daoUser = new DAOUser();
         return daoUser.getUserList("2");
     }
 
     public int addDoctor(User user){
         int linesAdded = 0;
-        DAOUser daoUser = new DAOUser();
         if (user instanceof Doctor) {
             return linesAdded = daoUser.addUser(user);
         }
@@ -28,8 +27,16 @@ public class Doctor extends User{
         return linesAdded;
     }
 
+    public int addDoctor(){
+        return addDoctor(this);
+    }
+
+    public int updateDoctor(){
+        return daoUser.updateUser(this);
+    }
+
     @Override
     public String toString() {
-        return "Doctor: " + getSsn() + " " + getFirstName() + " " + getLastName();
+        return super.toString();
     }
 }

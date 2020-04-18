@@ -20,12 +20,21 @@ public class Main extends Application {
 
         //examples of use of methods getUser() and getUserList()
         DBConnection.getInstance();
-   //     DAOUser dbUser = new DAOUser();
-   //     Patient patient = new Patient("1", "2", "3", new Date(2010-10-10), "5", "6", "7", "8", "9");
+        DAOUser dbUser = new DAOUser();
+// Important!
+/*        Patient patient = new Patient("2", "2", "3", java.sql.Date.valueOf("1995-12-10"), "5", "6", "7", "8", "9");
+        patient.addPatient();
+        patient.setFirstName("Liliia");
+        patient.setLastName("Allansson");
+        patient.setBDate(java.sql.Date.valueOf("1986-12-10"));  //with this way of entering date we loose one day for some reason (in the table it is 1986-12-09).
+        patient.setZipCode("11111");
+        patient.setAddress("new address");
+        patient.setEmail("new@gmail.com");
+        patient.setPhoneNumber("+467777777");
+        patient.updatePatient();  // SSN, Type and Password are not being changed by this. For Password - another method (i think its more secure to do so, plus there we need to hash and validate it twice).
+        System.out.println(patient.getUser("2"));
+*/
 
-    //    patient.addPatient(patient);
-
-        
         /*DAOMedicine dbMedicine = new DAOMedicine();
 
         Doctor doctor = new Doctor();

@@ -169,7 +169,7 @@ public class DAOUser {
                 phoneNumber = user.getPhoneNumber();
                 password = user.getPassword();
                 String query = "INSERT INTO `edrugs_test`.`User` (`ssn`, `type`, `first_name`, `last_name`, `birth_date`, `zip_code`, `address`, `email`, `phone_number`, `password`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-                linesAdded = common.insertUser(query, sSN, userType, firstName, lastName, (java.sql.Date) birthDate, zipCode, address, email, phoneNumber, password);
+                linesAdded = common.insertUser(query, sSN, userType, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password);
                 } else {
                     throw new NullPointerException("The user object is null");
                 }
@@ -186,8 +186,32 @@ public class DAOUser {
 
 
 
-    private void updateUser(User user){//
-     //   updateUser(user, "UPDATE `edrugs_test`.`User` SET `first_name` = ?, `last_name` = ?, `birth_date` = ?, `zip_code` = ?, `address` = ?, `email` = ?, `phone_number` = ? WHERE (`ssn` = ?);");
-                //UPDATE `edrugs_test`.`User` SET `first_name` = 'Bill', `last_name` = 'Smith1', `birth_date` = '1999-10-24 00:00:00', `zip_code` = '55401', `address` = 'Sveagatan 1', `email` = 'johnsmit@yahoo.com', `phone_number` = '+46712327331' WHERE (`ssn` = '199912251111');
+    public int updateUser(User user){
+        int linesAdded=0;
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                if (user != null) {
+                    firstName = user.getFirstName();
+                    lastName = user.getLastName();
+                    birthDate = user.getBDate();
+                    zipCode = user.getZipCode();
+                    address = user.getAddress();
+                    email = user.getEmail();
+                    phoneNumber = user.getPhoneNumber();
+                    sSN = user.getSsn();
+                    String query = "UPDATE `edrugs_test`.`User` SET `first_name` = ?, `last_name` = ?, `birth_date` = ?, `zip_code` = ?, `address` = ?, `email` = ?, `phone_number` = ? WHERE (`ssn` = ?);";
+                    linesAdded = common.updateUser(query, sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber);
+                } else {
+                    throw new NullPointerException("The user object is null");
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error while working with statement!");
+            System.out.println(ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        } finally {
+            return linesAdded;
+        }
     }
 }

@@ -125,7 +125,6 @@ public abstract class User {
         return daoUser.getUserList("0");
     }
 
-
     @Override
     public String toString() {
         return "User{" +
