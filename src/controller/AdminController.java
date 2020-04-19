@@ -1,15 +1,15 @@
 package controller;
 
 import javafx.fxml.Initializable;
-import model.Patient;
+import model.Admin;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class PatientViewController implements Initializable {
-    Patient model;
+public class AdminController implements Initializable {
+    Admin model;
 
-    public PatientViewController(Patient model) {
+    public AdminController(Admin model) {
         this.model = model;
 
     }

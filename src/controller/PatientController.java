@@ -7,11 +7,19 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import model.Patient;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class PatientController implements Initializable {
+
+    Patient model;
+
+    public PatientController(Patient model) {
+        this.model = model;
+
+    }
 
     @FXML
     private ComboBox<String> filter_combo;
