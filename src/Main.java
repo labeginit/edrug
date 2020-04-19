@@ -10,6 +10,7 @@ import model.dBConnection.DBConnection;
 import model.dBConnection.DAOMedicine;
 import model.dBConnection.DAOUser;
 
+import java.sql.Date;
 import java.util.List;
 
 public class Main extends Application {
@@ -20,36 +21,57 @@ public class Main extends Application {
         //examples of use of methods getUser() and getUserList()
         DBConnection.getInstance();
         DAOUser dbUser = new DAOUser();
-        DAOMedicine dbMedicine = new DAOMedicine();
+// Important!
+     /*   Patient patient = new Patient("2", "2", "3", java.sql.Date.valueOf("1995-12-10"), "5", "6", "7", "8", "9");
+        System.out.println(patient.addPatient() + " add");
+        patient.setFirstName("Liliia");
+        patient.setLastName("Allansson");
+        patient.setBDate(java.sql.Date.valueOf("1986-12-10"));  //with this way of entering date we loose one day for some reason (in the table it is 1986-12-09).
+        patient.setZipCode("11111");
+        patient.setAddress("new address");
+        patient.setEmail("new@gmail.com");
+        patient.setPhoneNumber("+467777777");
+        patient.setActive(1);
+        System.out.println(patient.updatePatient() + " update");  // SSN, Type and Password are not being changed by this. For Password - another method (i think its more secure to do so, plus there we need to hash and validate it twice).
+        System.out.println(patient.getUser("2"));
+        System.out.println(patient.removePatient() + " remove");*/
+/*
+        System.out.println();
+
+        //DAOMedicine dbMedicine = new DAOMedicine();
 
         Doctor doctor = new Doctor();
         List<User> list1 = doctor.getDoctorList();
         if (list1 != null) {
             for (User element : list1) {
-                System.out.println(element + " list1 doctors");
+                System.out.println(" list1 doctors " + element);
             }
         }
-        Patient patient = new Patient();
-        List<User> list2 = patient.getPatientList();
+        System.out.println();
+
+        Patient patient1 = new Patient();
+        List<User> list2 = patient1.getPatientList();
         if (list2 != null) {
             for (User element : list2) {
-                System.out.println(element + " list2 patients");
+                System.out.println(" list2 patients" + element);
             }
         }
 
-        User user = dbUser.getUser("8603050731");
-        if (user instanceof Doctor) {
-            System.out.println(user);
-            System.out.println(user.getClass().toString());
+        System.out.println();
+        User user = dbUser.getUser("2009103168");
+        if (user instanceof Patient) {
+            System.out.println(user + " patient test");
+            //System.out.println(user.getClass().toString() + " patient test");
         }
+        System.out.println();
 
         List<User> list3  = dbUser.getUserList("0");
         if (list3 != null) {
             for (User element : list3) {
-                System.out.println(element + " list3 patients");
+                System.out.println(" list3 all users" + element);
             }
         }
-
+*/
 
         //   List<Medicine> list3 = dbMedicine.retrieveMedicineList("SELECT * FROM Medicine;");
   /*      if (list3 != null) {
@@ -65,8 +87,9 @@ public class Main extends Application {
         
         primaryStage.show();
 
-        if(DBConnection.getInstance() != null)
-            DBConnection.getInstance().disconnect();
+       // if(DBConnection.getInstance() != null)
+        //    DBConnection.getInstance().disconnect();
+
 
 
 //  THIS IS JUST A TEST CODE

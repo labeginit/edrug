@@ -2,7 +2,7 @@ package model;
 
 import model.dBConnection.DAOUser;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 public abstract class User {
@@ -10,16 +10,17 @@ public abstract class User {
     private int userType;  //   1 = Patient, 2 = Doctor, 3 = Admin
     private String firstName;
     private String lastName;
-    private Date bDate;
+    private java.sql.Date bDate;
     private String zipCode;
     private String address;
     private String email;
     private String phoneNumber;
     private String password;
+    private int isActive;
 
     public User(){}
 
-    public User(String sSN, int userType, String firstName, String lastName, Date birthDate, String zipCode, String address, String email, String phoneNumber, String password) {
+    public User(String sSN, int userType, String firstName, String lastName, java.sql.Date birthDate, String zipCode, String address, String email, String phoneNumber, String password, int isActive) {
         setSsn(sSN);
         setUserType(userType);
         setFirstName(firstName);
@@ -30,6 +31,11 @@ public abstract class User {
         setEmail(email);
         setPhoneNumber(phoneNumber);
         setPassword(password);
+        setActive(isActive);
+    }
+
+    public User(String sSN, int userType, String firstName, String lastName, java.sql.Date birthDate, String zipCode, String address, String email, String phoneNumber, String password) {
+        this(sSN, userType, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, 1);
     }
 
     public String getSsn() {
@@ -68,7 +74,7 @@ public abstract class User {
         return bDate;
     }
 
-    public void setBDate(Date bDate) {
+    public void setBDate(java.sql.Date bDate) {
         this.bDate = bDate;
     }
 
@@ -112,6 +118,14 @@ public abstract class User {
         this.password = password;
     }
 
+    public void setActive(int active) {
+        isActive = active;
+    }
+
+    public int getActive() {
+        return isActive;
+    }
+
     // use this method carefully ('instance of' will LIE. getClass().toString() will show the truth)
     // since it needs to be instantiated from a subclass but it will still give you an object of the actual type
     // consider using DAOUser class method getUser() instead if the user type is unknown
@@ -125,20 +139,20 @@ public abstract class User {
         return daoUser.getUserList("0");
     }
 
-
     @Override
     public String toString() {
         return "User{" +
-                "sSN=" + sSN +
+                "sSN='" + sSN + '\'' +
                 ", userType=" + userType +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", bDate=" + bDate +
-                ", zipCode=" + zipCode +
+                ", zipCode='" + zipCode + '\'' +
                 ", address='" + address + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", password='" + password + '\'' +
+                ", isActive=" + isActive +
                 '}';
     }
 }
