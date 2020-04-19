@@ -3,7 +3,7 @@ package controller;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 
-public class Validation {
+public class ValidationController {
     static void alertPopup(String infoMessage, String titleBar, String headerMessage) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, infoMessage, ButtonType.OK);
         alert.setResizable(true);
