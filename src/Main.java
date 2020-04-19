@@ -22,8 +22,8 @@ public class Main extends Application {
         DBConnection.getInstance();
         DAOUser dbUser = new DAOUser();
 // Important!
-        Patient patient = new Patient("2", "2", "3", java.sql.Date.valueOf("1995-12-10"), "5", "6", "7", "8", "9", true);
-        patient.addPatient();
+     /*   Patient patient = new Patient("2", "2", "3", java.sql.Date.valueOf("1995-12-10"), "5", "6", "7", "8", "9");
+        System.out.println(patient.addPatient() + " add");
         patient.setFirstName("Liliia");
         patient.setLastName("Allansson");
         patient.setBDate(java.sql.Date.valueOf("1986-12-10"));  //with this way of entering date we loose one day for some reason (in the table it is 1986-12-09).
@@ -31,39 +31,44 @@ public class Main extends Application {
         patient.setAddress("new address");
         patient.setEmail("new@gmail.com");
         patient.setPhoneNumber("+467777777");
-        patient.updatePatient();  // SSN, Type and Password are not being changed by this. For Password - another method (i think its more secure to do so, plus there we need to hash and validate it twice).
+        patient.setActive(1);
+        System.out.println(patient.updatePatient() + " update");  // SSN, Type and Password are not being changed by this. For Password - another method (i think its more secure to do so, plus there we need to hash and validate it twice).
         System.out.println(patient.getUser("2"));
-        patient.removePatient();
+        System.out.println(patient.removePatient() + " remove");*/
+/*
+        System.out.println();
 
-
-
-        /*DAOMedicine dbMedicine = new DAOMedicine();
+        //DAOMedicine dbMedicine = new DAOMedicine();
 
         Doctor doctor = new Doctor();
         List<User> list1 = doctor.getDoctorList();
         if (list1 != null) {
             for (User element : list1) {
-                System.out.println(element + " list1 doctors");
+                System.out.println(" list1 doctors " + element);
             }
         }
-        Patient patient = new Patient();
-        List<User> list2 = patient.getPatientList();
+        System.out.println();
+
+        Patient patient1 = new Patient();
+        List<User> list2 = patient1.getPatientList();
         if (list2 != null) {
             for (User element : list2) {
-                System.out.println(element + " list2 patients");
+                System.out.println(" list2 patients" + element);
             }
         }
 
+        System.out.println();
         User user = dbUser.getUser("2009103168");
         if (user instanceof Patient) {
             System.out.println(user + " patient test");
-            System.out.println(user.getClass().toString() + " patient test");
+            //System.out.println(user.getClass().toString() + " patient test");
         }
+        System.out.println();
 
         List<User> list3  = dbUser.getUserList("0");
         if (list3 != null) {
             for (User element : list3) {
-                System.out.println(element + " list3 patients");
+                System.out.println(" list3 all users" + element);
             }
         }
 */

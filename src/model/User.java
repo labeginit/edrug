@@ -16,11 +16,11 @@ public abstract class User {
     private String email;
     private String phoneNumber;
     private String password;
-    private Boolean isActive;
+    private int isActive;
 
     public User(){}
 
-    public User(String sSN, int userType, String firstName, String lastName, java.sql.Date birthDate, String zipCode, String address, String email, String phoneNumber, String password, Boolean isActive) {
+    public User(String sSN, int userType, String firstName, String lastName, java.sql.Date birthDate, String zipCode, String address, String email, String phoneNumber, String password, int isActive) {
         setSsn(sSN);
         setUserType(userType);
         setFirstName(firstName);
@@ -32,6 +32,10 @@ public abstract class User {
         setPhoneNumber(phoneNumber);
         setPassword(password);
         setActive(isActive);
+    }
+
+    public User(String sSN, int userType, String firstName, String lastName, java.sql.Date birthDate, String zipCode, String address, String email, String phoneNumber, String password) {
+        this(sSN, userType, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, 1);
     }
 
     public String getSsn() {
@@ -114,11 +118,11 @@ public abstract class User {
         this.password = password;
     }
 
-    public void setActive(Boolean active) {
+    public void setActive(int active) {
         isActive = active;
     }
 
-    public Boolean getActive() {
+    public int getActive() {
         return isActive;
     }
 
@@ -138,16 +142,17 @@ public abstract class User {
     @Override
     public String toString() {
         return "User{" +
-                "sSN=" + sSN +
+                "sSN='" + sSN + '\'' +
                 ", userType=" + userType +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", bDate=" + bDate +
-                ", zipCode=" + zipCode +
+                ", zipCode='" + zipCode + '\'' +
                 ", address='" + address + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", password='" + password + '\'' +
+                ", isActive=" + isActive +
                 '}';
     }
 }

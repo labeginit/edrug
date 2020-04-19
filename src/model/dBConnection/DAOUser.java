@@ -13,6 +13,7 @@ public class DAOUser {
     private Statement statement;
     private ResultSet resultSet;
     private List<User> userList = new ArrayList<>();
+    private int linesAffected = 0;
     private static User user;
     DAOCommon common = new DAOCommon();
     Connection connection = DBConnection.getConnection();
@@ -27,7 +28,7 @@ public class DAOUser {
     private String email;
     private String phoneNumber;
     private String password;
-    private Boolean isActive;
+    private int isActive;
 
     // to be used to retrieve a specific user list (types 1-3) (internal use)
     private List<User> retrieveUserList(String usType) {
@@ -75,7 +76,7 @@ public class DAOUser {
                 email = resultSet.getString("email");
                 phoneNumber = resultSet.getString("phone_number");
                 password = resultSet.getString("password");
-                isActive = resultSet.getBoolean("active");
+                isActive = resultSet.getInt("active");
 
                 if (userType == 1) {
                     user = new Patient(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, isActive);
@@ -119,7 +120,7 @@ public class DAOUser {
                     email = resultSet.getString("email");
                     phoneNumber = resultSet.getString("phone_number");
                     password = resultSet.getString("password");
-                    isActive = resultSet.getBoolean("active");
+                    isActive = resultSet.getInt("active");
 
                     if (userType == 1) {
                         return user = new Patient(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, isActive);
@@ -157,7 +158,6 @@ public class DAOUser {
     }
 
     public int addUser(User user) {
-        int linesAdded=0;
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 if (user != null) {
@@ -171,9 +171,8 @@ public class DAOUser {
                 email = user.getEmail();
                 phoneNumber = user.getPhoneNumber();
                 password = user.getPassword();
-                isActive = true;
-                String query = "INSERT INTO `edrugs_test`.`User` (`ssn`, `type`, `first_name`, `last_name`, `birth_date`, `zip_code`, `address`, `email`, `phone_number`, `password`, 'active') VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?," + isActive + ");";
-                linesAdded = common.insertUser(query, sSN, userType, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password);
+                String query = "INSERT INTO `edrugs_test`.`User` (`ssn`, `type`, `first_name`, `last_name`, `birth_date`, `zip_code`, `address`, `email`, `phone_number`, `password`, `active`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '1');";
+                linesAffected = common.insertUser(query, sSN, userType, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password);
                 } else {
                     throw new NullPointerException("The user object is null");
                 }
@@ -184,14 +183,13 @@ public class DAOUser {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         } finally {
-            return linesAdded;
+            return linesAffected;
         }
     }
 
 
 
     public int updateUser(User user){
-        int linesAdded=0;
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 if (user != null) {
@@ -204,8 +202,8 @@ public class DAOUser {
                     phoneNumber = user.getPhoneNumber();
                     isActive = user.getActive();
                     sSN = user.getSsn();
-                    String query = "UPDATE `edrugs_test`.`User` SET `first_name` = ?, `last_name` = ?, `birth_date` = ?, `zip_code` = ?, `address` = ?, `email` = ?, `phone_number` = ?, 'active' = ? WHERE (`ssn` = ?);";
-                    linesAdded = common.updateUser(query, sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, isActive);
+                    String query = "UPDATE `edrugs_test`.`User` SET `first_name` = ?, `last_name` = ?, `birth_date` = ?, `zip_code` = ?, `address` = ?, `email` = ?, `phone_number` = ?, `active` = ? WHERE (`ssn` = ?);";
+                    linesAffected = common.updateUser(query, sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, isActive);
                 } else {
                     throw new NullPointerException("The user object is null");
                 }
@@ -216,18 +214,17 @@ public class DAOUser {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         } finally {
-            return linesAdded;
+            return linesAffected;
         }
     }
 
     public int removeUser(User user){
-        int linesAdded=0;
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 if (user != null) {
                     sSN = user.getSsn();
                     String query = "UPDATE `edrugs_test`.`User` SET `active` = '0' WHERE (`ssn` = ?)";
-                    linesAdded = common.updateRecordStr(query, sSN);
+                    linesAffected = common.updateRecordStr(query, sSN);
                 } else {
                     throw new NullPointerException("The user object is null");
                 }
@@ -238,7 +235,7 @@ public class DAOUser {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         } finally {
-            return linesAdded;
+            return linesAffected;
         }
     }
 }

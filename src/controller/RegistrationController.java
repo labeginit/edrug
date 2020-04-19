@@ -118,8 +118,12 @@ public class RegistrationController implements Initializable {
                 Date dob = Date.valueOf(birthDate.getText());
                 Patient patient = new Patient(ssn.getText(), firstName.getText(), lastName.getText(), dob,
                         zipcode.getText(), address.getText(), email.getText(),
-                        phoneNumber.getText(), password.getText(), true);
+                        phoneNumber.getText(), password.getText());
                 DAOUser dbUser = new DAOUser();
+
+                /// by Liliia:
+                System.out.println("PLS check if user already exists and if exists and isActive=0 - set active to 1 and do not update the other values (let login first)"); // if exists and isActive=1 then let the user know :)
+                ///end
                 dbUser.addUser(patient);
             } catch (IllegalArgumentException illegalArgumentException) {
                 Validation.alertPopup("Date must follow the correct format YYYY-MM-DD", "Improper Date", "Improper date format ");

@@ -10,8 +10,12 @@ public class Patient extends User {
 
     public Patient(){}
 
-    public Patient(String sSN, String firstName, String lastName, Date birthDate, String zipCode, String address, String email, String phoneNumber, String password, Boolean isActive) {
+    public Patient(String sSN, String firstName, String lastName, Date birthDate, String zipCode, String address, String email, String phoneNumber, String password, int isActive) {
         super(sSN, 1, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, isActive);
+    }
+
+    public Patient(String sSN, String firstName, String lastName, Date birthDate, String zipCode, String address, String email, String phoneNumber, String password) {
+        super(sSN, 1, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, 1);
     }
 
     public List<User> getPatientList(){

@@ -56,6 +56,7 @@ public class DAOCommon {
                 prepStmt.setString(8, email);
                 prepStmt.setString(9, phoneNumber);
                 prepStmt.setString(10, password);
+               // prepStmt.setInt(11, isActive);
 
                 linesAffected = prepStmt.executeUpdate();
                 prepStmt.close();
@@ -69,7 +70,7 @@ public class DAOCommon {
         return linesAffected;
     }
 
-    public int updateUser(String queryString, String ssn, String firstName, String lastName, Date birthDate, String zipCode, String address, String email, String phoneNumber, Boolean isActive) {
+    public int updateUser(String queryString, String ssn, String firstName, String lastName, Date birthDate, String zipCode, String address, String email, String phoneNumber, int isActive) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
@@ -80,16 +81,16 @@ public class DAOCommon {
                 prepStmt.setString(5, address);
                 prepStmt.setString(6, email);
                 prepStmt.setString(7, phoneNumber);
-                prepStmt.setBoolean(8, isActive);
+                prepStmt.setInt(8, isActive);//////fails here
                 prepStmt.setString(9, ssn);
                 linesAffected = prepStmt.executeUpdate();
                 prepStmt.close();
             }
         } catch (SQLException | NullPointerException ex) {
             System.out.println("Error when executing statement!");
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
         return linesAffected;
     }
