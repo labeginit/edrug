@@ -66,7 +66,7 @@ public class LoginController implements Initializable {
                             Scene scene = node.getScene();
                             Stage stage = (Stage) scene.getWindow();
 
-                            Parent root = FXMLLoader.load(getClass().getResource("/view/patient.fxml"));
+                            Parent root = FXMLLoader.load(getClass().getResource("/view/patientView.fxml"));
                             Scene newScene = new Scene(root);
 
                             stage.setTitle("e-Drugs");
