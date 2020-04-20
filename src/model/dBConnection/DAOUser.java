@@ -39,9 +39,9 @@ public class DAOUser {
             }
         } catch (SQLException ex) {
             System.out.println("Error while working with ResultSet!");
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         } finally {
             return userList;
         }

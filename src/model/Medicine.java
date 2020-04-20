@@ -1,6 +1,11 @@
 package model;
 
 
+import model.dBConnection.DAOMedicine;
+import model.dBConnection.DAOUser;
+
+import java.util.List;
+
 public abstract class Medicine {
     private int articleNo;
     private boolean onPrescription;
@@ -13,6 +18,7 @@ public abstract class Medicine {
     private String searchTerms;
     private int groupId;
     private boolean isActive;
+    private DAOMedicine daoMedicine = new DAOMedicine();
 
     public Medicine(){}
 
@@ -110,12 +116,28 @@ public abstract class Medicine {
         return groupId;
     }
 
-    public void setActive(Boolean active) {
+    public void setActive(boolean active) {
         isActive = active;
     }
 
-    public Boolean getActive() {
+    public boolean getActive() {
         return isActive;
+    }
+
+    public List<Medicine> getMedicineListCustom(boolean onPrescription, boolean isActive){
+        return daoMedicine.retrieveMedicineList(onPrescription, isActive);
+    }
+
+    public List<Medicine> getMedicineListPrescr(boolean onPrescription){
+        return daoMedicine.retrieveMedicineList(onPrescription);
+    }
+
+    public List<Medicine> getMedicineListFull(){
+        return daoMedicine.retrieveMedicineList();
+    }
+
+    public List<String> getProductGroupList(){
+        return daoMedicine.retrieveProductGroupList();
     }
 
     @Override

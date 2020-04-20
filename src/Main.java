@@ -73,14 +73,14 @@ public class Main extends Application {
         }
 */
         DAOMedicine dbMedicine = new DAOMedicine();
-        List<String> grtlst = dbMedicine.retrieveProductGroupList();
+ /*       List<String> grtlst = dbMedicine.retrieveProductGroupList();
         if (grtlst != null) {
             for (String element : grtlst) {
                 System.out.println(element);
             }
         } else System.out.println("empty group list");
-
-           List<Medicine> list3 = dbMedicine.retrieveMedicineList("SELECT * FROM Medicine;");
+*/
+           List<Medicine> list3 = dbMedicine.retrieveMedicineList();
         if (list3 != null) {
             for (Medicine element : list3) {
                 System.out.println(element);
