@@ -88,7 +88,7 @@ public class Main extends Application {
         } else System.out.println("empty list3");*/
 
 
-        Parent root = FXMLLoader.load(getClass().getResource("view/login.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("view/loginView.fxml"));
         primaryStage.setTitle("e-DRUGS");
         primaryStage.setScene(new Scene(root));
         

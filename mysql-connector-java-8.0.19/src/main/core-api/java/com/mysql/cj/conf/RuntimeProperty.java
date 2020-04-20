@@ -100,7 +100,7 @@ public interface RuntimeProperty<T> {
     String getStringValue();
 
     /**
-     * Set the object value of a property directly. Validation against allowable values will be performed.
+     * Set the object value of a property directly. ValidationController against allowable values will be performed.
      * 
      * @param value
      *            value
@@ -108,7 +108,7 @@ public interface RuntimeProperty<T> {
     void setValue(T value);
 
     /**
-     * Set the object value of a property directly. Validation against allowable values will be performed.
+     * Set the object value of a property directly. ValidationController against allowable values will be performed.
      * 
      * @param value
      *            value

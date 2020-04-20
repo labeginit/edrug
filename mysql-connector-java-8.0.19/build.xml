@@ -748,14 +748,14 @@ See also com.mysql.cj.conf.PropertyDefinitions.SYSP_* variables for other test o
             depends="real-clean, dist, -make-packages, -create-archives" />
 
 
-    <!-- Build a distribution 'image' that include documentation. -->
+    <!-- Build a distribution 'view.image' that include documentation. -->
     <target name="full-dist"
-            description="Builds driver, binary .jar file and documentation, basically a distribution 'image'."
+            description="Builds driver, binary .jar file and documentation, basically a distribution 'view.image'."
             depends="real-clean, dist, -bundle-documentation" />
 
 
-    <!-- Build a distribution 'image' that doesn't include documentation. -->
-    <target name="dist" description="Builds driver and binary .jar file, basically a distribution 'image' without documentation." depends="init, compile">
+    <!-- Build a distribution 'view.image' that doesn't include documentation. -->
+    <target name="dist" description="Builds driver and binary .jar file, basically a distribution 'view.image' without documentation." depends="init, compile">
         <delete file="${com.mysql.cj.build.dir.driver}/${com.mysql.cj.build.driver.fullName}.jar" />
 
         <!-- JDBC 4+ support of service provider mechanism. -->

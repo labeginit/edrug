@@ -44,10 +44,11 @@
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="search_textField" layoutX="100.0" layoutY="22.0" prefHeight="25.0" prefWidth="272.0" promptText="enter active ingredient etc. here" />
-                        <Button fx:id="go_Button" layoutX="383.0" layoutY="22.0" mnemonicParsing="false" text="Go!" />
+                        <TextField fx:id="search_textField" layoutX="100.0" layoutY="22.0" prefHeight="26.0" prefWidth="222.0" promptText="enter active ingredient etc. here" />
+                        <Button fx:id="go_Button" layoutX="329.0" layoutY="22.0" mnemonicParsing="false" text="Go!" />
                         <ComboBox fx:id="sort_combo" layoutX="429.0" layoutY="22.0" prefHeight="25.0" prefWidth="170.0" />
                         <ComboBox fx:id="filter_combo" layoutX="607.0" layoutY="22.0" prefHeight="25.0" prefWidth="170.0" />
+                        <Button fx:id="cartButton" layoutX="369.0" layoutY="22.0" mnemonicParsing="false" onAction="#cartButtonHandle" prefHeight="26.0" prefWidth="54.0" text="Cart" />
                      </children></AnchorPane>
             </content>
           </Tab>

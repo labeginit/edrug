@@ -3,6 +3,7 @@ package model.dBConnection;
 import java.sql.*;
 
 public class DBConnection {
+
    static String url= "jdbc:mysql://ro03.beginit.se:23306/edrugs_test?verifyServerCertificate=false&useSSL=true&serverTimezone=UTC";
    static String username = "ap";
    static String password="BNXVEvRY#9R^";
@@ -12,12 +13,12 @@ public class DBConnection {
     private Statement statement;
     private ResultSet resultSet;
 
-    private DBConnection(){
+    private DBConnection() {
 
     }
 
-    public static DBConnection getInstance(){
-        if (myDBConnection == null){
+    public static DBConnection getInstance() {
+        if (myDBConnection == null) {
             myDBConnection = new DBConnection();
             try {
                 dbConnection = DriverManager.getConnection(url, username, password);
@@ -29,21 +30,22 @@ public class DBConnection {
 
         return myDBConnection;
     }
-    public static Connection getConnection(){
+
+    public static Connection getConnection() {
 
         return dbConnection;
     }
 
-    public void disconnect(){
+    public void disconnect() {
 
-        try{
-            if(dbConnection != null)
+        try {
+            if (dbConnection != null)
                 dbConnection.close();
-            if(statement != null)
+            if (statement != null)
                 statement.close();
-            if(resultSet != null)
+            if (resultSet != null)
                 resultSet.close();
-        }catch (SQLException ex){
+        } catch (SQLException ex) {
             System.out.println("Failed to disconnect!");
         }
     }

@@ -126,7 +126,7 @@ public class RegistrationController implements Initializable {
                 ///end
                 dbUser.addUser(patient);
             } catch (IllegalArgumentException illegalArgumentException) {
-                Validation.alertPopup("Date must follow the correct format YYYY-MM-DD", "Improper Date", "Improper date format ");
+                ValidationController.alertPopup("Date must follow the correct format YYYY-MM-DD", "Improper Date", "Improper date format ");
             }
             progress.setVisible(true);
             PauseTransition pt = new PauseTransition();
@@ -138,7 +138,7 @@ public class RegistrationController implements Initializable {
                     Scene scene = node.getScene();
                     Stage stage = (Stage) scene.getWindow();
 
-                    Parent root = FXMLLoader.load(getClass().getResource("/view/login.fxml"));
+                    Parent root = FXMLLoader.load(getClass().getResource("/view/loginView.fxml"));
                     Scene newScene = new Scene(root);
 
                     stage.setTitle("e-Drugs Login");
@@ -200,12 +200,12 @@ public class RegistrationController implements Initializable {
             } if (phoneNumber.getText().isEmpty()) {
                 phoneNumberStar.setVisible(true);
             }
-            Validation.alertPopup("Please enter your information into all fields", "Empty Fields", "Contains empty fields");
+            ValidationController.alertPopup("Please enter your information into all fields", "Empty Fields", "Contains empty fields");
             return false;
         } else if (!password.getText().equals(confirmPassword.getText())){
             passwordStar.setVisible(true);
             confirmPasswordStar.setVisible(true);
-            Validation.alertPopup("Password does not match", "Password Mismatch", "Password doesnt Match");
+            ValidationController.alertPopup("Password does not match", "Password Mismatch", "Password doesnt Match");
             return false;
         } else
         return true;

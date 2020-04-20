@@ -58,7 +58,7 @@ public final class MysqlxResultset {
    *   this list isn't comprehensive. As guideline: the field's value is expected
    *   to pass a validator check on client and server if this field is set.
    *   If the server adds more internal datatypes that rely on BLOB storage
-   *   like image manipulation, seeking into complex types in BLOBs, ... more
+   *   like view.image manipulation, seeking into complex types in BLOBs, ... more
    *   types will be added.
    * </pre>
    *

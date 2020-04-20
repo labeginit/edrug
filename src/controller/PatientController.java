@@ -3,15 +3,32 @@ package controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+import model.Patient;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+
 
 public class PatientController implements Initializable {
+
+    Patient model;
+
+    public PatientController(Patient model) {
+        this.model = model;
+
+    }
+
     @FXML
     private ComboBox<String> filter_combo;
 
@@ -26,6 +43,9 @@ public class PatientController implements Initializable {
 
     @FXML
     private ComboBox<String> filter2_combo;
+
+    @FXML
+    private Button cartButton;
 
     @FXML
     private Button save_button;
@@ -75,5 +95,16 @@ public class PatientController implements Initializable {
 
     public ObservableList<String> getFilters2() {
         return filters2;
+    }
+
+    @FXML
+    public void cartButtonHandle(ActionEvent event) throws IOException {
+        Parent tableViewParent = FXMLLoader.load(getClass().getResource("view/shoppingCartView.fxml"));
+        Scene tableViewScene = new Scene(tableViewParent);
+
+        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+
+        window.setScene(tableViewScene);
+        window.show();
     }
 }

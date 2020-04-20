@@ -18,22 +18,22 @@
       <CheckBox fx:id="rememberMeCheckBox" layoutX="174.0" layoutY="227.0" mnemonicParsing="false" text="Remember Me" />
       <ImageView fitHeight="26.0" fitWidth="22.0" layoutX="167.0" layoutY="132.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../image/iconfinder_41-User_2123927.png" />
+            <Image url="@image/iconfinder_41-User_2123927.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="28.0" fitWidth="37.0" layoutX="164.0" layoutY="167.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../image/iconfinder_Lock_4473012.png" />
+            <Image url="@image/iconfinder_Lock_4473012.png" />
          </image>
       </ImageView>
       <ImageView fitHeight="258.0" fitWidth="374.0" layoutX="172.0" layoutY="-71.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../image/Logo.png" />
+            <Image url="@image/Logo.png" />
          </image>
       </ImageView>
       <ImageView fx:id="progress" fitHeight="150.0" fitWidth="200.0" layoutX="201.0" layoutY="339.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../image/30.gif" />
+            <Image url="@image/30.gif" />
          </image>
       </ImageView>
       <TextField fx:id="ssnTextField" layoutX="215.0" layoutY="130.0" promptText="SSN" />
