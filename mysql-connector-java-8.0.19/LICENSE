@@ -851,10 +851,10 @@ under the copyright of this Package, but belong to whoever generated
 them, and may be sold commercially, and may be aggregated with this
 Package.  If such scripts or library files are aggregated with this
 Package via the so-called "undump" or "unexec" methods of producing a
-binary executable image, then distribution of such an image shall
+binary executable view.image, then distribution of such an view.image shall
 neither be construed as a distribution of this Package nor shall it
 fall under the restrictions of Paragraphs 3 and 4, provided that you do
-not represent such an executable image as a Standard Version of this
+not represent such an executable view.image as a Standard Version of this
 Package.
 
 7. C subroutines (or comparably compiled subroutines in other
