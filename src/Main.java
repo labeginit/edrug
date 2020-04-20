@@ -4,6 +4,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.Doctor;
+import model.Medicine;
 import model.Patient;
 import model.User;
 import model.dBConnection.DBConnection;
@@ -32,13 +33,12 @@ public class Main extends Application {
         patient.setEmail("new@gmail.com");
         patient.setPhoneNumber("+467777777");
         patient.setActive(1);
-        System.out.println(patient.updatePatient() + " update");  // SSN, Type and Password are not being changed by this. For Password - another method (i think its more secure to do so, plus there we need to hash and validate it twice).
+        System.out.println(patient.updatePatient() + " update");  // SSN, Type and Password are not being changed by this. For Password - another method (work in progress) (i think its more secure to do so, plus there we need to hash and validate it twice).
         System.out.println(patient.getUser("2"));
         System.out.println(patient.removePatient() + " remove");*/
 /*
         System.out.println();
 
-        //DAOMedicine dbMedicine = new DAOMedicine();
 
         Doctor doctor = new Doctor();
         List<User> list1 = doctor.getDoctorList();
@@ -72,14 +72,21 @@ public class Main extends Application {
             }
         }
 */
+        DAOMedicine dbMedicine = new DAOMedicine();
+        List<String> grtlst = dbMedicine.retrieveProductGroupList();
+        if (grtlst != null) {
+            for (String element : grtlst) {
+                System.out.println(element);
+            }
+        } else System.out.println("empty group list");
 
-        //   List<Medicine> list3 = dbMedicine.retrieveMedicineList("SELECT * FROM Medicine;");
-  /*      if (list3 != null) {
+       /*    List<Medicine> list3 = dbMedicine.retrieveMedicineList("SELECT * FROM Medicine;");
+        if (list3 != null) {
             for (Medicine element : list3) {
                 System.out.println(element);
             }
-        } else System.out.println("empty list3");
-*/
+        } else System.out.println("empty list3");*/
+
 
         Parent root = FXMLLoader.load(getClass().getResource("view/login.fxml"));
         primaryStage.setTitle("e-DRUGS");
@@ -92,7 +99,7 @@ public class Main extends Application {
 
 
 
-//  THIS IS JUST A TEST CODE
+//  THIS IS JUST TEST CODE
    /*     String ingredients = {"Naturligt havsvatten", "hyperton",  "koncentration av mineralsalter (22 g/l)"};
         PrescriptionFree a1 = new PrescriptionFree(10001, "Nezeril", "Astra Zeneka", "50 ml.", "Nezefri Menthol är en nässpray med eteriska oljor. Kan användas av vuxna och barn över 6 år.", 54, 68.50, ingredients);
         OnPrescription b1 = new OnPrescription(10002, "Cocaine", "neighbour", "1 match box", "You are going to get high", 20, 75, "chemical stuff");
