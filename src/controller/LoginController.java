@@ -78,7 +78,7 @@ public class LoginController implements Initializable {
                     });
                     pt.play();
                 } else
-                    ValidationController.alertPopup("Incorrect SSN or Password ", "Invalid Login", "Invalid Login");
+                    Validation.alertPopup("Incorrect SSN or Password ", "Invalid Login", "Invalid Login");
             }
         }
     }
@@ -106,13 +106,13 @@ public class LoginController implements Initializable {
     }
     @FXML public boolean checkFields(){
         if (ssnTextField.getText().isEmpty() && passwordField.getText().isEmpty()) {
-            ValidationController.alertPopup("Please enter information into all the fields", "Empty Fields", "SSN & Password are empty");
+            Validation.alertPopup("Please enter information into all the fields", "Empty Fields", "SSN & Password are empty");
             return false;
         } else if (ssnTextField.getText().isEmpty()) {
-            ValidationController.alertPopup("Please enter your SSN into the field", "Empty SSN", "SSN is empty");
+            Validation.alertPopup("Please enter your SSN into the field", "Empty SSN", "SSN is empty");
             return false;
         } else if (passwordField.getText().isEmpty()) {
-            ValidationController.alertPopup("Please enter your Password into the field", "Empty Password", "Password is empty");
+            Validation.alertPopup("Please enter your Password into the field", "Empty Password", "Password is empty");
             return false;
         } else
             return true;
@@ -122,9 +122,9 @@ public class LoginController implements Initializable {
             DAOUser DBUser = new DAOUser();
             User user = DBUser.getUser(ssnTextField.getText());
             if (user != null) {
-                ValidationController.alertPopup("A temporary password has been sent to your email", "Forgot Password", "Forgot Password");
+                Validation.alertPopup("A temporary password has been sent to your email", "Forgot Password", "Forgot Password");
             }
         } else
-            ValidationController.alertPopup("Please enter your SSN to get a new password sent to your email address", "SSN Empty", "Need to supply SSN");
+            Validation.alertPopup("Please enter your SSN to get a new password sent to your email address", "SSN Empty", "Need to supply SSN");
     }
 }

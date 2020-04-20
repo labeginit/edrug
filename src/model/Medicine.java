@@ -66,7 +66,7 @@ public abstract class Medicine {
        this.searchTerms = searchTerms;
     }
 
-    public void setGroup(int group) {
+    public void setGroup(int groupId) {
         this.groupId = groupId;
     }
 
@@ -121,17 +121,17 @@ public abstract class Medicine {
     @Override
     public String toString() {
         return "Medicine{" +
-                "articleNo=" + articleNo +
-                ", onPrescription=" + onPrescription +
-                ", name='" + name + '\'' +
-                ", producer='" + producer + '\'' +
-                ", packageSize='" + packageSize + '\'' +
-                ", description='" + description + '\'' +
-                ", quantity=" + quantity +
-                ", price=" + price +
-                ", searchTerms='" + searchTerms + '\'' +
-                ", groupId=" + groupId +
-                ", isActive=" + isActive +
+                "articleNo=" + getArticleNo() +
+                ", groupId=" + getGroup() +
+                ", onPrescription=" + isOnPrescription() +
+                ", name='" + getName() + '\'' +
+                ", producer='" + getProducer() + '\'' +
+                ", packageSize='" + getPackageSize() + '\'' +
+                ", description='" + getDescription() + '\'' +
+                ", quantity=" + getQuantity() +
+                ", price=" + getPrice() +
+                ", searchTerms='" + getSearchTerms() + '\'' +
+                ", isActive=" + getActive() +
                 '}';
     }
 }

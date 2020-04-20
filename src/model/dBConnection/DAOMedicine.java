@@ -22,10 +22,10 @@ public class DAOMedicine {
             if (resultSet != null) {
                 while (resultSet.next()) {
                     if (!resultSet.getBoolean("onPrescription")) {
-                        PrescriptionFree med = new PrescriptionFree(resultSet.getInt("article"), resultSet.getInt("Product_group_id"), resultSet.getString("name"), resultSet.getString("producer"), resultSet.getString("description"), resultSet.getString("packageSize"), resultSet.getInt("quantityAvailable"), resultSet.getDouble("Price"), resultSet.getString("searchTerms"), resultSet.getBoolean("active"));
+                        PrescriptionFree med = new PrescriptionFree(resultSet.getInt("article"), resultSet.getInt("Product_group_id"), resultSet.getString("name"), resultSet.getString("producer"), resultSet.getString("package_size"), resultSet.getString("description"), resultSet.getInt("quantity_available"), resultSet.getDouble("price"), resultSet.getString("search_terms"), resultSet.getBoolean("active"));
                         medList.add(med);
                     } else {
-                        OnPrescription med = new OnPrescription(resultSet.getInt("article"), resultSet.getInt("Product_group_id"), resultSet.getString("name"), resultSet.getString("producer"), resultSet.getString("description"), resultSet.getString("packageSize"), resultSet.getInt("quantityAvailable"), resultSet.getDouble("Price"), resultSet.getString("searchTerms"), resultSet.getBoolean("active"));
+                        OnPrescription med = new OnPrescription(resultSet.getInt("article"), resultSet.getInt("Product_group_id"), resultSet.getString("name"), resultSet.getString("producer"), resultSet.getString("package_size"), resultSet.getString("description"), resultSet.getInt("quantity_available"), resultSet.getDouble("price"), resultSet.getString("search_terms"), resultSet.getBoolean("active"));
                         medList.add(med);
                     }
                 }
@@ -43,9 +43,9 @@ public class DAOMedicine {
     public List<String> retrieveProductGroupList(){
         String path = "";
         try{
-            resultSet = common.retrieveSet("select concat(concat(a.gr_name, '/', b.gr_name), '/', c.gr_name) as path, c.id from Product_group b \n" +
-                    "inner join Product_group a on a.id = b.Product_group_id\n" +
-                    "inner join Product_group c on b.id = c.Product_group_id;");
+            resultSet = common.retrieveSet("SELECT CONCAT(CONCAT(c.gr_name, '/', b.gr_name), '/', a.gr_name) AS path, a.id FROM Product_group a \n" +
+                    "INNER JOIN Product_group b ON b.id = a.Product_group_id \n" +
+                    "INNER JOIN Product_group c ON c.id = b.Product_group_id;");
             if (resultSet != null) {
                 while (resultSet.next()) {
                     path = resultSet.getString("path");

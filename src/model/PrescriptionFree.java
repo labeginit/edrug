@@ -21,9 +21,7 @@ public class PrescriptionFree extends Medicine {
 */
     @Override
     public String toString() {
-        return super.toString() +
-                "onPrescription=" + isOnPrescription() +
-                '}';
+        return super.toString();
     }
 }
 

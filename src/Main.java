@@ -80,12 +80,12 @@ public class Main extends Application {
             }
         } else System.out.println("empty group list");
 
-       /*    List<Medicine> list3 = dbMedicine.retrieveMedicineList("SELECT * FROM Medicine;");
+           List<Medicine> list3 = dbMedicine.retrieveMedicineList("SELECT * FROM Medicine;");
         if (list3 != null) {
             for (Medicine element : list3) {
                 System.out.println(element);
             }
-        } else System.out.println("empty list3");*/
+        } else System.out.println("empty list3");
 
 
         Parent root = FXMLLoader.load(getClass().getResource("view/loginView.fxml"));
