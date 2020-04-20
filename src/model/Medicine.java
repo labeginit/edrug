@@ -12,10 +12,11 @@ public abstract class Medicine {
     private double price;
     private String searchTerms;
     private int groupId;
+    private boolean isActive;
 
     public Medicine(){}
 
-    public Medicine(int articleNo, boolean onPrescription, String name, String producer, String packageSize, String description, int quantity, double price, String searchTerms, int groupId){
+    public Medicine(int articleNo, int groupId, boolean onPrescription, String name, String producer, String packageSize, String description, int quantity, double price, String searchTerms, boolean isActive){
         setArticleNo(articleNo);
         setName(name);
         setProducer(producer);
@@ -26,7 +27,7 @@ public abstract class Medicine {
         setSearchTerms(searchTerms);
         setGroup(groupId);
         setOnPrescription(onPrescription);
-
+        setActive(isActive);
     }
 
     public void setArticleNo(int articleNo) {
@@ -109,16 +110,28 @@ public abstract class Medicine {
         return groupId;
     }
 
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
     @Override
     public String toString() {
         return "Medicine{" +
-                "articleNo=" + getArticleNo() +
-                ", name='" + getName() + '\'' +
-                ", producer='" + getProducer() + '\'' +
-                ", packageSize='" + getPackageSize() + '\'' +
-                ", description='" + getDescription() + '\'' +
-                ", quantity='" + getQuantity() + '\'' +
-                ", price='" + getPrice() + '\'' +
-                ", activeIngredients=" + getSearchTerms() + ", ";
+                "articleNo=" + articleNo +
+                ", onPrescription=" + onPrescription +
+                ", name='" + name + '\'' +
+                ", producer='" + producer + '\'' +
+                ", packageSize='" + packageSize + '\'' +
+                ", description='" + description + '\'' +
+                ", quantity=" + quantity +
+                ", price=" + price +
+                ", searchTerms='" + searchTerms + '\'' +
+                ", groupId=" + groupId +
+                ", isActive=" + isActive +
+                '}';
     }
 }
