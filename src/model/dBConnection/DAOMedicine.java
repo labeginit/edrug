@@ -4,7 +4,6 @@ import model.*;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,8 +13,8 @@ public class DAOMedicine {
     private String path;
     private ProdGroup group = null;
     private ResultSet resultSet;
-    private static List<Medicine> medList = new ArrayList<>();
-    private static List<ProdGroup> groups = new ArrayList<>();
+    private List<Medicine> medList = new ArrayList<>();
+    private List<ProdGroup> groups = new ArrayList<>();
     private DAOCommon common = new DAOCommon();
     private String value1;
     private String value2;
@@ -31,19 +30,12 @@ public class DAOMedicine {
         } else {
             value2 = "0";
         }
-
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 resultSet = common.retrieveSet("SELECT * FROM Medicine where onPrescription = ? and active = ?;", value1, value2);
                 if (resultSet != null) {
                     while (resultSet.next()) {
-                        if (!resultSet.getBoolean("onPrescription")) {
-                            PrescriptionFree med = new PrescriptionFree(resultSet.getInt("article"), resultSet.getInt("Product_group_id"), resultSet.getString("name"), resultSet.getString("producer"), resultSet.getString("package_size"), resultSet.getString("description"), resultSet.getInt("quantity_available"), resultSet.getDouble("price"), resultSet.getString("search_terms"), resultSet.getBoolean("active"));
-                            medList.add(med);
-                        } else {
-                            OnPrescription med = new OnPrescription(resultSet.getInt("article"), resultSet.getInt("Product_group_id"), resultSet.getString("name"), resultSet.getString("producer"), resultSet.getString("package_size"), resultSet.getString("description"), resultSet.getInt("quantity_available"), resultSet.getDouble("price"), resultSet.getString("search_terms"), resultSet.getBoolean("active"));
-                            medList.add(med);
-                        }
+                        medList.add(createMedicineObjects(resultSet));
                     }
                 }
             }
@@ -66,9 +58,11 @@ public class DAOMedicine {
 
         try {
             if (!DBConnection.dbConnection.isClosed()) {
-                resultSet = common.retrieveSet("SELECT * FROM Medicine where onPrescription = ?", value1);
+                resultSet = common.retrieveSet("SELECT * FROM Medicine WHERE active = 1 AND onPrescription = ?", value1);
                 if (resultSet != null) {
-                    createObjects(resultSet);
+                    while (resultSet.next()) {
+                        medList.add(createMedicineObjects(resultSet));
+                    }
                 }
             }
         } catch (SQLException ex) {
@@ -86,7 +80,9 @@ public class DAOMedicine {
             if (!DBConnection.dbConnection.isClosed()) {
                 resultSet = common.retrieveSet("SELECT * FROM Medicine;");
                 if (resultSet != null) {
-                    createObjects(resultSet);
+                    while (resultSet.next()) {
+                        medList.add(createMedicineObjects(resultSet));
+                    }
                 }
             }
         } catch (SQLException ex) {
@@ -99,18 +95,16 @@ public class DAOMedicine {
         }
     }
 
-    private void createObjects(ResultSet resultSet) throws Exception {
+    private Medicine createMedicineObjects(ResultSet resultSet) throws Exception {
+        Medicine med = null;
         if (resultSet != null) {
-            while (resultSet.next()) {
-                if (!resultSet.getBoolean("onPrescription")) {
-                    PrescriptionFree med = new PrescriptionFree(resultSet.getInt("article"), resultSet.getInt("Product_group_id"), resultSet.getString("name"), resultSet.getString("producer"), resultSet.getString("package_size"), resultSet.getString("description"), resultSet.getInt("quantity_available"), resultSet.getDouble("price"), resultSet.getString("search_terms"), resultSet.getBoolean("active"));
-                    medList.add(med);
-                } else {
-                    OnPrescription med = new OnPrescription(resultSet.getInt("article"), resultSet.getInt("Product_group_id"), resultSet.getString("name"), resultSet.getString("producer"), resultSet.getString("package_size"), resultSet.getString("description"), resultSet.getInt("quantity_available"), resultSet.getDouble("price"), resultSet.getString("search_terms"), resultSet.getBoolean("active"));
-                    medList.add(med);
-                }
+            if (!resultSet.getBoolean("onPrescription")) {
+                med = new PrescriptionFree(resultSet.getInt("article"), resultSet.getInt("Product_group_id"), resultSet.getString("name"), resultSet.getString("producer"), resultSet.getString("package_size"), resultSet.getString("description"), resultSet.getInt("quantity_available"), resultSet.getDouble("price"), resultSet.getString("search_terms"), resultSet.getBoolean("active"));
+            } else {
+                med = new OnPrescription(resultSet.getInt("article"), resultSet.getInt("Product_group_id"), resultSet.getString("name"), resultSet.getString("producer"), resultSet.getString("package_size"), resultSet.getString("description"), resultSet.getInt("quantity_available"), resultSet.getDouble("price"), resultSet.getString("search_terms"), resultSet.getBoolean("active"));
             }
         }
+        return med;
     }
 
     public List<ProdGroup> retrieveProductGroupList() {
@@ -160,6 +154,47 @@ public class DAOMedicine {
         path = resultSet.getString("path");
         group = new ProdGroup(id, name, path);
         return group;
+    }
+
+    // here we expect full path like "Drugs/Digestion & Nausea/Constipation"
+    public List<Medicine> retrieveMedicineByProductGroupPath(String fullPath) {
+        medList.clear();
+        try {
+            resultSet = common.retrieveSet("select * from Medicine as m \n" +
+                    "join groupPath as p on m.Product_group_id = p.id\n" +
+                    "WHERE active = 1 AND p.path = ?;", fullPath);
+            if (resultSet != null) {
+                while (resultSet.next()) {
+                    medList.add(createMedicineObjects(resultSet));
+                }
+            } else throw new NullPointerException("There is no medicine belonging to group = " + fullPath);
+        } catch (SQLException ex) {
+            System.out.println("Error while working with ResultSet!");
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            return medList;
+        }
+    }
+
+    public List<Medicine> retrieveMedicineByMaxPrice(double maxPrice) {  // LA: ___shows wrong data___
+        medList.clear();// LA: ___without this shows wrong data___
+        try {
+            resultSet = common.retrieveSet("SELECT * from Medicine WHERE active = 1 AND price <= ?", String.valueOf(maxPrice));
+            if (resultSet != null) {
+                while (resultSet.next()) {
+                    medList.add(createMedicineObjects(resultSet));
+                }
+            } else throw new NullPointerException("There is no medicine with price less than " + maxPrice);
+        } catch (SQLException ex) {
+            System.out.println("Error while working with ResultSet!");
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            return medList;
+        }
     }
 
 }
