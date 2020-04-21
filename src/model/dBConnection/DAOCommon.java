@@ -57,7 +57,6 @@ public class DAOCommon {
                 prepStmt.setString(9, phoneNumber);
                 prepStmt.setString(10, password);
                 prepStmt.setInt(11, isActive);
-               // prepStmt.setInt(11, isActive);
 
                 linesAffected = prepStmt.executeUpdate();
                 prepStmt.close();
@@ -82,7 +81,7 @@ public class DAOCommon {
                 prepStmt.setString(5, address);
                 prepStmt.setString(6, email);
                 prepStmt.setString(7, phoneNumber);
-                prepStmt.setInt(8, isActive);//////fails here
+                prepStmt.setInt(8, isActive);
                 prepStmt.setString(9, ssn);
                 linesAffected = prepStmt.executeUpdate();
                 prepStmt.close();
@@ -96,7 +95,6 @@ public class DAOCommon {
         return linesAffected;
     }
 
-    //DELETE FROM `edrugs_test`.`User` WHERE (`ssn` = '2');
     public int updateRecordStr(String queryString, String... params) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
