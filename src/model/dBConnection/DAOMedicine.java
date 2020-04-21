@@ -2,6 +2,7 @@ package model.dBConnection;
 
 import model.*;
 
+import javax.xml.namespace.QName;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,8 +12,8 @@ import java.util.List;
 public class DAOMedicine {
     private Statement statement;
     private ResultSet resultSet;
-    private static List<Medicine> medList  = new ArrayList<>();;
-    private List<String> strings  = new ArrayList<>();;
+    private static List<Medicine> medList  = new ArrayList<>();
+    private List<String> strings  = new ArrayList<>();
     DAOCommon common = new DAOCommon();
     private String value1;
     private String value2;
@@ -125,6 +126,34 @@ public class DAOMedicine {
     } finally {
         return strings;
     }
+    }
+
+    public ProdGroup retrieveProductGroup(int groupId){
+        ProdGroup group = null;
+        int id = 0;
+        String name = "";
+        String path = "";
+        try{
+            resultSet = common.retrieveSet("SELECT CONCAT(CONCAT(c.gr_name, '/', b.gr_name), '/', a.gr_name) AS path, a.id, a.gr_name FROM Product_group a \n" +
+                    "INNER JOIN Product_group b ON b.id = a.Product_group_id \n" +
+                    "INNER JOIN Product_group c ON c.id = b.Product_group_id\n" +
+                    "WHERE a.id =  ?;", String.valueOf(groupId));
+            if (resultSet != null) {
+                while (resultSet.next()) {
+                    path = resultSet.getString("path");
+                    id = resultSet.getInt("id");
+                    name = resultSet.getString("gr_name");
+                    group = new ProdGroup(id, name, path);
+                }
+            } else throw new NullPointerException("There is no group with id = " + groupId);
+        } catch (SQLException ex) {
+            System.out.println("Error while working with ResultSet!");
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            return group;
+        }
     }
 
 }

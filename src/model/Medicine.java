@@ -124,15 +124,15 @@ public abstract class Medicine {
         return isActive;
     }
 
-    public List<Medicine> getMedicineListCustom(boolean onPrescription, boolean isActive){
+    public List<Medicine> getMedicineList(boolean onPrescription, boolean isActive){
         return daoMedicine.retrieveMedicineList(onPrescription, isActive);
     }
 
-    public List<Medicine> getMedicineListPrescr(boolean onPrescription){
+    public List<Medicine> getMedicineList(boolean onPrescription){
         return daoMedicine.retrieveMedicineList(onPrescription);
     }
 
-    public List<Medicine> getMedicineListFull(){
+    public List<Medicine> getMedicineList(){
         return daoMedicine.retrieveMedicineList();
     }
 
