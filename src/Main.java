@@ -3,15 +3,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import model.Doctor;
-import model.Medicine;
-import model.Patient;
-import model.User;
+import model.*;
 import model.dBConnection.DBConnection;
 import model.dBConnection.DAOMedicine;
 import model.dBConnection.DAOUser;
 
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Main extends Application {
@@ -72,8 +70,21 @@ public class Main extends Application {
             }
         }
 */
+
         DAOMedicine dbMedicine = new DAOMedicine();
-        List<String> grtlst = dbMedicine.retrieveProductGroupList();
+        ProdGroup gr = new ProdGroup();
+        ProdGroup gr1 = gr.getProdGroup(152300);
+        System.out.println(gr1.getId() + " " + gr1.getName() + " " + gr1.getPath());
+        System.out.println();
+        List<ProdGroup> groupList = dbMedicine.retrieveProductGroupList();
+        if (groupList != null) {
+            for (ProdGroup element : groupList) {
+                System.out.println(element);
+            }
+        } else System.out.println("empty group list");
+
+
+ /*       List<String> grtlst = dbMedicine.retrieveProductGroupList();
         if (grtlst != null) {
             for (String element : grtlst) {
                 System.out.println(element);
@@ -86,7 +97,7 @@ public class Main extends Application {
                 System.out.println(element);
             }
         } else System.out.println("empty list3");
-
+*/
 
         Parent root = FXMLLoader.load(getClass().getResource("view/loginView.fxml"));
         primaryStage.setTitle("e-DRUGS");

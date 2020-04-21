@@ -136,8 +136,12 @@ public abstract class Medicine {
         return daoMedicine.retrieveMedicineList();
     }
 
-    public List<String> getProductGroupList(){
+    public List<ProdGroup> getProductGroupList(){
         return daoMedicine.retrieveProductGroupList();
+    }
+
+    public ProdGroup getProdGroup(int id){
+        return daoMedicine.retrieveProductGroup(id);
     }
 
     @Override

@@ -2,7 +2,6 @@ package model.dBConnection;
 
 import model.*;
 
-import javax.xml.namespace.QName;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -10,21 +9,28 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DAOMedicine {
-    private Statement statement;
+    private int id;
+    private String name;
+    private String path;
+    private ProdGroup group = null;
     private ResultSet resultSet;
-    private static List<Medicine> medList  = new ArrayList<>();
-    private List<String> strings  = new ArrayList<>();
-    DAOCommon common = new DAOCommon();
+    private static List<Medicine> medList = new ArrayList<>();
+    private static List<ProdGroup> groups = new ArrayList<>();
+    private DAOCommon common = new DAOCommon();
     private String value1;
     private String value2;
 
     public List<Medicine> retrieveMedicineList(boolean onPrescription, boolean active) {
-        if (onPrescription){
+        if (onPrescription) {
             value1 = "1";
-        } else {value1 = "0";}
-        if (active){
+        } else {
+            value1 = "0";
+        }
+        if (active) {
             value2 = "1";
-        } else {value2 = "0";}
+        } else {
+            value2 = "0";
+        }
 
         try {
             if (!DBConnection.dbConnection.isClosed()) {
@@ -52,9 +58,11 @@ public class DAOMedicine {
     }
 
     public List<Medicine> retrieveMedicineList(boolean onPrescription) {
-        if (onPrescription){
+        if (onPrescription) {
             value1 = "1";
-        } else {value1 = "0";}
+        } else {
+            value1 = "0";
+        }
 
         try {
             if (!DBConnection.dbConnection.isClosed()) {
@@ -91,7 +99,7 @@ public class DAOMedicine {
         }
     }
 
-    private void createObjects(ResultSet resultSet) throws Exception{
+    private void createObjects(ResultSet resultSet) throws Exception {
         if (resultSet != null) {
             while (resultSet.next()) {
                 if (!resultSet.getBoolean("onPrescription")) {
@@ -105,45 +113,35 @@ public class DAOMedicine {
         }
     }
 
-    public List<String> retrieveProductGroupList(){
-        String path = "";
-        try{
-            resultSet = common.retrieveSet("SELECT CONCAT(CONCAT(c.gr_name, '/', b.gr_name), '/', a.gr_name) AS path, a.id FROM Product_group a \n" +
+    public List<ProdGroup> retrieveProductGroupList() {
+        try {
+            resultSet = common.retrieveSet("SELECT CONCAT(CONCAT(c.gr_name, '/', b.gr_name), '/', a.gr_name) AS path, a.id, a.gr_name FROM Product_group a \n" +
                     "INNER JOIN Product_group b ON b.id = a.Product_group_id \n" +
-                    "INNER JOIN Product_group c ON c.id = b.Product_group_id;");
+                    "INNER JOIN Product_group c ON c.id = b.Product_group_id");
             if (resultSet != null) {
                 while (resultSet.next()) {
-                    path = resultSet.getString("path");
-                    strings.add(path);
+                    groups.add(createGroupObject(resultSet));
                 }
             }
-
         } catch (SQLException ex) {
-        System.out.println("Error while working with ResultSet!");
-        ex.printStackTrace();
-    } catch (Exception ex) {
-        ex.printStackTrace();
-    } finally {
-        return strings;
-    }
+            System.out.println("Error while working with ResultSet!");
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            return groups;
+        }
     }
 
-    public ProdGroup retrieveProductGroup(int groupId){
-        ProdGroup group = null;
-        int id = 0;
-        String name = "";
-        String path = "";
-        try{
+    public ProdGroup retrieveProductGroup(int groupId) {
+        try {
             resultSet = common.retrieveSet("SELECT CONCAT(CONCAT(c.gr_name, '/', b.gr_name), '/', a.gr_name) AS path, a.id, a.gr_name FROM Product_group a \n" +
                     "INNER JOIN Product_group b ON b.id = a.Product_group_id \n" +
                     "INNER JOIN Product_group c ON c.id = b.Product_group_id\n" +
                     "WHERE a.id =  ?;", String.valueOf(groupId));
             if (resultSet != null) {
                 while (resultSet.next()) {
-                    path = resultSet.getString("path");
-                    id = resultSet.getInt("id");
-                    name = resultSet.getString("gr_name");
-                    group = new ProdGroup(id, name, path);
+                    group = createGroupObject(resultSet);
                 }
             } else throw new NullPointerException("There is no group with id = " + groupId);
         } catch (SQLException ex) {
@@ -154,6 +152,14 @@ public class DAOMedicine {
         } finally {
             return group;
         }
+    }
+
+    private ProdGroup createGroupObject(ResultSet resultSet) throws SQLException {
+        id = resultSet.getInt("id");
+        name = resultSet.getString("gr_name");
+        path = resultSet.getString("path");
+        group = new ProdGroup(id, name, path);
+        return group;
     }
 
 }

@@ -2,7 +2,6 @@ package model;
 
 import model.dBConnection.DAOMedicine;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ProdGroup {
@@ -10,11 +9,14 @@ public class ProdGroup {
     private String name;
     private String path;
     DAOMedicine dbMedicine = new DAOMedicine();
-    List<String> groups = new ArrayList<>();
+
 
     public ProdGroup(){}
 
     public ProdGroup(int id, String name, String path) {
+        this.id = id;
+        this.name = name;
+        this.path = path;
     }
 
     public int getId() {
@@ -29,7 +31,7 @@ public class ProdGroup {
         return path;
     }
 
-    public List<String> getPathList() {
+    public List<ProdGroup> getGroupList() {
         return dbMedicine.retrieveProductGroupList();
     }
 
@@ -37,4 +39,12 @@ public class ProdGroup {
         return dbMedicine.retrieveProductGroup(id);
     }
 
+    @Override
+    public String toString() {
+        return "ProdGroup{" +
+                "id=" + getId() +
+                ", name='" + getName() + '\'' +
+                ", path='" + getPath() + '\'' +
+                '}';
+    }
 }
