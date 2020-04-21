@@ -23,19 +23,19 @@ public class Main extends Application {
         DBConnection.getInstance();
         DAOUser dbUser = new DAOUser();
 // Important!
-     /*   Patient patient = new Patient("2", "2", "3", java.sql.Date.valueOf("1995-12-10"), "5", "6", "7", "8", "9");
+ /*       Patient patient = new Patient("2", "2", "3", java.sql.Date.valueOf("1995-12-10"), "5", "6", "7", "8", "9");
         System.out.println(patient.addPatient() + " add");
         patient.setFirstName("Liliia");
         patient.setLastName("Allansson");
         patient.setBDate(java.sql.Date.valueOf("1986-12-10"));  //with this way of entering date we loose one day for some reason (in the table it is 1986-12-09).
-        patient.setZipCode("11111");
+        patient.setZipCode("12222");
         patient.setAddress("new address");
         patient.setEmail("new@gmail.com");
         patient.setPhoneNumber("+467777777");
-        patient.setActive(1);
+        patient.setActive(true);
         System.out.println(patient.updatePatient() + " update");  // SSN, Type and Password are not being changed by this. For Password - another method (work in progress) (i think its more secure to do so, plus there we need to hash and validate it twice).
         System.out.println(patient.getUser("2"));
-        System.out.println(patient.removePatient() + " remove");*/
+        System.out.println(patient.removePatient() + " remove");
 /*
         System.out.println();
 
@@ -73,13 +73,13 @@ public class Main extends Application {
         }
 */
         DAOMedicine dbMedicine = new DAOMedicine();
- /*       List<String> grtlst = dbMedicine.retrieveProductGroupList();
+        List<String> grtlst = dbMedicine.retrieveProductGroupList();
         if (grtlst != null) {
             for (String element : grtlst) {
                 System.out.println(element);
             }
         } else System.out.println("empty group list");
-*/
+
            List<Medicine> list3 = dbMedicine.retrieveMedicineList();
         if (list3 != null) {
             for (Medicine element : list3) {

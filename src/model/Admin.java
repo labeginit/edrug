@@ -10,12 +10,12 @@ public class Admin extends User {
 
     public Admin(){}
 
-    public Admin(String sSN, String firstName, String lastName, Date birthDate, String zipCode, String address, String email, String phoneNumber, String password, int isActive) {
+    public Admin(String sSN, String firstName, String lastName, Date birthDate, String zipCode, String address, String email, String phoneNumber, String password, boolean isActive) {
         super(sSN, 3, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, isActive);
     }
 
     public Admin(String sSN, String firstName, String lastName, Date birthDate, String zipCode, String address, String email, String phoneNumber, String password) {
-        super(sSN, 3, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, 1);
+        super(sSN, 3, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, true);
     }
 
     public List<User> getAdminList(){

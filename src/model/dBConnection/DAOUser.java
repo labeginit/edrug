@@ -28,7 +28,8 @@ public class DAOUser {
     private String email;
     private String phoneNumber;
     private String password;
-    private int isActive;
+    private boolean isActive;
+    private int value1;
 
     // to be used to retrieve a specific user list (types 1-3) (internal use)
     private List<User> retrieveUserList(String usType) {
@@ -76,7 +77,7 @@ public class DAOUser {
                 email = resultSet.getString("email");
                 phoneNumber = resultSet.getString("phone_number");
                 password = resultSet.getString("password");
-                isActive = resultSet.getInt("active");
+                isActive = resultSet.getBoolean("active");
 
                 if (userType == 1) {
                     user = new Patient(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, isActive);
@@ -120,7 +121,7 @@ public class DAOUser {
                     email = resultSet.getString("email");
                     phoneNumber = resultSet.getString("phone_number");
                     password = resultSet.getString("password");
-                    isActive = resultSet.getInt("active");
+                    isActive = resultSet.getBoolean("active");
 
                     if (userType == 1) {
                         return user = new Patient(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, isActive);
@@ -171,8 +172,12 @@ public class DAOUser {
                 email = user.getEmail();
                 phoneNumber = user.getPhoneNumber();
                 password = user.getPassword();
-                String query = "INSERT INTO `edrugs_test`.`User` (`ssn`, `type`, `first_name`, `last_name`, `birth_date`, `zip_code`, `address`, `email`, `phone_number`, `password`, `active`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, '1');";
-                linesAffected = common.insertUser(query, sSN, userType, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password);
+                isActive = user.getActive();
+                    if (isActive){
+                        value1 = 1;
+                    } else {value1 = 0;}
+                String query = "INSERT INTO `edrugs_test`.`User` (`ssn`, `type`, `first_name`, `last_name`, `birth_date`, `zip_code`, `address`, `email`, `phone_number`, `password`, `active`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                linesAffected = common.insertUser(query, sSN, userType, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, value1);
                 } else {
                     throw new NullPointerException("The user object is null");
                 }
@@ -202,8 +207,11 @@ public class DAOUser {
                     phoneNumber = user.getPhoneNumber();
                     isActive = user.getActive();
                     sSN = user.getSsn();
+                    if (isActive){
+                        value1 = 1;
+                    } else {value1 = 0;}
                     String query = "UPDATE `edrugs_test`.`User` SET `first_name` = ?, `last_name` = ?, `birth_date` = ?, `zip_code` = ?, `address` = ?, `email` = ?, `phone_number` = ?, `active` = ? WHERE (`ssn` = ?);";
-                    linesAffected = common.updateUser(query, sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, isActive);
+                    linesAffected = common.updateUser(query, sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, value1);
                 } else {
                     throw new NullPointerException("The user object is null");
                 }

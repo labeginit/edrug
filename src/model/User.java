@@ -16,11 +16,11 @@ public abstract class User {
     private String email;
     private String phoneNumber;
     private String password;
-    private int isActive;
+    private boolean isActive;
 
     public User(){}
 
-    public User(String sSN, int userType, String firstName, String lastName, java.sql.Date birthDate, String zipCode, String address, String email, String phoneNumber, String password, int isActive) {
+    public User(String sSN, int userType, String firstName, String lastName, java.sql.Date birthDate, String zipCode, String address, String email, String phoneNumber, String password, boolean isActive) {
         setSsn(sSN);
         setUserType(userType);
         setFirstName(firstName);
@@ -35,7 +35,7 @@ public abstract class User {
     }
 
     public User(String sSN, int userType, String firstName, String lastName, java.sql.Date birthDate, String zipCode, String address, String email, String phoneNumber, String password) {
-        this(sSN, userType, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, 1);
+        this(sSN, userType, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, true);
     }
 
     public String getSsn() {
@@ -118,11 +118,11 @@ public abstract class User {
         this.password = password;
     }
 
-    public void setActive(int active) {
+    public void setActive(boolean active) {
         isActive = active;
     }
 
-    public int getActive() {
+    public boolean getActive() {
         return isActive;
     }
 

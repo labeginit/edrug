@@ -42,7 +42,7 @@ public class DAOCommon {
         return resultSet;
     }
 
-    public int insertUser(String queryString, String ssn, int type, String firstName, String lastName, Date birthDate, String zipCode, String address, String email, String phoneNumber, String password) {
+    public int insertUser(String queryString, String ssn, int type, String firstName, String lastName, Date birthDate, String zipCode, String address, String email, String phoneNumber, String password, int isActive) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
@@ -56,6 +56,7 @@ public class DAOCommon {
                 prepStmt.setString(8, email);
                 prepStmt.setString(9, phoneNumber);
                 prepStmt.setString(10, password);
+                prepStmt.setInt(11, isActive);
                // prepStmt.setInt(11, isActive);
 
                 linesAffected = prepStmt.executeUpdate();
