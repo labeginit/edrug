@@ -11,11 +11,11 @@
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RegistrationController">
    <children>
-      <Button fx:id="registerButton" layoutX="291.0" layoutY="506.0" minWidth="75.0" mnemonicParsing="false" prefHeight="25.6" text="Register">
+      <Button fx:id="registerButton" layoutX="291.0" layoutY="506.0" minWidth="75.0" mnemonicParsing="false" prefHeight="25.6" text="Register" AnchorPane.bottomAnchor="70.0">
          <font>
             <Font size="13.0" />
          </font></Button>
-      <Button fx:id="cancelButton" layoutX="447.0" layoutY="506.0" minWidth="75.0" mnemonicParsing="false" prefHeight="25.6" text="Cancel">
+      <Button fx:id="cancelButton" layoutX="447.0" layoutY="506.0" minWidth="75.0" mnemonicParsing="false" prefHeight="25.6" text="Cancel" AnchorPane.bottomAnchor="70.0">
          <font>
             <Font size="13.0" />
          </font></Button>
@@ -52,7 +52,7 @@
             <Image url="@image/Logo.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="progress" fitHeight="106.0" fitWidth="200.0" layoutX="306.0" layoutY="552.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="progress" fitHeight="106.0" fitWidth="200.0" layoutX="306.0" layoutY="552.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="25.0">
          <image>
             <Image url="@image/30.gif" />
          </image>
