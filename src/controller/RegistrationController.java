@@ -114,38 +114,42 @@ public class RegistrationController implements Initializable {
     }
     @FXML public void onRegisterButtonPressed(ActionEvent ae) {
         if (checkFields() == true) {
-            try {
-                Date dob = Date.valueOf(birthDate.getText());
-                Patient patient = new Patient(ssn.getText(), firstName.getText(), lastName.getText(), dob,
-                        zipcode.getText(), address.getText(), email.getText(),
-                        phoneNumber.getText(), password.getText());
-                DAOUser dbUser = new DAOUser();
-                dbUser.addUser(patient);
-            } catch (IllegalArgumentException illegalArgumentException) {
-                Validation.alertPopup("Date must follow the correct format YYYY-MM-DD", "Improper Date", "Improper date format ");
-            }
-            progress.setVisible(true);
-            PauseTransition pt = new PauseTransition();
-            pt.setDuration(Duration.seconds(2));
-            pt.setOnFinished(event -> {
-                System.out.println("Login successful");
+            if(Validation.isName(firstName.getText(), firstNameStar) && Validation.isName(lastName.getText(), lastNameStar) &&
+            Validation.isSSN(ssn.getText(), ssnStar) && Validation.isDOB(birthDate.getText(), birthDateStar) &&
+            Validation.isZipcode(zipcode.getText(), zipcodeStar)) {
                 try {
-                    Node node = (Node) ae.getSource();
-                    Scene scene = node.getScene();
-                    Stage stage = (Stage) scene.getWindow();
-
-                    Parent root = FXMLLoader.load(getClass().getResource("/view/login.fxml"));
-                    Scene newScene = new Scene(root);
-
-                    stage.setTitle("e-Drugs Login");
-                    stage.setScene(newScene);
-
-
-                } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
+                    Date dob = Date.valueOf(birthDate.getText());
+                    Patient patient = new Patient(ssn.getText(), firstName.getText(), lastName.getText(), dob,
+                            zipcode.getText(), address.getText(), email.getText(),
+                            phoneNumber.getText(), password.getText());
+                    DAOUser dbUser = new DAOUser();
+                    dbUser.addUser(patient);
+                } catch (IllegalArgumentException illegalArgumentException) {
+                    birthDate.setText("");
                 }
-            });
-            pt.play();
+                progress.setVisible(true);
+                PauseTransition pt = new PauseTransition();
+                pt.setDuration(Duration.seconds(2));
+                pt.setOnFinished(event -> {
+                    System.out.println("Login successful");
+                    try {
+                        Node node = (Node) ae.getSource();
+                        Scene scene = node.getScene();
+                        Stage stage = (Stage) scene.getWindow();
+
+                        Parent root = FXMLLoader.load(getClass().getResource("/view/login.fxml"));
+                        Scene newScene = new Scene(root);
+
+                        stage.setTitle("e-Drugs Login");
+                        stage.setScene(newScene);
+
+
+                    } catch (Exception ex) {
+                        System.out.println(ex.getMessage());
+                    }
+                });
+                pt.play();
+            }
         }
     }
     @FXML public void onCancelButtonPressed(ActionEvent ae) {
@@ -204,7 +208,7 @@ public class RegistrationController implements Initializable {
             Validation.alertPopup("Password does not match", "Password Mismatch", "Password doesnt Match");
             return false;
         } else
-        return true;
+            return true;
     }
     @FXML public void setVisibleFalse() {
         progress.setVisible(false);
