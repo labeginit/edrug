@@ -16,10 +16,11 @@ public abstract class User {
     private String email;
     private String phoneNumber;
     private String password;
+    private boolean isActive;
 
     public User(){}
 
-    public User(String sSN, int userType, String firstName, String lastName, java.sql.Date birthDate, String zipCode, String address, String email, String phoneNumber, String password) {
+    public User(String sSN, int userType, String firstName, String lastName, java.sql.Date birthDate, String zipCode, String address, String email, String phoneNumber, String password, boolean isActive) {
         setSsn(sSN);
         setUserType(userType);
         setFirstName(firstName);
@@ -30,6 +31,11 @@ public abstract class User {
         setEmail(email);
         setPhoneNumber(phoneNumber);
         setPassword(password);
+        setActive(isActive);
+    }
+
+    public User(String sSN, int userType, String firstName, String lastName, java.sql.Date birthDate, String zipCode, String address, String email, String phoneNumber, String password) {
+        this(sSN, userType, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, true);
     }
 
     public String getSsn() {
@@ -112,6 +118,14 @@ public abstract class User {
         this.password = password;
     }
 
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public boolean getActive() {
+        return isActive;
+    }
+
     // use this method carefully ('instance of' will LIE. getClass().toString() will show the truth)
     // since it needs to be instantiated from a subclass but it will still give you an object of the actual type
     // consider using DAOUser class method getUser() instead if the user type is unknown
@@ -125,20 +139,20 @@ public abstract class User {
         return daoUser.getUserList("0");
     }
 
-
     @Override
     public String toString() {
         return "User{" +
-                "sSN=" + sSN +
+                "sSN='" + sSN + '\'' +
                 ", userType=" + userType +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", bDate=" + bDate +
-                ", zipCode=" + zipCode +
+                ", zipCode='" + zipCode + '\'' +
                 ", address='" + address + '\'' +
                 ", email='" + email + '\'' +
                 ", phoneNumber='" + phoneNumber + '\'' +
                 ", password='" + password + '\'' +
+                ", isActive=" + isActive +
                 '}';
     }
 }

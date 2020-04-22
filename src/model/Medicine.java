@@ -1,6 +1,11 @@
 package model;
 
 
+import model.dBConnection.DAOMedicine;
+import model.dBConnection.DAOUser;
+
+import java.util.List;
+
 public abstract class Medicine {
     private int articleNo;
     private boolean onPrescription;
@@ -12,10 +17,12 @@ public abstract class Medicine {
     private double price;
     private String searchTerms;
     private int groupId;
+    private boolean isActive;
+    private DAOMedicine daoMedicine = new DAOMedicine();
 
     public Medicine(){}
 
-    public Medicine(int articleNo, boolean onPrescription, String name, String producer, String packageSize, String description, int quantity, double price, String searchTerms, int groupId){
+    public Medicine(int articleNo, int groupId, boolean onPrescription, String name, String producer, String packageSize, String description, int quantity, double price, String searchTerms, boolean isActive){
         setArticleNo(articleNo);
         setName(name);
         setProducer(producer);
@@ -26,7 +33,7 @@ public abstract class Medicine {
         setSearchTerms(searchTerms);
         setGroup(groupId);
         setOnPrescription(onPrescription);
-
+        setActive(isActive);
     }
 
     public void setArticleNo(int articleNo) {
@@ -65,7 +72,7 @@ public abstract class Medicine {
        this.searchTerms = searchTerms;
     }
 
-    public void setGroup(int group) {
+    public void setGroup(int groupId) {
         this.groupId = groupId;
     }
 
@@ -109,16 +116,48 @@ public abstract class Medicine {
         return groupId;
     }
 
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    public boolean getActive() {
+        return isActive;
+    }
+
+    public List<Medicine> getMedicineList(boolean onPrescription, boolean isActive){
+        return daoMedicine.retrieveMedicineList(onPrescription, isActive);
+    }
+
+    public List<Medicine> getMedicineList(boolean onPrescription){
+        return daoMedicine.retrieveMedicineList(onPrescription);
+    }
+
+    public List<Medicine> getMedicineList(){
+        return daoMedicine.retrieveMedicineList();
+    }
+
+    public List<ProdGroup> getProductGroupList(){
+        return daoMedicine.retrieveProductGroupList();
+    }
+
+    public ProdGroup getProdGroup(int id){
+        return daoMedicine.retrieveProductGroup(id);
+    }
+
     @Override
     public String toString() {
         return "Medicine{" +
                 "articleNo=" + getArticleNo() +
+                ", groupId=" + getGroup() +
+                ", onPrescription=" + isOnPrescription() +
                 ", name='" + getName() + '\'' +
                 ", producer='" + getProducer() + '\'' +
                 ", packageSize='" + getPackageSize() + '\'' +
                 ", description='" + getDescription() + '\'' +
-                ", quantity='" + getQuantity() + '\'' +
-                ", price='" + getPrice() + '\'' +
-                ", activeIngredients=" + getSearchTerms() + ", ";
+                ", quantity=" + getQuantity() +
+                ", price=" + getPrice() +
+                ", searchTerms='" + getSearchTerms() + '\'' +
+                ", isActive=" + getActive() +
+                '}';
     }
 }

@@ -8,13 +8,14 @@ import javafx.scene.control.Label;
 import java.util.regex.Pattern;
 
 public class Validation {
-    static void alertPopup(String infoMessage, String titleBar, String headerMessage) {
+    public static void alertPopup(String infoMessage, String titleBar, String headerMessage) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION, infoMessage, ButtonType.OK);
         alert.setResizable(true);
         alert.setTitle(titleBar);
         alert.setHeaderText(headerMessage);
         alert.showAndWait();
     }
+
     @FXML public static boolean isName(String name, Label starLabel) {
         String regex = "^[\\p{L}\\s.’\\-,]+$";
         boolean aName = Pattern.compile(regex).matcher(name).find();
@@ -67,7 +68,16 @@ public class Validation {
             return true;
         } else
             alertPopup("Please enter a valid phone number ", "Invalid phone number", "Enter a valid phone number");
-            starLabel.setVisible(true);
-            return false;
+        starLabel.setVisible(true);
+        return false;
+    }
+
+    //an example of validation method
+    public static boolean validateAmount(String value){
+        String reg = "^(?!0+$)\\d+$";
+        if (!value.matches(reg)){
+            alertPopup("Wrong input format", "Illegal format", "Wrong input format");
+        }
+        return value.matches(reg);
     }
 }
