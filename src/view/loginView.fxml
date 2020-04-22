@@ -24,11 +24,11 @@
          <font>
             <Font size="13.0" />
          </font></Button>
-      <Label fx:id="forgotPasswordLabel" layoutX="191.0" layoutY="213.0" text="Forgot Password?" textFill="#3e82f8">
+      <Label fx:id="forgotPasswordLabel" layoutX="166.0" layoutY="231.0" text="Forgot Password?" textFill="#3e82f8">
          <font>
             <Font size="13.0" />
          </font></Label>
-      <CheckBox fx:id="rememberMeCheckBox" layoutX="301.0" layoutY="213.0" mnemonicParsing="false" text="Remember Me">
+      <CheckBox fx:id="rememberMeCheckBox" layoutX="312.0" layoutY="230.0" mnemonicParsing="false" text="Remember Me">
          <font>
             <Font size="13.0" />
          </font></CheckBox>

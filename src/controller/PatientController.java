@@ -22,12 +22,6 @@ import javafx.event.ActionEvent;
 
 public class PatientController implements Initializable {
 
-    Patient model;
-
-    public PatientController(Patient model) {
-        this.model = model;
-
-    }
 
     @FXML
     private ComboBox<String> filter_combo;

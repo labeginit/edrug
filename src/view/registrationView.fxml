@@ -19,31 +19,31 @@
          <font>
             <Font size="13.0" />
          </font></Button>
-      <Label layoutX="158.0" layoutY="122.0" text="First Name:">
+      <Label layoutX="152.0" layoutY="122.0" text="First Name:">
          <font>
             <Font size="13.0" />
          </font></Label>
-      <Label layoutX="158.0" layoutY="157.0" text="Last Name:">
+      <Label layoutX="153.0" layoutY="157.0" text="Last Name:">
          <font>
             <Font size="13.0" />
          </font></Label>
-      <Label layoutX="158.0" layoutY="195.0" text="SSN:">
+      <Label layoutX="158.0" layoutY="191.0" text="SSN:">
          <font>
             <Font size="13.0" />
          </font></Label>
-      <Label layoutX="158.0" layoutY="265.0" text="Address:">
+      <Label layoutX="153.0" layoutY="261.0" text="Address:">
          <font>
             <Font size="13.0" />
          </font></Label>
-      <Label layoutX="158.0" layoutY="301.0" text="Zipcode:">
+      <Label layoutX="153.0" layoutY="297.0" text="Zipcode:">
          <font>
             <Font size="13.0" />
          </font></Label>
-      <Label layoutX="158.0" layoutY="337.0" text="Phone Number:">
+      <Label layoutX="153.0" layoutY="333.0" text="Phone Number:">
          <font>
             <Font size="13.0" />
          </font></Label>
-      <Label layoutX="158.0" layoutY="372.0" text="Email:">
+      <Label layoutX="153.0" layoutY="368.0" text="Email:">
          <font>
             <Font size="13.0" />
          </font></Label>
@@ -68,23 +68,23 @@
       <TextField fx:id="address" layoutX="291.0" layoutY="256.0" prefHeight="26.0" prefWidth="230.0" promptText="Address" />
       <TextField fx:id="zipcode" layoutX="291.0" layoutY="292.0" prefHeight="26.0" prefWidth="230.0" promptText="Zipcode" />
       <TextField fx:id="phoneNumber" layoutX="291.0" layoutY="328.0" prefHeight="26.0" prefWidth="230.0" promptText="Phone Number" />
-      <Label layoutX="158.0" layoutY="407.0" text="Password:">
+      <Label layoutX="149.0" layoutY="403.0" text="Password:">
          <font>
             <Font size="13.0" />
          </font></Label>
-      <Label layoutX="158.0" layoutY="445.0" text="Confrim Password:">
+      <Label layoutX="148.0" layoutY="441.0" text="Confrim Password:">
          <font>
             <Font size="13.0" />
          </font></Label>
       <PasswordField fx:id="confirmPassword" layoutX="291.0" layoutY="436.0" prefHeight="26.0" prefWidth="230.0" promptText="Confrim Password" />
       <PasswordField fx:id="password" layoutX="291.0" layoutY="398.0" prefHeight="26.0" prefWidth="230.0" promptText="Password" />
-      <Label layoutX="158.0" layoutY="230.0" text="Birth Date:">
+      <Label layoutX="154.0" layoutY="226.0" text="Birth Date:">
          <font>
             <Font size="13.0" />
          </font></Label>
       <TextField fx:id="email" layoutX="292.0" layoutY="363.0" prefHeight="26.0" prefWidth="230.0" promptText="Email" />
-      <Label fx:id="passwordCheckLabel" layoutX="552.0" layoutY="436.0" prefHeight="26.0" prefWidth="177.0" text="The Password must match*" textFill="#f20202" />
-      <Label fx:id="firstNameStar" layoutX="274.0" layoutY="122.0" text="*" textFill="#f20101" />
+      <Label fx:id="passwordCheckLabel" layoutX="552.0" layoutY="436.0" prefHeight="26.0" prefWidth="200.0" text="The Password must match*" textFill="#f20202" />
+      <Label fx:id="firstNameStar" layoutX="274.0" layoutY="118.0" text="*" textFill="#f20101" />
       <Label fx:id="lastNameStar" layoutX="274.0" layoutY="157.0" text="*" textFill="#f20101" />
       <Label fx:id="birthDateStar" layoutX="274.0" layoutY="230.0" text="*" textFill="#f20101" />
       <Label fx:id="ssnStar" layoutX="274.0" layoutY="195.0" text="*" textFill="#f20101" />

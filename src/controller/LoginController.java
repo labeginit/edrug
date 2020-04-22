@@ -81,6 +81,7 @@ public class LoginController implements Initializable {
 
                         } catch (Exception ex) {
                             System.out.println(ex.getMessage());
+                            ex.printStackTrace();
                         }
                     });
                     pt.play();
@@ -101,7 +102,7 @@ public class LoginController implements Initializable {
                 Scene scene = node.getScene();
                 Stage stage = (Stage) scene.getWindow();
 
-                Parent root = FXMLLoader.load(getClass().getResource("/view/registration.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/view/registrationView.fxml"));
                 Scene newScene = new Scene(root);
 
                 stage.setTitle("e-Drugs Registration");
