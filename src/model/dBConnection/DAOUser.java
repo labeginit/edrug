@@ -6,6 +6,7 @@ import model.Patient;
 import model.User;
 
 import java.sql.*;
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class DAOUser {
     private int userType;  //   1 = Patient, 2 = Doctor, 3 = Admin
     private String firstName;
     private String lastName;
-    private Date birthDate;
+    private java.sql.Date birthDate;
     private String zipCode;
     private String address;
     private String email;
@@ -30,6 +31,15 @@ public class DAOUser {
     private String password;
     private boolean isActive;
     private int value1;
+
+    private Date inputDate;
+
+    private java.sql.Date convertDate(Date inputDate){  ///////// WIP
+        java.sql.Date sqlDate;
+      //  inputDate;
+        sqlDate = new java.sql.Date(inputDate.getTime());
+        return sqlDate;
+    }
 
     // to be used to retrieve a specific user list (types 1-3) (internal use)
     private List<User> retrieveUserList(String usType) {
