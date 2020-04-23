@@ -64,6 +64,10 @@ public class LoginController implements Initializable {
                 if (ssnTextField.getText().equals(user.getSsn())) {
                     String password = user.getPassword();
                     if (passwordField.getText().equals(password)) {
+                        if (!user.getActive()){
+                            user.setActive(true);
+                            common.updateUser(user);
+                        }
                         progress.setVisible(true);
                         int type = user.getUserType();
                         PauseTransition pt = new PauseTransition();
