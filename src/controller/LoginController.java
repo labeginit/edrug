@@ -58,45 +58,52 @@ public class LoginController implements Initializable {
 
     @FXML
     public void loginButtonPressed(ActionEvent ae) {
-        user = DBUser.getUser(ssnTextField.getText());
-        if (user != null) {
-            if (ssnTextField.getText().equals(user.getSsn())) {
-                String password = user.getPassword();
-                if (passwordField.getText().equals(password)) {
-                    progress.setVisible(true);
-                    int type = user.getUserType();
-                    PauseTransition pt = new PauseTransition();
-                    pt.setDuration(Duration.seconds(2));
-                    pt.setOnFinished(event -> {
-                        System.out.println("Login successful");
-                        if (rememberMeCheckBox.isSelected()) {
-                            onRememberMeCheckBox();
-                        }
-                        try {
-                            String view;
-                            if (type == 1) {
-                                view = "/view/patientView.fxml";
-                            } else if (type == 2) {
-                                view = "/view/doctorView.fxml";
-                            } else {
-                                view = "/view/adminView.fxml";
+        if (checkFields()) {
+            user = DBUser.getUser(ssnTextField.getText());
+            if (user != null) {
+                if (ssnTextField.getText().equals(user.getSsn())) {
+                    String password = user.getPassword();
+                    if (passwordField.getText().equals(password)) {
+                        progress.setVisible(true);
+                        int type = user.getUserType();
+                        PauseTransition pt = new PauseTransition();
+                        pt.setDuration(Duration.seconds(2));
+                        pt.setOnFinished(event -> {
+                            System.out.println("Login successful");
+                            if (rememberMeCheckBox.isSelected()) {
+                                onRememberMeCheckBox();
                             }
-                            Node node = (Node) ae.getSource();
-                            Scene scene = node.getScene();
-                            Stage stage = (Stage) scene.getWindow();
+                            try {
+                                String view;
+                                if (type == 1) {
+                                    view = "/view/patientView.fxml";
+                                } else if (type == 2) {
+                                    view = "/view/doctorView.fxml";
+                                } else {
+                                    view = "/view/adminView.fxml";
+                                }
+                                Node node = (Node) ae.getSource();
+                                Scene scene = node.getScene();
+                                Stage stage = (Stage) scene.getWindow();
 
-                            Parent root = FXMLLoader.load(getClass().getResource(view));
-                            Scene newScene = new Scene(root);
+                                Parent root = FXMLLoader.load(getClass().getResource(view));
+                                Scene newScene = new Scene(root);
 
-                            stage.setTitle("e-Drugs");
-                            stage.setScene(newScene);
+                                stage.setTitle("e-Drugs");
+                                stage.setScene(newScene);
 
-                        } catch (Exception ex) {
-                            System.out.println(ex.getMessage());
-                            ex.printStackTrace();
-                        }
-                    });
-                    pt.play();
+                            } catch (Exception ex) {
+                                System.out.println(ex.getMessage());
+                                ex.printStackTrace();
+                            }
+                        });
+                        pt.play();
+                    } else {
+                        user = null;
+                        Validation.alertPopup("Incorrect SSN or Password ", "Invalid Credentials", "Invalid Credentials");
+                        ssnTextField.setText("");
+                        passwordField.setText("");
+                    }
                 } else {
                     user = null;
                     Validation.alertPopup("Incorrect SSN or Password ", "Invalid Credentials", "Invalid Credentials");
@@ -109,11 +116,6 @@ public class LoginController implements Initializable {
                 ssnTextField.setText("");
                 passwordField.setText("");
             }
-        } else {
-            user = null;
-            Validation.alertPopup("Incorrect SSN or Password ", "Invalid Credentials", "Invalid Credentials");
-            ssnTextField.setText("");
-            passwordField.setText("");
         }
     }
 
