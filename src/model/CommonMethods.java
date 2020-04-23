@@ -134,7 +134,7 @@ public class CommonMethods {
     //**********************
 
     //returns all active medicine in the specified group (by full path) - made for filter
-    public List<Medicine> retrieveMedicineByProductGroupPath(String fullPath){
+    public List<Medicine> getMedicineByProductGroupPath(String fullPath){
         return daoMedicine.retrieveMedicineByProductGroupPath(fullPath);
     }
 

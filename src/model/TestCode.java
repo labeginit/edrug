@@ -30,7 +30,7 @@ public class TestCode {
         System.out.println(commonMethods.getUser("222222-111"));
         //System.out.println(commonMethods.removePatient(patient) + " remove");
 */
-        System.out.println();
+ /*       System.out.println();
 
         List<User> list3  = commonMethods.getUserList();
         if (list3 != null) {
@@ -80,15 +80,15 @@ public class TestCode {
 
         System.out.println();
 
+*/
 
 
-
-
-   /*     ProdGroup gr = new ProdGroup();
+/*
+        ProdGroup gr = new ProdGroup();
         ProdGroup gr1 = gr.getProdGroup(152300);
         System.out.println(gr1.getId() + " " + gr1.getName() + " " + gr1.getPath());
         System.out.println();
-        List<ProdGroup> groupList = dbMedicine.retrieveProductGroupList();
+        List<ProdGroup> groupList = commonMethods.getProductGroupList();
         if (groupList != null) {
             for (ProdGroup element : groupList) {
                 System.out.println(element);
@@ -96,7 +96,7 @@ public class TestCode {
         } else System.out.println("empty group list");
         System.out.println();
 
-        List<Medicine> mList = dbMedicine.retrieveMedicineByProductGroupPath("Drugs/Digestion & Nausea/Constipation");
+        List<Medicine> mList = commonMethods.getMedicineByProductGroupPath("Drugs/Digestion & Nausea/Constipation");
         if (mList != null) {
             for (Medicine element : mList) {
                 System.out.println(element);
@@ -104,37 +104,32 @@ public class TestCode {
         } else System.out.println("empty med list");
         System.out.println();
 
-        List<Medicine> mList2 = dbMedicine.retrieveMedicineByMaxPrice(200);
+        List<Medicine> mList2 = commonMethods.getMedicineByMaxPrice(200);
         if (mList2 != null) {
             for (Medicine element : mList2) {
-                System.out.println(element);
+                System.out.println(element + " price below or = 200");
             }
         } else System.out.println("empty med list");
-*/
 
-   /*     List<Medicine> list3 = dbMedicine.retrieveMedicineList();
+        System.out.println();
+        List<Medicine> list3 = commonMethods.getMedicineList();
         if (list3 != null) {
             for (Medicine element : list3) {
-                System.out.println(element);
+                System.out.println(element + " all active medicine");
             }
         } else System.out.println("empty list3");
+
+        System.out.println();
+        List<Medicine> list8 = commonMethods.getMedicineList(false);
+        if (list8 != null) {
+            for (Medicine element : list8) {
+                System.out.println(element + " no prescription, active");
+            }
+        } else System.out.println("empty list8");
 */
 
-   /*     String ingredients = {"Naturligt havsvatten", "hyperton",  "koncentration av mineralsalter (22 g/l)"};
-        PrescriptionFree a1 = new PrescriptionFree(10001, "Nezeril", "Astra Zeneka", "50 ml.", "Nezefri Menthol är en nässpray med eteriska oljor. Kan användas av vuxna och barn över 6 år.", 54, 68.50, ingredients);
-        OnPrescription b1 = new OnPrescription(10002, "Cocaine", "neighbour", "1 match box", "You are going to get high", 20, 75, "chemical stuff");
 
-        OnPrescription d1 = new OnPrescription();
-        OnPrescription c1 = d1.getOnPrescriptionObject(10002);
-        if (c1 != null) {
-            System.out.println(c1.toString());
-        }
-        List<Medicine> listAll = new ArrayList<>();
-        listAll.add(a1);
-        listAll.add(b1);
 
-        for (Medicine item: listAll) {
-           System.out.println(item.toString());
-        }*/
+
     }
 }
