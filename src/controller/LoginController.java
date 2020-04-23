@@ -71,7 +71,7 @@ public class LoginController implements Initializable {
                         progress.setVisible(true);
                         int type = user.getUserType();
                         PauseTransition pt = new PauseTransition();
-                        pt.setDuration(Duration.seconds(2));
+                     //   pt.setDuration(Duration.seconds(2));  not removing it for your consideration if you want to keep it :)
                         pt.setOnFinished(event -> {
                             System.out.println("Login successful");
                             if (rememberMeCheckBox.isSelected()) {
@@ -115,7 +115,6 @@ public class LoginController implements Initializable {
                     passwordField.setText("");
                 }
             } else {
-                user = null;
                 Validation.alertPopup("Incorrect SSN or Password ", "Invalid Credentials", "Invalid Credentials");
                 ssnTextField.setText("");
                 passwordField.setText("");
@@ -197,6 +196,7 @@ public class LoginController implements Initializable {
                 ssnTextField.setText(lines.get(0));
                 passwordField.setText(lines.get(1));
             } catch (Exception ignored) {
+                ignored.getSuppressed();
             }
     }
 
