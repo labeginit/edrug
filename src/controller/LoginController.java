@@ -23,6 +23,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
+    DAOUser DBUser = new DAOUser();
+    private User user;
 
     @FXML
     private Label forgotPasswordLabel;
@@ -56,13 +58,13 @@ public class LoginController implements Initializable {
 
     @FXML
     public void loginButtonPressed(ActionEvent ae) {
-        if (checkFields() == true) {
-            DAOUser DBUser = new DAOUser();
-            User user = DBUser.getUser(ssnTextField.getText());
-            if (user != null) {
+        user = DBUser.getUser(ssnTextField.getText());
+        if (user != null) {
+            if (ssnTextField.getText().equals(user.getSsn())) {
                 String password = user.getPassword();
                 if (passwordField.getText().equals(password)) {
                     progress.setVisible(true);
+                    int type = user.getUserType();
                     PauseTransition pt = new PauseTransition();
                     pt.setDuration(Duration.seconds(2));
                     pt.setOnFinished(event -> {
@@ -72,9 +74,9 @@ public class LoginController implements Initializable {
                         }
                         try {
                             String view;
-                            if (user.getUserType() == 1) {
+                            if (type == 1) {
                                 view = "/view/patientView.fxml";
-                            } else if (user.getUserType() == 2) {
+                            } else if (type == 2) {
                                 view = "/view/doctorView.fxml";
                             } else {
                                 view = "/view/adminView.fxml";
@@ -95,10 +97,23 @@ public class LoginController implements Initializable {
                         }
                     });
                     pt.play();
-                } else
+                } else {
+                    user = null;
                     Validation.alertPopup("Incorrect SSN or Password ", "Invalid Credentials", "Invalid Credentials");
-            } else
+                    ssnTextField.setText("");
+                    passwordField.setText("");
+                }
+            } else {
+                user = null;
                 Validation.alertPopup("Incorrect SSN or Password ", "Invalid Credentials", "Invalid Credentials");
+                ssnTextField.setText("");
+                passwordField.setText("");
+            }
+        } else {
+            user = null;
+            Validation.alertPopup("Incorrect SSN or Password ", "Invalid Credentials", "Invalid Credentials");
+            ssnTextField.setText("");
+            passwordField.setText("");
         }
     }
 
