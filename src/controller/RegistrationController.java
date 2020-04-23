@@ -27,7 +27,7 @@ import java.sql.Date;
 
 public class RegistrationController implements Initializable {
     CommonMethods common = new CommonMethods();
-    private User user;
+    
     @FXML
     private Button registerButton;
 
