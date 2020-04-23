@@ -10,10 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -21,11 +18,13 @@ import model.CommonMethods;
 import model.Patient;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.sql.Date;
 
 public class RegistrationController implements Initializable {
     CommonMethods common = new CommonMethods();
+    LocalDate localDate;
 
     @FXML
     private Button registerButton;
@@ -46,7 +45,7 @@ public class RegistrationController implements Initializable {
     private TextField ssn;
 
     @FXML
-    private TextField birthDate;
+    private DatePicker dPicker;
 
     @FXML
     private TextField address;
@@ -102,6 +101,7 @@ public class RegistrationController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setVisibleFalse();
+        dPicker.setOnAction(e -> {localDate = dPicker.getValue();});
         registerButton.setOnAction(this::onRegisterButtonPressed);
         cancelButton.setOnAction(this::onCancelButtonPressed);
         confirmPassword.textProperty().addListener(new ChangeListener<String>() {
@@ -114,17 +114,17 @@ public class RegistrationController implements Initializable {
     @FXML public void onRegisterButtonPressed(ActionEvent ae) {
         if (checkFields()) {
             if(Validation.isName(firstName.getText(), firstNameStar) && Validation.isName(lastName.getText(), lastNameStar) &&
-            Validation.isSSN(ssn.getText(), ssnStar) && Validation.isDOB(birthDate.getText(), birthDateStar) &&
+            Validation.isSSN(ssn.getText(), ssnStar) &&
             Validation.isZipcode(zipcode.getText(), zipcodeStar) && Validation.isPhoneNumber(phoneNumber.getText(), phoneNumberStar)
             && Validation.isEmail(email.getText(), emailStar)) {
                 try {
-                    Date dob = Date.valueOf(birthDate.getText());
+                    Date dob = Date.valueOf(dPicker.getValue());
                     Patient patient = new Patient(ssn.getText(), firstName.getText(), lastName.getText(), dob,
                             zipcode.getText(), address.getText(), email.getText(),
                             phoneNumber.getText(), password.getText());
                     common.addUser(patient);
                 } catch (IllegalArgumentException illegalArgumentException) {
-                    birthDate.setText("");
+                   illegalArgumentException.getSuppressed();
                 }
                 progress.setVisible(true);
                 PauseTransition pt = new PauseTransition();
@@ -175,7 +175,7 @@ public class RegistrationController implements Initializable {
         pt.play();
     }
     @FXML public boolean checkFields() {
-        if (firstName.getText().isEmpty() || lastName.getText().isEmpty() || ssn.getText().isEmpty() || birthDate.getText().isEmpty()
+        if (firstName.getText().isEmpty() || lastName.getText().isEmpty() || ssn.getText().isEmpty() || dPicker.getValue() == null
         || zipcode.getText().isEmpty() || address.getText().isEmpty() || email.getText().isEmpty() || password.getText().isEmpty()
         || confirmPassword.getText().isEmpty() || phoneNumber.getText().isEmpty()) {
             if(firstName.getText().isEmpty()){
@@ -184,7 +184,7 @@ public class RegistrationController implements Initializable {
                 lastNameStar.setVisible(true);
             } if (ssn.getText().isEmpty()) {
                 ssnStar.setVisible(true);
-            } if (birthDate.getText().isEmpty()) {
+            } if (dPicker.getValue() == null) {
                 birthDateStar.setVisible(true);
             } if (zipcode.getText().isEmpty()) {
                 zipcodeStar.setVisible(true);
