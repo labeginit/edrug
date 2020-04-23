@@ -67,13 +67,23 @@ public class LoginController implements Initializable {
                     pt.setDuration(Duration.seconds(2));
                     pt.setOnFinished(event -> {
                         System.out.println("Login successful");
-                        onRememberMeCheckBox();
+                        if (rememberMeCheckBox.isSelected()) {
+                            onRememberMeCheckBox();
+                        }
                         try {
+                            String view;
+                            if (user.getUserType() == 1) {
+                                view = "/view/patientView.fxml";
+                            } else if (user.getUserType() == 2) {
+                                view = "/view/doctorView.fxml";
+                            } else {
+                                view = "/view/adminView.fxml";
+                            }
                             Node node = (Node) ae.getSource();
                             Scene scene = node.getScene();
                             Stage stage = (Stage) scene.getWindow();
 
-                            Parent root = FXMLLoader.load(getClass().getResource("/view/patientView.fxml"));
+                            Parent root = FXMLLoader.load(getClass().getResource(view));
                             Scene newScene = new Scene(root);
 
                             stage.setTitle("e-Drugs");
@@ -81,12 +91,14 @@ public class LoginController implements Initializable {
 
                         } catch (Exception ex) {
                             System.out.println(ex.getMessage());
+                            ex.printStackTrace();
                         }
                     });
                     pt.play();
                 } else
-                    Validation.alertPopup("Incorrect SSN or Password ", "Invalid Login", "Invalid Login");
-            }
+                    Validation.alertPopup("Incorrect SSN or Password ", "Invalid Credentials", "Invalid Credentials");
+            } else
+                Validation.alertPopup("Incorrect SSN or Password ", "Invalid Credentials", "Invalid Credentials");
         }
     }
 
@@ -101,7 +113,7 @@ public class LoginController implements Initializable {
                 Scene scene = node.getScene();
                 Stage stage = (Stage) scene.getWindow();
 
-                Parent root = FXMLLoader.load(getClass().getResource("/view/registration.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/view/registrationView.fxml"));
                 Scene newScene = new Scene(root);
 
                 stage.setTitle("e-Drugs Registration");

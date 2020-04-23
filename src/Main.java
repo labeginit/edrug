@@ -4,13 +4,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.*;
-import model.dBConnection.DBConnection;
-import model.dBConnection.DAOMedicine;
-import model.dBConnection.DAOUser;
-
-import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Main extends Application {
 
