@@ -18,32 +18,6 @@ public class Patient extends User {
         super(sSN, 1, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, true);
     }
 
-    public List<User> getPatientList(){
-        DAOUser daoUser = new DAOUser();
-        return daoUser.getUserList("1");
-    }
-
-    public int addPatient(User user){
-        int linesAdded = 0;
-        if (user instanceof Patient) {
-            return linesAdded = daoUser.addUser(user);
-        }
-        System.out.println("records added: " + linesAdded);
-        return linesAdded;
-    }
-
-    public int addPatient(){
-        return addPatient(this);
-    }
-
-    public int updatePatient(){
-        return daoUser.updateUser(this);
-    }
-
-    public int removePatient(){
-        return daoUser.removeUser(this);
-    }
-
     @Override
     public String toString() {
         return super.toString();

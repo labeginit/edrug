@@ -22,26 +22,7 @@ public class Doctor extends User{
         return daoUser.getUserList("2");
     }
 
-    public int addDoctor(User user){
-        int linesAdded = 0;
-        if (user instanceof Doctor) {
-            return linesAdded = daoUser.addUser(user);
-        }
-        System.out.println("records added: " + linesAdded);
-        return linesAdded;
-    }
 
-    public int addDoctor(){
-        return addDoctor(this);
-    }
-
-    public int updateDoctor(){
-        return daoUser.updateUser(this);
-    }
-
-    public int removeDoctor(){
-        return daoUser.removeUser(this);
-    }
 
     @Override
     public String toString() {

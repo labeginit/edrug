@@ -17,14 +17,17 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.CommonMethods;
 import model.Patient;
-import model.dBConnection.DAOUser;
+import model.User;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.sql.Date;
 
 public class RegistrationController implements Initializable {
+    CommonMethods common = new CommonMethods();
+    private User user;
     @FXML
     private Button registerButton;
 
@@ -100,8 +103,8 @@ public class RegistrationController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setVisibleFalse();
-        registerButton.setOnAction(event -> onRegisterButtonPressed(event));
-        cancelButton.setOnAction(event -> onCancelButtonPressed(event));
+        registerButton.setOnAction(this::onRegisterButtonPressed);
+        cancelButton.setOnAction(this::onCancelButtonPressed);
         confirmPassword.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
@@ -110,7 +113,7 @@ public class RegistrationController implements Initializable {
         });
     }
     @FXML public void onRegisterButtonPressed(ActionEvent ae) {
-        if (checkFields() == true) {
+        if (checkFields()) {
             if(Validation.isName(firstName.getText(), firstNameStar) && Validation.isName(lastName.getText(), lastNameStar) &&
             Validation.isSSN(ssn.getText(), ssnStar) && Validation.isDOB(birthDate.getText(), birthDateStar) &&
             Validation.isZipcode(zipcode.getText(), zipcodeStar) && Validation.isPhoneNumber(phoneNumber.getText(), phoneNumberStar)
@@ -120,8 +123,7 @@ public class RegistrationController implements Initializable {
                     Patient patient = new Patient(ssn.getText(), firstName.getText(), lastName.getText(), dob,
                             zipcode.getText(), address.getText(), email.getText(),
                             phoneNumber.getText(), password.getText());
-                    DAOUser dbUser = new DAOUser();
-                    dbUser.addUser(patient);
+                    common.addUser(patient);
                 } catch (IllegalArgumentException illegalArgumentException) {
                     birthDate.setText("");
                 }

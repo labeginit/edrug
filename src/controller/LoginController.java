@@ -13,8 +13,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.CommonMethods;
 import model.User;
-import model.dBConnection.DAOUser;
 
 import java.net.URL;
 import java.nio.file.*;
@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
-    DAOUser DBUser = new DAOUser();
+    CommonMethods common = new CommonMethods();
     private User user;
 
     @FXML
@@ -59,7 +59,7 @@ public class LoginController implements Initializable {
     @FXML
     public void loginButtonPressed(ActionEvent ae) {
         if (checkFields()) {
-            user = DBUser.getUser(ssnTextField.getText());
+            user = common.getUser(ssnTextField.getText());
             if (user != null) {
                 if (ssnTextField.getText().equals(user.getSsn())) {
                     String password = user.getPassword();
@@ -161,8 +161,7 @@ public class LoginController implements Initializable {
     @FXML
     public void onForgotPasswordPressed(MouseEvent me) {
         if (!ssnTextField.getText().isEmpty()) {
-            DAOUser DBUser = new DAOUser();
-            User user = DBUser.getUser(ssnTextField.getText());
+            user = common.getUser(ssnTextField.getText());
             if (user != null) {
                 Validation.alertPopup("A temporary password has been sent to your email", "Forgot Password", "Forgot Password");
             }
