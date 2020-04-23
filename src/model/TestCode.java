@@ -31,7 +31,7 @@ public class TestCode {
         //System.out.println(commonMethods.removePatient(patient) + " remove");
 */
         System.out.println();
-/*
+
         List<User> list3  = commonMethods.getUserList();
         if (list3 != null) {
             for (User element : list3) {
@@ -62,20 +62,21 @@ public class TestCode {
             for (User element : list6) {
                 System.out.println(" list6 admins" + element);
             }
-        }*/
+        }
+        System.out.println();
 
-  /*      List<User> list7 = commonMethods.getUserList(false);
+        List<User> list7 = commonMethods.getUserList(false);
         if (list7 != null) {
             for (User element : list7) {
                 System.out.println(" list7 passive " + element);
             }
         }
-*/
+
         System.out.println();
 
-        User user1 = commonMethods.getUser("2009103168");
+        User user1 = commonMethods.getUser("860305-0731");
 
-            System.out.println(user1 + " patient test");
+            System.out.println(user1 + " getUser test");
 
         System.out.println();
 

@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DAOUser {
-    private ResultSet resultSet;
+    private ResultSet resultSet = null;
     private List<User> userList = new ArrayList<>();
     private int linesAffected = 0;
-    private User user;  //changed from static - be attentive
+    private User user;
     DAOCommon common = new DAOCommon();
 
     private String sSN;
@@ -42,6 +42,7 @@ public class DAOUser {
 
     // to be used to retrieve a specific user list (types 1-3) (internal use)
     private List<User> retrieveUserList(String usType) {
+        resultSet = null;
         userList.clear();
         try {
             if (!DBConnection.dbConnection.isClosed()) {
@@ -58,12 +59,18 @@ public class DAOUser {
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
+            try {
+                resultSet.close();
+            }catch (Exception ex) {
+                ex.printStackTrace();
+            }
             return userList;
         }
     }
 
     // to be used to retrieve the whole user list (internal use)
     private List<User> retrieveUserList() {
+        resultSet = null;
         userList.clear();
         try {
             if (!DBConnection.dbConnection.isClosed()) {
@@ -81,11 +88,17 @@ public class DAOUser {
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
+            try {
+                resultSet.close();
+            }catch (Exception ex) {
+                ex.printStackTrace();
+            }
             return userList;
         }
     }
 
     public List<User> retrieveUserList(boolean isActive) {
+        user = null;
         userList.clear();
         if (isActive) {
             value2 = "1";
@@ -108,6 +121,11 @@ public class DAOUser {
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
+            try {
+                resultSet.close();
+            }catch (Exception ex) {
+                ex.printStackTrace();
+            }
             return userList;
         }
     }
@@ -143,14 +161,13 @@ public class DAOUser {
                 userList = retrieveUserList(userType);
             }
         } else {
-           // userList.clear();
             throw new IllegalArgumentException("Illegal argument. Possible values are 0, 1, 2, 3");
         }
         return userList;
     }
 
     private User retrieveUser(String query, String sSN) {
-   
+        user = null;
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 resultSet = common.retrieveSet(query, sSN);
@@ -178,7 +195,7 @@ public class DAOUser {
                     }
                 } else {
                     System.out.println("Empty resultSet");
-                    return user = null;
+                    return user;
                 }
             }
         } catch (SQLException ex) {
@@ -187,9 +204,13 @@ public class DAOUser {
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
+            try {
+                resultSet.close();
+            }catch (Exception ex) {
+                ex.printStackTrace();
+            }
             return user;
         }
-
     }
 
     public User getUser(String sSN) {
