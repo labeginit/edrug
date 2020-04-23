@@ -96,8 +96,9 @@ public class LoginController implements Initializable {
                     });
                     pt.play();
                 } else
-                    Validation.alertPopup("Incorrect SSN or Password ", "Invalid Login", "Invalid Login");
-            }
+                    Validation.alertPopup("Incorrect SSN or Password ", "Invalid Credentials", "Invalid Credentials");
+            } else
+                Validation.alertPopup("Incorrect SSN or Password ", "Invalid Credentials", "Invalid Credentials");
         }
     }
 
