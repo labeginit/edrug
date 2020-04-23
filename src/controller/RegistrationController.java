@@ -116,7 +116,8 @@ public class RegistrationController implements Initializable {
         if (checkFields() == true) {
             if(Validation.isName(firstName.getText(), firstNameStar) && Validation.isName(lastName.getText(), lastNameStar) &&
             Validation.isSSN(ssn.getText(), ssnStar) && Validation.isDOB(birthDate.getText(), birthDateStar) &&
-            Validation.isZipcode(zipcode.getText(), zipcodeStar)) {
+            Validation.isZipcode(zipcode.getText(), zipcodeStar) && Validation.isPhoneNumber(phoneNumber.getText(), phoneNumberStar)
+            && Validation.isEmail(email.getText(), emailStar)) {
                 try {
                     Date dob = Date.valueOf(birthDate.getText());
                     Patient patient = new Patient(ssn.getText(), firstName.getText(), lastName.getText(), dob,
@@ -137,7 +138,7 @@ public class RegistrationController implements Initializable {
                         Scene scene = node.getScene();
                         Stage stage = (Stage) scene.getWindow();
 
-                        Parent root = FXMLLoader.load(getClass().getResource("/view/login.fxml"));
+                        Parent root = FXMLLoader.load(getClass().getResource("/view/loginView.fxml"));
                         Scene newScene = new Scene(root);
 
                         stage.setTitle("e-Drugs Login");
