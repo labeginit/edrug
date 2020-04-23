@@ -19,7 +19,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.CommonMethods;
 import model.Patient;
-import model.User;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -27,7 +26,7 @@ import java.sql.Date;
 
 public class RegistrationController implements Initializable {
     CommonMethods common = new CommonMethods();
-    
+
     @FXML
     private Button registerButton;
 
