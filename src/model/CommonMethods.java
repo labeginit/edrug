@@ -24,6 +24,11 @@ public class CommonMethods {
         return daoUser.getUserList("0");
     }
 
+    //returns all types active or passive users
+    public List<User> getUserList(boolean isActive){
+        return daoUser.retrieveUserList(isActive);
+    }
+
     //returns all active admins
     public List<User> getAdminList(){
         return daoUser.getUserList("3");
@@ -75,6 +80,10 @@ public class CommonMethods {
 
     public int updateAdmin(Admin user){
         return daoUser.updateUser(user);
+    }
+
+    public int updatePassword(User user){
+        return daoUser.updatePassword(user);
     }
 
     //**********************
