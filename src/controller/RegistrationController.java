@@ -105,10 +105,7 @@ public class RegistrationController implements Initializable {
         confirmPassword.textProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
-                if (t1.equals(password.getText())){
-                    passwordCheckLabel.setVisible(false);
-                } else
-                    passwordCheckLabel.setVisible(true);
+                passwordCheckLabel.setVisible(!t1.equals(password.getText()));
             }
         });
     }

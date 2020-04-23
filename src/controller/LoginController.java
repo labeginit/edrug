@@ -144,14 +144,16 @@ public class LoginController implements Initializable {
     @FXML
     public void onRememberMeCheckBox() {
 
-        try {
-            Path path = Paths.get("login.txt");
+        if (rememberMeCheckBox.isSelected()) {
+            try {
+                Path path = Paths.get("login.txt");
 
-            ArrayList<String> lines = new ArrayList<>();
-            lines.add(ssnTextField.getText());
-            lines.add(passwordField.getText());
-            Files.write(path, lines, StandardOpenOption.CREATE);
-        } catch (Exception ignored) {
+                ArrayList<String> lines = new ArrayList<>();
+                lines.add(ssnTextField.getText());
+                lines.add(passwordField.getText());
+                Files.write(path, lines, StandardOpenOption.CREATE);
+            } catch (Exception ignored) {
+            }
         }
     }
 

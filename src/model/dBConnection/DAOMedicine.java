@@ -13,9 +13,9 @@ public class DAOMedicine {
     private String path;
     private ProdGroup group = null;
     private ResultSet resultSet;
-    private List<Medicine> medList = new ArrayList<>();
-    private List<ProdGroup> groups = new ArrayList<>();
-    private DAOCommon common = new DAOCommon();
+    private final List<Medicine> medList = new ArrayList<>();
+    private final List<ProdGroup> groups = new ArrayList<>();
+    private final DAOCommon common = new DAOCommon();
     private String value1;
     private String value2;
 
