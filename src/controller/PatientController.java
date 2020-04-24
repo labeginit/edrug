@@ -237,7 +237,7 @@ public class PatientController implements Initializable {
 
     @FXML public void onCancelButtonPressed(ActionEvent ae) {
       setInitialValues(currentUser);
-
+      setVisible(false);
     }
 
     @FXML public boolean checkFields() {
