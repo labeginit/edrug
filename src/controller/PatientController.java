@@ -1,5 +1,8 @@
 package controller;
 
+import javafx.animation.PauseTransition;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -10,11 +13,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import model.*;
 
 import java.io.IOException;
 import java.net.URL;
-import java.security.Signature;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -24,12 +29,10 @@ import javafx.event.ActionEvent;
 public class PatientController implements Initializable {
     CommonMethods commonMethods = new CommonMethods();
     User currentUser;
+    LocalDate localDate;
 
     @FXML
     private ComboBox<String> groupFilter_combo;
-
- //   @FXML
- //   private ComboBox<String> sort_combo;
 
     @FXML
     private TextField search_textField;
@@ -56,19 +59,10 @@ public class PatientController implements Initializable {
     private TextField address_text;
 
     @FXML
-    private TextField phone_text;
-
-    @FXML
     private TextField email_text;
 
     @FXML
     private TextField firstName_text;
-
-    @FXML
-    private TextField birth_text;
-
-    @FXML
-    private TextField pass_text;
 
     @FXML
     private Button buy_button;
@@ -120,19 +114,16 @@ public class PatientController implements Initializable {
 
 
     @FXML
-    private TextField zipcode_text;
+    private TextField zipCode_text;
 
     @FXML
     private TextField phoneNumber_text;
 
     @FXML
-    private TextField password_text;
+    private PasswordField password;
 
     @FXML
-    private TextField confirmPassword_text;
-
-    @FXML
-    private Label ssnStar;
+    private PasswordField confirmPassword;
 
     @FXML
     private Label birthDateStar;
@@ -175,12 +166,12 @@ public class PatientController implements Initializable {
         return groupPaths;
     }
 
-   // ObservableList<String> sortings = FXCollections.observableArrayList("Prescribed first", "A-Z", "Z-A", "Price ascending", "Price descending");
     ObservableList<String> filters1 = FXCollections.observableArrayList(fillList(groups));
     ObservableList<String> filters2 = FXCollections.observableArrayList("All", "Only Current", "Only Consumed");
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        setVisible(false);
         currentUser = Singleton.getInstance().getUser();
         groupFilter_combo.setItems(filters1);
         prescFilter_combo.setItems(filters2);
@@ -188,16 +179,22 @@ public class PatientController implements Initializable {
         lastName_text.setText(currentUser.getLastName());
         ssn_text.setText(currentUser.getSsn());
        // birth_text.setText(currentUser.getBDate().toString());
-        zipcode_text.setText(currentUser.getZipCode());
+        zipCode_text.setText(currentUser.getZipCode());
         address_text.setText(currentUser.getAddress());
-      //  phone_text.setText(currentUser.getPhoneNumber());
+        phoneNumber_text.setText(currentUser.getPhoneNumber());
         email_text.setText(currentUser.getEmail());
+        dPicker.setOnAction(e -> {localDate = dPicker.getValue();});
+        save_button.setOnAction(this::onSaveButtonPressed);
+  //      cancelButton.setOnAction(this::onCancelButtonPressed);
+
+        confirmPassword.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String s, String t1) {
+                passwordCheckLabel.setVisible(!t1.equals(password.getText()));
+            }
+        });
 
     }
-
- //   public ObservableList<String> getSortings() {
- //       return sortings;
- //   }
 
     public ObservableList<String> getFilters1() {
         return filters1;
@@ -216,5 +213,77 @@ public class PatientController implements Initializable {
 
         window.setScene(tableViewScene);
         window.show();
+    }
+
+    @FXML public void onSaveButtonPressed(ActionEvent ae) {
+        if (checkFields()) {
+            if(Validation.isName(firstName_text.getText(), firstNameStar) && Validation.isName(lastName_text.getText(), lastNameStar) &&
+                    Validation.isZipcode(zipCode_text.getText(), zipCodeStar) && Validation.isPhoneNumber(phoneNumber_text.getText(), phoneStar)
+                    && Validation.isEmail(email_text.getText(), emailStar)) {
+                try {
+                    Date dob = Date.valueOf(dPicker.getValue());
+                    currentUser.setFirstName(firstName_text.getText());
+                    currentUser.setLastName(lastName_text.getText());
+                    currentUser.setBDate(dob);
+                    currentUser.setZipCode(zipCode_text.getText());
+                    currentUser.setAddress(address_text.getText());
+                    currentUser.setPhoneNumber(phoneNumber_text.getText());
+                    currentUser.setEmail(email_text.getText());
+                    commonMethods.updateUser(currentUser);
+                    String pass = password.getText();
+                    if (!pass.equalsIgnoreCase("")) {
+                        if (pass.equalsIgnoreCase(confirmPassword.getText())) {
+                            currentUser.setPassword(pass);
+                            commonMethods.updatePassword(currentUser);
+                        }
+                    }
+                    Singleton.getInstance().setUser(currentUser);
+                    setVisible(false);
+                    password.clear();
+                    confirmPassword.clear();
+
+                } catch (IllegalArgumentException illegalArgumentException) {
+                    illegalArgumentException.getSuppressed();
+                }
+            }
+        }
+    }
+
+    @FXML public boolean checkFields() {
+        if (firstName_text.getText().isEmpty() || lastName_text.getText().isEmpty() || dPicker.getValue() == null
+                || zipCode_text.getText().isEmpty() || address_text.getText().isEmpty() || email_text.getText().isEmpty() || phoneNumber_text.getText().isEmpty()) {
+            if(firstName_text.getText().isEmpty()){
+                firstNameStar.setVisible(true);
+            } if (lastName_text.getText().isEmpty()) {
+                lastNameStar.setVisible(true);
+            } if (dPicker.getValue() == null) {
+                birthDateStar.setVisible(true);
+            } if (zipCode_text.getText().isEmpty()) {
+                zipCodeStar.setVisible(true);
+            } if (address_text.getText().isEmpty()) {
+                addressStar.setVisible(true);
+            } if (email_text.getText().isEmpty()) {
+                emailStar.setVisible(true);
+            } if (phoneNumber_text.getText().isEmpty()) {
+                phoneStar.setVisible(true);
+            }
+            Validation.alertPopup("Please enter your information into all fields", "Empty Fields", "Contains empty fields");
+            return false;
+        } else if (!password.getText().equals(confirmPassword.getText())){
+            passwordCheckLabel.setVisible(true);
+            Validation.alertPopup("Password does not match", "Password Mismatch", "Password doesn't match");
+            return false;
+        } else
+            return true;
+    }
+    @FXML public void setVisible(boolean on) {
+        firstNameStar.setVisible(on);
+        lastNameStar.setVisible(on);
+        birthDateStar.setVisible(on);
+        addressStar.setVisible(on);
+        zipCodeStar.setVisible(on);
+        phoneStar.setVisible(on);
+        emailStar.setVisible(on);
+        passwordCheckLabel.setVisible(on);
     }
 }
