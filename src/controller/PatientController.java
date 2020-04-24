@@ -8,26 +8,28 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
-import model.Patient;
+import model.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.security.Signature;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 
 
 public class PatientController implements Initializable {
-
-
-    @FXML
-    private ComboBox<String> filter_combo;
+    CommonMethods commonMethods = new CommonMethods();
+    User currentUser;
 
     @FXML
-    private ComboBox<String> sort_combo;
+    private ComboBox<String> groupFilter_combo;
+
+ //   @FXML
+ //   private ComboBox<String> sort_combo;
 
     @FXML
     private TextField search_textField;
@@ -36,7 +38,7 @@ public class PatientController implements Initializable {
     private Button go_Button;
 
     @FXML
-    private ComboBox<String> filter2_combo;
+    private ComboBox<String> prescFilter_combo;
 
     @FXML
     private Button cartButton;
@@ -68,20 +70,134 @@ public class PatientController implements Initializable {
     @FXML
     private TextField pass_text;
 
-    ObservableList<String> sortings = FXCollections.observableArrayList("Prescribed first", "A-Z", "Z-A", "Price ascending", "Price descending");
-    ObservableList<String> filters1 = FXCollections.observableArrayList("All", "Only Prescribed", "Only Prescription-free");
+    @FXML
+    private Button buy_button;
+
+    @FXML
+    private TableColumn<?, ?> c1;
+
+    @FXML
+    private TableColumn<?, ?> c2;
+
+    @FXML
+    private TableColumn<?, ?> c3;
+
+    @FXML
+    private TableColumn<?, ?> c4;
+
+    @FXML
+    private TableColumn<?, ?> c5;
+
+    @FXML
+    private TableColumn<?, ?> c6;
+
+    @FXML
+    private TableColumn<?, ?> c7;
+
+    @FXML
+    private TreeTableColumn<?, ?> c8;
+
+    @FXML
+    private TreeTableColumn<?, ?> c9;
+
+    @FXML
+    private TreeTableColumn<?, ?> c10;
+
+    @FXML
+    private TreeTableColumn<?, ?> c11;
+
+    @FXML
+    private TreeTableColumn<?, ?> c12;
+
+    @FXML
+    private TreeTableColumn<?, ?> c13;
+
+    @FXML
+    private Button cancel_button;
+
+    @FXML
+    private DatePicker dPicker;
+
+
+    @FXML
+    private TextField zipcode_text;
+
+    @FXML
+    private TextField phoneNumber_text;
+
+    @FXML
+    private TextField password_text;
+
+    @FXML
+    private TextField confirmPassword_text;
+
+    @FXML
+    private Label ssnStar;
+
+    @FXML
+    private Label birthDateStar;
+
+    @FXML
+    private Label firstNameStar;
+
+    @FXML
+    private Label lastNameStar;
+
+    @FXML
+    private Label zipCodeStar;
+
+    @FXML
+    private Label phoneStar;
+
+    @FXML
+    private Label emailStar;
+
+    @FXML
+    private Label newPassStar;
+
+    @FXML
+    private Label confirmPassStar;
+
+    @FXML
+    private Label addressStar;
+
+    @FXML
+    private Label passwordCheckLabel;
+
+    List<ProdGroup> groups = commonMethods.getProductGroupList();
+    List<String> groupPaths = new ArrayList<>();
+
+    private List<String> fillList(List<ProdGroup> groups){
+        groupPaths.add("All");
+        for (int i = 1; i < groups.size(); i++) {
+            groupPaths.add(groups.get(i).getPath());
+        }
+        return groupPaths;
+    }
+
+   // ObservableList<String> sortings = FXCollections.observableArrayList("Prescribed first", "A-Z", "Z-A", "Price ascending", "Price descending");
+    ObservableList<String> filters1 = FXCollections.observableArrayList(fillList(groups));
     ObservableList<String> filters2 = FXCollections.observableArrayList("All", "Only Current", "Only Consumed");
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        sort_combo.setItems(sortings);
-        filter_combo.setItems(filters1);
-        filter2_combo.setItems(filters2);
+        currentUser = Singleton.getInstance().getUser();
+        groupFilter_combo.setItems(filters1);
+        prescFilter_combo.setItems(filters2);
+        firstName_text.setText(currentUser.getFirstName());
+        lastName_text.setText(currentUser.getLastName());
+        ssn_text.setText(currentUser.getSsn());
+       // birth_text.setText(currentUser.getBDate().toString());
+        zipcode_text.setText(currentUser.getZipCode());
+        address_text.setText(currentUser.getAddress());
+      //  phone_text.setText(currentUser.getPhoneNumber());
+        email_text.setText(currentUser.getEmail());
+
     }
 
-    public ObservableList<String> getSortings() {
-        return sortings;
-    }
+ //   public ObservableList<String> getSortings() {
+ //       return sortings;
+ //   }
 
     public ObservableList<String> getFilters1() {
         return filters1;
