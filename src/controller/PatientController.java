@@ -1,6 +1,5 @@
 package controller;
 
-import javafx.animation.PauseTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -13,7 +12,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import model.*;
 
 import java.io.IOException;
@@ -50,7 +48,7 @@ public class PatientController implements Initializable {
     private Button save_button;
 
     @FXML
-    private TextField ssn_text;
+    private Label ssn_text;
 
     @FXML
     private TextField lastName_text;
@@ -144,12 +142,6 @@ public class PatientController implements Initializable {
     private Label emailStar;
 
     @FXML
-    private Label newPassStar;
-
-    @FXML
-    private Label confirmPassStar;
-
-    @FXML
     private Label addressStar;
 
     @FXML
@@ -172,20 +164,14 @@ public class PatientController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setVisible(false);
+        cancel_button.setCancelButton(true);
         currentUser = Singleton.getInstance().getUser();
         groupFilter_combo.setItems(filters1);
         prescFilter_combo.setItems(filters2);
-        firstName_text.setText(currentUser.getFirstName());
-        lastName_text.setText(currentUser.getLastName());
-        ssn_text.setText(currentUser.getSsn());
-       // birth_text.setText(currentUser.getBDate().toString());
-        zipCode_text.setText(currentUser.getZipCode());
-        address_text.setText(currentUser.getAddress());
-        phoneNumber_text.setText(currentUser.getPhoneNumber());
-        email_text.setText(currentUser.getEmail());
+        setInitialValues(currentUser);
         dPicker.setOnAction(e -> {localDate = dPicker.getValue();});
         save_button.setOnAction(this::onSaveButtonPressed);
-  //      cancelButton.setOnAction(this::onCancelButtonPressed);
+        cancel_button.setOnAction(this::onCancelButtonPressed);
 
         confirmPassword.textProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -249,6 +235,11 @@ public class PatientController implements Initializable {
         }
     }
 
+    @FXML public void onCancelButtonPressed(ActionEvent ae) {
+      setInitialValues(currentUser);
+
+    }
+
     @FXML public boolean checkFields() {
         if (firstName_text.getText().isEmpty() || lastName_text.getText().isEmpty() || dPicker.getValue() == null
                 || zipCode_text.getText().isEmpty() || address_text.getText().isEmpty() || email_text.getText().isEmpty() || phoneNumber_text.getText().isEmpty()) {
@@ -285,5 +276,16 @@ public class PatientController implements Initializable {
         phoneStar.setVisible(on);
         emailStar.setVisible(on);
         passwordCheckLabel.setVisible(on);
+    }
+
+    public void setInitialValues(User currentUser){
+        firstName_text.setText(currentUser.getFirstName());
+        lastName_text.setText(currentUser.getLastName());
+        ssn_text.setText(currentUser.getSsn());
+        dPicker.setValue(currentUser.getBDate().toLocalDate());
+        zipCode_text.setText(currentUser.getZipCode());
+        address_text.setText(currentUser.getAddress());
+        phoneNumber_text.setText(currentUser.getPhoneNumber());
+        email_text.setText(currentUser.getEmail());
     }
 }
