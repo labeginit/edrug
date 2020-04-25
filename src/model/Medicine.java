@@ -18,7 +18,7 @@ public abstract class Medicine {
     private String searchTerms;
     private int groupId;
     private boolean isActive;
-    private DAOMedicine daoMedicine = new DAOMedicine();
+    private final DAOMedicine daoMedicine = new DAOMedicine();
 
     public Medicine(){}
 

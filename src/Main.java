@@ -4,11 +4,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.*;
+import model.dBConnection.DBConnection;
 
 public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        DBConnection.getInstance();
         Parent root = FXMLLoader.load(getClass().getResource("view/loginView.fxml"));
         primaryStage.setTitle("e-DRUGS");
         primaryStage.setScene(new Scene(root));

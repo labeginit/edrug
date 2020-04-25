@@ -13,8 +13,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.CommonMethods;
+import model.Singleton;
 import model.User;
-import model.dBConnection.DAOUser;
 
 import java.net.URL;
 import java.nio.file.*;
@@ -23,6 +24,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
+    CommonMethods common = new CommonMethods();
+    private User user;
 
     @FXML
     private Label forgotPasswordLabel;
@@ -56,49 +59,68 @@ public class LoginController implements Initializable {
 
     @FXML
     public void loginButtonPressed(ActionEvent ae) {
-        if (checkFields() == true) {
-            DAOUser DBUser = new DAOUser();
-            User user = DBUser.getUser(ssnTextField.getText());
+        if (checkFields()) {
+            user = common.getUser(ssnTextField.getText());
             if (user != null) {
-                String password = user.getPassword();
-                if (passwordField.getText().equals(password)) {
-                    progress.setVisible(true);
-                    PauseTransition pt = new PauseTransition();
-                    pt.setDuration(Duration.seconds(2));
-                    pt.setOnFinished(event -> {
-                        System.out.println("Login successful");
-                        if (rememberMeCheckBox.isSelected()) {
-                            onRememberMeCheckBox();
+                if (ssnTextField.getText().equals(user.getSsn())) {
+                    String password = user.getPassword();
+                    if (passwordField.getText().equals(password)) {
+                        if (!user.getActive()){
+                            user.setActive(true);
+                            common.updateUser(user);
                         }
-                        try {
-                            String view;
-                            if (user.getUserType() == 1) {
-                                view = "/view/patientView.fxml";
-                            } else if (user.getUserType() == 2) {
-                                view = "/view/doctorView.fxml";
-                            } else {
-                                view = "/view/adminView.fxml";
+                        Singleton.getInstance().setUser(user);
+                        progress.setVisible(true);
+                        int type = user.getUserType();
+                        PauseTransition pt = new PauseTransition();
+                     //   pt.setDuration(Duration.seconds(2));  not removing it for your consideration if you want to keep it :)
+                        pt.setOnFinished(event -> {
+                            System.out.println("Login successful");
+                            if (rememberMeCheckBox.isSelected()) {
+                                onRememberMeCheckBox();
                             }
-                            Node node = (Node) ae.getSource();
-                            Scene scene = node.getScene();
-                            Stage stage = (Stage) scene.getWindow();
+                            try {
+                                String view;
+                                if (type == 1) {
+                                    view = "/view/patientView.fxml";
+                                } else if (type == 2) {
+                                    view = "/view/doctorView.fxml";
+                                } else {
+                                    view = "/view/adminView.fxml";
+                                }
+                                Node node = (Node) ae.getSource();
+                                Scene scene = node.getScene();
+                                Stage stage = (Stage) scene.getWindow();
 
-                            Parent root = FXMLLoader.load(getClass().getResource(view));
-                            Scene newScene = new Scene(root);
+                                Parent root = FXMLLoader.load(getClass().getResource(view));
+                                Scene newScene = new Scene(root);
 
-                            stage.setTitle("e-Drugs");
-                            stage.setScene(newScene);
+                                stage.setTitle("e-Drugs");
+                                stage.setScene(newScene);
 
-                        } catch (Exception ex) {
-                            System.out.println(ex.getMessage());
-                            ex.printStackTrace();
-                        }
-                    });
-                    pt.play();
-                } else
+                            } catch (Exception ex) {
+                                System.out.println(ex.getMessage());
+                                ex.printStackTrace();
+                            }
+                        });
+                        pt.play();
+                    } else {
+                        user = null;
+                        Validation.alertPopup("Incorrect SSN or Password ", "Invalid Credentials", "Invalid Credentials");
+                        ssnTextField.setText("");
+                        passwordField.setText("");
+                    }
+                } else {
+                    user = null;
                     Validation.alertPopup("Incorrect SSN or Password ", "Invalid Credentials", "Invalid Credentials");
-            } else
+                    ssnTextField.setText("");
+                    passwordField.setText("");
+                }
+            } else {
                 Validation.alertPopup("Incorrect SSN or Password ", "Invalid Credentials", "Invalid Credentials");
+                ssnTextField.setText("");
+                passwordField.setText("");
+            }
         }
     }
 
@@ -144,8 +166,7 @@ public class LoginController implements Initializable {
     @FXML
     public void onForgotPasswordPressed(MouseEvent me) {
         if (!ssnTextField.getText().isEmpty()) {
-            DAOUser DBUser = new DAOUser();
-            User user = DBUser.getUser(ssnTextField.getText());
+            user = common.getUser(ssnTextField.getText());
             if (user != null) {
                 Validation.alertPopup("A temporary password has been sent to your email", "Forgot Password", "Forgot Password");
             }
@@ -156,14 +177,16 @@ public class LoginController implements Initializable {
     @FXML
     public void onRememberMeCheckBox() {
 
-        try {
-            Path path = Paths.get("login.txt");
+        if (rememberMeCheckBox.isSelected()) {
+            try {
+                Path path = Paths.get("login.txt");
 
-            ArrayList<String> lines = new ArrayList<>();
-            lines.add(ssnTextField.getText());
-            lines.add(passwordField.getText());
-            Files.write(path, lines, StandardOpenOption.CREATE);
-        } catch (Exception ignored) {
+                ArrayList<String> lines = new ArrayList<>();
+                lines.add(ssnTextField.getText());
+                lines.add(passwordField.getText());
+                Files.write(path, lines, StandardOpenOption.CREATE);
+            } catch (Exception ignored) {
+            }
         }
     }
 
@@ -175,6 +198,7 @@ public class LoginController implements Initializable {
                 ssnTextField.setText(lines.get(0));
                 passwordField.setText(lines.get(1));
             } catch (Exception ignored) {
+                ignored.getSuppressed();
             }
     }
 

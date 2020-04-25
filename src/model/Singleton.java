@@ -128,21 +128,9 @@ public class Singleton {
         }
 
         @Override
-        public User getUser(String sSN) {
-            return super.getUser(sSN);
-        }
-
-        @Override
-        public List<User> getUserList() {
-            return super.getUserList();
-        }
-
-        @Override
         public String toString() {
             return super.toString();
         }
-
-
     };
 
     public User getUser() {

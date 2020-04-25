@@ -11,13 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DAOUser {
-    private Statement statement;
-    private ResultSet resultSet;
+    private ResultSet resultSet = null;
     private List<User> userList = new ArrayList<>();
     private int linesAffected = 0;
-    private static User user;
+    private User user;
     DAOCommon common = new DAOCommon();
-    Connection connection = DBConnection.getConnection();
 
     private String sSN;
     private int userType;  //   1 = Patient, 2 = Doctor, 3 = Admin
@@ -31,22 +29,29 @@ public class DAOUser {
     private String password;
     private boolean isActive;
     private int value1;
+    private String value2;
 
     private Date inputDate;
 
-    private java.sql.Date convertDate(Date inputDate){  ///////// WIP
+    private java.sql.Date convertDate(Date inputDate) {  ///////// WIP
         java.sql.Date sqlDate;
-      //  inputDate;
+        //  inputDate;
         sqlDate = new java.sql.Date(inputDate.getTime());
         return sqlDate;
     }
 
     // to be used to retrieve a specific user list (types 1-3) (internal use)
     private List<User> retrieveUserList(String usType) {
+        resultSet = null;
+        userList.clear();
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 resultSet = common.retrieveSet("SELECT * FROM User where type = ? and active = 1;", usType);
-                createObjects(resultSet);
+                if (resultSet != null) {
+                    while (resultSet.next()) {
+                        userList.add(createObjects(resultSet));
+                    }
+                } else throw new Exception("Empty resultSet");
             }
         } catch (SQLException ex) {
             System.out.println("Error while working with ResultSet!");
@@ -54,54 +59,101 @@ public class DAOUser {
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
+            try {
+                resultSet.close();
+            }catch (Exception ex) {
+                ex.printStackTrace();
+            }
             return userList;
         }
     }
+
     // to be used to retrieve the whole user list (internal use)
     private List<User> retrieveUserList() {
+        resultSet = null;
+        userList.clear();
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 resultSet = common.retrieveSet("SELECT * FROM User where active = 1;");
-                createObjects(resultSet);
+                if (resultSet != null) {
+                    while (resultSet.next()) {
+                        userList.add(createObjects(resultSet));
+                    }
+                } else throw new Exception("Empty resultSet");
+
             }
         } catch (SQLException ex) {
             System.out.println("Error while working with ResultSet!");
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         } finally {
+            try {
+                resultSet.close();
+            }catch (Exception ex) {
+                ex.printStackTrace();
+            }
             return userList;
         }
     }
 
-    private void createObjects(ResultSet resultSet) throws Exception{
-        if (resultSet != null) {
-            while (resultSet.next()) {
-                sSN = resultSet.getString("ssn");
-                userType = resultSet.getInt("type");
-                firstName = resultSet.getString("first_name");
-                lastName = resultSet.getString("last_name");
-                birthDate = resultSet.getDate("birth_date");
-                zipCode = resultSet.getString("zip_code");
-                address = resultSet.getString("address");
-                email = resultSet.getString("email");
-                phoneNumber = resultSet.getString("phone_number");
-                password = resultSet.getString("password");
-                isActive = resultSet.getBoolean("active");
+    public List<User> retrieveUserList(boolean isActive) {
+        user = null;
+        userList.clear();
+        if (isActive) {
+            value2 = "1";
+        } else {
+            value2 = "0";
+        }
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                resultSet = common.retrieveSet("SELECT * FROM User where active = ?;", value2);
+                if (resultSet != null) {
+                    while (resultSet.next()) {
+                        userList.add(createObjects(resultSet));
+                    }
+                } else throw new Exception("Empty resultSet");
 
-                if (userType == 1) {
-                    user = new Patient(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, isActive);
-                } else if (userType == 2) {
-                    user = new Doctor(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, isActive);
-                } else {
-                    user = new Admin(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, isActive);
-                }
-                userList.add(user);
             }
-        } else throw new Exception("Empty resultSet");
+        } catch (SQLException ex) {
+            System.out.println("Error while working with ResultSet!");
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                resultSet.close();
+            }catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            return userList;
+        }
     }
 
-    public List<User> getUserList(String userType) throws IllegalArgumentException{ // 0 - all users will be shown; values 1-3 - a corresponding type of users.
+    private User createObjects(ResultSet resultSet) throws Exception {
+        sSN = resultSet.getString("ssn");
+        userType = resultSet.getInt("type");
+        firstName = resultSet.getString("first_name");
+        lastName = resultSet.getString("last_name");
+        birthDate = resultSet.getDate("birth_date");
+        zipCode = resultSet.getString("zip_code");
+        address = resultSet.getString("address");
+        email = resultSet.getString("email");
+        phoneNumber = resultSet.getString("phone_number");
+        password = resultSet.getString("password");
+        isActive = resultSet.getBoolean("active");
+
+        if (userType == 1) {
+            user = new Patient(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, isActive);
+        } else if (userType == 2) {
+            user = new Doctor(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, isActive);
+        } else {
+            user = new Admin(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, isActive);
+        }
+        return user;
+    }
+
+    public List<User> getUserList(String userType) throws IllegalArgumentException { // 0 - all users will be shown; values 1-3 - a corresponding type of users.
         if (userType.matches("[0-3]")) {
             if (userType.compareTo("0") == 0) {
                 userList = retrieveUserList();
@@ -109,52 +161,56 @@ public class DAOUser {
                 userList = retrieveUserList(userType);
             }
         } else {
-            userList = null;
             throw new IllegalArgumentException("Illegal argument. Possible values are 0, 1, 2, 3");
         }
         return userList;
     }
 
     private User retrieveUser(String query, String sSN) {
+        user = null;
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 resultSet = common.retrieveSet(query, sSN);
                 if (resultSet != null) {
-                    if (resultSet.first()){
-                    this.sSN = resultSet.getString("ssn");
-                    userType = resultSet.getInt("type");
-                    firstName = resultSet.getString("first_name");
-                    lastName = resultSet.getString("last_name");
-                    birthDate = resultSet.getDate("birth_date");
-                    zipCode = resultSet.getString("zip_code");
-                    address = resultSet.getString("address");
-                    email = resultSet.getString("email");
-                    phoneNumber = resultSet.getString("phone_number");
-                    password = resultSet.getString("password");
-                    isActive = resultSet.getBoolean("active");
+                    if (resultSet.first()) {
+                        this.sSN = resultSet.getString("ssn");
+                        userType = resultSet.getInt("type");
+                        firstName = resultSet.getString("first_name");
+                        lastName = resultSet.getString("last_name");
+                        birthDate = resultSet.getDate("birth_date");
+                        zipCode = resultSet.getString("zip_code");
+                        address = resultSet.getString("address");
+                        email = resultSet.getString("email");
+                        phoneNumber = resultSet.getString("phone_number");
+                        password = resultSet.getString("password");
+                        isActive = resultSet.getBoolean("active");
 
-                    if (userType == 1) {
-                        return user = new Patient(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, isActive);
-                    } else if (userType == 2) {
-                        return user = new Doctor(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, isActive);
-                    } else {
-                        return user = new Admin(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, isActive);
+                        if (userType == 1) {
+                            return user = new Patient(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, isActive);
+                        } else if (userType == 2) {
+                            return user = new Doctor(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, isActive);
+                        } else {
+                            return user = new Admin(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, isActive);
+                        }
                     }
-                }
                 } else {
                     System.out.println("Empty resultSet");
-                    return user = null;
+                    return user;
                 }
             }
         } catch (SQLException ex) {
             System.out.println("Error while working with ResultSet!");
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         } finally {
+            try {
+                resultSet.close();
+            }catch (Exception ex) {
+                ex.printStackTrace();
+            }
             return user;
         }
-
     }
 
     public User getUser(String sSN) {
@@ -162,7 +218,7 @@ public class DAOUser {
         String query = "SELECT * FROM User where ssn = ?;";
         try {
             temp = retrieveUser(query, sSN);
-        } catch (Exception ex){
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
         return temp;
@@ -172,39 +228,39 @@ public class DAOUser {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 if (user != null) {
-                sSN = user.getSsn();
-                userType = user.getUserType();
-                firstName = user.getFirstName();
-                lastName = user.getLastName();
-                birthDate = user.getBDate();
-                zipCode = user.getZipCode();
-                address = user.getAddress();
-                email = user.getEmail();
-                phoneNumber = user.getPhoneNumber();
-                password = user.getPassword();
-                isActive = user.getActive();
-                    if (isActive){
+                    sSN = user.getSsn();
+                    userType = user.getUserType();
+                    firstName = user.getFirstName();
+                    lastName = user.getLastName();
+                    birthDate = user.getBDate();
+                    zipCode = user.getZipCode();
+                    address = user.getAddress();
+                    email = user.getEmail();
+                    phoneNumber = user.getPhoneNumber();
+                    password = user.getPassword();
+                    isActive = user.getActive();
+                    if (isActive) {
                         value1 = 1;
-                    } else {value1 = 0;}
-                String query = "INSERT INTO `edrugs_test`.`User` (`ssn`, `type`, `first_name`, `last_name`, `birth_date`, `zip_code`, `address`, `email`, `phone_number`, `password`, `active`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-                linesAffected = common.insertUser(query, sSN, userType, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, value1);
+                    } else {
+                        value1 = 0;
+                    }
+                    String query = "INSERT INTO `edrugs_test`.`User` (`ssn`, `type`, `first_name`, `last_name`, `birth_date`, `zip_code`, `address`, `email`, `phone_number`, `password`, `active`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                    linesAffected = common.insertUser(query, sSN, userType, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, value1);
                 } else {
                     throw new NullPointerException("The user object is null");
                 }
             }
         } catch (SQLException ex) {
             System.out.println("Error while working with statement!");
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         } finally {
             return linesAffected;
         }
     }
 
-
-
-    public int updateUser(User user){
+    public int updateUser(User user) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 if (user != null) {
@@ -217,9 +273,11 @@ public class DAOUser {
                     phoneNumber = user.getPhoneNumber();
                     isActive = user.getActive();
                     sSN = user.getSsn();
-                    if (isActive){
+                    if (isActive) {
                         value1 = 1;
-                    } else {value1 = 0;}
+                    } else {
+                        value1 = 0;
+                    }
                     String query = "UPDATE `edrugs_test`.`User` SET `first_name` = ?, `last_name` = ?, `birth_date` = ?, `zip_code` = ?, `address` = ?, `email` = ?, `phone_number` = ?, `active` = ? WHERE (`ssn` = ?);";
                     linesAffected = common.updateUser(query, sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, value1);
                 } else {
@@ -228,15 +286,37 @@ public class DAOUser {
             }
         } catch (SQLException ex) {
             System.out.println("Error while working with statement!");
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         } finally {
             return linesAffected;
         }
     }
 
-    public int removeUser(User user){
+    public int updatePassword(User user) {
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                if (user != null) {
+                    password = user.getPassword();
+                    sSN = user.getSsn();
+                    String query = "UPDATE `edrugs_test`.`User` SET `password` = ? WHERE (`ssn` = ?);";
+                    linesAffected = common.updateRecordStr(query, password, sSN);
+                } else {
+                    throw new NullPointerException("The user object is null");
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error while working with statement!");
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            return linesAffected;
+        }
+    }
+
+    public int removeUser(User user) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 if (user != null) {
@@ -249,11 +329,13 @@ public class DAOUser {
             }
         } catch (SQLException ex) {
             System.out.println("Error while working with statement!");
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         } finally {
             return linesAffected;
         }
     }
+
+
 }
