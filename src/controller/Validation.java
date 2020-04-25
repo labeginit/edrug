@@ -91,4 +91,15 @@ public class Validation {
             starLabel.setVisible(true);
             return false;
     }
+    @FXML public static boolean isPassword(String password, Label starLabel) {
+        String regex =".{6,16}";
+        boolean aPassword = Pattern.compile(regex).matcher(password).find();
+        if (aPassword) {
+            starLabel.setVisible(false);
+            return true;
+        } else
+            alertPopup("Password needs to be 6 characters long", "Short Password", "Password is to short");
+            starLabel.setVisible(true);
+            return false;
+    }
 }
