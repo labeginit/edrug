@@ -158,14 +158,21 @@ public class LoginController implements Initializable {
 
     @FXML
     public void onForgotPasswordPressed(MouseEvent me) {
-        if (!ssnTextField.getText().isEmpty()) {
-            DAOUser DBUser = new DAOUser();
-            User user = DBUser.getUser(ssnTextField.getText());
-            if (user != null) {
-                Validation.alertPopup("A temporary password has been sent to your email", "Forgot Password", "Forgot Password");
-            }
-        } else
-            Validation.alertPopup("Please enter your SSN to get a new password sent to your email address", "SSN Empty", "Need to supply SSN");
+
+        try {
+            Node node = (Node) me.getSource();
+            Scene scene = node.getScene();
+            Stage stage = (Stage) scene.getWindow();
+
+            Parent root = FXMLLoader.load(getClass().getResource("/view/forgottenPasswordView.fxml"));
+            Scene newScene = new Scene(root);
+
+            stage.setTitle("e-Drugs Password Recovery");
+            stage.setScene(newScene);
+
+        } catch (Exception ex) {
+            ex.getMessage();
+        }
     }
 
     @FXML
