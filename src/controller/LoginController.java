@@ -12,7 +12,6 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import model.CommonMethods;
 import model.UserSingleton;
 import model.User;
@@ -126,7 +125,6 @@ public class LoginController implements Initializable {
     public void registerButtonPressed(ActionEvent ae) {
         progress.setVisible(true);
         PauseTransition pt = new PauseTransition();
-        pt.setDuration(Duration.seconds(2));
         pt.setOnFinished(event -> {
             try {
                 Node node = (Node) ae.getSource();

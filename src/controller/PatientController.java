@@ -293,7 +293,7 @@ public class PatientController implements Initializable {
         window.setScene(tableViewScene);
         window.show();
         currentUser = null;
-        Singleton.getInstance().setUser(currentUser);
+        UserSingleton.getOurInstance().setUser(currentUser);
     }
 
     @FXML public boolean checkFields() {
