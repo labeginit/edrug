@@ -24,7 +24,7 @@ import java.sql.Date;
 
 public class RegistrationController implements Initializable {
     CommonMethods common = new CommonMethods();
-    LocalDate localDate;
+    public LocalDate localDate;
 
     @FXML
     private Button registerButton;
@@ -116,7 +116,7 @@ public class RegistrationController implements Initializable {
             if(Validation.isName(firstName.getText(), firstNameStar) && Validation.isName(lastName.getText(), lastNameStar) &&
             Validation.isSSN(ssn.getText(), ssnStar) &&
             Validation.isZipcode(zipcode.getText(), zipcodeStar) && Validation.isPhoneNumber(phoneNumber.getText(), phoneNumberStar)
-            && Validation.isEmail(email.getText(), emailStar)) {
+            && Validation.isEmail(email.getText(), emailStar) && Validation.isPassword(password.getText(), passwordStar)) {
                 try {
                     Date dob = Date.valueOf(dPicker.getValue());
                     Patient patient = new Patient(ssn.getText(), firstName.getText(), lastName.getText(), dob,

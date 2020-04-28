@@ -26,8 +26,8 @@ import javafx.event.ActionEvent;
 
 public class PatientController implements Initializable {
     CommonMethods commonMethods = new CommonMethods();
-    User currentUser;
-    LocalDate localDate;
+    private User currentUser;
+    public LocalDate localDate;
 
     @FXML
     private ComboBox<String> groupFilter_combo;
@@ -158,8 +158,8 @@ public class PatientController implements Initializable {
     @FXML
     private Label passwordCheckLabel;
 
-    List<ProdGroup> groups = commonMethods.getProductGroupList();
-    List<String> groupPaths = new ArrayList<>();
+    private List<ProdGroup> groups = commonMethods.getProductGroupList();
+    private List<String> groupPaths = new ArrayList<>();
 
     private List<String> fillList(List<ProdGroup> groups){
         groupPaths.add("All");
@@ -169,14 +169,14 @@ public class PatientController implements Initializable {
         return groupPaths;
     }
 
-    ObservableList<String> filters1 = FXCollections.observableArrayList(fillList(groups));
-    ObservableList<String> filters2 = FXCollections.observableArrayList("All", "Only Current", "Only Consumed");
+    private ObservableList<String> filters1 = FXCollections.observableArrayList(fillList(groups));
+    private ObservableList<String> filters2 = FXCollections.observableArrayList("All", "Only Current", "Only Consumed");
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle){
         setVisible(false);
         cancel_button.setCancelButton(true);
-        currentUser = Singleton.getInstance().getUser();
+        currentUser = UserSingleton.getOurInstance().getUser();
         groupFilter_combo.setItems(filters1);
         prescFilter_combo.setItems(filters2);
         setInitialValues(currentUser);
@@ -266,7 +266,7 @@ public class PatientController implements Initializable {
                             commonMethods.updatePassword(currentUser);
                         }
                     }
-                    Singleton.getInstance().setUser(currentUser);
+                    UserSingleton.getOurInstance().setUser(currentUser);
                     setVisible(false);
                     password.clear();
                     confirmPassword.clear();
