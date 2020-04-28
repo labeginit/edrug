@@ -279,7 +279,7 @@ public class PatientController implements Initializable {
             tableView.setItems(sortedData2);
 
         });
-        
+
         maxPrice_text.textProperty().addListener((observable, oldValue, newValue) -> {
             search_textField.setText("");
             filteredData.setPredicate(medicine -> {
@@ -305,16 +305,15 @@ public class PatientController implements Initializable {
 
     }
 
-    public ObservableList<String> getFilters1() {
+    private ObservableList<String> getFilters1() {
         return filters1;
     }
 
-    public ObservableList<String> getFilters2() {
+    private ObservableList<String> getFilters2() {
         return filters2;
     }
 
-    @FXML
-    public void cartButtonHandle(ActionEvent event) throws IOException {
+    @FXML private void cartButtonHandle(ActionEvent event) throws IOException {
         Parent tableViewParent = FXMLLoader.load(getClass().getResource("/view/shoppingCartView.fxml"));
         Scene tableViewScene = new Scene(tableViewParent);
 
@@ -324,7 +323,7 @@ public class PatientController implements Initializable {
         window.show();
     }
 
-    @FXML public void onSaveButtonPressed(ActionEvent ae) {
+    @FXML private void onSaveButtonPressed(ActionEvent ae) {
         if (checkFields()) {
             if(Validation.isName(firstName_text.getText(), firstNameStar) && Validation.isName(lastName_text.getText(), lastNameStar) &&
                     Validation.isZipcode(zipCode_text.getText(), zipCodeStar) && Validation.isPhoneNumber(phoneNumber_text.getText(), phoneStar)
@@ -358,13 +357,12 @@ public class PatientController implements Initializable {
         }
     }
 
-    @FXML public void onCancelButtonPressed(ActionEvent ae) {
+    @FXML private void onCancelButtonPressed(ActionEvent ae) {
       setInitialValues(currentUser);
       setVisible(false);
     }
 
-    @FXML
-    public void onLogOutButtonPressed(ActionEvent event) throws IOException{
+    @FXML private void onLogOutButtonPressed(ActionEvent event) throws IOException{
         Parent tableViewParent = FXMLLoader.load(getClass().getResource("/view/loginView.fxml"));
         Scene tableViewScene = new Scene(tableViewParent);
 
@@ -376,7 +374,7 @@ public class PatientController implements Initializable {
         UserSingleton.getOurInstance().setUser(currentUser);
     }
 
-    @FXML public boolean checkFields() {
+    @FXML private boolean checkFields() {
         if (firstName_text.getText().isEmpty() || lastName_text.getText().isEmpty() || dPicker.getValue() == null
                 || zipCode_text.getText().isEmpty() || address_text.getText().isEmpty() || email_text.getText().isEmpty() || phoneNumber_text.getText().isEmpty()) {
             if(firstName_text.getText().isEmpty()){
@@ -403,7 +401,7 @@ public class PatientController implements Initializable {
         } else
             return true;
     }
-    @FXML public void setVisible(boolean on) {
+    @FXML private void setVisible(boolean on) {
         firstNameStar.setVisible(on);
         lastNameStar.setVisible(on);
         birthDateStar.setVisible(on);
@@ -414,7 +412,7 @@ public class PatientController implements Initializable {
         passwordCheckLabel.setVisible(on);
     }
 
-    public void setInitialValues(User currentUser){
+    private void setInitialValues(User currentUser){
         firstName_text.setText(currentUser.getFirstName());
         lastName_text.setText(currentUser.getLastName());
         ssn_text.setText(currentUser.getSsn());
