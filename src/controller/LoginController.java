@@ -69,7 +69,7 @@ public class LoginController implements Initializable {
                             user.setActive(true);
                             common.updateUser(user);
                         }
-                        UserSingleton.getInstance().setUser(user);
+                        UserSingleton.getOurInstance().setUser(user);
                         progress.setVisible(true);
                         int type = user.getUserType();
                         PauseTransition pt = new PauseTransition();
