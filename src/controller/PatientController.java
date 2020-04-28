@@ -171,7 +171,7 @@ public class PatientController implements Initializable {
     private List<ProdGroup> groups = commonMethods.getProductGroupList();
     private List<String> groupPaths = new ArrayList<>();
     private ObservableList<Medicine> medList = FXCollections.observableArrayList(commonMethods.getMedicineList(false)); // here will probably need to add those from Prescriptions
-    private FilteredList<Medicine> filteredData = new FilteredList<>(medList);
+    private FilteredList<Medicine> filteredData = new FilteredList<>(medList, p -> true);
 
     private List<String> fillList(List<ProdGroup> groups){
         groupPaths.add("All");
@@ -244,10 +244,10 @@ public class PatientController implements Initializable {
         c6.setCellValueFactory(new PropertyValueFactory<Medicine, String>("description"));
         c7.setCellValueFactory(new PropertyValueFactory<Medicine, String>("producer"));
 
-        // currently the combination of different filters is not working properly. Especially after changing value in comboBox
+        // currently the combination of different filters is not working after value in the comboBox has been changed
 
-        filteredData = new FilteredList<>(medList, p -> true);
         search_textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            maxPrice_text.setText("");
             filteredData.setPredicate(medicine -> {
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
@@ -265,9 +265,6 @@ public class PatientController implements Initializable {
                 return false;
             });
         });
-     //   SortedList<Medicine> sortedData = new SortedList<>(filteredData);
-     //   sortedData.comparatorProperty().bind(tableView.comparatorProperty());
-    //    tableView.setItems(sortedData);
 
         groupFilter_combo.setOnAction((event) -> {
             String val = groupFilter_combo.getValue();
@@ -282,15 +279,15 @@ public class PatientController implements Initializable {
             tableView.setItems(sortedData2);
 
         });
-
-        filteredData = new FilteredList<>(medList, p -> true);
+        
         maxPrice_text.textProperty().addListener((observable, oldValue, newValue) -> {
+            search_textField.setText("");
             filteredData.setPredicate(medicine -> {
                 if (newValue == null || newValue.isEmpty()) {
                     return true;
                 }
 
-                double priceFilter = Double.valueOf(newValue);
+                double priceFilter = Double.parseDouble(newValue);
 
                 if (medicine.getPrice() < priceFilter) {
                     return true;
