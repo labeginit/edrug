@@ -3,7 +3,10 @@ package controller;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -20,9 +23,12 @@ import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
+
+import javax.swing.*;
 
 
 public class PatientController implements Initializable {
@@ -35,9 +41,6 @@ public class PatientController implements Initializable {
 
     @FXML
     private TextField search_textField;
-
-    @FXML
-    private Button go_Button;
 
     @FXML
     private ComboBox<String> prescFilter_combo;
@@ -62,6 +65,9 @@ public class PatientController implements Initializable {
 
     @FXML
     private TextField firstName_text;
+
+    @FXML
+    private TextField maxPrice_text;
 
     @FXML
     private Button buy_button;
@@ -164,6 +170,8 @@ public class PatientController implements Initializable {
 
     private List<ProdGroup> groups = commonMethods.getProductGroupList();
     private List<String> groupPaths = new ArrayList<>();
+    private ObservableList<Medicine> medList = FXCollections.observableArrayList(commonMethods.getMedicineList(false)); // here will probably need to add those from Prescriptions
+    private FilteredList<Medicine> filteredData = new FilteredList<>(medList);
 
     private List<String> fillList(List<ProdGroup> groups){
         groupPaths.add("All");
@@ -235,8 +243,67 @@ public class PatientController implements Initializable {
         c5.setCellValueFactory(new PropertyValueFactory<Medicine, Integer>("quantity"));
         c6.setCellValueFactory(new PropertyValueFactory<Medicine, String>("description"));
         c7.setCellValueFactory(new PropertyValueFactory<Medicine, String>("producer"));
-        ObservableList<Medicine> medList = FXCollections.observableArrayList(commonMethods.getMedicineList(false));
-        tableView.setItems(medList);
+
+        // currently the combination of different filters is not working properly. Especially after changing value in comboBox
+
+        filteredData = new FilteredList<>(medList, p -> true);
+        search_textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(medicine -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (medicine.getName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (medicine.getSearchTerms().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (String.valueOf(medicine.getArticleNo()).contains(lowerCaseFilter)){
+                    return true;
+                }
+                return false;
+            });
+        });
+     //   SortedList<Medicine> sortedData = new SortedList<>(filteredData);
+     //   sortedData.comparatorProperty().bind(tableView.comparatorProperty());
+    //    tableView.setItems(sortedData);
+
+        groupFilter_combo.setOnAction((event) -> {
+            String val = groupFilter_combo.getValue();
+            ObservableList<Medicine> newList = FXCollections.observableArrayList(commonMethods.getMedicineByProductGroupPath(val));
+            for (int i = 0; i < newList.size(); i++) {
+                if (newList.get(i).isOnPrescription()){  //add more here - if these ids are from the prescription - do not delete
+                    newList.remove(i);
+                }
+            }
+            SortedList<Medicine> sortedData2 = new SortedList<>(newList);
+            sortedData2.comparatorProperty().bind(tableView.comparatorProperty());
+            tableView.setItems(sortedData2);
+
+        });
+
+        filteredData = new FilteredList<>(medList, p -> true);
+        maxPrice_text.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(medicine -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                double priceFilter = Double.valueOf(newValue);
+
+                if (medicine.getPrice() < priceFilter) {
+                    return true;
+                }
+                return false;
+            });
+        });
+
+        SortedList<Medicine> sortedData = new SortedList<>(filteredData);
+
+        sortedData.comparatorProperty().bind(tableView.comparatorProperty());
+        tableView.setItems(sortedData);
+
         //TableView end
 
     }
