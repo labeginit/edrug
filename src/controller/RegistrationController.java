@@ -161,7 +161,7 @@ public class RegistrationController implements Initializable {
                 Scene scene = node.getScene();
                 Stage stage = (Stage) scene.getWindow();
 
-                Parent root = FXMLLoader.load(getClass().getResource("/view/login.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/view/loginView.fxml"));
                 Scene newScene = new Scene(root);
 
                 stage.setTitle("e-Drugs Login");

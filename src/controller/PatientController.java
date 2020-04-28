@@ -87,6 +87,9 @@ public class PatientController implements Initializable {
     private TableColumn<?, ?> c7;
 
     @FXML
+    private TreeTableView<?> treeTableView;
+
+    @FXML
     private TreeTableColumn<?, ?> c8;
 
     @FXML
@@ -110,6 +113,14 @@ public class PatientController implements Initializable {
     @FXML
     private DatePicker dPicker;
 
+    @FXML
+    private  Button logOut1_button;
+
+    @FXML
+    private Button logOut2_button;
+
+    @FXML
+    private Button logOut3_button;
 
     @FXML
     private TextField zipCode_text;
@@ -162,7 +173,7 @@ public class PatientController implements Initializable {
     ObservableList<String> filters2 = FXCollections.observableArrayList("All", "Only Current", "Only Consumed");
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
+    public void initialize(URL url, ResourceBundle resourceBundle){
         setVisible(false);
         cancel_button.setCancelButton(true);
         currentUser = Singleton.getInstance().getUser();
@@ -172,6 +183,38 @@ public class PatientController implements Initializable {
         dPicker.setOnAction(e -> {localDate = dPicker.getValue();});
         save_button.setOnAction(this::onSaveButtonPressed);
         cancel_button.setOnAction(this::onCancelButtonPressed);
+
+        logOut1_button.setOnAction(event -> {
+            try {
+                onLogOutButtonPressed(event);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        logOut2_button.setOnAction(event -> {
+            try {
+                onLogOutButtonPressed(event);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        logOut3_button.setOnAction(event -> {
+            try {
+                onLogOutButtonPressed(event);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        cartButton.setOnAction(event -> {
+            try {
+                cartButtonHandle(event);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
 
         confirmPassword.textProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -192,7 +235,7 @@ public class PatientController implements Initializable {
 
     @FXML
     public void cartButtonHandle(ActionEvent event) throws IOException {
-        Parent tableViewParent = FXMLLoader.load(getClass().getResource("view/shoppingCartView.fxml"));
+        Parent tableViewParent = FXMLLoader.load(getClass().getResource("/view/shoppingCartView.fxml"));
         Scene tableViewScene = new Scene(tableViewParent);
 
         Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
@@ -238,6 +281,21 @@ public class PatientController implements Initializable {
     @FXML public void onCancelButtonPressed(ActionEvent ae) {
       setInitialValues(currentUser);
       setVisible(false);
+    }
+
+    @FXML
+    public void onLogOutButtonPressed(ActionEvent event) throws IOException{
+        Parent tableViewParent = FXMLLoader.load(getClass().getResource("/view/loginView.fxml"));
+        Scene tableViewScene = new Scene(tableViewParent);
+
+        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+
+        window.setScene(tableViewScene);
+        window.show();
+        currentUser = null;
+        Singleton.getInstance().setUser(currentUser);
+        System.out.println("user = " + currentUser);             ////deleteme
+
     }
 
     @FXML public boolean checkFields() {

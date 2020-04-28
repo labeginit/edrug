@@ -73,7 +73,6 @@ public class LoginController implements Initializable {
                         progress.setVisible(true);
                         int type = user.getUserType();
                         PauseTransition pt = new PauseTransition();
-                     //   pt.setDuration(Duration.seconds(2));  not removing it for your consideration if you want to keep it :)
                         pt.setOnFinished(event -> {
                             System.out.println("Login successful");
                             if (rememberMeCheckBox.isSelected()) {
@@ -97,7 +96,7 @@ public class LoginController implements Initializable {
 
                                 stage.setTitle("e-Drugs");
                                 stage.setScene(newScene);
-
+                                System.out.println("user = " + Singleton.getInstance().getUser());  ////deleteme
                             } catch (Exception ex) {
                                 System.out.println(ex.getMessage());
                                 ex.printStackTrace();
