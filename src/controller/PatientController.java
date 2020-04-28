@@ -294,8 +294,6 @@ public class PatientController implements Initializable {
         window.show();
         currentUser = null;
         Singleton.getInstance().setUser(currentUser);
-        System.out.println("user = " + currentUser);             ////deleteme
-
     }
 
     @FXML public boolean checkFields() {

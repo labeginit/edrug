@@ -96,7 +96,6 @@ public class LoginController implements Initializable {
 
                                 stage.setTitle("e-Drugs");
                                 stage.setScene(newScene);
-                                System.out.println("user = " + Singleton.getInstance().getUser());  ////deleteme
                             } catch (Exception ex) {
                                 System.out.println(ex.getMessage());
                                 ex.printStackTrace();
