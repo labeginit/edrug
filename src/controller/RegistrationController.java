@@ -24,7 +24,7 @@ import java.sql.Date;
 
 public class RegistrationController implements Initializable {
     CommonMethods common = new CommonMethods();
-    LocalDate localDate;
+    public LocalDate localDate;
 
     @FXML
     private Button registerButton;

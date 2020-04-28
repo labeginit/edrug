@@ -1,20 +1,17 @@
 package model;
 
 import java.sql.Date;
-import java.util.List;
 
-public class Singleton {
-    private static Singleton singleton = null;
+public class UserSingleton {
+    private static UserSingleton ourInstance = new UserSingleton();
 
-    private Singleton() {
+    private UserSingleton() {
     }
-    
-    public static Singleton getInstance() {
-        if (singleton == null)
-            singleton = new Singleton();
 
-        return singleton;
+    public static UserSingleton getOurInstance() {
+        return ourInstance;
     }
+
 
     User user = new User() {
         @Override

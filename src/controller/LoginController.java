@@ -14,7 +14,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.CommonMethods;
-import model.Singleton;
+import model.UserSingleton;
 import model.User;
 
 import java.net.URL;
@@ -69,7 +69,7 @@ public class LoginController implements Initializable {
                             user.setActive(true);
                             common.updateUser(user);
                         }
-                        Singleton.getInstance().setUser(user);
+                        UserSingleton.getInstance().setUser(user);
                         progress.setVisible(true);
                         int type = user.getUserType();
                         PauseTransition pt = new PauseTransition();

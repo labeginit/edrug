@@ -38,17 +38,6 @@ public class Validation {
             starLabel.setVisible(true);
             return false;
     }
-    @FXML public static boolean isDOB(String dob, Label starLabel) {
-        String regex = "^([0-9]{4})-(1[0-2]|0[1-9])-(3[01]|[12][0-9]|0[1-9])$";
-        boolean aDOB = Pattern.compile(regex).matcher(dob).matches();
-        if (aDOB) {
-            starLabel.setVisible(false);
-            return true;
-        } else
-            alertPopup("Date must follow the correct format YYYY-MM-DD and be a valid date", "Improper Date", "Improper date format ");
-            starLabel.setVisible(true);
-            return false;
-    }
     @FXML public static boolean isZipcode(String zipcode, Label starLabel) {
         String regex = "^[0-9]{5}+$";
         boolean aZipcode = Pattern.compile(regex).matcher(zipcode).find();
@@ -70,15 +59,6 @@ public class Validation {
             alertPopup("Please enter a valid phone number ", "Invalid phone number", "Enter a valid phone number");
             starLabel.setVisible(true);
             return false;
-    }
-
-    //an example of validation method
-    public static boolean validateAmount(String value){
-        String reg = "^(?!0+$)\\d+$";
-        if (!value.matches(reg)){
-            alertPopup("Wrong input format", "Illegal format", "Wrong input format");
-        }
-        return value.matches(reg);
     }
     @FXML public static boolean isEmail(String email, Label starLabel) {
         String regex = "^(.+)@(.+)$";
