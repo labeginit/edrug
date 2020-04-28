@@ -12,7 +12,7 @@ public class DAOMedicine {
     private String name;
     private String path;
     private ProdGroup group = null;
-    private ResultSet resultSet;
+    private ResultSet resultSet = null;
     private final List<Medicine> medList = new ArrayList<>();
     private final List<ProdGroup> groups = new ArrayList<>();
     private final DAOCommon common = new DAOCommon();
@@ -20,6 +20,7 @@ public class DAOMedicine {
     private String value2;
 
     public List<Medicine> retrieveMedicineList(boolean onPrescription, boolean active) {
+        medList.clear();
         if (onPrescription) {
             value1 = "1";
         } else {
@@ -50,6 +51,7 @@ public class DAOMedicine {
     }
 
     public List<Medicine> retrieveMedicineList(boolean onPrescription) {
+        medList.clear();
         if (onPrescription) {
             value1 = "1";
         } else {
@@ -76,6 +78,7 @@ public class DAOMedicine {
     }
 
     public List<Medicine> retrieveMedicineList() {
+        medList.clear();
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 resultSet = common.retrieveSet("SELECT * FROM Medicine;");
@@ -108,6 +111,7 @@ public class DAOMedicine {
     }
 
     public List<ProdGroup> retrieveProductGroupList() {
+        groups.clear();
         try {
             resultSet = common.retrieveSet("SELECT CONCAT(CONCAT(c.gr_name, '/', b.gr_name), '/', a.gr_name) AS path, a.id, a.gr_name FROM Product_group a \n" +
                     "INNER JOIN Product_group b ON b.id = a.Product_group_id \n" +
@@ -128,6 +132,7 @@ public class DAOMedicine {
     }
 
     public ProdGroup retrieveProductGroup(int groupId) {
+        group = null;
         try {
             resultSet = common.retrieveSet("SELECT CONCAT(CONCAT(c.gr_name, '/', b.gr_name), '/', a.gr_name) AS path, a.id, a.gr_name FROM Product_group a \n" +
                     "INNER JOIN Product_group b ON b.id = a.Product_group_id \n" +
@@ -178,8 +183,8 @@ public class DAOMedicine {
         }
     }
 
-    public List<Medicine> retrieveMedicineByMaxPrice(double maxPrice) {  // LA: ___shows wrong data___
-        medList.clear();// LA: ___without this shows wrong data___
+    public List<Medicine> retrieveMedicineByMaxPrice(double maxPrice) {
+        medList.clear();
         try {
             resultSet = common.retrieveSet("SELECT * from Medicine WHERE active = 1 AND price <= ?", String.valueOf(maxPrice));
             if (resultSet != null) {

@@ -126,18 +126,6 @@ public abstract class User {
         return isActive;
     }
 
-    // use this method carefully ('instance of' will LIE. getClass().toString() will show the truth)
-    // since it needs to be instantiated from a subclass but it will still give you an object of the actual type
-    // consider using DAOUser class method getUser() instead if the user type is unknown
-    public User getUser(String sSN){
-        DAOUser daoUser = new DAOUser();
-        return daoUser.getUser(sSN);
-    }
-
-    public List<User> getUserList(){  // 0 - all users will be shown; values 1-3 - a corresponding type of users.
-        DAOUser daoUser = new DAOUser();
-        return daoUser.getUserList("0");
-    }
 
     @Override
     public String toString() {

@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DAOCommon {
-    private ResultSet resultSet;
+    private ResultSet resultSet = null;
     private int linesAffected = 0;
 
     public ResultSet retrieveSet(String queryString, String... params) {
@@ -16,13 +16,13 @@ public class DAOCommon {
                 for (int i = 0; i < params.length; i++) {
                     prepStmt.setString(i+1, params[i]);
                 }
-                resultSet = prepStmt.executeQuery();
+                return resultSet = prepStmt.executeQuery();
             }
         } catch (SQLException | NullPointerException ex) {
             System.out.println("Error when executing statement!");
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
         return resultSet;
     }
@@ -31,7 +31,7 @@ public class DAOCommon {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
-                resultSet = prepStmt.executeQuery();
+                return resultSet = prepStmt.executeQuery();
             }
         } catch (SQLException | NullPointerException ex) {
             System.out.println("Error when executing statement!");
