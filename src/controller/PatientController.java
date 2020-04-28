@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.*;
 
@@ -66,25 +67,28 @@ public class PatientController implements Initializable {
     private Button buy_button;
 
     @FXML
-    private TableColumn<?, ?> c1;
+    private TableView<Medicine> tableView;
 
     @FXML
-    private TableColumn<?, ?> c2;
+    private TableColumn<Medicine, Integer> c1;
 
     @FXML
-    private TableColumn<?, ?> c3;
+    private TableColumn<Medicine, String> c2;
 
     @FXML
-    private TableColumn<?, ?> c4;
+    private TableColumn<Medicine, String> c3;
 
     @FXML
-    private TableColumn<?, ?> c5;
+    private TableColumn<Medicine, Double> c4;
 
     @FXML
-    private TableColumn<?, ?> c6;
+    private TableColumn<Medicine, Integer> c5;
 
     @FXML
-    private TableColumn<?, ?> c7;
+    private TableColumn<Medicine, String> c6;
+
+    @FXML
+    private TableColumn<Medicine, String> c7;
 
     @FXML
     private TreeTableView<?> treeTableView;
@@ -222,6 +226,18 @@ public class PatientController implements Initializable {
                 passwordCheckLabel.setVisible(!t1.equals(password.getText()));
             }
         });
+
+        //TableView begin
+        c1.setCellValueFactory(new PropertyValueFactory<Medicine, Integer>("articleNo"));
+        c2.setCellValueFactory(new PropertyValueFactory<Medicine, String>("name"));
+        c3.setCellValueFactory(new PropertyValueFactory<Medicine, String>("packageSize"));
+        c4.setCellValueFactory(new PropertyValueFactory<Medicine, Double>("price"));
+        c5.setCellValueFactory(new PropertyValueFactory<Medicine, Integer>("quantity"));
+        c6.setCellValueFactory(new PropertyValueFactory<Medicine, String>("description"));
+        c7.setCellValueFactory(new PropertyValueFactory<Medicine, String>("producer"));
+        ObservableList<Medicine> medList = FXCollections.observableArrayList(commonMethods.getMedicineList(false));
+        tableView.setItems(medList);
+        //TableView end
 
     }
 

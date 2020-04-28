@@ -34,14 +34,14 @@
                             <Button fx:id="buy_button" minWidth="64.0" mnemonicParsing="false" prefWidth="64.0" text="Add to Cart" />
                           </buttons>
                         </ButtonBar>
-                        <TableView layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0">
+                        <TableView fx:id="tableView" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0">
                           <columns>
-                            <TableColumn fx:id="c1" prefWidth="93.33324909210205" text="Article" />
-                            <TableColumn fx:id="c2" minWidth="4.0" prefWidth="284.66674041748047" text="Name" />
-                              <TableColumn fx:id="c3" prefWidth="58.6666259765625" text="Size" />
-                              <TableColumn fx:id="c4" prefWidth="93.33328247070312" text="Price" />
-                              <TableColumn fx:id="c5" prefWidth="85.3333740234375" text="Availability" />
-                              <TableColumn fx:id="c6" prefWidth="74.0" text="Description" />
+                            <TableColumn fx:id="c1" prefWidth="57.600006103515625" text="Article" />
+                            <TableColumn fx:id="c2" minWidth="4.0" prefWidth="228.0" text="Name" />
+                              <TableColumn fx:id="c3" prefWidth="53.5999755859375" text="Size" />
+                              <TableColumn fx:id="c4" prefWidth="51.20001220703125" text="Price" />
+                              <TableColumn fx:id="c5" prefWidth="72.800048828125" text="Availability" />
+                              <TableColumn fx:id="c6" prefWidth="230.39996337890625" text="Description" />
                               <TableColumn fx:id="c7" prefWidth="81.333251953125" text="Producer" />
                           </columns>
                         </TableView>

@@ -10,15 +10,7 @@ public class PrescriptionFree extends Medicine {
     public boolean isOnPrescription() {
         return super.isOnPrescription();
     }
-/*
-    public PrescriptionFree getPrescriptionFreeObject(int articleNo){
-        //request to the DB
-        if (prescriptionFreeObject != null) {
-            return prescriptionFreeObject;
-        }
-        return null;
-    }
-*/
+
     @Override
     public String toString() {
         return super.toString();
