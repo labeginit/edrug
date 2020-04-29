@@ -128,7 +128,12 @@ public class TestCode {
         } else System.out.println("empty list8");
 */
 
-
+    /*    Medicine medicine = new OnPrescription(10005, 152400, "medicine", "biohim", "10 pcs", "descr", 33, 12.25, "active ingridient", true);
+        commonMethods.addMedicine(medicine);
+        medicine.setQuantity(5);
+        medicine.setActive(false);
+        medicine.setDescription("new descr");
+        commonMethods.updateMedicine(medicine);*/
 
 
     }

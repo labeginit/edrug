@@ -130,4 +130,59 @@ public class DAOCommon {
         }
         return linesAffected;
     }
+
+    public int insertMedicine(String queryString, int article, int prodGroupId, int onPrescription, String name, String producer, String description, String packageSize, int quantityAvailable, double price, String searchTerms, int isActive) {
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
+                prepStmt.setInt(1, article);
+                prepStmt.setInt(2, prodGroupId);
+                prepStmt.setInt(3, onPrescription);
+                prepStmt.setString(4, name);
+                prepStmt.setString(5, producer);
+                prepStmt.setString(6, description);
+                prepStmt.setString(7, packageSize);
+                prepStmt.setInt(8, quantityAvailable);
+                prepStmt.setDouble(9, price);
+                prepStmt.setString(10, searchTerms);
+                prepStmt.setInt(11, isActive);
+                linesAffected = prepStmt.executeUpdate();
+                prepStmt.close();
+            }
+        } catch (SQLException | NullPointerException ex) {
+            System.out.println("Error when executing statement!");
+            System.out.println(ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return linesAffected;
+    }
+
+    public int updateMedicine(String queryString, int article, int prodGroupId, int onPrescription, String name, String producer, String description, String packageSize, int quantityAvailable, double price, String searchTerms, int isActive) {
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
+
+                prepStmt.setInt(1, prodGroupId);
+                prepStmt.setInt(2, onPrescription);
+                prepStmt.setString(3, name);
+                prepStmt.setString(4, producer);
+                prepStmt.setString(5, description);
+                prepStmt.setString(6, packageSize);
+                prepStmt.setInt(7, quantityAvailable);
+                prepStmt.setDouble(8, price);
+                prepStmt.setString(9, searchTerms);
+                prepStmt.setInt(10, isActive);
+                prepStmt.setInt(11, article);
+                linesAffected = prepStmt.executeUpdate();
+                prepStmt.close();
+            }
+        } catch (SQLException | NullPointerException ex) {
+            System.out.println("Error when executing statement!");
+            System.out.println(ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return linesAffected;
+    }
 }

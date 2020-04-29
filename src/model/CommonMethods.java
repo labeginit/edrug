@@ -137,6 +137,16 @@ public class CommonMethods {
 
     //**********************
 
+    public int addMedicine(Medicine medicine){
+        return linesAffected = daoMedicine.addMedicine(medicine);
+    }
+
+    public int updateMedicine(Medicine medicine){
+        return linesAffected = daoMedicine.updateMedicine(medicine);
+    }
+
+    //**********************
+
     //returns all active medicine in the specified group (by full path) - made for filter
     public List<Medicine> getMedicineByProductGroupPath(String fullPath){
         return daoMedicine.retrieveMedicineByProductGroupPath(fullPath);
