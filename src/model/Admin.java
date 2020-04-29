@@ -12,7 +12,6 @@ public class Admin extends User {
         super(sSN, 3, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, true);
     }
 
-
     @Override
     public String toString(){
         return super.toString();
