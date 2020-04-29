@@ -117,7 +117,7 @@ public class RegistrationController implements Initializable {
             Validation.isZipcode(zipcode.getText(), zipcodeStar) && Validation.isPhoneNumber(phoneNumber.getText(), phoneNumberStar)
             && Validation.isEmail(email.getText(), emailStar) && Validation.isPassword(password.getText(), passwordStar)) {
                 try {
-                    Date dob = Date.valueOf(dPicker.getValue());
+                    Date dob = Date.valueOf(dPicker.getValue().plusDays(1));
                     Patient patient = new Patient(ssn.getText(), firstName.getText(), lastName.getText(), dob,
                             zipcode.getText(), address.getText(), email.getText(),
                             phoneNumber.getText(), password.getText());

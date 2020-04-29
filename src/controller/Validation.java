@@ -78,7 +78,7 @@ public class Validation {
             starLabel.setVisible(false);
             return true;
         } else
-            alertPopup("Password needs to be 6 characters long", "Short Password", "Password is to short");
+            alertPopup("Password needs to be at least 6 characters long", "Short Password", "Password is too short");
             starLabel.setVisible(true);
             return false;
     }

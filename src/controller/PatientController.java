@@ -403,7 +403,7 @@ public class PatientController implements Initializable {
                     Validation.isZipcode(zipCode_text.getText(), zipCodeStar) && Validation.isPhoneNumber(phoneNumber_text.getText(), phoneStar)
                     && Validation.isEmail(email_text.getText(), emailStar)) {
                 try {
-                    Date dob = Date.valueOf(dPicker.getValue());
+                    Date dob = Date.valueOf(dPicker.getValue().plusDays(1));
                     currentUser.setFirstName(firstName_text.getText());
                     currentUser.setLastName(lastName_text.getText());
                     currentUser.setBDate(dob);
