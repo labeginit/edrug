@@ -162,7 +162,7 @@ public class CommonMethods {
     //**********************
 
     public int addPrescription(Prescription prescription){
-        return daoPrescription.addPrescription(prescription); //adds only the header
+        return daoPrescription.addPrescription(prescription);
     }
 
     //**********************

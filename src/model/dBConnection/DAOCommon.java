@@ -207,4 +207,26 @@ public class DAOCommon {
         }
         return linesAffected;
     }
+
+    public int insertPrescriptionLine(String queryString, int prescId, String patientSSN, int article, int quantity, String instructions) {
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
+                prepStmt.setInt(1, prescId);
+                prepStmt.setString(2, patientSSN);
+                prepStmt.setInt(3, article);
+                prepStmt.setInt(4, quantity);
+                prepStmt.setString(5, instructions);
+
+                linesAffected = prepStmt.executeUpdate();
+                prepStmt.close();
+            }
+        } catch (SQLException | NullPointerException ex) {
+            System.out.println("Error when executing statement!");
+            System.out.println(ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return linesAffected;
+    }
 }

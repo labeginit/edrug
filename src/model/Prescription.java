@@ -9,9 +9,9 @@ public class Prescription {
     private Doctor doctor;
     private Date date;
     private String diagnosis;
-    private List<PrescriptionLines> specification;
+    private List<PrescriptionLine> specification;
 
-    public Prescription(int id, Doctor doctor, Patient patient, Date date,  String diagnosis, List<PrescriptionLines> specification){
+    public Prescription(int id, Doctor doctor, Patient patient, Date date,  String diagnosis, List<PrescriptionLine> specification){
         setId(id);
         setCurrentUser(doctor);
         setPatient(patient);
@@ -40,7 +40,7 @@ public class Prescription {
         this.diagnosis = diagnosis;
     }
 
-    public void setSpecification(List<PrescriptionLines> specification) {
+    public void setSpecification(List<PrescriptionLine> specification) {
         this.specification = specification;
     }
 
@@ -64,7 +64,7 @@ public class Prescription {
         return diagnosis;
     }
 
-    public List<PrescriptionLines> getSpecification() {
+    public List<PrescriptionLine> getSpecification() {
         return specification;
     }
 

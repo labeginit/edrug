@@ -1,13 +1,13 @@
 package model;
 
-public class PrescriptionLines {
+public class PrescriptionLine {
     private int prescId;
     private Medicine medicine;
     private Patient patient;
     private int quantity;
     private String instructions;
 
-    public PrescriptionLines(int prescId, Patient patient, Medicine medicine, int quantity, String instructions){
+    public PrescriptionLine(int prescId, Patient patient, Medicine medicine, int quantity, String instructions){
         setPrescId(prescId);
         setPatient(patient);
         setMedicine(medicine);
@@ -57,7 +57,7 @@ public class PrescriptionLines {
 
     @Override
     public String toString() {
-        return "PrescriptionLines{" +
+        return "PrescriptionLine{" +
                 "prescId=" + prescId +
                 ", medicine=" + medicine +
                 ", patient=" + patient +
