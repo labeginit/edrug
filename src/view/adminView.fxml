@@ -52,20 +52,21 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="425.0" prefWidth="586.0">
                             <children>
-                                <TreeTableView layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0">
-                                    <columns>
-                                        <TreeTableColumn fx:id="d2SSN" prefWidth="102.39996337890625" text="SSN" />
-                                        <TreeTableColumn fx:id="d2Name" prefWidth="215.0" text="Name" />
-                                        <TreeTableColumn fx:id="d2Phone" prefWidth="209.0" text="Phone Number" />
-                                        <TreeTableColumn fx:id="d2Email" prefWidth="243.0" text="Email" />
-                                    </columns>
-                                </TreeTableView>
-                                <ComboBox fx:id="filter2_combo" layoutX="607.0" layoutY="22.0" prefHeight="25.0" prefWidth="170.0" />
+                                <ComboBox fx:id="filterPatient" layoutX="607.0" layoutY="22.0" prefHeight="25.0" prefWidth="170.0" />
                                 <Label layoutX="10.0" layoutY="26.0" prefHeight="19.0" prefWidth="323.0" text="Here you can view all patients">
                                     <font>
                                         <Font size="13.0" />
                                     </font>
                                 </Label>
+                        <TableView fx:id="patientTableView" layoutX="3.0" layoutY="52.0" prefHeight="475.0" prefWidth="784.0">
+                          <columns>
+                            <TableColumn fx:id="patientSSNtable" prefWidth="144.0" text="SSN" />
+                            <TableColumn fx:id="patientLastNameTable" prefWidth="176.0" text="Last Name" />
+                              <TableColumn fx:id="patientFirstNameTable" prefWidth="131.0" text="First Name" />
+                              <TableColumn fx:id="patientPhoneTable" prefWidth="139.0" text="Phone Number" />
+                              <TableColumn fx:id="patientEmailTable" prefWidth="268.0" text="Email" />
+                          </columns>
+                        </TableView>
                             </children>
                         </AnchorPane>
                     </content>
@@ -76,13 +77,13 @@
                      <children>
                         <TreeTableView layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0">
                            <columns>
-                              <TreeTableColumn fx:id="d2SSN1" prefWidth="102.39996337890625" text="SSN" />
-                              <TreeTableColumn fx:id="d2Name1" prefWidth="189.5999755859375" text="Name" />
-                              <TreeTableColumn fx:id="d2Phone1" prefWidth="219.0" text="Phone Number" />
-                              <TreeTableColumn fx:id="d2Email1" prefWidth="258.0" text="Email" />
+                              <TreeTableColumn fx:id="doctorSSNtree" prefWidth="102.39996337890625" text="SSN" />
+                              <TreeTableColumn fx:id="doctorNameTree" prefWidth="189.5999755859375" text="Name" />
+                              <TreeTableColumn fx:id="doctorPhoneTree" prefWidth="219.0" text="Phone Number" />
+                              <TreeTableColumn fx:id="doctorEmailTree" prefWidth="258.0" text="Email" />
                            </columns>
                         </TreeTableView>
-                        <ComboBox fx:id="filter2_combo1" layoutX="607.0" layoutY="22.0" prefHeight="25.0" prefWidth="170.0" />
+                        <ComboBox fx:id="doctorFilter" layoutX="607.0" layoutY="22.0" prefHeight="25.0" prefWidth="170.0" />
                         <Label layoutX="10.0" layoutY="26.0" prefHeight="19.0" prefWidth="323.0" text="Here you can view all doctors">
                            <font>
                               <Font size="13.0" />
@@ -98,20 +99,20 @@
                      <children>
                         <TreeTableView layoutX="6.0" layoutY="55.0" prefHeight="417.0" prefWidth="771.0">
                            <columns>
-                              <TreeTableColumn fx:id="d2SSN11" prefWidth="102.39996337890625" text="SSN" />
-                              <TreeTableColumn fx:id="d2Name11" prefWidth="208.0" text="Name" />
-                              <TreeTableColumn fx:id="d2Phone11" prefWidth="140.0" text="Phone Number" />
-                              <TreeTableColumn fx:id="d2Email11" prefWidth="198.0" text="Email" />
-                              <TreeTableColumn fx:id="d2Role11" prefWidth="121.0" text="Role" />
+                              <TreeTableColumn fx:id="addSSN" prefWidth="102.39996337890625" text="SSN" />
+                              <TreeTableColumn fx:id="addName" prefWidth="208.0" text="Name" />
+                              <TreeTableColumn fx:id="addPhone" prefWidth="140.0" text="Phone Number" />
+                              <TreeTableColumn fx:id="addEmail" prefWidth="198.0" text="Email" />
+                              <TreeTableColumn fx:id="addRole" prefWidth="121.0" text="Role" />
                            </columns>
                         </TreeTableView>
-                        <ComboBox fx:id="filter2_combo11" layoutX="607.0" layoutY="22.0" prefHeight="25.0" prefWidth="170.0" />
+                        <ComboBox fx:id="addFilter" layoutX="607.0" layoutY="22.0" prefHeight="25.0" prefWidth="170.0" />
                         <Label layoutX="10.0" layoutY="26.0" prefHeight="19.0" prefWidth="323.0" text="Edit or add different roles">
                            <font>
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <Button fx:id="confirmButton" layoutX="186.0" layoutY="20.0" mnemonicParsing="false" text="Confirm" />
+                        <Button fx:id="confirmAddButton" layoutX="186.0" layoutY="20.0" mnemonicParsing="false" text="Confirm" />
                         <TextField fx:id="SSNnewTextField" alignment="CENTER" layoutX="14.0" layoutY="485.0" prefHeight="26.0" prefWidth="111.0" promptText="SSN" />
                         <TextField fx:id="nameNewTextField" alignment="CENTER" layoutX="142.0" layoutY="485.0" promptText="Name" />
                         <TextField fx:id="phoneNewTextField" alignment="CENTER" layoutX="312.0" layoutY="485.0" promptText="Phone Number" />
