@@ -2,6 +2,7 @@ package controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
@@ -11,10 +12,7 @@ import model.CommonMethods;
 
 import model.User;
 import model.UserSingleton;
-
-
 import java.net.URL;
-
 import java.util.ResourceBundle;
 
 public class AdminController implements Initializable {
@@ -52,12 +50,19 @@ public class AdminController implements Initializable {
     public TableColumn<User, String> patientEmailTable;
     public TableColumn<User, String> patientLastNameTable;
     public TableColumn<User, String> patientFirstNameTable;
-    public TableView <User>doctorTable;
-    public TableColumn <User, String> doctorSSNtable;
-    public TableColumn <User, String> doctorLastNameTable;
-    public TableColumn <User, String> doctorFirstNameTable;
-    public TableColumn <User, String> doctorPhoneTable;
-    public TableColumn <User, String> doctorEmailTable;
+    public TableView<User> doctorTable;
+    public TableColumn<User, String> doctorSSNtable;
+    public TableColumn<User, String> doctorLastNameTable;
+    public TableColumn<User, String> doctorFirstNameTable;
+    public TableColumn<User, String> doctorPhoneTable;
+    public TableColumn<User, String> doctorEmailTable;
+    public TableColumn<User, String> changeLastNameTable;
+    public TableColumn<User, String> changeFirstNameTable;
+    public TableColumn<User, String> changePhoneTable;
+    public TableColumn<User, String> changeEmailTable;
+    public TableColumn<User, String> changeSSNTable;
+    public TableView<User> changeTable;
+    public TableColumn<User, Integer> changeRoleTable;
 
     CommonMethods methods = new CommonMethods();
     User currentUser = UserSingleton.getOurInstance().getUser();
@@ -66,6 +71,7 @@ public class AdminController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         fillPatientTable();
         fillDoctorTable();
+        fillEditTable();
 
     }
 
@@ -77,11 +83,13 @@ public class AdminController implements Initializable {
         patientPhoneTable.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
         patientEmailTable.setCellValueFactory(new PropertyValueFactory<>("Email"));
 
+
         ObservableList<User> listOfPatients = FXCollections.observableArrayList(methods.getPatientList());
 
         patientTableView.setItems(listOfPatients);
 
     }
+
     public void fillDoctorTable() {
         doctorSSNtable.setCellValueFactory(new PropertyValueFactory<>("Ssn"));
         doctorFirstNameTable.setCellValueFactory(new PropertyValueFactory<>("firstName"));
@@ -92,6 +100,23 @@ public class AdminController implements Initializable {
         ObservableList<User> listOfDoctors = FXCollections.observableArrayList(methods.getDoctorList());
 
         doctorTable.setItems(listOfDoctors);
+        doctorPhoneTable.setEditable(true);
+
     }
 
-}
+    public void fillEditTable() {
+        changeSSNTable.setCellValueFactory(new PropertyValueFactory<>("Ssn"));
+        changeFirstNameTable.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        changeLastNameTable.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        changePhoneTable.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+        changeEmailTable.setCellValueFactory(new PropertyValueFactory<>("Email"));
+        changeRoleTable.setCellValueFactory(new PropertyValueFactory<>("userType"));
+
+
+        ObservableList<User> listOfAll = FXCollections.observableArrayList(methods.getDoctorList());
+        listOfAll.addAll(FXCollections.observableArrayList(methods.getPatientList()));
+
+            changeTable.setItems(listOfAll);
+
+        }
+    }
