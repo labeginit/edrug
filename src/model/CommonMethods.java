@@ -116,6 +116,10 @@ public class CommonMethods {
 
     //**********************
 
+    public Medicine getMedicine(int article){
+        return daoMedicine.getMedicine(article);
+    }
+
     //all kinds of medicine, active and inactive
     public List<Medicine> getMedicineList(){
         return daoMedicine.retrieveMedicineList();

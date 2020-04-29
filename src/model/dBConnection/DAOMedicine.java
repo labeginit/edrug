@@ -18,6 +18,7 @@ public class DAOMedicine {
     private final DAOCommon common = new DAOCommon();
     private String value1;
     private String value2;
+    private Medicine medicine;
 
     public List<Medicine> retrieveMedicineList(boolean onPrescription, boolean active) {
         medList.clear();
@@ -108,6 +109,46 @@ public class DAOMedicine {
             }
         }
         return med;
+    }
+
+    public Medicine getMedicine(int article) {
+        Medicine temp = null;
+        String query = "SELECT * FROM Medicine where article = ?;";
+        try {
+            temp = retrieveMedicine(query, article);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return temp;
+    }
+
+    private Medicine retrieveMedicine(String query, int article) {
+        medicine = null;
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                resultSet = common.retrieveSet(query, String.valueOf(article));
+                if (resultSet != null) {
+                    if (resultSet.first()) {
+                        medicine = createMedicineObjects(resultSet);
+                    }
+                } else {
+                    System.out.println("Empty resultSet");
+                    return medicine;
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error while working with ResultSet!");
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                resultSet.close();
+            }catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            return medicine;
+        }
     }
 
     public List<ProdGroup> retrieveProductGroupList() {
