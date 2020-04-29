@@ -1,35 +1,26 @@
 package controller;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TreeItemPropertyValueFactory;
-import javafx.util.Callback;
+
 import model.CommonMethods;
-import model.Patient;
+
 import model.User;
 import model.UserSingleton;
 
 
 import java.net.URL;
-import java.util.Collection;
-import java.util.List;
+
 import java.util.ResourceBundle;
 
 public class AdminController implements Initializable {
 
 
     public ComboBox filterPatient;
-    public TreeTableColumn doctorSSNtree;
-    public TreeTableColumn doctorNameTree;
-    public TreeTableColumn doctorPhoneTree;
-    public TreeTableColumn doctorEmailTree;
     public ComboBox doctorFilter;
     public TreeTableColumn addSSN;
     public TreeTableColumn addName;
@@ -56,16 +47,29 @@ public class AdminController implements Initializable {
     public TextField pass1_text;
     public TextField pass2_text;
     public TableView<User> patientTableView;
-    public TableColumn <User, String> patientSSNtable;
+    public TableColumn<User, String> patientSSNtable;
     public TableColumn<User, String> patientPhoneTable;
     public TableColumn<User, String> patientEmailTable;
     public TableColumn<User, String> patientLastNameTable;
     public TableColumn<User, String> patientFirstNameTable;
+    public TableView <User>doctorTable;
+    public TableColumn <User, String> doctorSSNtable;
+    public TableColumn <User, String> doctorLastNameTable;
+    public TableColumn <User, String> doctorFirstNameTable;
+    public TableColumn <User, String> doctorPhoneTable;
+    public TableColumn <User, String> doctorEmailTable;
+
+    CommonMethods methods = new CommonMethods();
+    User currentUser = UserSingleton.getOurInstance().getUser();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        User currentUser = UserSingleton.getOurInstance().getUser();
-        CommonMethods methods = new CommonMethods();
+        fillPatientTable();
+        fillDoctorTable();
+
+    }
+
+    public void fillPatientTable() {
 
         patientSSNtable.setCellValueFactory(new PropertyValueFactory<>("Ssn"));
         patientFirstNameTable.setCellValueFactory(new PropertyValueFactory<>("firstName"));
@@ -75,8 +79,19 @@ public class AdminController implements Initializable {
 
         ObservableList<User> listOfPatients = FXCollections.observableArrayList(methods.getPatientList());
 
+        patientTableView.setItems(listOfPatients);
 
-            patientTableView.setItems(listOfPatients);
-        }
+    }
+    public void fillDoctorTable() {
+        doctorSSNtable.setCellValueFactory(new PropertyValueFactory<>("Ssn"));
+        doctorFirstNameTable.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        doctorLastNameTable.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        doctorPhoneTable.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+        doctorEmailTable.setCellValueFactory(new PropertyValueFactory<>("Email"));
 
-        }
+        ObservableList<User> listOfDoctors = FXCollections.observableArrayList(methods.getDoctorList());
+
+        doctorTable.setItems(listOfDoctors);
+    }
+
+}
