@@ -19,6 +19,7 @@ import model.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.sql.SQLType;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -355,20 +356,34 @@ public class PatientController implements Initializable {
     @FXML
 
     private void addToCartButtonHandle(ActionEvent event) {
-        for(Medicine element : medList)
+
+        for(Medicine element : filteredData)
         {
             if(element.getCheckBox().isSelected())
             {
-                if (cart.size() == 0){
-                    cart.addMedicine(element);
-                } else {
-                    if (!cartElementPresenceCheck(element)){
+                int available = commonMethods.getMedicine(element.getArticleNo()).getQuantity();
+                System.out.println("qty before: " + available);
+                if (available > 0) {
+                    if (cart.size() == 0) {
                         cart.addMedicine(element);
+                    } else {
+                        if (!cartElementPresenceCheck(element)) {
+                            cart.addMedicine(element);
+                        }
+
                     }
+                    available--;
+                    System.out.println("qty after: " + available);
+                    tableView.refresh();
                 }
                 element.getCheckBox().setSelected(false);
             }
         }
+//deleteme
+        for (int i = 0; i < cart.size(); i++) {
+            System.out.println(cart.getMedicine(i));
+        }
+        System.out.println();
     }
 
     private boolean cartElementPresenceCheck(Medicine selectedElement){
