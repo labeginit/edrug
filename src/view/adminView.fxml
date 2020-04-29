@@ -133,7 +133,7 @@
                                         <Button fx:id="save_button" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" text="Save" />
                                     </buttons>
                                 </ButtonBar>
-                                <ListView focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0" />
+                                <ListView focusTraversable="false" layoutX="6.0" layoutY="64.0" prefHeight="454.0" prefWidth="771.0" />
                                 <TextField fx:id="SSNtext" editable="false" layoutX="200.0" layoutY="73.0" prefHeight="25.0" prefWidth="220.0" />
                                 <TextField fx:id="birth_text" editable="false" layoutX="200.0" layoutY="116.0" prefHeight="25.0" prefWidth="220.0" />
                                 <TextField fx:id="firstName_text" layoutX="200.0" layoutY="164.0" prefHeight="25.0" prefWidth="220.0" />
@@ -194,6 +194,16 @@
                                         <Font size="13.0" />
                                     </font>
                                 </Label>
+                        <Label fx:id="SSNstar" layoutX="434.0" layoutY="78.0" text="*" textFill="RED" />
+                        <Label fx:id="BDateStar" layoutX="434.0" layoutY="120.0" text="*" textFill="RED" />
+                        <Label fx:id="firstNameStar" layoutX="434.0" layoutY="168.0" text="*" textFill="RED" />
+                        <Label fx:id="lastNameStar" layoutX="434.0" layoutY="212.0" text="*" textFill="RED" />
+                        <Label fx:id="zipStar" layoutX="264.0" layoutY="254.0" text="*" textFill="RED" />
+                        <Label fx:id="addressStar" layoutX="753.0" layoutY="254.0" text="*" textFill="RED" />
+                        <Label fx:id="phoneStar" layoutX="434.0" layoutY="295.0" text="*" textFill="RED" />
+                        <Label fx:id="emailStar" layoutX="434.0" layoutY="342.0" text="*" textFill="RED" />
+                        <Label fx:id="pass2star" layoutX="434.0" layoutY="437.0" text="*" textFill="RED" />
+                        <Label fx:id="pass1star" layoutX="434.0" layoutY="388.0" text="*" textFill="RED" />
                             </children>
                         </AnchorPane>
                     </content>
