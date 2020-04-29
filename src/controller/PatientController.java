@@ -3,7 +3,6 @@ package controller;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -17,24 +16,23 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.*;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+
 import javafx.event.ActionEvent;
 
-import javax.swing.*;
 
 
 public class PatientController implements Initializable {
     CommonMethods commonMethods = new CommonMethods();
     private User currentUser;
     public LocalDate localDate;
+    private static ShoppingCart cart = new ShoppingCart();
 
     @FXML
     private ComboBox<String> groupFilter_combo;
@@ -97,10 +95,12 @@ public class PatientController implements Initializable {
     private TableColumn<Medicine, String> c7;
 
     @FXML
-    private TreeTableView<?> treeTableView;
+    private TableColumn<Medicine, CheckBox> c8;
 
     @FXML
-    private TreeTableColumn<?, ?> c8;
+    private TreeTableView<?> treeTableView;
+
+
 
     @FXML
     private TreeTableColumn<?, ?> c9;
@@ -118,13 +118,16 @@ public class PatientController implements Initializable {
     private TreeTableColumn<?, ?> c13;
 
     @FXML
+    private TreeTableColumn<?, ?> c14;
+
+    @FXML
     private Button cancel_button;
 
     @FXML
     private DatePicker dPicker;
 
     @FXML
-    private  Button logOut1_button;
+    private Button logOut1_button;
 
     @FXML
     private Button logOut2_button;
@@ -173,8 +176,8 @@ public class PatientController implements Initializable {
     private ObservableList<Medicine> medList = FXCollections.observableArrayList(commonMethods.getMedicineList(false)); // here will probably need to add those from Prescriptions
     private FilteredList<Medicine> filteredData = new FilteredList<>(medList, p -> true);
 
-    private List<String> fillList(List<ProdGroup> groups){
-        groupPaths.add("All");
+    private List<String> fillList(List<ProdGroup> groups) {
+        groupPaths.add("");
         for (int i = 1; i < groups.size(); i++) {
             groupPaths.add(groups.get(i).getPath());
         }
@@ -185,14 +188,16 @@ public class PatientController implements Initializable {
     private ObservableList<String> filters2 = FXCollections.observableArrayList("All", "Only Current", "Only Consumed");
 
     @Override
-    public void initialize(URL url, ResourceBundle resourceBundle){
+    public void initialize(URL url, ResourceBundle resourceBundle) {
         setVisible(false);
         cancel_button.setCancelButton(true);
         currentUser = UserSingleton.getOurInstance().getUser();
         groupFilter_combo.setItems(filters1);
         prescFilter_combo.setItems(filters2);
         setInitialValues(currentUser);
-        dPicker.setOnAction(e -> {localDate = dPicker.getValue();});
+        dPicker.setOnAction(e -> {
+            localDate = dPicker.getValue();
+        });
         save_button.setOnAction(this::onSaveButtonPressed);
         cancel_button.setOnAction(this::onCancelButtonPressed);
 
@@ -243,6 +248,7 @@ public class PatientController implements Initializable {
         c5.setCellValueFactory(new PropertyValueFactory<Medicine, Integer>("quantity"));
         c6.setCellValueFactory(new PropertyValueFactory<Medicine, String>("description"));
         c7.setCellValueFactory(new PropertyValueFactory<Medicine, String>("producer"));
+        c8.setCellValueFactory(new PropertyValueFactory<Medicine, CheckBox>("checkBox"));
 
         // currently the combination of different filters is not working after value in the comboBox has been changed
 
@@ -259,27 +265,49 @@ public class PatientController implements Initializable {
                     return true;
                 } else if (medicine.getSearchTerms().toLowerCase().contains(lowerCaseFilter)) {
                     return true;
-                } else if (String.valueOf(medicine.getArticleNo()).contains(lowerCaseFilter)){
+                } else if (String.valueOf(medicine.getArticleNo()).contains(lowerCaseFilter)) {
                     return true;
                 }
                 return false;
             });
         });
 
-        groupFilter_combo.setOnAction((event) -> {
+           groupFilter_combo.setOnAction((event) -> {
+               String val = groupFilter_combo.getValue();
+               ObservableList<Medicine> newList = FXCollections.observableArrayList(commonMethods.getMedicineByProductGroupPath(val));
+               for (int i = 0; i < newList.size(); i++) {
+                   if (newList.get(i).isOnPrescription()){  //add more here - if these ids are from the prescription - do not delete
+                       newList.remove(i);
+                    }
+                }
+               SortedList<Medicine> sortedData2 = new SortedList<>(newList);
+               sortedData2.comparatorProperty().bind(tableView.comparatorProperty());
+               tableView.setItems(sortedData2);
+
+            });
+
+  /*      groupFilter_combo.editorProperty().addListener((observable, oldValue, newValue) -> {
             String val = groupFilter_combo.getValue();
             ObservableList<Medicine> newList = FXCollections.observableArrayList(commonMethods.getMedicineByProductGroupPath(val));
-            for (int i = 0; i < newList.size(); i++) {
-                if (newList.get(i).isOnPrescription()){  //add more here - if these ids are from the prescription - do not delete
-                    newList.remove(i);
+            filteredData.setPredicate(medicine -> {
+                if (newValue == null) {
+                    return true;
                 }
-            }
-            SortedList<Medicine> sortedData2 = new SortedList<>(newList);
-            sortedData2.comparatorProperty().bind(tableView.comparatorProperty());
-            tableView.setItems(sortedData2);
-
+                if (newList != null) {
+                    for (int i = 0; i < newList.size(); i++) {
+                        if (newList.get(i).isOnPrescription()) {  //add more here - if these ids are from the prescription - do not delete
+                            newList.remove(i);
+                        }
+                        return true;
+                    }
+                }
+                return false;
+                //     SortedList<Medicine> sortedData2 = new SortedList<>(newList);
+                //     sortedData2.comparatorProperty().bind(tableView.comparatorProperty());
+                //     tableView.setItems(sortedData2);
+            });
         });
-
+*/
         maxPrice_text.textProperty().addListener((observable, oldValue, newValue) -> {
             search_textField.setText("");
             filteredData.setPredicate(medicine -> {
@@ -313,19 +341,50 @@ public class PatientController implements Initializable {
         return filters2;
     }
 
-    @FXML private void cartButtonHandle(ActionEvent event) throws IOException {
+    @FXML
+    private void cartButtonHandle(ActionEvent event) throws IOException {
         Parent tableViewParent = FXMLLoader.load(getClass().getResource("/view/shoppingCartView.fxml"));
         Scene tableViewScene = new Scene(tableViewParent);
 
-        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         window.setScene(tableViewScene);
         window.show();
     }
 
-    @FXML private void onSaveButtonPressed(ActionEvent ae) {
+    @FXML
+
+    private void addToCartButtonHandle(ActionEvent event) {
+        for(Medicine element : medList)
+        {
+            if(element.getCheckBox().isSelected())
+            {
+                if (cart.size() == 0){
+                    cart.addMedicine(element);
+                } else {
+                    if (!cartElementPresenceCheck(element)){
+                        cart.addMedicine(element);
+                    }
+                }
+                element.getCheckBox().setSelected(false);
+            }
+        }
+    }
+
+    private boolean cartElementPresenceCheck(Medicine selectedElement){
+        for (int i = 0; i < cart.size(); i++) {
+            if (cart.getMedicine(i).getArticleNo() == selectedElement.getArticleNo()) {
+                cart.getMedicine(i).setQuantity(cart.getMedicine(i).getQuantity() + 1);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @FXML
+    private void onSaveButtonPressed(ActionEvent ae) {
         if (checkFields()) {
-            if(Validation.isName(firstName_text.getText(), firstNameStar) && Validation.isName(lastName_text.getText(), lastNameStar) &&
+            if (Validation.isName(firstName_text.getText(), firstNameStar) && Validation.isName(lastName_text.getText(), lastNameStar) &&
                     Validation.isZipcode(zipCode_text.getText(), zipCodeStar) && Validation.isPhoneNumber(phoneNumber_text.getText(), phoneStar)
                     && Validation.isEmail(email_text.getText(), emailStar)) {
                 try {
@@ -357,16 +416,18 @@ public class PatientController implements Initializable {
         }
     }
 
-    @FXML private void onCancelButtonPressed(ActionEvent ae) {
-      setInitialValues(currentUser);
-      setVisible(false);
+    @FXML
+    private void onCancelButtonPressed(ActionEvent ae) {
+        setInitialValues(currentUser);
+        setVisible(false);
     }
 
-    @FXML private void onLogOutButtonPressed(ActionEvent event) throws IOException{
+    @FXML
+    private void onLogOutButtonPressed(ActionEvent event) throws IOException {
         Parent tableViewParent = FXMLLoader.load(getClass().getResource("/view/loginView.fxml"));
         Scene tableViewScene = new Scene(tableViewParent);
 
-        Stage window = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         window.setScene(tableViewScene);
         window.show();
@@ -374,34 +435,43 @@ public class PatientController implements Initializable {
         UserSingleton.getOurInstance().setUser(currentUser);
     }
 
-    @FXML private boolean checkFields() {
+    @FXML
+    private boolean checkFields() {
         if (firstName_text.getText().isEmpty() || lastName_text.getText().isEmpty() || dPicker.getValue() == null
                 || zipCode_text.getText().isEmpty() || address_text.getText().isEmpty() || email_text.getText().isEmpty() || phoneNumber_text.getText().isEmpty()) {
-            if(firstName_text.getText().isEmpty()){
+            if (firstName_text.getText().isEmpty()) {
                 firstNameStar.setVisible(true);
-            } if (lastName_text.getText().isEmpty()) {
+            }
+            if (lastName_text.getText().isEmpty()) {
                 lastNameStar.setVisible(true);
-            } if (dPicker.getValue() == null) {
+            }
+            if (dPicker.getValue() == null) {
                 birthDateStar.setVisible(true);
-            } if (zipCode_text.getText().isEmpty()) {
+            }
+            if (zipCode_text.getText().isEmpty()) {
                 zipCodeStar.setVisible(true);
-            } if (address_text.getText().isEmpty()) {
+            }
+            if (address_text.getText().isEmpty()) {
                 addressStar.setVisible(true);
-            } if (email_text.getText().isEmpty()) {
+            }
+            if (email_text.getText().isEmpty()) {
                 emailStar.setVisible(true);
-            } if (phoneNumber_text.getText().isEmpty()) {
+            }
+            if (phoneNumber_text.getText().isEmpty()) {
                 phoneStar.setVisible(true);
             }
             Validation.alertPopup("Please enter your information into all fields", "Empty Fields", "Contains empty fields");
             return false;
-        } else if (!password.getText().equals(confirmPassword.getText())){
+        } else if (!password.getText().equals(confirmPassword.getText())) {
             passwordCheckLabel.setVisible(true);
             Validation.alertPopup("Password does not match", "Password Mismatch", "Password doesn't match");
             return false;
         } else
             return true;
     }
-    @FXML private void setVisible(boolean on) {
+
+    @FXML
+    private void setVisible(boolean on) {
         firstNameStar.setVisible(on);
         lastNameStar.setVisible(on);
         birthDateStar.setVisible(on);
@@ -412,7 +482,7 @@ public class PatientController implements Initializable {
         passwordCheckLabel.setVisible(on);
     }
 
-    private void setInitialValues(User currentUser){
+    private void setInitialValues(User currentUser) {
         firstName_text.setText(currentUser.getFirstName());
         lastName_text.setText(currentUser.getLastName());
         ssn_text.setText(currentUser.getSsn());

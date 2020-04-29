@@ -1,10 +1,6 @@
 package model;
 
-
-import model.dBConnection.DAOMedicine;
-import model.dBConnection.DAOUser;
-
-import java.util.List;
+import javafx.scene.control.CheckBox;
 
 public abstract class Medicine {
     private int articleNo;
@@ -18,9 +14,7 @@ public abstract class Medicine {
     private String searchTerms;
     private int groupId;
     private boolean isActive;
-    private final DAOMedicine daoMedicine = new DAOMedicine();
-
-    public Medicine(){}
+    private CheckBox checkBox;
 
     public Medicine(int articleNo, int groupId, boolean onPrescription, String name, String producer, String packageSize, String description, int quantity, double price, String searchTerms, boolean isActive){
         setArticleNo(articleNo);
@@ -34,6 +28,7 @@ public abstract class Medicine {
         setGroup(groupId);
         setOnPrescription(onPrescription);
         setActive(isActive);
+        setCheckBox(new CheckBox());
     }
 
     public void setArticleNo(int articleNo) {
@@ -124,25 +119,14 @@ public abstract class Medicine {
         return isActive;
     }
 
-    public List<Medicine> getMedicineList(boolean onPrescription, boolean isActive){
-        return daoMedicine.retrieveMedicineList(onPrescription, isActive);
+    public void setCheckBox(CheckBox checkBox) {
+        this.checkBox = checkBox;
     }
 
-    public List<Medicine> getMedicineList(boolean onPrescription){
-        return daoMedicine.retrieveMedicineList(onPrescription);
+    public CheckBox getCheckBox() {
+        return checkBox;
     }
 
-    public List<Medicine> getMedicineList(){
-        return daoMedicine.retrieveMedicineList();
-    }
-
-    public List<ProdGroup> getProductGroupList(){
-        return daoMedicine.retrieveProductGroupList();
-    }
-
-    public ProdGroup getProdGroup(int id){
-        return daoMedicine.retrieveProductGroup(id);
-    }
 
     @Override
     public String toString() {
