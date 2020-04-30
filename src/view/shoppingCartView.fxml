@@ -43,28 +43,28 @@
                                         <Font size="13.0" />
                                     </font>
                                 </Label>
-                                <TextField fx:id="firstName_text" alignment="CENTER_RIGHT" layoutX="127.0" layoutY="21.0" prefHeight="26.0" prefWidth="134.0" />
-                                <ComboBox fx:id="delivery_combo" layoutX="127.0" layoutY="101.0" prefHeight="25.0" prefWidth="179.0" promptText="select here..." />
-                                <TextField fx:id="totalCost_text" alignment="CENTER_RIGHT" editable="false" layoutX="390.0" layoutY="101.0" prefHeight="25.0" prefWidth="145.0" promptText="00.00" />
+                                <TextField fx:id="firstName_text" alignment="CENTER_RIGHT" layoutX="127.0" layoutY="21.0" prefHeight="26.0" prefWidth="134.0" promptText="first name" />
+                                <ComboBox fx:id="delivery_combo" layoutX="127.0" layoutY="101.0" prefHeight="26.0" prefWidth="192.0" promptText="select here..." />
+                                <TextField fx:id="totalCost_text" alignment="CENTER_RIGHT" editable="false" layoutX="402.0" layoutY="101.0" prefHeight="26.0" prefWidth="134.0" promptText="00.00" />
                                 <Label layoutX="14.0" layoutY="64.0" prefHeight="19.0" prefWidth="103.0" text="Delivery Address:">
                                     <font>
                                         <Font size="13.0" />
                                     </font>
                                 </Label>
-                        <ComboBox fx:id="payment_combo" layoutX="127.0" layoutY="140.0" prefHeight="25.0" prefWidth="179.0" promptText="select here..." />
-                        <TextField fx:id="address_text" alignment="CENTER_RIGHT" layoutX="127.0" layoutY="61.0" prefHeight="26.0" prefWidth="409.0" />
-                        <Label layoutX="317.0" layoutY="104.0" prefHeight="19.0" prefWidth="65.0" text="Total Cost:">
+                        <ComboBox fx:id="payment_combo" layoutX="127.0" layoutY="140.0" prefHeight="26.0" prefWidth="192.0" promptText="select here..." />
+                        <TextField fx:id="zipCode_text" alignment="CENTER_RIGHT" layoutX="127.0" layoutY="61.0" prefHeight="26.0" prefWidth="134.0" promptText="zip code" />
+                        <Label layoutX="327.0" layoutY="104.0" prefHeight="19.0" prefWidth="65.0" text="Total Cost:">
                            <font>
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="totalVAT_text" alignment="CENTER_RIGHT" editable="false" layoutX="390.0" layoutY="140.0" prefHeight="25.0" prefWidth="145.0" promptText="00.00" />
-                        <Label layoutX="317.0" layoutY="142.0" prefHeight="19.0" prefWidth="65.0" text="Total VAT:">
+                        <TextField fx:id="totalVAT_text" alignment="CENTER_RIGHT" editable="false" layoutX="402.0" layoutY="140.0" prefHeight="26.0" prefWidth="134.0" promptText="00.00" />
+                        <Label layoutX="327.0" layoutY="142.0" prefHeight="19.0" prefWidth="65.0" text="Total VAT:">
                            <font>
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="lastName_text" alignment="CENTER_RIGHT" layoutX="272.0" layoutY="21.0" prefHeight="26.0" prefWidth="264.0" />
+                        <TextField fx:id="lastName_text" alignment="CENTER_RIGHT" layoutX="272.0" layoutY="21.0" prefHeight="26.0" prefWidth="264.0" promptText="last name" />
                         <Label layoutX="14.0" layoutY="104.0" prefHeight="19.0" prefWidth="103.0" text="Delivery Method:">
                            <font>
                               <Font size="13.0" />
@@ -75,6 +75,7 @@
                               <Font size="13.0" />
                            </font>
                         </Label>
+                        <TextField fx:id="address_text" alignment="CENTER_RIGHT" layoutX="272.0" layoutY="61.0" prefHeight="26.0" prefWidth="264.0" promptText="address" />
                             </children></AnchorPane>
                     </content>
                 </Tab>

@@ -41,4 +41,9 @@ public class ShoppingCart {
     public int size(){
         return size;
     }
+
+    public List<Medicine> getCartList() {
+
+        return cartList;
+    }
 }

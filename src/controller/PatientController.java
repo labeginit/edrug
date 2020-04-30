@@ -27,10 +27,12 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 
 public class PatientController implements Initializable {
-    CommonMethods commonMethods = new CommonMethods();
+    private CommonMethods commonMethods = new CommonMethods();
+    private UserCommon userCommon = new UserCommon();
     private User currentUser;
     public LocalDate localDate;
     public static ShoppingCart cart = new ShoppingCart();
+
 
     @FXML
     private ComboBox<String> groupFilter_combo;
@@ -199,7 +201,7 @@ public class PatientController implements Initializable {
 
         logOut1_button.setOnAction(event -> {
             try {
-                onLogOutButtonPressed(event);
+                userCommon.onLogOutButtonPressed(event);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -207,7 +209,7 @@ public class PatientController implements Initializable {
 
         logOut2_button.setOnAction(event -> {
             try {
-                onLogOutButtonPressed(event);
+                userCommon.onLogOutButtonPressed(event);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -215,7 +217,7 @@ public class PatientController implements Initializable {
 
         logOut3_button.setOnAction(event -> {
             try {
-                onLogOutButtonPressed(event);
+                userCommon.onLogOutButtonPressed(event);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -339,13 +341,7 @@ public class PatientController implements Initializable {
 
     @FXML
     private void cartButtonHandle(ActionEvent event) throws IOException {
-        Parent tableViewParent = FXMLLoader.load(getClass().getResource("/view/shoppingCartView.fxml"));
-        Scene tableViewScene = new Scene(tableViewParent);
-
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        window.setScene(tableViewScene);
-        window.show();
+       userCommon.switchScene(event, "/view/shoppingCartView.fxml");
     }
 
     @FXML
@@ -383,6 +379,9 @@ public class PatientController implements Initializable {
         }
         System.out.println();
     }
+
+
+
 
     private boolean cartElementPresenceCheck(Medicine selectedElement){
         for (int i = 0; i < cart.size(); i++) {
@@ -433,19 +432,6 @@ public class PatientController implements Initializable {
     private void onCancelButtonPressed(ActionEvent ae) {
         setInitialValues(currentUser);
         setVisible(false);
-    }
-
-    @FXML
-    private void onLogOutButtonPressed(ActionEvent event) throws IOException {
-        Parent tableViewParent = FXMLLoader.load(getClass().getResource("/view/loginView.fxml"));
-        Scene tableViewScene = new Scene(tableViewParent);
-
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        window.setScene(tableViewScene);
-        window.show();
-        currentUser = null;
-        UserSingleton.getOurInstance().setUser(currentUser);
     }
 
     @FXML
