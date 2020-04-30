@@ -5,6 +5,7 @@ import model.dBConnection.DAOUser;
 import model.dBConnection.DBConnection;
 
 import javax.print.MultiDocPrintService;
+import java.util.ArrayList;
 import java.util.List;
 
 public class TestCode {
@@ -128,7 +129,23 @@ public class TestCode {
         } else System.out.println("empty list8");
 */
 
+    /*    Medicine medicine = new OnPrescription(10005, 152400, "medicine", "biohim", "10 pcs", "descr", 33, 12.25, "active ingridient", true);
+        commonMethods.addMedicine(medicine);
+        medicine.setQuantity(5);
+        medicine.setActive(false);
+        medicine.setDescription("new descr");
+        commonMethods.updateMedicine(medicine);*/
 
+/*        List<PrescriptionLine> lines = new ArrayList<>();
+        PrescriptionLine line1 = new PrescriptionLine(2, (Patient) commonMethods.getUser("222222-111"), commonMethods.getMedicine(10003), 1, "take it easy");
+        PrescriptionLine line2 = new PrescriptionLine(2, (Patient) commonMethods.getUser("222222-111"), commonMethods.getMedicine(10004), 2, "take it slow");
+        lines.add(line1);
+        lines.add(line2);
+
+        Prescription prescription = new Prescription(2, (Doctor) commonMethods.getUser("860305-0731"), (Patient) commonMethods.getUser("222222-111"), java.sql.Date.valueOf("2020-04-29"), "headache", lines);
+        int added = commonMethods.addPrescription(prescription);
+        System.out.println(added);
+*/
 
 
     }

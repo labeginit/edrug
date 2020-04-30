@@ -1,10 +1,6 @@
 package model;
 
-
-import model.dBConnection.DAOMedicine;
-import model.dBConnection.DAOUser;
-
-import java.util.List;
+import javafx.scene.control.CheckBox;
 
 public abstract class Medicine {
     private int articleNo;
@@ -14,13 +10,12 @@ public abstract class Medicine {
     private String packageSize;
     private String description;
     private int quantity;
+    private int quantityReserved;
     private double price;
     private String searchTerms;
     private int groupId;
     private boolean isActive;
-    private final DAOMedicine daoMedicine = new DAOMedicine();
-
-    public Medicine(){}
+    private CheckBox checkBox;
 
     public Medicine(int articleNo, int groupId, boolean onPrescription, String name, String producer, String packageSize, String description, int quantity, double price, String searchTerms, boolean isActive){
         setArticleNo(articleNo);
@@ -34,6 +29,7 @@ public abstract class Medicine {
         setGroup(groupId);
         setOnPrescription(onPrescription);
         setActive(isActive);
+        setCheckBox(new CheckBox());
     }
 
     public void setArticleNo(int articleNo) {
@@ -74,6 +70,10 @@ public abstract class Medicine {
 
     public void setGroup(int groupId) {
         this.groupId = groupId;
+    }
+
+    public void setQuantityReserved(int quantityReserved) {
+        this.quantityReserved = quantityReserved;
     }
 
     public int getArticleNo() {
@@ -124,24 +124,16 @@ public abstract class Medicine {
         return isActive;
     }
 
-    public List<Medicine> getMedicineList(boolean onPrescription, boolean isActive){
-        return daoMedicine.retrieveMedicineList(onPrescription, isActive);
+    public void setCheckBox(CheckBox checkBox) {
+        this.checkBox = checkBox;
     }
 
-    public List<Medicine> getMedicineList(boolean onPrescription){
-        return daoMedicine.retrieveMedicineList(onPrescription);
+    public CheckBox getCheckBox() {
+        return checkBox;
     }
 
-    public List<Medicine> getMedicineList(){
-        return daoMedicine.retrieveMedicineList();
-    }
-
-    public List<ProdGroup> getProductGroupList(){
-        return daoMedicine.retrieveProductGroupList();
-    }
-
-    public ProdGroup getProdGroup(int id){
-        return daoMedicine.retrieveProductGroup(id);
+    public int getQuantityReserved() {
+        return quantityReserved;
     }
 
     @Override
@@ -153,8 +145,8 @@ public abstract class Medicine {
                 ", name='" + getName() + '\'' +
                 ", producer='" + getProducer() + '\'' +
                 ", packageSize='" + getPackageSize() + '\'' +
-                ", description='" + getDescription() + '\'' +
                 ", quantity=" + getQuantity() +
+                ", reserved=" + getQuantityReserved() +
                 ", price=" + getPrice() +
                 ", searchTerms='" + getSearchTerms() + '\'' +
                 ", isActive=" + getActive() +

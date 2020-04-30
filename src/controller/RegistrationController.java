@@ -13,7 +13,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import model.CommonMethods;
 import model.Patient;
 
@@ -24,7 +23,7 @@ import java.sql.Date;
 
 public class RegistrationController implements Initializable {
     CommonMethods common = new CommonMethods();
-    LocalDate localDate;
+    public LocalDate localDate;
 
     @FXML
     private Button registerButton;
@@ -116,9 +115,9 @@ public class RegistrationController implements Initializable {
             if(Validation.isName(firstName.getText(), firstNameStar) && Validation.isName(lastName.getText(), lastNameStar) &&
             Validation.isSSN(ssn.getText(), ssnStar) &&
             Validation.isZipcode(zipcode.getText(), zipcodeStar) && Validation.isPhoneNumber(phoneNumber.getText(), phoneNumberStar)
-            && Validation.isEmail(email.getText(), emailStar)) {
+            && Validation.isEmail(email.getText(), emailStar) && Validation.isPassword(password.getText(), passwordStar)) {
                 try {
-                    Date dob = Date.valueOf(dPicker.getValue());
+                    Date dob = Date.valueOf(dPicker.getValue().plusDays(1));
                     Patient patient = new Patient(ssn.getText(), firstName.getText(), lastName.getText(), dob,
                             zipcode.getText(), address.getText(), email.getText(),
                             phoneNumber.getText(), password.getText());
@@ -128,7 +127,6 @@ public class RegistrationController implements Initializable {
                 }
                 progress.setVisible(true);
                 PauseTransition pt = new PauseTransition();
-                pt.setDuration(Duration.seconds(2));
                 pt.setOnFinished(event -> {
                     System.out.println("Login successful");
                     try {
@@ -154,14 +152,13 @@ public class RegistrationController implements Initializable {
     @FXML public void onCancelButtonPressed(ActionEvent ae) {
         progress.setVisible(true);
         PauseTransition pt = new PauseTransition();
-        pt.setDuration(Duration.seconds(2));
         pt.setOnFinished(event -> {
             try {
                 Node node = (Node) ae.getSource();
                 Scene scene = node.getScene();
                 Stage stage = (Stage) scene.getWindow();
 
-                Parent root = FXMLLoader.load(getClass().getResource("/view/login.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/view/loginView.fxml"));
                 Scene newScene = new Scene(root);
 
                 stage.setTitle("e-Drugs Login");

@@ -31,15 +31,6 @@ public class DAOUser {
     private int value1;
     private String value2;
 
-    private Date inputDate;
-
-    private java.sql.Date convertDate(Date inputDate) {  ///////// WIP
-        java.sql.Date sqlDate;
-        //  inputDate;
-        sqlDate = new java.sql.Date(inputDate.getTime());
-        return sqlDate;
-    }
-
     // to be used to retrieve a specific user list (types 1-3) (internal use)
     private List<User> retrieveUserList(String usType) {
         resultSet = null;
