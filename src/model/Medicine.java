@@ -10,6 +10,7 @@ public abstract class Medicine {
     private String packageSize;
     private String description;
     private int quantity;
+    private int quantityReserved;
     private double price;
     private String searchTerms;
     private int groupId;
@@ -71,6 +72,10 @@ public abstract class Medicine {
         this.groupId = groupId;
     }
 
+    public void setQuantityReserved(int quantityReserved) {
+        this.quantityReserved = quantityReserved;
+    }
+
     public int getArticleNo() {
         return articleNo;
     }
@@ -127,6 +132,9 @@ public abstract class Medicine {
         return checkBox;
     }
 
+    public int getQuantityReserved() {
+        return quantityReserved;
+    }
 
     @Override
     public String toString() {
@@ -137,8 +145,8 @@ public abstract class Medicine {
                 ", name='" + getName() + '\'' +
                 ", producer='" + getProducer() + '\'' +
                 ", packageSize='" + getPackageSize() + '\'' +
-                ", description='" + getDescription() + '\'' +
                 ", quantity=" + getQuantity() +
+                ", reserved=" + getQuantityReserved() +
                 ", price=" + getPrice() +
                 ", searchTerms='" + getSearchTerms() + '\'' +
                 ", isActive=" + getActive() +

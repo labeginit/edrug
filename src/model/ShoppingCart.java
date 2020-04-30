@@ -12,13 +12,11 @@ public class ShoppingCart {
     }
 
     public void addMedicine(Medicine medicine) {
-        medicine.setQuantity(1);
         cartList.add(medicine);
         size++;
     }
 
     public boolean removeMedicine(Medicine medicine) {
-        medicine.setQuantity(0);
         size--;
         return cartList.remove(medicine);
     }
@@ -27,7 +25,7 @@ public class ShoppingCart {
         double totalAmount = 0;
 
         for (Medicine medicine : cartList) {
-            totalAmount = +(medicine.getPrice() * medicine.getQuantity());
+            totalAmount = +(medicine.getPrice() * medicine.getQuantityReserved());
         }
         return totalAmount;
     }

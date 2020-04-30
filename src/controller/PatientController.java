@@ -356,13 +356,15 @@ public class PatientController implements Initializable {
     @FXML
 
     private void addToCartButtonHandle(ActionEvent event) {
-
+        int available;
+        int qtyReserved;
         for(Medicine element : filteredData)
         {
             if(element.getCheckBox().isSelected())
             {
-                int available = commonMethods.getMedicine(element.getArticleNo()).getQuantity();
-                System.out.println("qty before: " + available);
+                available = element.getQuantity();
+                qtyReserved = element.getQuantityReserved();
+
                 if (available > 0) {
                     if (cart.size() == 0) {
                         cart.addMedicine(element);
@@ -370,10 +372,11 @@ public class PatientController implements Initializable {
                         if (!cartElementPresenceCheck(element)) {
                             cart.addMedicine(element);
                         }
-
                     }
-                    available--;
-                    System.out.println("qty after: " + available);
+                    element.setQuantityReserved(qtyReserved + 1);
+                    available = available - 1;
+                    element.setQuantity(available);
+
                     tableView.refresh();
                 }
                 element.getCheckBox().setSelected(false);
