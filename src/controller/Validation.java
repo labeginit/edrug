@@ -82,4 +82,19 @@ public class Validation {
             starLabel.setVisible(true);
             return false;
     }
+
+    public static boolean isRole(String role) {
+        int roleint = 0;
+        try {
+            roleint=Integer.parseInt(role);
+        }catch (Exception e) {
+            alertPopup("Roles are 1 for patient and 2 for doctor", "Incorrect input", "Please enter a true role");
+        }
+        if (roleint == 1 || roleint == 2) {
+            return true;
+        }else {
+            alertPopup("Roles are 1 for patient and 2 for doctor", "Incorrect input", "Please enter a true role");
+        return false;
+        }
+    }
 }

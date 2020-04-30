@@ -102,12 +102,12 @@
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <Button fx:id="confirmAddButton" layoutX="186.0" layoutY="20.0" mnemonicParsing="false" text="Confirm" />
-                        <TextField fx:id="SSNnewTextField" alignment="CENTER" layoutX="14.0" layoutY="485.0" prefHeight="26.0" prefWidth="111.0" promptText="SSN" />
-                        <TextField fx:id="nameNewTextField" alignment="CENTER" layoutX="142.0" layoutY="485.0" promptText="Name" />
-                        <TextField fx:id="phoneNewTextField" alignment="CENTER" layoutX="312.0" layoutY="485.0" promptText="Phone Number" />
-                        <TextField fx:id="emailNewTextField" alignment="CENTER" layoutX="477.0" layoutY="485.0" promptText="Email" />
-                        <TextField fx:id="roleNewTextField" alignment="CENTER" layoutX="652.0" layoutY="485.0" prefHeight="26.0" prefWidth="116.0" promptText="Role" />
+                        <Button fx:id="confirmAddButton" layoutX="699.0" layoutY="485.0" mnemonicParsing="false" text="Confirm" />
+                        <TextField fx:id="SSNnewTextField" alignment="CENTER" layoutX="14.0" layoutY="485.0" prefHeight="26.0" prefWidth="83.0" promptText="SSN" />
+                        <TextField fx:id="firstNameNewTextField" alignment="CENTER" layoutX="221.0" layoutY="485.0" prefHeight="26.0" prefWidth="89.0" promptText="First Name" />
+                        <TextField fx:id="phoneNewTextField" alignment="CENTER" layoutX="312.0" layoutY="485.0" prefHeight="26.0" prefWidth="115.0" promptText="Phone Number" />
+                        <TextField fx:id="emailNewTextField" alignment="CENTER" layoutX="427.0" layoutY="485.0" prefHeight="26.0" prefWidth="141.0" promptText="Email" />
+                        <TextField fx:id="roleNewTextField" alignment="CENTER" layoutX="569.0" layoutY="485.0" prefHeight="26.0" prefWidth="108.0" promptText="Role" />
                         <TableView fx:id="changeTable" editable="true" layoutX="10.0" layoutY="52.0" prefHeight="423.0" prefWidth="772.0">
                           <columns>
                             <TableColumn fx:id="changeSSNTable" prefWidth="114.0" text="SSN" />
@@ -118,7 +118,8 @@
                               <TableColumn fx:id="changeRoleTable" prefWidth="98.0" text="Role" />
                           </columns>
                         </TableView>
-                        <Label layoutX="279.0" layoutY="27.0" text="Role 1: Patient, role 2: doctor" />
+                        <Label layoutX="592.0" layoutY="466.0" text="Role 1: Patient, Role 2: doctor" />
+                        <TextField fx:id="lastNameNewTextField" layoutX="97.0" layoutY="485.0" prefHeight="26.0" prefWidth="124.0" promptText="Last Name" />
                      </children>
                   </AnchorPane>
                </content>

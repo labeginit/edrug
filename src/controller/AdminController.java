@@ -10,11 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.IntegerStringConverter;
-import model.Admin;
-import model.CommonMethods;
-
-import model.User;
-import model.UserSingleton;
+import model.*;
 
 import java.net.URL;
 import java.sql.Date;
@@ -28,7 +24,6 @@ public class AdminController implements Initializable {
     public ComboBox addFilter;
     public Button confirmAddButton;
     public TextField SSNnewTextField;
-    public TextField nameNewTextField;
     public TextField phoneNewTextField;
     public TextField emailNewTextField;
     public TextField roleNewTextField;
@@ -73,6 +68,8 @@ public class AdminController implements Initializable {
     public Label emailStar;
     public Label pass2star;
     public Label pass1star;
+    public TextField firstNameNewTextField;
+    public TextField lastNameNewTextField;
 
     CommonMethods methods = new CommonMethods();
     User currentUser = UserSingleton.getOurInstance().getUser();
@@ -135,6 +132,57 @@ public class AdminController implements Initializable {
                     }
                 }
             }
+        });
+
+        confirmAddButton.setOnAction(actionEvent -> {
+            if (SSNnewTextField.getText().isEmpty() || firstNameNewTextField.getText().isEmpty() ||
+                    lastNameNewTextField.getText().isEmpty() || phoneNewTextField.getText().isEmpty() ||
+                    emailNewTextField.getText().isEmpty() || roleNewTextField.getText().isEmpty()) {
+                Validation.alertPopup("Please fill in all fields", "All fields need to have info", "Incorrect");
+                if (Validation.isSSN(SSNnewTextField.getText(), SSNstar)) {
+                    SSNstar.setVisible(false);
+                }
+                if (Validation.isName(firstNameNewTextField.getText(), SSNstar)) {
+                    SSNstar.setVisible(false);
+                }
+                if (Validation.isName(lastNameNewTextField.getText(), SSNstar)) {
+                    SSNstar.setVisible(false);
+                }
+                if (Validation.isPhoneNumber(phoneNewTextField.getText(), SSNstar)) {
+                    SSNstar.setVisible(false);
+                }
+                if (Validation.isEmail(emailNewTextField.getText(), SSNstar)) {
+                    SSNstar.setVisible(false);
+                }
+                Validation.isRole(roleNewTextField.getText());
+
+                if (Integer.parseInt(roleNewTextField.getText()) == 1) {
+                    Patient patient = new Patient(SSNnewTextField.getText(), firstNameNewTextField.getText()
+                            , lastNameNewTextField.getText(), Date.valueOf(SSNnewTextField.getText()), "", "", emailNewTextField.getText(),
+                            phoneNewTextField.getText(), "");
+                    methods.addUser(patient);
+                }
+                else {
+                    System.out.println("error1");
+                }
+                if (Integer.parseInt(roleNewTextField.getText()) == 2) {
+                    Doctor doctor = new Doctor(SSNnewTextField.getText(), firstNameNewTextField.getText()
+                            , lastNameNewTextField.getText(), Date.valueOf(SSNnewTextField.getText()), "", "", emailNewTextField.getText(),
+                            phoneNewTextField.getText(), "");
+                   methods.addUser(doctor);
+                }
+                else {
+                    System.out.println("error 2");
+                }
+            }
+            fillDoctorTable();
+            fillPatientTable();
+            SSNnewTextField.clear();
+            lastNameNewTextField.clear();
+            firstNameNewTextField.clear();
+            phoneNewTextField.clear();
+            emailNewTextField.clear();
+            roleNewTextField.clear();
         });
 
     }
@@ -254,6 +302,7 @@ public class AdminController implements Initializable {
                             ((User) t.getTableView().getItems().get(
                                     t.getTablePosition().getRow())
                             ).setSsn(t.getNewValue());
+                            methods.updateUser(t.getTableView().getItems().get(t.getTablePosition().getRow()));
                         }
                     }
                 }
@@ -269,6 +318,7 @@ public class AdminController implements Initializable {
                             ((User) t.getTableView().getItems().get(
                                     t.getTablePosition().getRow())
                             ).setFirstName(t.getNewValue());
+                            methods.updateUser(t.getTableView().getItems().get(t.getTablePosition().getRow()));
                         }
                     }
                 }
@@ -284,6 +334,7 @@ public class AdminController implements Initializable {
                             ((User) t.getTableView().getItems().get(
                                     t.getTablePosition().getRow())
                             ).setLastName(t.getNewValue());
+                            methods.updateUser(t.getTableView().getItems().get(t.getTablePosition().getRow()));
                         }
                     }
                 }
@@ -299,6 +350,7 @@ public class AdminController implements Initializable {
                             ((User) t.getTableView().getItems().get(
                                     t.getTablePosition().getRow())
                             ).setEmail(t.getNewValue());
+                            methods.updateUser(t.getTableView().getItems().get(t.getTablePosition().getRow()));
                         }
                     }
                 }
@@ -314,7 +366,7 @@ public class AdminController implements Initializable {
                             ((User) t.getTableView().getItems().get(
                                     t.getTablePosition().getRow())
                             ).setPhoneNumber(t.getNewValue());
-
+                            methods.updateUser(t.getTableView().getItems().get(t.getTablePosition().getRow()));
 
                         }
                     }
@@ -329,6 +381,7 @@ public class AdminController implements Initializable {
                             ((User) t.getTableView().getItems().get(
                                     t.getTablePosition().getRow())
                             ).setUserType(t.getNewValue());
+                            methods.updateUser(t.getTableView().getItems().get(t.getTablePosition().getRow()));
                         } else {
                             Validation.alertPopup("Inccorect value", "Please enter a true role", "Enter 1, 2 or 3");
                         }
