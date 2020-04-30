@@ -37,22 +37,22 @@ public class ShoppingCartController implements Initializable {
     private Button back_button;
 
     @FXML
-    private TableView<Medicine> tableView;
+    private TableView<OrderLine> tableView;
 
     @FXML
-    private TableColumn<Medicine, Integer> c1;
+    private TableColumn<OrderLine, Integer> c1;
 
     @FXML
-    private TableColumn<Medicine, String> c2;
+    private TableColumn<OrderLine, String> c2;
 
     @FXML
-    private TableColumn<Medicine, Double> c4;
+    private TableColumn<OrderLine, Double> c4;
 
     @FXML
-    private TableColumn<Medicine, Integer> c5;
+    private TableColumn<OrderLine, Integer> c5;
 
     @FXML
-    private TableColumn<Medicine, CheckBox> c8;
+    private TableColumn<OrderLine, CheckBox> c8;
 
     @FXML
     private TextField firstName_text;
@@ -78,7 +78,7 @@ public class ShoppingCartController implements Initializable {
     @FXML
     private TextField lastName_text;
 
-   // private ObservableList<Medicine> medList = FXCollections.observableArrayList(cart.getCartList()); //UNCOMMENTING THIS MAKES Quantity CALCULATIONS IN THE Shop SCREWED UP
+    private ObservableList<OrderLine> medList = FXCollections.observableArrayList(cart); //UNCOMMENTING THIS MAKES Quantity CALCULATIONS IN THE Shop SCREWED UP
     private ObservableList<Enum> deliveryMethodsCombo = FXCollections.observableArrayList(Order.DeliveryMethod.SELFPICKUP, Order.DeliveryMethod.SCHENKER, Order.DeliveryMethod.POSTEN);
     private ObservableList<Enum> paymentMethodsCombo = FXCollections.observableArrayList(Order.PaymentMethod.CREDIT_CARD, Order.PaymentMethod.INVOICE, Order.PaymentMethod.CREDIT_CARD);
 
@@ -104,12 +104,13 @@ public class ShoppingCartController implements Initializable {
             }
         });
 
-        c1.setCellValueFactory(new PropertyValueFactory<Medicine, Integer>("articleNo"));
-        c2.setCellValueFactory(new PropertyValueFactory<Medicine, String>("name"));
-        c4.setCellValueFactory(new PropertyValueFactory<Medicine, Double>("price"));
-        c5.setCellValueFactory(new PropertyValueFactory<Medicine, Integer>("quantityReserved"));
-        c8.setCellValueFactory(new PropertyValueFactory<Medicine, CheckBox>("checkBox"));
-     //   tableView.setItems(medList);
+
+        c1.setCellValueFactory(new PropertyValueFactory<OrderLine, Integer>("articleNo"));
+        c2.setCellValueFactory(new PropertyValueFactory<OrderLine, String>("medicine"));
+        c4.setCellValueFactory(new PropertyValueFactory<OrderLine, Double>("price"));
+        c5.setCellValueFactory(new PropertyValueFactory<OrderLine, Integer>("quantity"));
+        c8.setCellValueFactory(new PropertyValueFactory<OrderLine, CheckBox>("checkBox"));
+        tableView.setItems(medList);
 
     }
 

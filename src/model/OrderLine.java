@@ -1,11 +1,16 @@
 package model;
 
+import javafx.scene.control.CheckBox;
+
 public class OrderLine {
     private int orderId;
     private Medicine medicine;
+    private int articleNo;
+    private String name;
     private User user;
     private double price;
     private int quantity;
+    private CheckBox checkBox;
 
     public OrderLine(int orderId, User user, Medicine medicine, double price, int quantity){
         setOrderId(orderId);
@@ -13,6 +18,7 @@ public class OrderLine {
         setMedicine(medicine);
         setPrice(price);
         setQuantity(quantity);
+        setCheckBox(new CheckBox());
     }
 
     public void setOrderId(int orderId) {
@@ -53,6 +59,30 @@ public class OrderLine {
 
     public int getQuantity() {
         return quantity;
+    }
+
+    public void setArticleNo(int articleNo) {
+        this.articleNo = articleNo;
+    }
+
+    public int getArticleNo() {
+        return articleNo;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setCheckBox(CheckBox checkBox) {
+        this.checkBox = checkBox;
+    }
+
+    public CheckBox getCheckBox() {
+        return checkBox;
     }
 
     @Override
