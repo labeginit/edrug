@@ -125,15 +125,4 @@ public class ShoppingCartController implements Initializable {
         userCommon.switchScene(event,"/view/patientView.fxml");
     }
 
-    public void initData(ShoppingCart cart)
-    {
-        //selectedPerson = person;
-        ShoppingCart newCart = cart;
-        for (int i = 0; i < cart.size(); i++) {
-            newCart.addMedicine(cart.getMedicine(i));
-        }
-        totalCost_text.setText(String.valueOf(newCart.getTotalCost()));
-        totalVAT_text.setText(String.valueOf(newCart.getTotalCost() * 0.2));
-
-    }
 }
