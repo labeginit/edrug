@@ -81,6 +81,18 @@ public class ShoppingCartController implements Initializable {
         delivery_combo.setItems(deliveryMethodsCombo);
         payment_combo.setItems(paymentMethodsCombo);
         setInitialValues(currentUser);
+        if (cart == null){
+            totalCost_text.setText("0.0");
+            totalVAT_text.setText("0.0");
+        } else {
+            double cost = 0;
+            for (int i = 0; i < cart.size(); i++) {
+                cost = cost + cart.get(i).getPrice() * cart.get(i).getQuantity();
+            }
+            totalCost_text.setText(Double.toString(cost));
+            totalVAT_text.setText(Double.toString(cost * 0.2));
+        }
+
         back_button.setOnAction(event -> {
             try {
                 backButtonHandle(event);
@@ -112,8 +124,6 @@ public class ShoppingCartController implements Initializable {
         lastName_text.setText(currentUser.getLastName());
         zipCode_text.setText(currentUser.getZipCode());
         address_text.setText(currentUser.getAddress());
-        totalCost_text.setText("0.0");
-        totalVAT_text.setText(Double.toString(Double.parseDouble(totalCost_text.getText())*0.2));
     }
 
     @FXML
