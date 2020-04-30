@@ -47,7 +47,7 @@ public class DAOPrescription {
                         article = element.getMedicine().getArticleNo();
                         quantity = element.getQuantity();
                         instructions = element.getInstructions();
-                        String queryLine = "INSERT INTO `edrugs_test`.`Prescription_has_Medicine` (`prescription_id`, `prescription_patient_ssn`, `article`, `quantity`, `instructions`) VALUES (?, ?, ?, ?, ?);";
+                        String queryLine = "INSERT INTO `edrugs_test`.`Prescription_has_Medicine` (`prescription_id`, `prescription_patient_ssn`, `article`, `quantity_prescribed`, `quantity_consumed`, `instructions`) VALUES (?, ?, ?, ?, 0, ?);";
                         linesAffected = linesAffected + common.insertPrescriptionLine(queryLine, id, patientSSN, article, quantity, instructions);
                     }
                 } else {
@@ -122,7 +122,7 @@ public class DAOPrescription {
         article = element.getMedicine().getArticleNo();
         quantity = element.getQuantity();
         instructions = element.getInstructions();
-        String queryLine = "INSERT INTO `edrugs_test`.`Prescription_has_Medicine` (`prescription_id`, `prescription_patient_ssn`, `article`, `quantity`, `instructions`) VALUES (?, ?, ?, ?, ?);";
+        String queryLine = "INSERT INTO `edrugs_test`.`Prescription_has_Medicine` (`prescription_id`, `prescription_patient_ssn`, `article`, `quantity_prescribed`, `instructions`) VALUES (?, ?, ?, ?, ?);";
         linesAffected = linesAffected + common.insertPrescriptionLine(queryLine, id, patientSSN, article, quantity, instructions);
         return
     }*/
