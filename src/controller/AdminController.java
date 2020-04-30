@@ -8,6 +8,8 @@ import javafx.scene.control.*;
 
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.converter.IntegerStringConverter;
 import model.Admin;
 import model.CommonMethods;
 
@@ -92,34 +94,48 @@ public class AdminController implements Initializable {
         fillDoctorTable();
         fillEditTable();
         fillMe();
+        makeEditable();
 
         cancel_button.setOnAction(actionEvent -> {
             fillMe();
+            SSNstar.setVisible(false);
+            BDateStar.setVisible(false);
+            firstNameStar.setVisible(false);
+            lastNameStar.setVisible(false);
+            zipStar.setVisible(false);
+            addressStar.setVisible(false);
+            phoneStar.setVisible(false);
+            emailStar.setVisible(false);
+            pass1star.setVisible(false);
+            pass2star.setVisible(false);
+
         });
         save_button.setOnAction(actionEvent -> {
             if (isItOk()) {
-            if (Validation.isName(firstName_text.getText(), firstNameStar) && Validation.isName(lastName_text.getText(), lastNameStar) &&
-                    Validation.isZipcode(zip_text.getText(), zipStar) && Validation.isPhoneNumber(phone_text.getText(), phoneStar)
-                    && Validation.isEmail(email_text.getText(), emailStar)) {
-                try {
-                    currentUser.setSsn(SSNtext.getText());
-                    currentUser.setLastName(lastName_text.getText());
-                    currentUser.setBDate(Date.valueOf(birth_text.getText()));
-                    currentUser.setZipCode(zip_text.getText());
-                    currentUser.setAddress(address_text.getText());
-                    currentUser.setPhoneNumber(phone_text.getText());
-                    currentUser.setEmail(email_text.getText());
-                    currentUser.setPassword(pass1_text.getText());
-                    methods.updateAdmin((Admin) currentUser);
+                if (Validation.isName(firstName_text.getText(), firstNameStar) && Validation.isName(lastName_text.getText(), lastNameStar) &&
+                        Validation.isZipcode(zip_text.getText(), zipStar) && Validation.isPhoneNumber(phone_text.getText(), phoneStar)
+                        && Validation.isEmail(email_text.getText(), emailStar)) {
+                    try {
+                        currentUser.setSsn(SSNtext.getText());
+                        currentUser.setLastName(lastName_text.getText());
+                        currentUser.setBDate(Date.valueOf(birth_text.getText()));
+                        currentUser.setZipCode(zip_text.getText());
+                        currentUser.setAddress(address_text.getText());
+                        currentUser.setPhoneNumber(phone_text.getText());
+                        currentUser.setEmail(email_text.getText());
+                        currentUser.setPassword(pass1_text.getText());
+                        methods.updateAdmin((Admin) currentUser);
 
-                    pass1_text.setText("******");
-                    pass2_text.setText("******");
+                        pass1_text.setText("******");
+                        pass2_text.setText("******");
 
-                } catch (Exception e ) {
-                    e.printStackTrace();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
-            }});
+        });
 
     }
 
@@ -213,18 +229,115 @@ public class AdminController implements Initializable {
                 pass2star.setVisible(true);
             }
             Validation.alertPopup("Please enter your information into all fields", "Empty Fields", "Contains empty fields");
-        return false;
+            return false;
         } else if (!pass1_text.getText().equals(pass2_text.getText())) {
             pass1star.setVisible(true);
             pass2star.setVisible(true);
             Validation.alertPopup("Password does not match", "Password Mismatch", "Password doesn't match");
-return false;
-        }
-        else if (!Validation.isPassword(pass1_text.getText(), pass1star)) {
-        return false;
-        }
-        else {
+            return false;
+        } else if (!Validation.isPassword(pass1_text.getText(), pass1star)) {
+            return false;
+        } else {
             return true;
         }
     }
+
+    public void makeEditable() {
+        changeSSNTable.setCellFactory(TextFieldTableCell.forTableColumn());
+        changeSSNTable.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<User, String>>() {
+
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<User, String> t) {
+                        if (Validation.isSSN(t.getNewValue(), SSNstar)) {
+                            SSNstar.setVisible(false);
+                            ((User) t.getTableView().getItems().get(
+                                    t.getTablePosition().getRow())
+                            ).setSsn(t.getNewValue());
+                        }
+                    }
+                }
+        );
+        changeFirstNameTable.setCellFactory(TextFieldTableCell.forTableColumn());
+        changeFirstNameTable.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<User, String>>() {
+
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<User, String> t) {
+                        if (Validation.isName(t.getNewValue(), firstNameStar)) {
+                            firstNameStar.setVisible(false);
+                            ((User) t.getTableView().getItems().get(
+                                    t.getTablePosition().getRow())
+                            ).setFirstName(t.getNewValue());
+                        }
+                    }
+                }
+        );
+        changeLastNameTable.setCellFactory(TextFieldTableCell.forTableColumn());
+        changeLastNameTable.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<User, String>>() {
+
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<User, String> t) {
+                        if (Validation.isName(t.getNewValue(), lastNameStar)) {
+                            lastNameStar.setVisible(false);
+                            ((User) t.getTableView().getItems().get(
+                                    t.getTablePosition().getRow())
+                            ).setLastName(t.getNewValue());
+                        }
+                    }
+                }
+        );
+        changeEmailTable.setCellFactory(TextFieldTableCell.forTableColumn());
+        changeEmailTable.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<User, String>>() {
+
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<User, String> t) {
+                        if (Validation.isEmail(t.getNewValue(), emailStar)) {
+                            emailStar.setVisible(false);
+                            ((User) t.getTableView().getItems().get(
+                                    t.getTablePosition().getRow())
+                            ).setEmail(t.getNewValue());
+                        }
+                    }
+                }
+        );
+        changePhoneTable.setCellFactory(TextFieldTableCell.forTableColumn());
+        changePhoneTable.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<User, String>>() {
+
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<User, String> t) {
+                        if (Validation.isPhoneNumber(t.getNewValue(), phoneStar)) {
+                            phoneStar.setVisible(false);
+                            ((User) t.getTableView().getItems().get(
+                                    t.getTablePosition().getRow())
+                            ).setPhoneNumber(t.getNewValue());
+
+
+                        }
+                    }
+                });
+        changeRoleTable.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
+        changeRoleTable.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<User, Integer>>() {
+
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<User, Integer> t) {
+                        if (t.getNewValue() == 1 || t.getNewValue() == 2) {
+                            ((User) t.getTableView().getItems().get(
+                                    t.getTablePosition().getRow())
+                            ).setUserType(t.getNewValue());
+                        } else {
+                            Validation.alertPopup("Inccorect value", "Please enter a true role", "Enter 1, 2 or 3");
+                        }
+                    }
+
+
+                }
+        );
+    }
+
 }
+
