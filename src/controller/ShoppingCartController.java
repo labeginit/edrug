@@ -112,6 +112,8 @@ public class ShoppingCartController implements Initializable {
         lastName_text.setText(currentUser.getLastName());
         zipCode_text.setText(currentUser.getZipCode());
         address_text.setText(currentUser.getAddress());
+        totalCost_text.setText("0.0");
+        totalVAT_text.setText(Double.toString(Double.parseDouble(totalCost_text.getText())*0.2));
     }
 
     @FXML
