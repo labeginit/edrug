@@ -4,20 +4,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
 import model.*;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import static controller.PatientController.cart;
 
 public class ShoppingCartController implements Initializable {
@@ -78,7 +71,7 @@ public class ShoppingCartController implements Initializable {
     @FXML
     private TextField lastName_text;
 
-    private ObservableList<OrderLine> medList = FXCollections.observableArrayList(cart); //UNCOMMENTING THIS MAKES Quantity CALCULATIONS IN THE Shop SCREWED UP
+    private ObservableList<OrderLine> medList = FXCollections.observableArrayList(cart);
     private ObservableList<Enum> deliveryMethodsCombo = FXCollections.observableArrayList(Order.DeliveryMethod.SELFPICKUP, Order.DeliveryMethod.SCHENKER, Order.DeliveryMethod.POSTEN);
     private ObservableList<Enum> paymentMethodsCombo = FXCollections.observableArrayList(Order.PaymentMethod.CREDIT_CARD, Order.PaymentMethod.INVOICE, Order.PaymentMethod.CREDIT_CARD);
 
@@ -122,7 +115,7 @@ public class ShoppingCartController implements Initializable {
     }
 
     @FXML
-    private void backButtonHandle(ActionEvent event) throws IOException {
+    private void backButtonHandle(ActionEvent event) throws IOException { //WHEN SWITCHING BACK TO SHOP the quantities become all wrong
         userCommon.switchScene(event,"/view/patientView.fxml");
     }
 
