@@ -1,6 +1,7 @@
 package model;
 
 import model.dBConnection.DAOMedicine;
+import model.dBConnection.DAOPrescription;
 import model.dBConnection.DAOUser;
 
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 public class CommonMethods {
     DAOUser daoUser = new DAOUser();
     DAOMedicine daoMedicine = new DAOMedicine();
+    DAOPrescription daoPrescription = new DAOPrescription();
     int linesAffected;
 
     //**********************
@@ -156,4 +158,12 @@ public class CommonMethods {
     public List<Medicine> getMedicineByMaxPrice(double maxPrice) {
         return daoMedicine.retrieveMedicineByMaxPrice(maxPrice);
     }
+
+    //**********************
+
+    public int addPrescription(Prescription prescription){
+        return daoPrescription.addPrescription(prescription);
+    }
+
+    //**********************
     }
