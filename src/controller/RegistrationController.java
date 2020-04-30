@@ -13,7 +13,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import model.CommonMethods;
 import model.Patient;
 
@@ -118,7 +117,7 @@ public class RegistrationController implements Initializable {
             Validation.isZipcode(zipcode.getText(), zipcodeStar) && Validation.isPhoneNumber(phoneNumber.getText(), phoneNumberStar)
             && Validation.isEmail(email.getText(), emailStar) && Validation.isPassword(password.getText(), passwordStar)) {
                 try {
-                    Date dob = Date.valueOf(dPicker.getValue());
+                    Date dob = Date.valueOf(dPicker.getValue().plusDays(1));
                     Patient patient = new Patient(ssn.getText(), firstName.getText(), lastName.getText(), dob,
                             zipcode.getText(), address.getText(), email.getText(),
                             phoneNumber.getText(), password.getText());
@@ -128,7 +127,6 @@ public class RegistrationController implements Initializable {
                 }
                 progress.setVisible(true);
                 PauseTransition pt = new PauseTransition();
-                pt.setDuration(Duration.seconds(2));
                 pt.setOnFinished(event -> {
                     System.out.println("Login successful");
                     try {
@@ -154,7 +152,6 @@ public class RegistrationController implements Initializable {
     @FXML public void onCancelButtonPressed(ActionEvent ae) {
         progress.setVisible(true);
         PauseTransition pt = new PauseTransition();
-        pt.setDuration(Duration.seconds(2));
         pt.setOnFinished(event -> {
             try {
                 Node node = (Node) ae.getSource();

@@ -9,7 +9,7 @@ import java.util.List;
 
 public class DAOMedicine {
     private int id;
-    private String name;
+    private String grName;
     private String path;
     private ProdGroup group = null;
     private ResultSet resultSet = null;
@@ -18,6 +18,20 @@ public class DAOMedicine {
     private final DAOCommon common = new DAOCommon();
     private String value1;
     private String value2;
+    private int value3;
+    private int linesAffected = 0;
+    private Medicine medicine;
+    private int articleNo;
+    private boolean onPrescription;
+    private String name;
+    private String producer;
+    private String packageSize;
+    private String description;
+    private int quantity;
+    private double price;
+    private String searchTerms;
+    private int groupId;
+    private boolean isActive;
 
     public List<Medicine> retrieveMedicineList(boolean onPrescription, boolean active) {
         medList.clear();
@@ -110,6 +124,131 @@ public class DAOMedicine {
         return med;
     }
 
+    public Medicine getMedicine(int article) {
+        Medicine temp = null;
+        String query = "SELECT * FROM Medicine where article = ?;";
+        try {
+            temp = retrieveMedicine(query, article);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return temp;
+    }
+
+    private Medicine retrieveMedicine(String query, int article) {
+        medicine = null;
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                resultSet = common.retrieveSet(query, String.valueOf(article));
+                if (resultSet != null) {
+                    if (resultSet.first()) {
+                        medicine = createMedicineObjects(resultSet);
+                    }
+                } else {
+                    System.out.println("Empty resultSet");
+                    return medicine;
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error while working with ResultSet!");
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                resultSet.close();
+            }catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            return medicine;
+        }
+    }
+
+    public int addMedicine(Medicine medicine) {
+        int value1;
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                if (medicine != null) {
+                    articleNo = medicine.getArticleNo();
+                    onPrescription = medicine.isOnPrescription();
+                    name = medicine.getName();
+                    producer = medicine.getProducer();
+                    packageSize = medicine.getPackageSize();
+                    description = medicine.getDescription();
+                    quantity = medicine.getQuantity();
+                    price = medicine.getPrice();
+                    searchTerms = medicine.getSearchTerms();
+                    groupId = medicine.getGroup();
+                    isActive = medicine.getActive();
+                    if (onPrescription) {
+                        value1 = 1;
+                    } else {
+                        value1 = 0;
+                    }
+
+                    if (isActive) {
+                        value3 = 1;
+                    } else {
+                        value3 = 0;
+                    }
+                    String query = "INSERT INTO `edrugs_test`.`Medicine` (`article`, `Product_group_id`, `onPrescription`, `name`, `producer`, `description`, `package_size`, `quantity_available`, `price`, `search_terms`, `active`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                    linesAffected = common.insertMedicine(query, articleNo, groupId, value1, name, producer, description, packageSize, quantity, price, searchTerms, value3);
+                } else {
+                    throw new NullPointerException("The user object is null");
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error while working with statement!");
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            return linesAffected;
+        }
+    }
+
+    public int updateMedicine(Medicine medicine) {
+        int value1;
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                if (medicine != null) {
+                    articleNo = medicine.getArticleNo();
+                    onPrescription = medicine.isOnPrescription();
+                    name = medicine.getName();
+                    producer = medicine.getProducer();
+                    packageSize = medicine.getPackageSize();
+                    description = medicine.getDescription();
+                    quantity = medicine.getQuantity();
+                    price = medicine.getPrice();
+                    searchTerms = medicine.getSearchTerms();
+                    groupId = medicine.getGroup();
+                    isActive = medicine.getActive();
+                    if (onPrescription) {
+                        value1 = 1;
+                    } else {
+                        value1 = 0;
+                    }
+                    if (isActive) {
+                        value3 = 1;
+                    } else {
+                        value3 = 0;
+                    }
+                    String query = "UPDATE `edrugs_test`.`Medicine` SET `Product_group_id` = ?, `onPrescription` = ?, `name` = ?, `producer` = ?, `description` = ?, `package_size` = ?, `quantity_available` = ?, `price` = ?, `search_terms` = ?, `active` = ? WHERE (`article` = ?);";
+                    linesAffected = common.updateMedicine(query, articleNo, groupId, value1, name, producer, description, packageSize, quantity, price, searchTerms, value3);
+                } else {
+                    throw new NullPointerException("The user object is null");
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error while working with statement!");
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            return linesAffected;
+        }
+    }
+
     public List<ProdGroup> retrieveProductGroupList() {
         groups.clear();
         try {
@@ -155,9 +294,9 @@ public class DAOMedicine {
 
     private ProdGroup createGroupObject(ResultSet resultSet) throws SQLException {
         id = resultSet.getInt("id");
-        name = resultSet.getString("gr_name");
+        grName = resultSet.getString("gr_name");
         path = resultSet.getString("path");
-        group = new ProdGroup(id, name, path);
+        group = new ProdGroup(id, grName, path);
         return group;
     }
 

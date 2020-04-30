@@ -12,7 +12,6 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 import model.CommonMethods;
 import model.UserSingleton;
 import model.User;
@@ -73,7 +72,6 @@ public class LoginController implements Initializable {
                         progress.setVisible(true);
                         int type = user.getUserType();
                         PauseTransition pt = new PauseTransition();
-                     //   pt.setDuration(Duration.seconds(2));  not removing it for your consideration if you want to keep it :)
                         pt.setOnFinished(event -> {
                             System.out.println("Login successful");
                             if (rememberMeCheckBox.isSelected()) {
@@ -97,7 +95,6 @@ public class LoginController implements Initializable {
 
                                 stage.setTitle("e-Drugs");
                                 stage.setScene(newScene);
-
                             } catch (Exception ex) {
                                 System.out.println(ex.getMessage());
                                 ex.printStackTrace();
@@ -128,7 +125,6 @@ public class LoginController implements Initializable {
     public void registerButtonPressed(ActionEvent ae) {
         progress.setVisible(true);
         PauseTransition pt = new PauseTransition();
-        pt.setDuration(Duration.seconds(2));
         pt.setOnFinished(event -> {
             try {
                 Node node = (Node) ae.getSource();

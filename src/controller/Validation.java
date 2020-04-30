@@ -78,8 +78,23 @@ public class Validation {
             starLabel.setVisible(false);
             return true;
         } else
-            alertPopup("Password needs to be 6 characters long", "Short Password", "Password is to short");
+            alertPopup("Password needs to be at least 6 characters long", "Short Password", "Password is too short");
             starLabel.setVisible(true);
             return false;
+    }
+
+    public static boolean isRole(String role) {
+        int roleint = 0;
+        try {
+            roleint=Integer.parseInt(role);
+        }catch (Exception e) {
+            alertPopup("Roles are 1 for patient and 2 for doctor", "Incorrect input", "Please enter a true role");
+        }
+        if (roleint == 1 || roleint == 2) {
+            return true;
+        }else {
+            alertPopup("Roles are 1 for patient and 2 for doctor", "Incorrect input", "Please enter a true role");
+        return false;
+        }
     }
 }
