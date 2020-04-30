@@ -24,8 +24,8 @@
                                     <buttons>
                                         <Button fx:id="logOut_button" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Cancel &amp; Logout" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
-                                        <Button fx:id="delete_button" mnemonicParsing="false" prefHeight="26.0" prefWidth="64.0" text="Delete rows" />
-                                        <Button fx:id="buy_button" minWidth="64.0" mnemonicParsing="false" prefWidth="64.0" text="Buy" />
+                                        <Button fx:id="delete_button" mnemonicParsing="false" prefHeight="26.0" prefWidth="64.0" text="Delete selected" />
+                                        <Button fx:id="checkOut_button" minWidth="64.0" mnemonicParsing="false" prefWidth="64.0" text="Check out" />
                               <Button fx:id="back_button" minWidth="64.0" mnemonicParsing="false" prefWidth="64.0" text="Back to Shop" />
                                     </buttons>
                                 </ButtonBar>
@@ -43,28 +43,38 @@
                                         <Font size="13.0" />
                                     </font>
                                 </Label>
-                                <TextField fx:id="search_textField" alignment="CENTER_RIGHT" layoutX="127.0" layoutY="21.0" prefHeight="26.0" prefWidth="134.0" />
-                                <ComboBox fx:id="groupFilter_combo" layoutX="359.0" layoutY="101.0" prefHeight="25.0" prefWidth="179.0" promptText="Delivery Method" />
-                                <TextField fx:id="maxPrice_text" alignment="CENTER_RIGHT" layoutX="127.0" layoutY="101.0" prefHeight="25.0" prefWidth="221.0" promptText="00.00" />
+                                <TextField fx:id="firstName_text" alignment="CENTER_RIGHT" layoutX="127.0" layoutY="21.0" prefHeight="26.0" prefWidth="134.0" />
+                                <ComboBox fx:id="delivery_combo" layoutX="127.0" layoutY="101.0" prefHeight="25.0" prefWidth="179.0" promptText="select here..." />
+                                <TextField fx:id="totalCost_text" alignment="CENTER_RIGHT" editable="false" layoutX="390.0" layoutY="101.0" prefHeight="25.0" prefWidth="145.0" promptText="00.00" />
                                 <Label layoutX="14.0" layoutY="64.0" prefHeight="19.0" prefWidth="103.0" text="Delivery Address:">
                                     <font>
                                         <Font size="13.0" />
                                     </font>
                                 </Label>
-                        <ComboBox fx:id="groupFilter_combo1" layoutX="359.0" layoutY="140.0" prefHeight="25.0" prefWidth="178.0" promptText="Payment Method" />
-                        <TextField fx:id="search_textField1" alignment="CENTER_RIGHT" layoutX="127.0" layoutY="61.0" prefHeight="26.0" prefWidth="409.0" />
-                        <Label layoutX="14.0" layoutY="104.0" prefHeight="19.0" prefWidth="103.0" text="Total Cost:">
+                        <ComboBox fx:id="payment_combo" layoutX="127.0" layoutY="140.0" prefHeight="25.0" prefWidth="179.0" promptText="select here..." />
+                        <TextField fx:id="address_text" alignment="CENTER_RIGHT" layoutX="127.0" layoutY="61.0" prefHeight="26.0" prefWidth="409.0" />
+                        <Label layoutX="317.0" layoutY="104.0" prefHeight="19.0" prefWidth="65.0" text="Total Cost:">
                            <font>
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="maxPrice_text1" alignment="CENTER_RIGHT" layoutX="127.0" layoutY="140.0" prefHeight="25.0" prefWidth="221.0" promptText="00.00" />
-                        <Label layoutX="14.0" layoutY="142.0" prefHeight="19.0" prefWidth="103.0" text="Total VAT:">
+                        <TextField fx:id="totalVAT_text" alignment="CENTER_RIGHT" editable="false" layoutX="390.0" layoutY="140.0" prefHeight="25.0" prefWidth="145.0" promptText="00.00" />
+                        <Label layoutX="317.0" layoutY="142.0" prefHeight="19.0" prefWidth="65.0" text="Total VAT:">
                            <font>
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="search_textField2" alignment="CENTER_RIGHT" layoutX="272.0" layoutY="21.0" prefHeight="26.0" prefWidth="264.0" />
+                        <TextField fx:id="lastName_text" alignment="CENTER_RIGHT" layoutX="272.0" layoutY="21.0" prefHeight="26.0" prefWidth="264.0" />
+                        <Label layoutX="14.0" layoutY="104.0" prefHeight="19.0" prefWidth="103.0" text="Delivery Method:">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="14.0" layoutY="142.0" prefHeight="19.0" prefWidth="103.0" text="Payment Method:">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
                             </children></AnchorPane>
                     </content>
                 </Tab>

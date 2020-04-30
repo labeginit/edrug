@@ -7,8 +7,8 @@ public class Order {
     private int id;
     private User user;
     private Date date;
-    private enum DeliveryMethod {SELFPICKUP, SCHENKER, POSTEN}
-    private enum PaymentMethod {CREDIT_CARD, INVOICE, BANK_TRANSFER}
+    public enum DeliveryMethod {SELFPICKUP, SCHENKER, POSTEN}
+    public enum PaymentMethod {CREDIT_CARD, INVOICE, BANK_TRANSFER}
     private DeliveryMethod deliveryMethod;
     private PaymentMethod paymentMethod;
     private double totalSum;

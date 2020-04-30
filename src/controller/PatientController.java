@@ -19,7 +19,6 @@ import model.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
-import java.sql.SQLType;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,13 +26,11 @@ import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 
-
-
 public class PatientController implements Initializable {
     CommonMethods commonMethods = new CommonMethods();
     private User currentUser;
     public LocalDate localDate;
-    private static ShoppingCart cart = new ShoppingCart();
+    public static ShoppingCart cart = new ShoppingCart();
 
     @FXML
     private ComboBox<String> groupFilter_combo;
@@ -100,8 +97,6 @@ public class PatientController implements Initializable {
 
     @FXML
     private TreeTableView<?> treeTableView;
-
-
 
     @FXML
     private TreeTableColumn<?, ?> c9;
@@ -186,7 +181,7 @@ public class PatientController implements Initializable {
     }
 
     private ObservableList<String> filters1 = FXCollections.observableArrayList(fillList(groups));
-    private ObservableList<String> filters2 = FXCollections.observableArrayList("All", "Only Current", "Only Consumed");
+    private ObservableList<String> filters2 = FXCollections.observableArrayList("", "Only Current", "Only Consumed");
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
