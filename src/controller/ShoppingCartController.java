@@ -99,7 +99,7 @@ public class ShoppingCartController implements Initializable {
 
 
         c1.setCellValueFactory(new PropertyValueFactory<OrderLine, Integer>("articleNo"));
-        c2.setCellValueFactory(new PropertyValueFactory<OrderLine, String>("medicine"));
+        c2.setCellValueFactory(new PropertyValueFactory<OrderLine, String>("name"));
         c4.setCellValueFactory(new PropertyValueFactory<OrderLine, Double>("price"));
         c5.setCellValueFactory(new PropertyValueFactory<OrderLine, Integer>("quantity"));
         c8.setCellValueFactory(new PropertyValueFactory<OrderLine, CheckBox>("checkBox"));
