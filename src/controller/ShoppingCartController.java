@@ -73,7 +73,7 @@ public class ShoppingCartController implements Initializable {
 
     private ObservableList<OrderLine> medList = FXCollections.observableArrayList(cart);
     private ObservableList<Enum> deliveryMethodsCombo = FXCollections.observableArrayList(Order.DeliveryMethod.SELFPICKUP, Order.DeliveryMethod.SCHENKER, Order.DeliveryMethod.POSTEN);
-    private ObservableList<Enum> paymentMethodsCombo = FXCollections.observableArrayList(Order.PaymentMethod.CREDIT_CARD, Order.PaymentMethod.INVOICE, Order.PaymentMethod.CREDIT_CARD);
+    private ObservableList<Enum> paymentMethodsCombo = FXCollections.observableArrayList(Order.PaymentMethod.CREDIT_CARD, Order.PaymentMethod.INVOICE, Order.PaymentMethod.BANK_TRANSFER);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
