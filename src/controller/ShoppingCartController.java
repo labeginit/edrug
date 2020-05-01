@@ -18,6 +18,7 @@ import static controller.PatientController.cart;
 
 public class ShoppingCartController implements Initializable {
     private User currentUser;
+    private CommonMethods commonMethods = new CommonMethods();
     private UserCommon userCommon = new UserCommon();
 
     @FXML
@@ -142,14 +143,19 @@ public class ShoppingCartController implements Initializable {
 
                     @Override
                     public void handle(TableColumn.CellEditEvent<OrderLine, Integer> t) {
-                        if(true) {
-
+                        int q = commonMethods.getMedicine(t.getRowValue().getArticleNo()).getQuantity();
+                        if(q >= t.getNewValue()) {
                             ((OrderLine) t.getTableView().getItems().get(
                                     t.getTablePosition().getRow())
                             ).setQuantity(t.getNewValue());
 
+                        } else {
+                            t.getRowValue().setQuantity(q);
+                            tableView.refresh();
                         }}
+
                 });
+
     }
 
 }
