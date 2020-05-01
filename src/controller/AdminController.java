@@ -560,6 +560,7 @@ public class AdminController implements Initializable {
 
                     @Override
                     public void handle(TableColumn.CellEditEvent<Medicine, Double> t) {
+                        if (Validation.isPriceMedicine(t.getNewValue().toString())) {
 
                         ((Medicine) t.getTableView().getItems().get(
                                 t.getTablePosition().getRow())
@@ -567,11 +568,11 @@ public class AdminController implements Initializable {
                         methods.updateMedicine(t.getTableView().getItems().get(t.getTablePosition().getRow()));
 
                         fillStore();
-                    }
+                    }}
                 });
         storeDescription.setCellFactory(TextFieldTableCell.forTableColumn());
         storeDescription.setOnEditCommit(
-                
+
                 new EventHandler<TableColumn.CellEditEvent<Medicine, String>>() {
 
                     @Override
@@ -592,6 +593,7 @@ public class AdminController implements Initializable {
                     @Override
                     public void handle(TableColumn.CellEditEvent<Medicine, String> t) {
 
+
                         ((Medicine) t.getTableView().getItems().get(
                                 t.getTablePosition().getRow())
                         ).setName(t.getNewValue());
@@ -606,6 +608,7 @@ public class AdminController implements Initializable {
 
                     @Override
                     public void handle(TableColumn.CellEditEvent<Medicine, Integer> t) {
+                        if(Validation.isAricleNo(t.getNewValue().toString())) {
 
                         ((Medicine) t.getTableView().getItems().get(
                                 t.getTablePosition().getRow())
@@ -613,7 +616,7 @@ public class AdminController implements Initializable {
                         methods.updateMedicine(t.getTableView().getItems().get(t.getTablePosition().getRow()));
 
                         fillStore();
-                    }
+                    }}
                 });
         storeAvailability.setCellFactory(TextFieldTableCell.<Medicine, Integer>forTableColumn(new IntegerStringConverter()));
         storeAvailability.setOnEditCommit(
@@ -621,6 +624,7 @@ public class AdminController implements Initializable {
 
                     @Override
                     public void handle(TableColumn.CellEditEvent<Medicine, Integer> t) {
+                        if(Validation.isQuantityMedicine(t.getNewValue().toString())) {
 
                         ((Medicine) t.getTableView().getItems().get(
                                 t.getTablePosition().getRow())
@@ -628,7 +632,7 @@ public class AdminController implements Initializable {
                         methods.updateMedicine(t.getTableView().getItems().get(t.getTablePosition().getRow()));
 
                         fillStore();
-                    }
+                    }}
                 });
 
 
