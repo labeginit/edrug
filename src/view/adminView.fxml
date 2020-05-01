@@ -23,15 +23,15 @@
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="379.0" prefWidth="586.0">
                             <children>
                                 <ButtonBar layoutX="6.0" layoutY="514.0" prefHeight="40.0" prefWidth="771.0" />
-                                <TableView layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0">
+                                <TableView fx:id="storeView" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0">
                                     <columns>
-                                        <TableColumn fx:id="c1" prefWidth="93.33324909210205" text="Article" />
-                                        <TableColumn fx:id="c2" minWidth="4.0" prefWidth="284.66674041748047" text="Name" />
-                                        <TableColumn fx:id="c3" prefWidth="58.6666259765625" text="Size" />
-                                        <TableColumn fx:id="c4" prefWidth="93.33328247070312" text="Price" />
-                                        <TableColumn fx:id="c5" prefWidth="85.3333740234375" text="Availability" />
-                                        <TableColumn fx:id="c6" prefWidth="74.0" text="Description" />
-                                        <TableColumn fx:id="c7" prefWidth="81.333251953125" text="Producer" />
+                                        <TableColumn fx:id="storeArticle" prefWidth="93.33324909210205" text="Article" />
+                                        <TableColumn fx:id="storeName" minWidth="4.0" prefWidth="284.66674041748047" text="Name" />
+                                        <TableColumn fx:id="storeSize" prefWidth="58.6666259765625" text="Size" />
+                                        <TableColumn fx:id="storePrice" prefWidth="93.33328247070312" text="Price" />
+                                        <TableColumn fx:id="storeAvailability" prefWidth="85.3333740234375" text="Availability" />
+                                        <TableColumn fx:id="storeDescription" prefWidth="74.0" text="Description" />
+                                        <TableColumn fx:id="storeProducer" prefWidth="81.333251953125" text="Producer" />
                                     </columns>
                                 </TableView>
                                 <Label layoutX="14.0" layoutY="26.0" prefHeight="17.0" prefWidth="84.0" text="Search terms:">
@@ -39,10 +39,10 @@
                                         <Font size="13.0" />
                                     </font>
                                 </Label>
-                                <TextField fx:id="search_textField" layoutX="100.0" layoutY="22.0" prefHeight="26.0" prefWidth="274.0" promptText="enter active ingredient etc. here" />
-                                <Button fx:id="go_Button" layoutX="383.0" layoutY="22.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="41.0" text="Go!" />
-                                <ComboBox fx:id="sort_combo" layoutX="433.0" layoutY="22.0" prefHeight="26.0" prefWidth="166.0" />
-                                <ComboBox fx:id="filter_combo" layoutX="607.0" layoutY="22.0" prefHeight="25.0" prefWidth="170.0" />
+                                <TextField fx:id="storeSearchTextField" layoutX="100.0" layoutY="22.0" prefHeight="26.0" prefWidth="274.0" promptText="enter active ingredient etc. here" />
+                                <Button fx:id="storeGoButton" layoutX="383.0" layoutY="22.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="41.0" text="Go!" />
+                                <ComboBox fx:id="storeSearchCombo" layoutX="433.0" layoutY="22.0" prefHeight="26.0" prefWidth="166.0" />
+                                <ComboBox fx:id="storeFilterCombo" layoutX="607.0" layoutY="22.0" prefHeight="25.0" prefWidth="170.0" />
                             </children>
                         </AnchorPane>
                     </content>

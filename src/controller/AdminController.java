@@ -94,6 +94,18 @@ public class AdminController implements Initializable {
     public TextField roleTextAdd;
     public DatePicker datePickerAdd;
     public Label roleStarAdd;
+    public TableView<Medicine> storeView;
+    public TableColumn<Medicine, Integer> storeArticle;
+    public TableColumn<Medicine, String> storeName;
+    public TableColumn <Medicine, String> storeSize;
+    public TableColumn <Medicine, Double> storePrice;
+    public TableColumn<Medicine, Integer> storeAvailability;
+    public TableColumn<Medicine, String> storeDescription;
+    public TableColumn<Medicine, String> storeProducer;
+    public TextField storeSearchTextField;
+    public Button storeGoButton;
+    public ComboBox storeSearchCombo;
+    public ComboBox storeFilterCombo;
 
     CommonMethods methods = new CommonMethods();
     User currentUser = UserSingleton.getOurInstance().getUser();
@@ -111,6 +123,7 @@ public class AdminController implements Initializable {
         pass1star.setVisible(false);
         pass2star.setVisible(false);
 
+        fillStore();
         fillPatientTable();
         fillDoctorTable();
         fillEditTable();
@@ -284,6 +297,23 @@ public class AdminController implements Initializable {
 
     }
 
+    public void fillStore() {
+        storeArticle.setCellValueFactory(new PropertyValueFactory<>("articleNo"));
+        storeName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        storeAvailability.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        storeDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        storePrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+        storeProducer.setCellValueFactory(new PropertyValueFactory<>("producer"));
+        storeSize.setCellValueFactory(new PropertyValueFactory<>("packageSize"));
+
+
+
+        ObservableList<Medicine> listOfAll = FXCollections.observableArrayList(methods.getMedicineList());
+        listOfAll.addAll(FXCollections.observableArrayList(methods.getMedicineList()));
+
+        storeView.setItems(listOfAll);
+
+    }
     public void fillMe() {
         SSNtext.setText(currentUser.getSsn());
         datePicker.setValue(currentUser.getBDate().toLocalDate());
