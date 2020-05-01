@@ -60,7 +60,6 @@ public class AdminController implements Initializable {
     public TableColumn<User, String> changeSSNTable;
     public TableView<User> changeTable;
     public TableColumn<User, Integer> changeRoleTable;
-    public Label SSNstar;
     public Label BDateStar;
     public Label firstNameStar;
     public Label lastNameStar;
@@ -113,7 +112,6 @@ public class AdminController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        SSNstar.setVisible(false);
         BDateStar.setVisible(false);
         firstNameStar.setVisible(false);
         lastNameStar.setVisible(false);
@@ -137,7 +135,6 @@ public class AdminController implements Initializable {
 
         cancel_button.setOnAction(actionEvent -> {
             fillMe();
-            SSNstar.setVisible(false);
             BDateStar.setVisible(false);
             firstNameStar.setVisible(false);
             lastNameStar.setVisible(false);
@@ -328,16 +325,7 @@ public class AdminController implements Initializable {
         pass2_text.setText("******");
 
     }
-
-    public void buttonPressed(KeyEvent e)
-    {
-        if(e.getCode() == KeyCode.ENTER)
-        {
-            fillEditTable();
-            fillPatientTable();
-            fillDoctorTable();
-        }
-    }
+    
 
     private boolean isItOk() {
         if (firstName_text.getText().isEmpty() || lastName_text.getText().isEmpty() || datePicker.getValue()==null
@@ -435,24 +423,7 @@ public class AdminController implements Initializable {
     }
 
     public void makeEditable() {
-        changeSSNTable.setCellFactory(TextFieldTableCell.forTableColumn());
-        changeSSNTable.setOnEditCommit(
-                new EventHandler<TableColumn.CellEditEvent<User, String>>() {
 
-                    @Override
-                    public void handle(TableColumn.CellEditEvent<User, String> t) {
-                        if (Validation.isSSN(t.getNewValue(), SSNstar)) {
-                            SSNstar.setVisible(false);
-                            ((User) t.getTableView().getItems().get(
-                                    t.getTablePosition().getRow())
-                            ).setSsn(t.getNewValue());
-                            methods.updateUser(t.getTableView().getItems().get(t.getTablePosition().getRow()));
-                        }
-                        fillDoctorTable();
-                        fillPatientTable();
-                    }
-                }
-        );
         changeFirstNameTable.setCellFactory(TextFieldTableCell.forTableColumn());
         changeFirstNameTable.setOnEditCommit(
                 new EventHandler<TableColumn.CellEditEvent<User, String>>() {
@@ -602,22 +573,7 @@ public class AdminController implements Initializable {
                         fillStore();
                     }
                 });
-        storeArticle.setCellFactory(TextFieldTableCell.<Medicine, Integer>forTableColumn(new IntegerStringConverter()));
-        storeArticle.setOnEditCommit(
-                new EventHandler<TableColumn.CellEditEvent<Medicine, Integer>>() {
 
-                    @Override
-                    public void handle(TableColumn.CellEditEvent<Medicine, Integer> t) {
-                        if(Validation.isAricleNo(t.getNewValue().toString())) {
-
-                        ((Medicine) t.getTableView().getItems().get(
-                                t.getTablePosition().getRow())
-                        ).setArticleNo(t.getNewValue());
-                        methods.updateMedicine(t.getTableView().getItems().get(t.getTablePosition().getRow()));
-
-                        fillStore();
-                    }}
-                });
         storeAvailability.setCellFactory(TextFieldTableCell.<Medicine, Integer>forTableColumn(new IntegerStringConverter()));
         storeAvailability.setOnEditCommit(
                 new EventHandler<TableColumn.CellEditEvent<Medicine, Integer>>() {
