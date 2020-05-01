@@ -19,7 +19,6 @@ import model.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
-import java.sql.SQLType;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,13 +26,13 @@ import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
 
-
-
 public class PatientController implements Initializable {
-    CommonMethods commonMethods = new CommonMethods();
+    private CommonMethods commonMethods = new CommonMethods();
+    private UserCommon userCommon = new UserCommon();
     private User currentUser;
     public LocalDate localDate;
-    private static ShoppingCart cart = new ShoppingCart();
+    public static List <OrderLine> cart = new ArrayList<>();
+
 
     @FXML
     private ComboBox<String> groupFilter_combo;
@@ -100,8 +99,6 @@ public class PatientController implements Initializable {
 
     @FXML
     private TreeTableView<?> treeTableView;
-
-
 
     @FXML
     private TreeTableColumn<?, ?> c9;
@@ -186,7 +183,7 @@ public class PatientController implements Initializable {
     }
 
     private ObservableList<String> filters1 = FXCollections.observableArrayList(fillList(groups));
-    private ObservableList<String> filters2 = FXCollections.observableArrayList("All", "Only Current", "Only Consumed");
+    private ObservableList<String> filters2 = FXCollections.observableArrayList("", "Only Current", "Only Consumed");
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -204,7 +201,7 @@ public class PatientController implements Initializable {
 
         logOut1_button.setOnAction(event -> {
             try {
-                onLogOutButtonPressed(event);
+                userCommon.onLogOutButtonPressed(event);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -212,7 +209,7 @@ public class PatientController implements Initializable {
 
         logOut2_button.setOnAction(event -> {
             try {
-                onLogOutButtonPressed(event);
+                userCommon.onLogOutButtonPressed(event);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -220,7 +217,7 @@ public class PatientController implements Initializable {
 
         logOut3_button.setOnAction(event -> {
             try {
-                onLogOutButtonPressed(event);
+                userCommon.onLogOutButtonPressed(event);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -287,28 +284,6 @@ public class PatientController implements Initializable {
 
             });
 
-  /*      groupFilter_combo.editorProperty().addListener((observable, oldValue, newValue) -> {
-            String val = groupFilter_combo.getValue();
-            ObservableList<Medicine> newList = FXCollections.observableArrayList(commonMethods.getMedicineByProductGroupPath(val));
-            filteredData.setPredicate(medicine -> {
-                if (newValue == null) {
-                    return true;
-                }
-                if (newList != null) {
-                    for (int i = 0; i < newList.size(); i++) {
-                        if (newList.get(i).isOnPrescription()) {  //add more here - if these ids are from the prescription - do not delete
-                            newList.remove(i);
-                        }
-                        return true;
-                    }
-                }
-                return false;
-                //     SortedList<Medicine> sortedData2 = new SortedList<>(newList);
-                //     sortedData2.comparatorProperty().bind(tableView.comparatorProperty());
-                //     tableView.setItems(sortedData2);
-            });
-        });
-*/
         maxPrice_text.textProperty().addListener((observable, oldValue, newValue) -> {
             search_textField.setText("");
             filteredData.setPredicate(medicine -> {
@@ -344,13 +319,7 @@ public class PatientController implements Initializable {
 
     @FXML
     private void cartButtonHandle(ActionEvent event) throws IOException {
-        Parent tableViewParent = FXMLLoader.load(getClass().getResource("/view/shoppingCartView.fxml"));
-        Scene tableViewScene = new Scene(tableViewParent);
-
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        window.setScene(tableViewScene);
-        window.show();
+       userCommon.switchScene(event, "/view/shoppingCartView.fxml");
     }
 
     @FXML
@@ -364,17 +333,23 @@ public class PatientController implements Initializable {
             {
                 available = element.getQuantity();
                 qtyReserved = element.getQuantityReserved();
+                OrderLine line = new OrderLine(0, currentUser, element, element.getPrice(), qtyReserved);
+                line.setArticleNo(element.getArticleNo());
+                line.setName(element.getName());
+
 
                 if (available > 0) {
                     if (cart.size() == 0) {
-                        cart.addMedicine(element);
-                    } else {
-                        if (!cartElementPresenceCheck(element)) {
-                            cart.addMedicine(element);
-                        }
+                        cart.add(line);
+                    } else if (!cartElementPresenceCheck(element)) {
+                            cart.add(line);
+
                     }
-                    element.setQuantityReserved(qtyReserved + 1);
-                    available = available - 1;
+                    qtyReserved=++qtyReserved;
+                    element.setQuantityReserved(qtyReserved);
+                    line.setQuantity(qtyReserved);
+
+                    available--;
                     element.setQuantity(available);
 
                     tableView.refresh();
@@ -384,15 +359,19 @@ public class PatientController implements Initializable {
         }
 //deleteme
         for (int i = 0; i < cart.size(); i++) {
-            System.out.println(cart.getMedicine(i));
+            System.out.println("med qty=" + cart.get(i).getMedicine().getQuantity() + " med qres=" + cart.get(i).getMedicine().getQuantityReserved() + " art=" + cart.get(i).getArticleNo() + " qty" + cart.get(i).getQuantity());
         }
         System.out.println();
     }
 
+
+
+
     private boolean cartElementPresenceCheck(Medicine selectedElement){
         for (int i = 0; i < cart.size(); i++) {
-            if (cart.getMedicine(i).getArticleNo() == selectedElement.getArticleNo()) {
-                cart.getMedicine(i).setQuantity(cart.getMedicine(i).getQuantity() + 1);
+            if (cart.get(i).getMedicine().getArticleNo() == selectedElement.getArticleNo()) {
+                cart.get(i).getMedicine().setQuantity(cart.get(i).getMedicine().getQuantity() + 1);
+                cart.get(i).setQuantity(selectedElement.getQuantityReserved() + 1);
                 return true;
             }
         }
@@ -438,19 +417,6 @@ public class PatientController implements Initializable {
     private void onCancelButtonPressed(ActionEvent ae) {
         setInitialValues(currentUser);
         setVisible(false);
-    }
-
-    @FXML
-    private void onLogOutButtonPressed(ActionEvent event) throws IOException {
-        Parent tableViewParent = FXMLLoader.load(getClass().getResource("/view/loginView.fxml"));
-        Scene tableViewScene = new Scene(tableViewParent);
-
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-        window.setScene(tableViewScene);
-        window.show();
-        currentUser = null;
-        UserSingleton.getOurInstance().setUser(currentUser);
     }
 
     @FXML
