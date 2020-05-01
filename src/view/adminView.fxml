@@ -23,14 +23,14 @@
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="379.0" prefWidth="586.0">
                             <children>
                                 <ButtonBar layoutX="6.0" layoutY="514.0" prefHeight="40.0" prefWidth="771.0" />
-                                <TableView fx:id="storeView" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0">
+                                <TableView fx:id="storeView" editable="true" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0">
                                     <columns>
-                                        <TableColumn fx:id="storeArticle" prefWidth="93.33324909210205" text="Article" />
-                                        <TableColumn fx:id="storeName" minWidth="4.0" prefWidth="284.66674041748047" text="Name" />
-                                        <TableColumn fx:id="storeSize" prefWidth="58.6666259765625" text="Size" />
-                                        <TableColumn fx:id="storePrice" prefWidth="93.33328247070312" text="Price" />
-                                        <TableColumn fx:id="storeAvailability" prefWidth="85.3333740234375" text="Availability" />
-                                        <TableColumn fx:id="storeDescription" prefWidth="74.0" text="Description" />
+                                        <TableColumn fx:id="storeArticle" prefWidth="85.0" text="Article" />
+                                        <TableColumn fx:id="storeName" minWidth="4.0" prefWidth="250.0" text="Name" />
+                                        <TableColumn fx:id="storeSize" text="Size" />
+                                        <TableColumn fx:id="storePrice" prefWidth="56.0" text="Price" />
+                                        <TableColumn fx:id="storeAvailability" prefWidth="72.0" text="Availability" />
+                                        <TableColumn fx:id="storeDescription" prefWidth="149.0" text="Description" />
                                         <TableColumn fx:id="storeProducer" prefWidth="81.333251953125" text="Producer" />
                                     </columns>
                                 </TableView>
