@@ -1,10 +1,12 @@
 package controller;
 
+import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import model.CommonMethods;
 import model.User;
 import model.dBConnection.DAOUser;
 
@@ -57,7 +59,7 @@ public class ForgottenPasswordController implements Initializable {
     private Button confirmButton;
 
     String confirmationCode;
-    DAOUser daoUser = new DAOUser();
+    CommonMethods common = new CommonMethods();
     User temp;
 
     @Override
@@ -71,7 +73,7 @@ public class ForgottenPasswordController implements Initializable {
         sendButton.setOnAction(event -> sendEmail());
         enterButton.setOnAction(event -> enterButtonHandler());
         cancelButton.setOnAction(event -> handleCancelButton(event));
-        confirmButton.setOnAction(event -> confirmButtonHandler());
+        confirmButton.setOnAction(event -> confirmButtonHandler(event));
     }
 
     @FXML
@@ -121,19 +123,26 @@ public class ForgottenPasswordController implements Initializable {
             // Send message
             Transport.send(message);
 
+            System.out.println("Succesfully sent");
+
         } catch (MessagingException ignored) {
+            System.out.println("Email failed");
         }
         confirmationTextField.setVisible(true);
         enterButton.setVisible(true);
     }
 
     public String addRecipient() {
-        temp = daoUser.getUser(ssnTextField.toString());
 
         String recipient = "";
-
-        if (temp.getEmail().equals(emailText.toString())) {
-            recipient = emailText.toString();
+        try {
+            temp = common.getUser(ssnTextField.getText());
+            
+            if (temp.getEmail().equals(emailText.getText())) {
+                recipient = emailText.getText();
+            }
+        } catch (Exception ex) {
+        ex.printStackTrace();
         }
         return recipient;
     }
@@ -167,7 +176,7 @@ public class ForgottenPasswordController implements Initializable {
     }
 
     public void enterButtonHandler() {
-        if (confirmationTextField.toString().equals(confirmationCode)) {
+        if (confirmationTextField.getText().equals(confirmationCode)) {
             passwordTextField.setVisible(true);
             passwordTextField2.setVisible(true);
             confirmButton.setVisible(true);
@@ -176,10 +185,19 @@ public class ForgottenPasswordController implements Initializable {
         }
     }
 
-    public void confirmButtonHandler() {
-        if (passwordTextField.toString().equals(passwordTextField2.toString()) && passwordTextField.toString().length() > 6) {
-            temp.setPassword(passwordTextField.toString());
-            daoUser.updateUser(temp);
+    public void confirmButtonHandler(ActionEvent ae) {
+        try {
+        if (passwordTextField.getText().equals(passwordTextField2.getText()) && passwordTextField.getText().length() > 6) {
+            temp.setPassword(passwordTextField.getText());
+            common.updateUser(temp);
+            handleCancelButton(ae);
+        } else {
+            throw new Exception();
+        }
+        } catch (Exception ignored) {
+            Validation.alertPopup("Both passwords must be the same and at least 6 characters long",
+                    "Password incorrect",
+                    "Warning");
         }
     }
 }

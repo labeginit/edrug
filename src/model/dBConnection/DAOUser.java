@@ -15,8 +15,7 @@ public class DAOUser {
     private List<User> userList = new ArrayList<>();
     private int linesAffected = 0;
     private User user;
-    DAOCommon common = new DAOCommon();
-
+    public DAOCommon common = new DAOCommon();
     private String sSN;
     private int userType;  //   1 = Patient, 2 = Doctor, 3 = Admin
     private String firstName;
@@ -327,6 +326,4 @@ public class DAOUser {
             return linesAffected;
         }
     }
-
-
 }

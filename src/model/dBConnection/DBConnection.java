@@ -4,9 +4,9 @@ import java.sql.*;
 
 public class DBConnection {
 
-   static String url= "jdbc:mysql://ro03.beginit.se:23306/edrugs_test?verifyServerCertificate=false&useSSL=true&serverTimezone=UTC";
-   static String username = "ap";
-   static String password="BNXVEvRY#9R^";
+   public static String url= "jdbc:mysql://ro03.beginit.se:23306/edrugs_test?verifyServerCertificate=false&useSSL=true&serverTimezone=UTC";
+   public static String username = "ap";
+   public static String password="BNXVEvRY#9R^";
 
     private static DBConnection myDBConnection;
     public static Connection dbConnection;
