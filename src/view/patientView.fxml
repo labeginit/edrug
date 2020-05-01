@@ -21,17 +21,16 @@
     <children>
       <TabPane layoutX="7.0" layoutY="7.0" prefHeight="585.0" prefWidth="784.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab closable="false" text="Medicine">
+          <Tab closable="false" text="Store">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="379.0" prefWidth="586.0">
                      <children>
-                        <ButtonBar layoutX="6.0" layoutY="514.0" prefHeight="40.0" prefWidth="771.0">
+                        <ButtonBar layoutX="6.0" layoutY="514.0" prefHeight="40.0" prefWidth="770.0">
                           <buttons>
                               <Button fx:id="logOut1_button" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Logout" />
                               <Label prefHeight="17.0" prefWidth="261.0" />
-                              <Label prefHeight="17.0" prefWidth="261.0" />
-                              <Label prefHeight="17.0" prefWidth="261.0" />
-                              <Label prefHeight="17.0" prefWidth="261.0" />
+                              <Button fx:id="buy_button" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Buy" />
+                              <Button fx:id="cartButton" minWidth="64.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="64.0" text="Go to Cart" />
                           </buttons>
                         </ButtonBar>
                         <TableView fx:id="tableView" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0">
