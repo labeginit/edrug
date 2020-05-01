@@ -9,6 +9,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.User;
 import model.UserSingleton;
+import javafx.scene.control.TextField;
+import javafx.scene.control.PasswordField;
+
+
 
 import java.io.IOException;
 
@@ -31,5 +35,4 @@ public class UserCommon {
         window.setScene(tableViewScene);
         window.show();
     }
-
 }

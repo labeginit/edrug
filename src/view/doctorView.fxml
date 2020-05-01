@@ -5,6 +5,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -19,20 +20,26 @@
    <children>
       <TabPane layoutX="7.0" layoutY="7.0" prefHeight="585.0" prefWidth="784.0" tabClosingPolicy="UNAVAILABLE">
          <tabs>
-            <Tab closable="false" text="Store">
+            <Tab closable="false" text="Medical Supplies">
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="379.0" prefWidth="586.0">
                      <children>
-                        <ButtonBar layoutX="6.0" layoutY="514.0" prefHeight="40.0" prefWidth="771.0" />
+                        <ButtonBar layoutX="6.0" layoutY="514.0" prefHeight="40.0" prefWidth="771.0">
+                           <buttons>
+                              <Button fx:id="logOut1_button" minWidth="64.0" mnemonicParsing="false" prefHeight="7.0" prefWidth="64.0" text="Logout" />
+                              <Label prefHeight="17.0" prefWidth="261.0" />
+                              <Label prefHeight="17.0" prefWidth="261.0" />
+                              <Label prefHeight="17.0" prefWidth="261.0" />
+                           </buttons></ButtonBar>
                         <TableView layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0">
                            <columns>
-                              <TableColumn fx:id="c1" prefWidth="93.33324909210205" text="Article" />
-                              <TableColumn fx:id="c2" minWidth="4.0" prefWidth="284.66674041748047" text="Name" />
-                              <TableColumn fx:id="c3" prefWidth="58.6666259765625" text="Size" />
-                              <TableColumn fx:id="c4" prefWidth="93.33328247070312" text="Price" />
-                              <TableColumn fx:id="c5" prefWidth="85.3333740234375" text="Availability" />
-                              <TableColumn fx:id="c6" prefWidth="74.0" text="Description" />
-                              <TableColumn fx:id="c7" prefWidth="81.333251953125" text="Producer" />
+                              <TableColumn fx:id="d1Article" prefWidth="73.60000610351562" text="Article" />
+                              <TableColumn fx:id="d1Name" minWidth="4.0" prefWidth="200.0" text="Name" />
+                              <TableColumn fx:id="d1Size" prefWidth="48.79998779296875" text="Size" />
+                              <TableColumn fx:id="d1Price" prefWidth="48.79998779296875" text="Price" />
+                              <TableColumn fx:id="d1Stock" prefWidth="49.60003662109375" text="Stock" />
+                              <TableColumn fx:id="d1Description" prefWidth="262.39996337890625" text="Description" />
+                              <TableColumn fx:id="d1Producer" prefWidth="92.0" text="Producer" />
                            </columns>
                         </TableView>
                         <Label layoutX="14.0" layoutY="26.0" prefHeight="17.0" prefWidth="84.0" text="Search terms:">
@@ -42,7 +49,7 @@
                         </Label>
                         <TextField fx:id="search_textField" layoutX="100.0" layoutY="22.0" prefHeight="26.0" prefWidth="274.0" promptText="enter active ingredient etc. here" />
                         <Button fx:id="go_Button" layoutX="383.0" layoutY="22.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="41.0" text="Go!" />
-                        <ComboBox fx:id="sort_combo" layoutX="433.0" layoutY="22.0" prefHeight="26.0" prefWidth="166.0" />
+                        <ComboBox fx:id="sort_combo" layoutX="440.0" layoutY="22.0" prefHeight="26.0" prefWidth="166.0" />
                         <ComboBox fx:id="filter_combo" layoutX="607.0" layoutY="22.0" prefHeight="25.0" prefWidth="170.0" />
                      </children>
                   </AnchorPane>
@@ -67,13 +74,14 @@
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="SSN_Textfield" layoutX="597.0" layoutY="520.0" prefHeight="26.0" prefWidth="142.0" promptText="Enter patient SSN here" />
+                        <TextField fx:id="sSN_textField" layoutX="597.0" layoutY="520.0" prefHeight="26.0" prefWidth="142.0" promptText="Enter patient SSN here" />
                         <Button fx:id="SSN_Go_Button" layoutX="739.0" layoutY="520.0" mnemonicParsing="false" text="Go!" />
                         <Label layoutX="290.0" layoutY="523.0" prefHeight="19.0" prefWidth="298.0" text="Add SSN to edit/add a prescription for the patient:">
                            <font>
                               <Font size="13.0" />
                            </font>
                         </Label>
+                        <Button fx:id="logOut1_button2" layoutX="26.0" layoutY="520.0" minWidth="64.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="181.0" text="Logout" />
                      </children>
                   </AnchorPane>
                </content>
@@ -82,23 +90,15 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <ButtonBar layoutX="6.0" layoutY="514.0" prefHeight="40.0" prefWidth="771.0">
-                           <buttons>
-                              <Button fx:id="cancel_button" mnemonicParsing="false" text="Cancel" />
-                              <Button fx:id="save_button" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" text="Save" />
-                           </buttons>
-                        </ButtonBar>
                         <ListView focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0" />
-                        <TextField fx:id="ssn_text" editable="false" layoutX="200.0" layoutY="73.0" prefHeight="25.0" prefWidth="220.0" />
+                        <TextField fx:id="ssn_update" editable="false" layoutX="200.0" layoutY="73.0" prefHeight="25.0" prefWidth="220.0" />
                         <TextField fx:id="birth_text" editable="false" layoutX="200.0" layoutY="116.0" prefHeight="25.0" prefWidth="220.0" />
                         <TextField fx:id="firstName_text" layoutX="200.0" layoutY="164.0" prefHeight="25.0" prefWidth="220.0" />
                         <TextField fx:id="lastName_text" layoutX="200.0" layoutY="208.0" prefHeight="25.0" prefWidth="220.0" />
                         <TextField fx:id="zip_text" layoutX="200.0" layoutY="250.0" prefHeight="25.0" prefWidth="67.0" />
                         <TextField fx:id="address_text" layoutX="342.0" layoutY="250.0" prefHeight="25.0" prefWidth="414.0" />
                         <TextField fx:id="phone_text" layoutX="200.0" layoutY="291.0" prefHeight="25.0" prefWidth="220.0" />
-                        <TextField fx:id="email_text" layoutX="200.0" layoutY="338.0" prefHeight="25.0" prefWidth="220.0" />
-                        <TextField fx:id="pass1_text" layoutX="200.0" layoutY="384.0" prefHeight="25.0" prefWidth="220.0" text=" * * * * * * * * * * * " />
-                        <TextField fx:id="pass2_text" layoutX="200.0" layoutY="431.0" prefHeight="25.0" prefWidth="220.0" text=" * * * * * * * * * * * " />
+                        <TextField fx:id="email_text" layoutX="200.0" layoutY="338.0" prefHeight="26.0" prefWidth="219.0" />
                         <Label layoutX="54.0" layoutY="77.0" text="Social Security Number">
                            <font>
                               <Font size="13.0" />
@@ -149,6 +149,16 @@
                               <Font size="13.0" />
                            </font>
                         </Label>
+                        <ButtonBar layoutX="6.0" layoutY="512.0" prefHeight="43.0" prefWidth="771.0">
+                           <buttons>
+                              <Button fx:id="logOut1_button1" minWidth="64.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="64.0" text="Logout" />
+                              <Label prefHeight="17.0" prefWidth="261.0" />
+                              <Button fx:id="save_Button" mnemonicParsing="false" text="Save" />
+                              <Button fx:id="cancel_Button" mnemonicParsing="false" text="Cancel" />
+                           </buttons>
+                        </ButtonBar>
+                        <PasswordField fx:id="password_Text" layoutX="200.0" layoutY="385.0" prefHeight="26.0" prefWidth="219.0" promptText="••••••" />
+                        <PasswordField fx:id="password_Text2" layoutX="200.0" layoutY="434.0" prefHeight="26.0" prefWidth="219.0" promptText="••••••" />
                      </children>
                   </AnchorPane>
                </content>

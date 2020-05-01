@@ -10,10 +10,12 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import model.*;
 
-import javax.print.Doc;
 import java.net.URL;
 import java.sql.Date;
 
@@ -71,7 +73,6 @@ public class AdminController implements Initializable {
     public Button save_buttonAdd;
     public Button cancel_buttonAdd;
     public TextField SSNtextAdd;
-    public TextField birth_textAdd;
     public TextField firstName_textAdd;
     public DatePicker datePicker;
     public TextField lastName_textAdd;
@@ -94,6 +95,18 @@ public class AdminController implements Initializable {
     public TextField roleTextAdd;
     public DatePicker datePickerAdd;
     public Label roleStarAdd;
+    public TableView<Medicine> storeView;
+    public TableColumn<Medicine, Integer> storeArticle;
+    public TableColumn<Medicine, String> storeName;
+    public TableColumn <Medicine, String> storeSize;
+    public TableColumn <Medicine, Double> storePrice;
+    public TableColumn<Medicine, Integer> storeAvailability;
+    public TableColumn<Medicine, String> storeDescription;
+    public TableColumn<Medicine, String> storeProducer;
+    public TextField storeSearchTextField;
+    public Button storeGoButton;
+    public ComboBox storeSearchCombo;
+    public ComboBox storeFilterCombo;
 
     public CommonMethods methods = new CommonMethods();
     public User currentUser = UserSingleton.getOurInstance().getUser();
@@ -111,11 +124,16 @@ public class AdminController implements Initializable {
         pass1star.setVisible(false);
         pass2star.setVisible(false);
 
+        fillStore();
         fillPatientTable();
         fillDoctorTable();
         fillEditTable();
         fillMe();
         makeEditable();
+
+
+
+
 
         cancel_button.setOnAction(actionEvent -> {
             fillMe();
@@ -233,6 +251,8 @@ public class AdminController implements Initializable {
 
     }
 
+
+
     public void fillPatientTable() {
 
         patientSSNtable.setCellValueFactory(new PropertyValueFactory<>("Ssn"));
@@ -278,6 +298,23 @@ public class AdminController implements Initializable {
 
     }
 
+    public void fillStore() {
+        storeArticle.setCellValueFactory(new PropertyValueFactory<>("articleNo"));
+        storeName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        storeAvailability.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        storeDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        storePrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+        storeProducer.setCellValueFactory(new PropertyValueFactory<>("producer"));
+        storeSize.setCellValueFactory(new PropertyValueFactory<>("packageSize"));
+
+
+
+        ObservableList<Medicine> listOfAll = FXCollections.observableArrayList(methods.getMedicineList());
+        listOfAll.addAll(FXCollections.observableArrayList(methods.getMedicineList()));
+
+        storeView.setItems(listOfAll);
+
+    }
     public void fillMe() {
         SSNtext.setText(currentUser.getSsn());
         datePicker.setValue(currentUser.getBDate().toLocalDate());
@@ -290,6 +327,16 @@ public class AdminController implements Initializable {
         pass1_text.setText("******");
         pass2_text.setText("******");
 
+    }
+
+    public void buttonPressed(KeyEvent e)
+    {
+        if(e.getCode() == KeyCode.ENTER)
+        {
+            fillEditTable();
+            fillPatientTable();
+            fillDoctorTable();
+        }
     }
 
     private boolean isItOk() {
@@ -401,6 +448,8 @@ public class AdminController implements Initializable {
                             ).setSsn(t.getNewValue());
                             methods.updateUser(t.getTableView().getItems().get(t.getTablePosition().getRow()));
                         }
+                        fillDoctorTable();
+                        fillPatientTable();
                     }
                 }
         );
@@ -417,6 +466,8 @@ public class AdminController implements Initializable {
                             ).setFirstName(t.getNewValue());
                             methods.updateUser(t.getTableView().getItems().get(t.getTablePosition().getRow()));
                         }
+                        fillDoctorTable();
+                        fillPatientTable();
                     }
                 }
         );
@@ -433,6 +484,8 @@ public class AdminController implements Initializable {
                             ).setLastName(t.getNewValue());
                             methods.updateUser(t.getTableView().getItems().get(t.getTablePosition().getRow()));
                         }
+                        fillDoctorTable();
+                        fillPatientTable();
                     }
                 }
         );
@@ -449,6 +502,8 @@ public class AdminController implements Initializable {
                             ).setEmail(t.getNewValue());
                             methods.updateUser(t.getTableView().getItems().get(t.getTablePosition().getRow()));
                         }
+                        fillDoctorTable();
+                        fillPatientTable();
                     }
                 }
         );
@@ -466,27 +521,123 @@ public class AdminController implements Initializable {
                             methods.updateUser(t.getTableView().getItems().get(t.getTablePosition().getRow()));
 
                         }
+                        fillDoctorTable();
+                        fillPatientTable();
                     }
                 });
-        changeRoleTable.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-        changeRoleTable.setOnEditCommit(
-                new EventHandler<TableColumn.CellEditEvent<User, Integer>>() {
+        storeSize.setCellFactory(TextFieldTableCell.forTableColumn());
+        storeSize.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Medicine, String>>() {
 
                     @Override
-                    public void handle(TableColumn.CellEditEvent<User, Integer> t) {
-                        if (t.getNewValue() == 1 || t.getNewValue() == 2) {
-                            ((User) t.getTableView().getItems().get(
+                    public void handle(TableColumn.CellEditEvent<Medicine, String> t) {
+                            ((Medicine) t.getTableView().getItems().get(
                                     t.getTablePosition().getRow())
-                            ).setUserType(t.getNewValue());
-                            methods.updateUser(t.getTableView().getItems().get(t.getTablePosition().getRow()));
-                        } else {
-                            Validation.alertPopup("Inccorect value", "Please enter a true role", "Enter 1, 2 or 3");
-                        }
+                            ).setPackageSize(t.getNewValue());
+                            methods.updateMedicine(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+
+                        fillStore();
                     }
+                });
+        storeProducer.setCellFactory(TextFieldTableCell.forTableColumn());
+        storeProducer.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Medicine, String>>() {
+
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Medicine, String> t) {
+
+                            ((Medicine) t.getTableView().getItems().get(
+                                    t.getTablePosition().getRow())
+                            ).setProducer(t.getNewValue());
+                            methods.updateMedicine(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+
+                        fillStore();
+                    }
+                });
+        storePrice.setCellFactory(TextFieldTableCell.<Medicine, Double>forTableColumn(new DoubleStringConverter()));
+        storePrice.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Medicine, Double>>() {
+
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Medicine, Double> t) {
+                        if (Validation.isPriceMedicine(t.getNewValue().toString())) {
+
+                        ((Medicine) t.getTableView().getItems().get(
+                                t.getTablePosition().getRow())
+                        ).setPrice(t.getNewValue());
+                        methods.updateMedicine(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+
+                        fillStore();
+                    }}
+                });
+        storeDescription.setCellFactory(TextFieldTableCell.forTableColumn());
+        storeDescription.setOnEditCommit(
+
+                new EventHandler<TableColumn.CellEditEvent<Medicine, String>>() {
+
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Medicine, String> t) {
+
+                        ((Medicine) t.getTableView().getItems().get(
+                                t.getTablePosition().getRow())
+                        ).setDescription(t.getNewValue());
+                        methods.updateMedicine(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+
+                        fillStore();
+                    }
+                });
+        storeName.setCellFactory(TextFieldTableCell.forTableColumn());
+        storeName.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Medicine, String>>() {
+
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Medicine, String> t) {
 
 
-                }
-        );
+                        ((Medicine) t.getTableView().getItems().get(
+                                t.getTablePosition().getRow())
+                        ).setName(t.getNewValue());
+                        methods.updateMedicine(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+
+                        fillStore();
+                    }
+                });
+        storeArticle.setCellFactory(TextFieldTableCell.<Medicine, Integer>forTableColumn(new IntegerStringConverter()));
+        storeArticle.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Medicine, Integer>>() {
+
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Medicine, Integer> t) {
+                        if(Validation.isAricleNo(t.getNewValue().toString())) {
+
+                        ((Medicine) t.getTableView().getItems().get(
+                                t.getTablePosition().getRow())
+                        ).setArticleNo(t.getNewValue());
+                        methods.updateMedicine(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+
+                        fillStore();
+                    }}
+                });
+        storeAvailability.setCellFactory(TextFieldTableCell.<Medicine, Integer>forTableColumn(new IntegerStringConverter()));
+        storeAvailability.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Medicine, Integer>>() {
+
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Medicine, Integer> t) {
+                        if(Validation.isQuantityMedicine(t.getNewValue().toString())) {
+
+                        ((Medicine) t.getTableView().getItems().get(
+                                t.getTablePosition().getRow())
+                        ).setQuantity(t.getNewValue());
+                        methods.updateMedicine(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+
+                        fillStore();
+                    }}
+                });
+
+
+
+        
     }
 
 }

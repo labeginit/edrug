@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
 import model.CommonMethods;
 import model.User;
@@ -50,10 +51,10 @@ public class ForgottenPasswordController implements Initializable {
     private Button enterButton;
 
     @FXML
-    private TextField passwordTextField;
+    private PasswordField passwordField1;
 
     @FXML
-    private TextField passwordTextField2;
+    private PasswordField passwordField2;
 
     @FXML
     private Button confirmButton;
@@ -66,8 +67,8 @@ public class ForgottenPasswordController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         confirmationTextField.setVisible(false);
         enterButton.setVisible(false);
-        passwordTextField.setVisible(false);
-        passwordTextField2.setVisible(false);
+        passwordField1.setVisible(false);
+        passwordField2.setVisible(false);
         confirmButton.setVisible(false);
 
         sendButton.setOnAction(event -> sendEmail());
@@ -177,8 +178,8 @@ public class ForgottenPasswordController implements Initializable {
 
     public void enterButtonHandler() {
         if (confirmationTextField.getText().equals(confirmationCode)) {
-            passwordTextField.setVisible(true);
-            passwordTextField2.setVisible(true);
+            passwordField1.setVisible(true);
+            passwordField2.setVisible(true);
             confirmButton.setVisible(true);
         } else {
             Validation.alertPopup("Confirmation code doesn't match the code sent to specified email", "Confirmation Failure", "Error");
@@ -187,9 +188,9 @@ public class ForgottenPasswordController implements Initializable {
 
     public void confirmButtonHandler(ActionEvent ae) {
         try {
-        if (passwordTextField.getText().equals(passwordTextField2.getText()) && passwordTextField.getText().length() > 6) {
-            temp.setPassword(passwordTextField.getText());
-            common.updateUser(temp);
+        if (passwordField1.getText().equals(passwordField2.getText()) && passwordField1.getText().length() > 5) {
+            temp.setPassword(passwordField1.getText());
+            common.updatePassword(temp);
             handleCancelButton(ae);
         } else {
             throw new Exception();
