@@ -9,10 +9,11 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.util.converter.IntegerStringConverter;
 import model.*;
 
-import javax.print.Doc;
 import java.net.URL;
 import java.sql.Date;
 
@@ -69,7 +70,6 @@ public class AdminController implements Initializable {
     public Button save_buttonAdd;
     public Button cancel_buttonAdd;
     public TextField SSNtextAdd;
-    public TextField birth_textAdd;
     public TextField firstName_textAdd;
     public DatePicker datePicker;
     public TextField lastName_textAdd;
@@ -114,6 +114,10 @@ public class AdminController implements Initializable {
         fillEditTable();
         fillMe();
         makeEditable();
+
+
+
+
 
         cancel_button.setOnAction(actionEvent -> {
             fillMe();
@@ -231,6 +235,8 @@ public class AdminController implements Initializable {
 
     }
 
+
+
     public void fillPatientTable() {
 
         patientSSNtable.setCellValueFactory(new PropertyValueFactory<>("Ssn"));
@@ -288,6 +294,16 @@ public class AdminController implements Initializable {
         pass1_text.setText("******");
         pass2_text.setText("******");
 
+    }
+
+    public void buttonPressed(KeyEvent e)
+    {
+        if(e.getCode() == KeyCode.ENTER)
+        {
+            fillEditTable();
+            fillPatientTable();
+            fillDoctorTable();
+        }
     }
 
     private boolean isItOk() {
@@ -399,6 +415,8 @@ public class AdminController implements Initializable {
                             ).setSsn(t.getNewValue());
                             methods.updateUser(t.getTableView().getItems().get(t.getTablePosition().getRow()));
                         }
+                        fillDoctorTable();
+                        fillPatientTable();
                     }
                 }
         );
@@ -415,6 +433,8 @@ public class AdminController implements Initializable {
                             ).setFirstName(t.getNewValue());
                             methods.updateUser(t.getTableView().getItems().get(t.getTablePosition().getRow()));
                         }
+                        fillDoctorTable();
+                        fillPatientTable();
                     }
                 }
         );
@@ -431,6 +451,8 @@ public class AdminController implements Initializable {
                             ).setLastName(t.getNewValue());
                             methods.updateUser(t.getTableView().getItems().get(t.getTablePosition().getRow()));
                         }
+                        fillDoctorTable();
+                        fillPatientTable();
                     }
                 }
         );
@@ -447,6 +469,8 @@ public class AdminController implements Initializable {
                             ).setEmail(t.getNewValue());
                             methods.updateUser(t.getTableView().getItems().get(t.getTablePosition().getRow()));
                         }
+                        fillDoctorTable();
+                        fillPatientTable();
                     }
                 }
         );
@@ -464,27 +488,11 @@ public class AdminController implements Initializable {
                             methods.updateUser(t.getTableView().getItems().get(t.getTablePosition().getRow()));
 
                         }
+                        fillDoctorTable();
+                        fillPatientTable();
                     }
                 });
-        changeRoleTable.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
-        changeRoleTable.setOnEditCommit(
-                new EventHandler<TableColumn.CellEditEvent<User, Integer>>() {
-
-                    @Override
-                    public void handle(TableColumn.CellEditEvent<User, Integer> t) {
-                        if (t.getNewValue() == 1 || t.getNewValue() == 2) {
-                            ((User) t.getTableView().getItems().get(
-                                    t.getTablePosition().getRow())
-                            ).setUserType(t.getNewValue());
-                            methods.updateUser(t.getTableView().getItems().get(t.getTablePosition().getRow()));
-                        } else {
-                            Validation.alertPopup("Inccorect value", "Please enter a true role", "Enter 1, 2 or 3");
-                        }
-                    }
-
-
-                }
-        );
+        
     }
 
 }
