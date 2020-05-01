@@ -58,9 +58,9 @@ public class ForgottenPasswordController implements Initializable {
     @FXML
     private Button confirmButton;
 
-    String confirmationCode;
-    CommonMethods common = new CommonMethods();
-    User temp;
+    public String confirmationCode;
+    public CommonMethods common = new CommonMethods();
+    public User temp;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {

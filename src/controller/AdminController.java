@@ -95,8 +95,8 @@ public class AdminController implements Initializable {
     public DatePicker datePickerAdd;
     public Label roleStarAdd;
 
-    CommonMethods methods = new CommonMethods();
-    User currentUser = UserSingleton.getOurInstance().getUser();
+    public CommonMethods methods = new CommonMethods();
+    public User currentUser = UserSingleton.getOurInstance().getUser();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
