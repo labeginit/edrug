@@ -136,13 +136,11 @@ public class TestCode {
         medicine.setDescription("new descr");
         commonMethods.updateMedicine(medicine);*/
 
-/*        List<PrescriptionLine> lines = new ArrayList<>();
-        PrescriptionLine line1 = new PrescriptionLine(2, (Patient) commonMethods.getUser("222222-111"), commonMethods.getMedicine(10003), 1, "take it easy");
-        PrescriptionLine line2 = new PrescriptionLine(2, (Patient) commonMethods.getUser("222222-111"), commonMethods.getMedicine(10004), 2, "take it slow");
+  /*      List<PrescriptionLine> lines = new ArrayList<>();
+        PrescriptionLine line1 = new PrescriptionLine(3, (Patient) commonMethods.getUser("660530-3910"), commonMethods.getMedicine(10001), 1, "1 pill a day 4 days");
         lines.add(line1);
-        lines.add(line2);
 
-        Prescription prescription = new Prescription(2, (Doctor) commonMethods.getUser("860305-0731"), (Patient) commonMethods.getUser("222222-111"), java.sql.Date.valueOf("2020-04-29"), "headache", lines);
+        Prescription prescription = new Prescription(3, (Doctor) commonMethods.getUser("860305-0731"), (Patient) commonMethods.getUser("660530-3910"), java.sql.Date.valueOf("2020-04-30"), "fever", lines);
         int added = commonMethods.addPrescription(prescription);
         System.out.println(added);
 */
