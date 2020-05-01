@@ -14,20 +14,20 @@ public class DAOPrescription {
     private ResultSet resultSet = null;
     private int id;
     private Patient patient;
-    String patientSSN;
+    public String patientSSN;
     private Doctor doctor;
-    String doctorSSN;
+    public String doctorSSN;
     private Date date;
     private String diagnosis;
     private List<PrescriptionLine> specification = new ArrayList<>();
     private Medicine medicine;
-    int article;
+    public int article;
     private int quantity;
     private String instructions;
     private int linesAffected = 0;
-    DAOCommon common = new DAOCommon();
-    DAOUser user = new DAOUser();
-    DAOMedicine med = new DAOMedicine();
+    public DAOCommon common = new DAOCommon();
+    public DAOUser user = new DAOUser();
+    public DAOMedicine med = new DAOMedicine();
 
     public int addPrescription(Prescription prescription) {
         try {

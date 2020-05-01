@@ -7,10 +7,10 @@ import model.dBConnection.DAOUser;
 import java.util.List;
 
 public class CommonMethods {
-    DAOUser daoUser = new DAOUser();
-    DAOMedicine daoMedicine = new DAOMedicine();
-    DAOPrescription daoPrescription = new DAOPrescription();
-    int linesAffected;
+    public DAOUser daoUser = new DAOUser();
+    public DAOMedicine daoMedicine = new DAOMedicine();
+    public DAOPrescription daoPrescription = new DAOPrescription();
+    public int linesAffected;
 
     //**********************
 

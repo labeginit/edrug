@@ -8,10 +8,7 @@ public class ProdGroup {
     private int id;
     private String name;
     private String path;
-    DAOMedicine dbMedicine = new DAOMedicine();
-
-
-    public ProdGroup(){}
+    public DAOMedicine dbMedicine = new DAOMedicine();
 
     public ProdGroup(int id, String name, String path) {
         this.id = id;
