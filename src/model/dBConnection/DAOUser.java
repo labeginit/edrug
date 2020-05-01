@@ -327,6 +327,4 @@ public class DAOUser {
             return linesAffected;
         }
     }
-
-
 }
