@@ -29,7 +29,7 @@
                           <buttons>
                               <Button fx:id="logOut1_button" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Logout" />
                               <Label prefHeight="17.0" prefWidth="261.0" />
-                              <Button fx:id="buy_button" minWidth="64.0" mnemonicParsing="false" onAction="#addToCartButtonHandle" prefHeight="25.0" prefWidth="64.0" text="Buy" />
+                              <Button fx:id="buy_button" minWidth="64.0" mnemonicParsing="false" onAction="#addToCartButtonHandle" prefHeight="25.0" prefWidth="64.0" text="Add" />
                               <Button fx:id="cartButton" minWidth="64.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="64.0" text="Go to Cart" />
                           </buttons>
                         </ButtonBar>
