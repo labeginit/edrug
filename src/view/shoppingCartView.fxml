@@ -29,11 +29,11 @@
                               <Button fx:id="back_button" minWidth="64.0" mnemonicParsing="false" prefWidth="64.0" text="Back to Shop" />
                                     </buttons>
                                 </ButtonBar>
-                                <TableView fx:id="tableView" layoutX="6.0" layoutY="193.0" prefHeight="316.0" prefWidth="771.0">
+                                <TableView fx:id="tableView" editable="true" layoutX="6.0" layoutY="193.0" prefHeight="316.0" prefWidth="771.0">
                                     <columns>
-                                        <TableColumn fx:id="c1" prefWidth="137.9999418258667" text="Article" />
-                                        <TableColumn fx:id="c2" minWidth="4.0" prefWidth="371.33341217041016" text="Name" />
-                                        <TableColumn fx:id="c4" prefWidth="107.333251953125" text="Price" />
+                                        <TableColumn fx:id="c1" editable="false" prefWidth="137.9999418258667" text="Article" />
+                                        <TableColumn fx:id="c2" editable="false" minWidth="4.0" prefWidth="371.33341217041016" text="Name" />
+                                        <TableColumn fx:id="c4" editable="false" prefWidth="107.333251953125" text="Price" />
                                         <TableColumn fx:id="c5" prefWidth="103.3333740234375" text="Quantity" />
                                         <TableColumn fx:id="c8" prefWidth="52.6666259765625" text="Delete" />
                                     </columns>

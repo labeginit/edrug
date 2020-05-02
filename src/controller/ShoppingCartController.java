@@ -3,10 +3,13 @@ package controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.converter.IntegerStringConverter;
 import model.*;
 import java.io.IOException;
 import java.net.URL;
@@ -15,6 +18,7 @@ import static controller.PatientController.cart;
 
 public class ShoppingCartController implements Initializable {
     private User currentUser;
+    private CommonMethods commonMethods = new CommonMethods();
     private UserCommon userCommon = new UserCommon();
 
     @FXML
@@ -109,13 +113,14 @@ public class ShoppingCartController implements Initializable {
             }
         });
 
-
         c1.setCellValueFactory(new PropertyValueFactory<OrderLine, Integer>("articleNo"));
         c2.setCellValueFactory(new PropertyValueFactory<OrderLine, String>("name"));
         c4.setCellValueFactory(new PropertyValueFactory<OrderLine, Double>("price"));
+        makeEditable();
         c5.setCellValueFactory(new PropertyValueFactory<OrderLine, Integer>("quantity"));
         c8.setCellValueFactory(new PropertyValueFactory<OrderLine, CheckBox>("checkBox"));
         tableView.setItems(medList);
+
 
     }
 
@@ -129,6 +134,28 @@ public class ShoppingCartController implements Initializable {
     @FXML
     private void backButtonHandle(ActionEvent event) throws IOException { //WHEN SWITCHING BACK TO SHOP the quantities become all wrong
         userCommon.switchScene(event,"/view/patientView.fxml");
+    }
+
+    public void makeEditable() {
+        c5.setCellFactory(TextFieldTableCell.<OrderLine, Integer>forTableColumn(new IntegerStringConverter()));
+        c5.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<OrderLine, Integer>>() {
+
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<OrderLine, Integer> t) {
+                        int q = commonMethods.getMedicine(t.getRowValue().getArticleNo()).getQuantity();
+                        if(q >= t.getNewValue()) {
+                            ((OrderLine) t.getTableView().getItems().get(
+                                    t.getTablePosition().getRow())
+                            ).setQuantity(t.getNewValue());
+
+                        } else {
+                            t.getRowValue().setQuantity(q);
+                            tableView.refresh();
+                        }}
+
+                });
+
     }
 
 }
