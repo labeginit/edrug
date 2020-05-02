@@ -44,7 +44,7 @@ public class RegistrationController implements Initializable {
     private TextField ssn;
 
     @FXML
-    private DatePicker dPicker;
+    public DatePicker dPicker;
 
     @FXML
     private TextField address;

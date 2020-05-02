@@ -34,8 +34,8 @@
                                         <TableColumn fx:id="c1" editable="false" prefWidth="137.9999418258667" text="Article" />
                                         <TableColumn fx:id="c2" editable="false" minWidth="4.0" prefWidth="371.33341217041016" text="Name" />
                                         <TableColumn fx:id="c4" editable="false" prefWidth="107.333251953125" text="Price" />
-                                        <TableColumn fx:id="c5" prefWidth="103.3333740234375" text="Quantity" />
-                                        <TableColumn fx:id="c8" prefWidth="52.6666259765625" text="Delete" />
+                                        <TableColumn fx:id="c5" prefWidth="96.0" text="Quantity" />
+                                        <TableColumn fx:id="c8" prefWidth="61.0" text="Delete" />
                                     </columns>
                                 </TableView>
                                 <Label layoutX="14.0" layoutY="24.0" prefHeight="19.0" prefWidth="103.0" text="Payer:">
@@ -43,39 +43,39 @@
                                         <Font size="13.0" />
                                     </font>
                                 </Label>
-                                <TextField fx:id="firstName_text" alignment="CENTER_RIGHT" layoutX="127.0" layoutY="21.0" prefHeight="26.0" prefWidth="134.0" promptText="first name" />
-                                <ComboBox fx:id="delivery_combo" layoutX="127.0" layoutY="101.0" prefHeight="26.0" prefWidth="192.0" promptText="select here..." />
-                                <TextField fx:id="totalCost_text" alignment="CENTER_RIGHT" editable="false" layoutX="402.0" layoutY="101.0" prefHeight="26.0" prefWidth="134.0" promptText="00.00" />
-                                <Label layoutX="14.0" layoutY="64.0" prefHeight="19.0" prefWidth="103.0" text="Delivery Address:">
+                                <TextField fx:id="firstName_text" layoutX="137.0" layoutY="21.0" prefHeight="26.0" prefWidth="134.0" promptText="first name" />
+                                <ComboBox fx:id="delivery_combo" layoutX="165.0" layoutY="101.0" prefHeight="26.0" prefWidth="192.0" promptText="select here..." />
+                                <TextField fx:id="totalCost_text" alignment="CENTER_RIGHT" editable="false" layoutX="491.0" layoutY="101.0" prefHeight="26.0" prefWidth="134.0" promptText="00.00" />
+                                <Label layoutX="14.0" layoutY="64.0" prefHeight="19.0" prefWidth="123.0" text="Delivery Address:">
                                     <font>
                                         <Font size="13.0" />
                                     </font>
                                 </Label>
-                        <ComboBox fx:id="payment_combo" layoutX="127.0" layoutY="140.0" prefHeight="26.0" prefWidth="192.0" promptText="select here..." />
-                        <TextField fx:id="zipCode_text" alignment="CENTER_RIGHT" layoutX="127.0" layoutY="61.0" prefHeight="26.0" prefWidth="134.0" promptText="zip code" />
-                        <Label layoutX="327.0" layoutY="104.0" prefHeight="19.0" prefWidth="65.0" text="Total Cost:">
+                        <ComboBox fx:id="payment_combo" layoutX="165.0" layoutY="139.0" prefHeight="26.0" prefWidth="192.0" promptText="select here..." />
+                        <TextField fx:id="zipCode_text" layoutX="137.0" layoutY="61.0" prefHeight="26.0" prefWidth="134.0" promptText="zip code" />
+                        <Label layoutX="385.0" layoutY="105.0" prefHeight="19.0" prefWidth="82.0" text="Total Cost:">
                            <font>
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="totalVAT_text" alignment="CENTER_RIGHT" editable="false" layoutX="402.0" layoutY="140.0" prefHeight="26.0" prefWidth="134.0" promptText="00.00" />
-                        <Label layoutX="327.0" layoutY="142.0" prefHeight="19.0" prefWidth="65.0" text="Total VAT:">
+                        <TextField fx:id="totalVAT_text" alignment="CENTER_RIGHT" editable="false" layoutX="491.0" layoutY="139.0" prefHeight="26.0" prefWidth="134.0" promptText="00.00" />
+                        <Label layoutX="384.0" layoutY="142.0" prefHeight="19.0" prefWidth="84.0" text="Total VAT:">
                            <font>
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="lastName_text" alignment="CENTER_RIGHT" layoutX="272.0" layoutY="21.0" prefHeight="26.0" prefWidth="264.0" promptText="last name" />
-                        <Label layoutX="14.0" layoutY="104.0" prefHeight="19.0" prefWidth="103.0" text="Delivery Method:">
+                        <TextField fx:id="lastName_text" layoutX="294.0" layoutY="21.0" prefHeight="26.0" prefWidth="264.0" promptText="last name" />
+                        <Label layoutX="14.0" layoutY="104.0" prefHeight="19.0" prefWidth="127.0" text="Delivery Method:">
                            <font>
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <Label layoutX="14.0" layoutY="142.0" prefHeight="19.0" prefWidth="103.0" text="Payment Method:">
+                        <Label layoutX="14.0" layoutY="142.0" prefHeight="19.0" prefWidth="124.0" text="Payment Method:">
                            <font>
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="address_text" alignment="CENTER_RIGHT" layoutX="272.0" layoutY="61.0" prefHeight="26.0" prefWidth="264.0" promptText="address" />
+                        <TextField fx:id="address_text" layoutX="294.0" layoutY="61.0" prefHeight="26.0" prefWidth="264.0" promptText="address" />
                             </children></AnchorPane>
                     </content>
                 </Tab>
