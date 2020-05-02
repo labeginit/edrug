@@ -9,7 +9,7 @@ public class DAOCommon {
     private ResultSet resultSet = null;
     private int linesAffected = 0;
 
-    public ResultSet retrieveSet(String queryString, String... params) {
+    protected ResultSet retrieveSet(String queryString, String... params) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
@@ -27,7 +27,7 @@ public class DAOCommon {
         return resultSet;
     }
 
-    public ResultSet retrieveSet(String queryString) {
+    protected ResultSet retrieveSet(String queryString) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
@@ -42,7 +42,7 @@ public class DAOCommon {
         return resultSet;
     }
 
-    public int insertUser(String queryString, String ssn, int type, String firstName, String lastName, Date birthDate, String zipCode, String address, String email, String phoneNumber, String password, int isActive) {
+    protected int insertUser(String queryString, String ssn, int type, String firstName, String lastName, Date birthDate, String zipCode, String address, String email, String phoneNumber, String password, int isActive) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
@@ -70,7 +70,7 @@ public class DAOCommon {
         return linesAffected;
     }
 
-    public int updateUser(String queryString, String ssn, String firstName, String lastName, Date birthDate, String zipCode, String address, String email, String phoneNumber, int isActive) {
+    protected int updateUser(String queryString, String ssn, String firstName, String lastName, Date birthDate, String zipCode, String address, String email, String phoneNumber, int isActive) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
@@ -95,7 +95,7 @@ public class DAOCommon {
         return linesAffected;
     }
 
-    public int updateRecordStr(String queryString, String... params) {
+    protected int updateRecordStr(String queryString, String... params) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
@@ -113,7 +113,7 @@ public class DAOCommon {
         return linesAffected;
     }
 
-    public int updateRecordBool(String queryString, Boolean... params) {
+    protected int updateRecordBool(String queryString, Boolean... params) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
@@ -131,7 +131,7 @@ public class DAOCommon {
         return linesAffected;
     }
 
-    public int insertMedicine(String queryString, int article, int prodGroupId, int onPrescription, String name, String producer, String description, String packageSize, int quantityAvailable, double price, String searchTerms, int isActive) {
+    protected int insertMedicine(String queryString, int article, int prodGroupId, int onPrescription, String name, String producer, String description, String packageSize, int quantityAvailable, double price, String searchTerms, int isActive) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
@@ -158,7 +158,7 @@ public class DAOCommon {
         return linesAffected;
     }
 
-    public int updateMedicine(String queryString, int article, int prodGroupId, int onPrescription, String name, String producer, String description, String packageSize, int quantityAvailable, double price, String searchTerms, int isActive) {
+    protected int updateMedicine(String queryString, int article, int prodGroupId, int onPrescription, String name, String producer, String description, String packageSize, int quantityAvailable, double price, String searchTerms, int isActive) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
@@ -186,7 +186,7 @@ public class DAOCommon {
         return linesAffected;
     }
 
-    public int insertPrescriptionHeader(String queryString, int id, String patientSSN, String doctorSSN, Date date, String diagnosis) {
+    protected int insertPrescriptionHeader(String queryString, int id, String patientSSN, String doctorSSN, Date date, String diagnosis) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
@@ -208,7 +208,7 @@ public class DAOCommon {
         return linesAffected;
     }
 
-    public int insertPrescriptionLine(String queryString, int prescId, String patientSSN, int article, int quantity, String instructions) {
+    protected int insertPrescriptionLine(String queryString, int prescId, String patientSSN, int article, int quantity, String instructions) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);

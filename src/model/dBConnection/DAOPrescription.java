@@ -14,22 +14,22 @@ public class DAOPrescription {
     private ResultSet resultSet = null;
     private int id;
     private Patient patient;
-    public String patientSSN;
+    private String patientSSN;
     private Doctor doctor;
-    public String doctorSSN;
+    private String doctorSSN;
     private Date date;
     private String diagnosis;
     private List<PrescriptionLine> specification = new ArrayList<>();
     private Medicine medicine;
-    public int article;
+    private int article;
     private int quantity;
     private String instructions;
     private int linesAffected = 0;
-    public DAOCommon common = new DAOCommon();
-    public DAOUser user = new DAOUser();
-    public DAOMedicine med = new DAOMedicine();
+    private DAOCommon common = new DAOCommon();
+    private DAOUser user = new DAOUser();
+    private DAOMedicine med = new DAOMedicine();
 
-    public int addPrescription(Prescription prescription) {
+    protected int addPrescription(Prescription prescription) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 if (prescription != null) {
@@ -65,7 +65,7 @@ public class DAOPrescription {
     }
 
 /*  WIP
-    public List<Prescription> getPrescriptionList(Doctor doctor) {
+    protected List<Prescription> getPrescriptionList(Doctor doctor) {
         List<Prescription> prescList = null;
         String query = "select id, patient_ssn, user_ssn, date, diagnosis, article, quantity, instructions from Prescription \n" +
                 "join Prescription_has_Medicine on id = prescription_id and prescription_patient_ssn = patient_ssn\n" +

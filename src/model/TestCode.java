@@ -1,12 +1,6 @@
 package model;
 
-import model.dBConnection.DAOMedicine;
-import model.dBConnection.DAOUser;
-import model.dBConnection.DBConnection;
-
-import javax.print.MultiDocPrintService;
-import java.util.ArrayList;
-import java.util.List;
+import model.dBConnection.CommonMethods;
 
 public class TestCode {
     public void code(){

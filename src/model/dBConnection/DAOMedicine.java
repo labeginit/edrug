@@ -33,7 +33,7 @@ public class DAOMedicine {
     private int groupId;
     private boolean isActive;
 
-    public List<Medicine> retrieveMedicineList(boolean onPrescription, boolean active) {
+    protected List<Medicine> retrieveMedicineList(boolean onPrescription, boolean active) {
         medList.clear();
         if (onPrescription) {
             value1 = "1";
@@ -64,7 +64,7 @@ public class DAOMedicine {
         }
     }
 
-    public List<Medicine> retrieveMedicineList(boolean onPrescription) {
+    protected List<Medicine> retrieveMedicineList(boolean onPrescription) {
         medList.clear();
         if (onPrescription) {
             value1 = "1";
@@ -91,7 +91,7 @@ public class DAOMedicine {
         }
     }
 
-    public List<Medicine> retrieveMedicineList() {
+    protected List<Medicine> retrieveMedicineList() {
         medList.clear();
         try {
             if (!DBConnection.dbConnection.isClosed()) {
@@ -112,7 +112,7 @@ public class DAOMedicine {
         }
     }
 
-    private Medicine createMedicineObjects(ResultSet resultSet) throws Exception {
+    protected Medicine createMedicineObjects(ResultSet resultSet) throws Exception {
         Medicine med = null;
         if (resultSet != null) {
             if (!resultSet.getBoolean("onPrescription")) {
@@ -124,7 +124,7 @@ public class DAOMedicine {
         return med;
     }
 
-    public Medicine getMedicine(int article) {
+    protected Medicine getMedicine(int article) {
         Medicine temp = null;
         String query = "SELECT * FROM Medicine where article = ?;";
         try {
@@ -135,7 +135,7 @@ public class DAOMedicine {
         return temp;
     }
 
-    private Medicine retrieveMedicine(String query, int article) {
+    protected Medicine retrieveMedicine(String query, int article) {
         medicine = null;
         try {
             if (!DBConnection.dbConnection.isClosed()) {
@@ -164,7 +164,7 @@ public class DAOMedicine {
         }
     }
 
-    public int addMedicine(Medicine medicine) {
+    protected int addMedicine(Medicine medicine) {
         int value1;
         try {
             if (!DBConnection.dbConnection.isClosed()) {
@@ -207,7 +207,7 @@ public class DAOMedicine {
         }
     }
 
-    public int updateMedicine(Medicine medicine) {
+    protected int updateMedicine(Medicine medicine) {
         int value1;
         try {
             if (!DBConnection.dbConnection.isClosed()) {
@@ -249,7 +249,7 @@ public class DAOMedicine {
         }
     }
 
-    public List<ProdGroup> retrieveProductGroupList() {
+    protected List<ProdGroup> retrieveProductGroupList() {
         groups.clear();
         try {
             resultSet = common.retrieveSet("SELECT CONCAT(CONCAT(c.gr_name, '/', b.gr_name), '/', a.gr_name) AS path, a.id, a.gr_name FROM Product_group a \n" +
@@ -270,7 +270,7 @@ public class DAOMedicine {
         }
     }
 
-    public ProdGroup retrieveProductGroup(int groupId) {
+    protected ProdGroup retrieveProductGroup(int groupId) {
         group = null;
         try {
             resultSet = common.retrieveSet("SELECT CONCAT(CONCAT(c.gr_name, '/', b.gr_name), '/', a.gr_name) AS path, a.id, a.gr_name FROM Product_group a \n" +
@@ -301,7 +301,7 @@ public class DAOMedicine {
     }
 
     // here we expect full path like "Drugs/Digestion & Nausea/Constipation"
-    public List<Medicine> retrieveMedicineByProductGroupPath(String fullPath) {
+    protected List<Medicine> retrieveMedicineByProductGroupPath(String fullPath) {
         medList.clear();
         try {
             resultSet = common.retrieveSet("select * from Medicine as m \n" +
@@ -322,7 +322,7 @@ public class DAOMedicine {
         }
     }
 
-    public List<Medicine> retrieveMedicineByMaxPrice(double maxPrice) {
+    protected List<Medicine> retrieveMedicineByMaxPrice(double maxPrice) {
         medList.clear();
         try {
             resultSet = common.retrieveSet("SELECT * from Medicine WHERE active = 1 AND price <= ?", String.valueOf(maxPrice));

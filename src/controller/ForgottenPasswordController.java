@@ -1,15 +1,13 @@
 package controller;
 
-import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
-import model.CommonMethods;
+import model.dBConnection.CommonMethods;
 import model.User;
-import model.dBConnection.DAOUser;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

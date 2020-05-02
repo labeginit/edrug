@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.event.ActionEvent;
+import model.dBConnection.CommonMethods;
 
 public class PatientController implements Initializable {
     private CommonMethods commonMethods = new CommonMethods();

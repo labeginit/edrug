@@ -6,7 +6,6 @@ import model.Patient;
 import model.User;
 
 import java.sql.*;
-import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +14,7 @@ public class DAOUser {
     private List<User> userList = new ArrayList<>();
     private int linesAffected = 0;
     private User user;
-    public DAOCommon common = new DAOCommon();
+    private DAOCommon common = new DAOCommon();
     private String sSN;
     private int userType;  //   1 = Patient, 2 = Doctor, 3 = Admin
     private String firstName;
@@ -87,7 +86,7 @@ public class DAOUser {
         }
     }
 
-    public List<User> retrieveUserList(boolean isActive) {
+    protected List<User> retrieveUserList(boolean isActive) {
         user = null;
         userList.clear();
         if (isActive) {
@@ -143,7 +142,7 @@ public class DAOUser {
         return user;
     }
 
-    public List<User> getUserList(String userType) throws IllegalArgumentException { // 0 - all users will be shown; values 1-3 - a corresponding type of users.
+    protected List<User> getUserList(String userType) throws IllegalArgumentException { // 0 - all users will be shown; values 1-3 - a corresponding type of users.
         if (userType.matches("[0-3]")) {
             if (userType.compareTo("0") == 0) {
                 userList = retrieveUserList();
@@ -203,7 +202,7 @@ public class DAOUser {
         }
     }
 
-    public User getUser(String sSN) {
+    protected User getUser(String sSN) {
         User temp = null;
         String query = "SELECT * FROM User where ssn = ?;";
         try {
@@ -214,7 +213,7 @@ public class DAOUser {
         return temp;
     }
 
-    public int addUser(User user) {
+    protected int addUser(User user) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 if (user != null) {
@@ -250,7 +249,7 @@ public class DAOUser {
         }
     }
 
-    public int updateUser(User user) {
+    protected int updateUser(User user) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 if (user != null) {
@@ -284,7 +283,7 @@ public class DAOUser {
         }
     }
 
-    public int updatePassword(User user) {
+    protected int updatePassword(User user) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 if (user != null) {
@@ -306,7 +305,7 @@ public class DAOUser {
         }
     }
 
-    public int removeUser(User user) {
+    protected int removeUser(User user) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 if (user != null) {

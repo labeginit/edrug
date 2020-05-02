@@ -12,7 +12,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import model.CommonMethods;
+import model.dBConnection.CommonMethods;
 import model.UserSingleton;
 import model.User;
 

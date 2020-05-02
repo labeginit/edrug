@@ -11,6 +11,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.IntegerStringConverter;
 import model.*;
+import model.dBConnection.CommonMethods;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
