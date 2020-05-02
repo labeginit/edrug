@@ -2,10 +2,7 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import model.Doctor;
 import model.User;
 import model.UserSingleton;
@@ -13,6 +10,7 @@ import model.UserSingleton;
 import javax.swing.table.TableColumn;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.util.ResourceBundle;
 
 public class DoctorController implements Initializable {
@@ -62,10 +60,10 @@ public class DoctorController implements Initializable {
     private TextField sSN_textField;
 
     @FXML
-    private TextField sSN_update;
+    private Label ssn_Label;
 
     @FXML
-    private TextField birth_text;
+    private DatePicker datePicker;
 
     @FXML
     private TextField firstName_text;
@@ -122,6 +120,7 @@ public class DoctorController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         currentUser = UserSingleton.getOurInstance().getUser();
         setProfileData(currentUser);
+
         logOut_button1.setOnAction(event -> {
             try {
                 userCommon.onLogOutButtonPressed(event);
@@ -145,8 +144,8 @@ public class DoctorController implements Initializable {
         });
     }
     public void setProfileData(User currentUser) {
-        sSN_update.setText(currentUser.getSsn());
-        birth_text.setText(currentUser.getBDate().toString());
+        ssn_Label.setText(currentUser.getSsn());
+        datePicker.setValue(datePicker.getValue());
         firstName_text.setText(currentUser.getFirstName());
         lastName_text.setText(currentUser.getLastName());
         zip_text.setText(currentUser.getZipCode());
@@ -155,5 +154,9 @@ public class DoctorController implements Initializable {
         email_text.setText(currentUser.getEmail());
         password_Text.setText(currentUser.getPassword());
         password_Text2.setText(currentUser.getPassword());
+    }
+    @FXML
+    public void handleSaveButton() {
+
     }
 }

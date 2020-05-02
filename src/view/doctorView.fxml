@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.PasswordField?>
@@ -26,7 +27,7 @@
                      <children>
                         <ButtonBar layoutX="6.0" layoutY="514.0" prefHeight="40.0" prefWidth="771.0">
                            <buttons>
-                              <Button fx:id="logOut1_button" minWidth="64.0" mnemonicParsing="false" prefHeight="7.0" prefWidth="64.0" text="Logout" />
+                              <Button fx:id="logOut_button1" minWidth="64.0" mnemonicParsing="false" prefHeight="7.0" prefWidth="64.0" text="Logout" />
                               <Label prefHeight="17.0" prefWidth="261.0" />
                               <Label prefHeight="17.0" prefWidth="261.0" />
                               <Label prefHeight="17.0" prefWidth="261.0" />
@@ -50,7 +51,7 @@
                         <TextField fx:id="search_textField" layoutX="100.0" layoutY="22.0" prefHeight="26.0" prefWidth="274.0" promptText="enter active ingredient etc. here" />
                         <Button fx:id="go_Button" layoutX="383.0" layoutY="22.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="41.0" text="Go!" />
                         <ComboBox fx:id="sort_combo" layoutX="440.0" layoutY="22.0" prefHeight="26.0" prefWidth="166.0" />
-                        <ComboBox fx:id="filter_combo" layoutX="607.0" layoutY="22.0" prefHeight="25.0" prefWidth="170.0" />
+                        <ComboBox fx:id="filter_Combo" layoutX="607.0" layoutY="22.0" prefHeight="25.0" prefWidth="170.0" />
                      </children>
                   </AnchorPane>
                </content>
@@ -81,7 +82,7 @@
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <Button fx:id="logOut1_button2" layoutX="26.0" layoutY="520.0" minWidth="64.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="181.0" text="Logout" />
+                        <Button fx:id="logOut_button2" layoutX="26.0" layoutY="520.0" minWidth="64.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="181.0" text="Logout" />
                      </children>
                   </AnchorPane>
                </content>
@@ -91,20 +92,18 @@
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <ListView focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0" />
-                        <TextField fx:id="ssn_update" editable="false" layoutX="200.0" layoutY="73.0" prefHeight="25.0" prefWidth="220.0" />
-                        <TextField fx:id="birth_text" editable="false" layoutX="200.0" layoutY="116.0" prefHeight="25.0" prefWidth="220.0" />
-                        <TextField fx:id="firstName_text" layoutX="200.0" layoutY="164.0" prefHeight="25.0" prefWidth="220.0" />
-                        <TextField fx:id="lastName_text" layoutX="200.0" layoutY="208.0" prefHeight="25.0" prefWidth="220.0" />
-                        <TextField fx:id="zip_text" layoutX="200.0" layoutY="250.0" prefHeight="25.0" prefWidth="67.0" />
-                        <TextField fx:id="address_text" layoutX="342.0" layoutY="250.0" prefHeight="25.0" prefWidth="414.0" />
-                        <TextField fx:id="phone_text" layoutX="200.0" layoutY="291.0" prefHeight="25.0" prefWidth="220.0" />
-                        <TextField fx:id="email_text" layoutX="200.0" layoutY="338.0" prefHeight="26.0" prefWidth="219.0" />
-                        <Label layoutX="54.0" layoutY="77.0" text="Social Security Number">
+                        <TextField fx:id="firstName_text" layoutX="294.0" layoutY="74.0" prefHeight="25.0" prefWidth="220.0" />
+                        <TextField fx:id="lastName_text" layoutX="294.0" layoutY="117.0" prefHeight="25.0" prefWidth="220.0" />
+                        <TextField fx:id="zip_text" layoutX="294.0" layoutY="249.0" prefHeight="25.0" prefWidth="67.0" />
+                        <TextField fx:id="address_text" layoutX="454.0" layoutY="249.0" prefHeight="26.0" prefWidth="214.0" />
+                        <TextField fx:id="phone_text" layoutX="294.0" layoutY="292.0" prefHeight="25.0" prefWidth="220.0" />
+                        <TextField fx:id="email_text" layoutX="294.0" layoutY="338.0" prefHeight="26.0" prefWidth="219.0" />
+                        <Label layoutX="52.0" layoutY="168.0" text="Social Security Number">
                            <font>
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <Label layoutX="54.0" layoutY="212.0" prefHeight="17.0" prefWidth="139.0" text="Family name">
+                        <Label layoutX="51.0" layoutY="120.0" prefHeight="17.0" prefWidth="139.0" text="Last Name">
                            <font>
                               <Font size="13.0" />
                            </font>
@@ -124,12 +123,12 @@
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <Label layoutX="54.0" layoutY="168.0" prefHeight="17.0" prefWidth="137.0" text="First name">
+                        <Label layoutX="50.0" layoutY="77.0" prefHeight="17.0" prefWidth="137.0" text="First name">
                            <font>
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <Label layoutX="54.0" layoutY="120.0" prefHeight="17.0" prefWidth="127.0" text="Birth date">
+                        <Label layoutX="50.0" layoutY="212.0" prefHeight="17.0" prefWidth="127.0" text="Birth date">
                            <font>
                               <Font size="13.0" />
                            </font>
@@ -144,21 +143,30 @@
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <Label layoutX="284.0" layoutY="253.0" prefHeight="19.0" prefWidth="84.0" text="Address">
+                        <Label layoutX="371.0" layoutY="253.0" prefHeight="19.0" prefWidth="66.0" text="Address">
                            <font>
                               <Font size="13.0" />
                            </font>
                         </Label>
                         <ButtonBar layoutX="6.0" layoutY="512.0" prefHeight="43.0" prefWidth="771.0">
                            <buttons>
-                              <Button fx:id="logOut1_button1" minWidth="64.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="64.0" text="Logout" />
+                              <Button fx:id="logOut_button3" minWidth="64.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="64.0" text="Logout" />
                               <Label prefHeight="17.0" prefWidth="261.0" />
                               <Button fx:id="save_Button" mnemonicParsing="false" text="Save" />
                               <Button fx:id="cancel_Button" mnemonicParsing="false" text="Cancel" />
                            </buttons>
                         </ButtonBar>
-                        <PasswordField fx:id="password_Text" layoutX="200.0" layoutY="385.0" prefHeight="26.0" prefWidth="219.0" promptText="••••••" />
-                        <PasswordField fx:id="password_Text2" layoutX="200.0" layoutY="434.0" prefHeight="26.0" prefWidth="219.0" promptText="••••••" />
+                        <PasswordField fx:id="password_Text" layoutX="294.0" layoutY="384.0" prefHeight="26.0" prefWidth="219.0" promptText="••••••" />
+                        <PasswordField fx:id="password_Text2" layoutX="294.0" layoutY="433.0" prefHeight="26.0" prefWidth="219.0" promptText="••••••" />
+                        <DatePicker fx:id="datePicker" layoutX="294.0" layoutY="208.0" maxHeight="26.0" prefHeight="26.0" prefWidth="220.0" />
+                        <Label fx:id="ssn_Label" layoutX="294.0" layoutY="164.0" prefHeight="26.0" prefWidth="220.0" />
+                        <Label fx:id="firstNameStar" layoutX="270.0" layoutY="78.0" text="*" textFill="#f20101" />
+                        <Label fx:id="lastNameStar" layoutX="270.0" layoutY="121.0" text="*" textFill="#f20101" />
+                        <Label fx:id="birthDateStar" layoutX="270.0" layoutY="213.0" text="*" textFill="#f20101" />
+                        <Label fx:id="zipCodeStar" layoutX="270.0" layoutY="254.0" text="*" textFill="#f20101" />
+                        <Label fx:id="addressStar" layoutX="434.0" layoutY="254.0" text="*" textFill="#f20101" />
+                        <Label fx:id="phoneStar" layoutX="270.0" layoutY="296.0" text="*" textFill="#f20101" />
+                        <Label fx:id="emailStar" layoutX="270.0" layoutY="343.0" text="*" textFill="#f20101" />
                      </children>
                   </AnchorPane>
                </content>
