@@ -1,5 +1,6 @@
-package model;
+package model.dBConnection;
 
+import model.*;
 import model.dBConnection.DAOMedicine;
 import model.dBConnection.DAOPrescription;
 import model.dBConnection.DAOUser;

@@ -13,7 +13,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import model.CommonMethods;
+import model.dBConnection.CommonMethods;
 import model.Patient;
 
 import java.net.URL;

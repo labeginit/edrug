@@ -28,13 +28,6 @@ public class ProdGroup {
         return path;
     }
 
-    public List<ProdGroup> getGroupList() {
-        return dbMedicine.retrieveProductGroupList();
-    }
-
-    public ProdGroup getProdGroup(int id){
-        return dbMedicine.retrieveProductGroup(id);
-    }
 
     @Override
     public String toString() {
