@@ -2,6 +2,8 @@ package controller;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import model.Doctor;
@@ -83,6 +85,33 @@ public class DoctorController implements Initializable {
 
     @FXML
     private PasswordField password_Text2;
+
+    @FXML
+    private Button logOut_button1;
+
+    @FXML
+    private Button logOut_button2;
+
+    @FXML
+    private Button logOut_button3;
+
+    @FXML
+    private Button cancel_Button;
+
+    @FXML
+    private Button save_Button;
+
+    @FXML
+    private Button go_Button;
+
+    @FXML
+    private Button SSN_Go_Button;
+
+    @FXML
+    private ComboBox sort_Combo;
+
+    @FXML
+    private ComboBox filter_Combo;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
