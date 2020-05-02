@@ -20,10 +20,14 @@ public class UserCommon {
     private User currentUser;
     @FXML
     public void onLogOutButtonPressed(ActionEvent event) throws IOException {
-       // Parent tableViewParent = FXMLLoader.load(getClass().getResource("/view/loginView.fxml"));
-        switchScene(event, "/view/loginView.fxml");
-        currentUser = null;
-        UserSingleton.getOurInstance().setUser(currentUser);
+        try {
+            // Parent tableViewParent = FXMLLoader.load(getClass().getResource("/view/loginView.fxml"));
+            switchScene(event, "/view/loginView.fxml");
+            currentUser = null;
+            UserSingleton.getOurInstance().setUser(currentUser);
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
     }
 
     public void switchScene(ActionEvent event, String path) throws IOException {

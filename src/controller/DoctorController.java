@@ -7,12 +7,17 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import model.Doctor;
+import model.User;
+import model.UserSingleton;
 
 import javax.swing.table.TableColumn;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class DoctorController implements Initializable {
+    private User currentUser;
+    private UserCommon userCommon = new UserCommon();
 
     @FXML
     private TableColumn d1Article;
@@ -108,14 +113,47 @@ public class DoctorController implements Initializable {
     private Button SSN_Go_Button;
 
     @FXML
-    private ComboBox sort_Combo;
+    private ComboBox<String> sort_Combo;
 
     @FXML
-    private ComboBox filter_Combo;
+    private ComboBox<String> filter_Combo;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        currentUser = UserSingleton.getOurInstance().getUser();
+        setProfileData(currentUser);
+        logOut_button1.setOnAction(event -> {
+            try {
+                userCommon.onLogOutButtonPressed(event);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        logOut_button2.setOnAction(event -> {
+            try {
+                userCommon.onLogOutButtonPressed(event);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+        logOut_button3.setOnAction(event -> {
+            try {
+                userCommon.onLogOutButtonPressed(event);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
-
+    public void setProfileData(User currentUser) {
+        sSN_update.setText(currentUser.getSsn());
+        birth_text.setText(currentUser.getBDate().toString());
+        firstName_text.setText(currentUser.getFirstName());
+        lastName_text.setText(currentUser.getLastName());
+        zip_text.setText(currentUser.getZipCode());
+        address_text.setText(currentUser.getAddress());
+        phone_text.setText(currentUser.getPhoneNumber());
+        email_text.setText(currentUser.getEmail());
+        password_Text.setText(currentUser.getPassword());
+        password_Text2.setText(currentUser.getPassword());
+    }
 }
