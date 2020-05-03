@@ -126,6 +126,9 @@ public class ShoppingCartController implements Initializable {
                         medicine.setQuantity(newQuantity);
                         commonMethods.updateQuantity(medicine);
                     }
+                    cart.removeAll(cart);
+                    RWFile.writeObject(RWFile.cartPath, cart);
+                    RWFile.delete();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
