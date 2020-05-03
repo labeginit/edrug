@@ -86,8 +86,10 @@ public class ShoppingCartController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        cart = RWFile.readObject(RWFile.cartPath);
-        medList = FXCollections.observableList(cart);
+        if (RWFile.readObject(RWFile.cartPath) != null) {
+            cart = RWFile.readObject(RWFile.cartPath);
+            medList = FXCollections.observableList(cart);
+        }
         currentUser = UserSingleton.getOurInstance().getUser();
         delivery_combo.setItems(deliveryMethodsCombo);
         payment_combo.setItems(paymentMethodsCombo);
