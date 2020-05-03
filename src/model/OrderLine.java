@@ -2,7 +2,9 @@ package model;
 
 import javafx.scene.control.CheckBox;
 
-public class OrderLine {
+import java.io.Serializable;
+
+public class OrderLine implements Serializable {
     private int orderId;
     private Medicine medicine;
     private int articleNo;
@@ -18,7 +20,7 @@ public class OrderLine {
         setMedicine(medicine);
         setPrice(price);
         setQuantity(quantity);
-        setCheckBox(new CheckBox());
+
     }
 
     public void setOrderId(int orderId) {

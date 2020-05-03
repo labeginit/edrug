@@ -1,8 +1,9 @@
 package model;
 
+import java.io.Serializable;
 import java.sql.Date;
 
-public class Patient extends User {
+public class Patient extends User implements Serializable {
 
     public Patient(String sSN, String firstName, String lastName, Date birthDate, String zipCode, String address, String email, String phoneNumber, String password, boolean isActive) {
         super(sSN, 1, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, isActive);

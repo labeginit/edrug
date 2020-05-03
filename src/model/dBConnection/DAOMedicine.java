@@ -340,5 +340,28 @@ public class DAOMedicine {
             return medList;
         }
     }
+    protected int updateQuantity(Medicine medicine) {
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                if (medicine != null) {
+
+                    articleNo = medicine.getArticleNo();
+                    quantity = medicine.getQuantity();
+
+                    String query = "UPDATE `edrugs_test`.`Medicine` SET `quantity_available` = ? WHERE (`article` = ?);";
+                    linesAffected = common.updateMedicineQuantity(query,quantity, articleNo);
+                } else {
+                    throw new NullPointerException("The user object is null");
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error while working with statement!");
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            return linesAffected;
+        }
+    }
 
 }

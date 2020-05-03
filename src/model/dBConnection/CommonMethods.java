@@ -148,6 +148,8 @@ public class CommonMethods {
         return linesAffected = daoMedicine.updateMedicine(medicine);
     }
 
+    public int updateQuantity(Medicine medicine) { return linesAffected = daoMedicine.updateQuantity(medicine);}
+
     //**********************
 
     //returns all active medicine in the specified group (by full path) - made for filter

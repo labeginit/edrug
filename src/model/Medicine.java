@@ -32,6 +32,9 @@ public abstract class Medicine {
         setCheckBox(new CheckBox());
     }
 
+    public Medicine() {
+    }
+
     public void setArticleNo(int articleNo) {
         this.articleNo = articleNo;
     }

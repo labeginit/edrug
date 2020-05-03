@@ -1,5 +1,6 @@
 package controller;
 
+import FileUtil.RWFile;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,9 +14,11 @@ import javafx.util.converter.IntegerStringConverter;
 import model.*;
 import model.dBConnection.CommonMethods;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.*;
+
 import static controller.PatientController.cart;
 
 public class ShoppingCartController implements Initializable {
@@ -83,6 +86,8 @@ public class ShoppingCartController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        cart = RWFile.readObject(RWFile.cartPath);
+        medList = FXCollections.observableList(cart);
         currentUser = UserSingleton.getOurInstance().getUser();
         delivery_combo.setItems(deliveryMethodsCombo);
         payment_combo.setItems(paymentMethodsCombo);
@@ -110,11 +115,23 @@ public class ShoppingCartController implements Initializable {
         logOut_button.setOnAction(event -> {
             try {
                 userCommon.onLogOutButtonPressed(event);
+                if (cart != null) {
+                    for (int i = 0; i < cart.size(); i++) {
+                        int article = cart.get(i).getArticleNo();
+                        int quantity = cart.get(i).getQuantity();
+                        Medicine medicine = commonMethods.getMedicine(article);
+                        int newQuantity = medicine.getQuantity() + quantity;
+                        medicine.setQuantity(newQuantity);
+                        commonMethods.updateQuantity(medicine);
+                    }
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
         });
-
+        for (OrderLine element: medList) {
+            element.setCheckBox(new CheckBox());
+        }
         c1.setCellValueFactory(new PropertyValueFactory<OrderLine, Integer>("articleNo"));
         c2.setCellValueFactory(new PropertyValueFactory<OrderLine, String>("name"));
         c4.setCellValueFactory(new PropertyValueFactory<OrderLine, Double>("price"));
@@ -123,7 +140,7 @@ public class ShoppingCartController implements Initializable {
         c8.setCellValueFactory(new PropertyValueFactory<OrderLine, CheckBox>("checkBox"));
         tableView.setItems(medList);
 
-
+        delete_button.setOnAction(event -> onDeleteButtonPressed(event));
     }
 
     private void setInitialValues(User currentUser) {
@@ -146,10 +163,19 @@ public class ShoppingCartController implements Initializable {
                     @Override
                     public void handle(TableColumn.CellEditEvent<OrderLine, Integer> t) {
                         int q = commonMethods.getMedicine(t.getRowValue().getArticleNo()).getQuantity();
+                        int currentQuantity = t.getOldValue();
+                        int newQuantity = t.getNewValue() - currentQuantity;
+                        int medicineQuantity;
                         if(q >= t.getNewValue()) {
                             ((OrderLine) t.getTableView().getItems().get(
                                     t.getTablePosition().getRow())
                             ).setQuantity(t.getNewValue());
+                            Medicine medicine = commonMethods.getMedicine(t.getRowValue().getArticleNo());
+                            medicineQuantity = medicine.getQuantity();
+                            newQuantity = medicineQuantity - newQuantity;
+                            medicine.setQuantity(newQuantity);
+                            commonMethods.updateQuantity(medicine);
+
 
                         } else {
                             t.getRowValue().setQuantity(q);
@@ -159,5 +185,31 @@ public class ShoppingCartController implements Initializable {
                 });
 
     }
-
+    @FXML public void onDeleteButtonPressed(ActionEvent ae) {
+        try {
+            RWFile.delete();
+            Medicine medicine;
+            int quantity;
+            int articleNo;
+            ObservableList<OrderLine> remove = FXCollections.observableArrayList();
+            for (OrderLine element: medList){
+                if (element.getCheckBox().isSelected()) {
+                    articleNo = element.getArticleNo();
+                    medicine = commonMethods.getMedicine(articleNo);
+                    quantity = element.getQuantity();
+                    medicine.setQuantity(quantity + medicine.getQuantity());
+                    commonMethods.updateQuantity(medicine);
+                    remove.add(element);
+                    System.out.println(medList.toString() + "removed");
+                } else {
+                    System.out.println(medList.toString() + "kept");
+                }
+            } medList.removeAll(remove);
+            cart.removeAll(remove);
+            RWFile.writeObject(RWFile.cartPath, cart);
+            tableView.setItems(medList);
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
 }

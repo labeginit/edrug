@@ -229,4 +229,23 @@ public class DAOCommon {
         }
         return linesAffected;
     }
+    protected int updateMedicineQuantity(String queryString, int quantityAvailable, int article) {
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
+
+                prepStmt.setInt(1, quantityAvailable);
+                prepStmt.setInt(2, article);
+
+                linesAffected = prepStmt.executeUpdate();
+                prepStmt.close();
+            }
+        } catch (SQLException | NullPointerException ex) {
+            System.out.println("Error when executing statement!");
+            System.out.println(ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return linesAffected;
+    }
 }

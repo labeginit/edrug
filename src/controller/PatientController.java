@@ -1,5 +1,6 @@
 package controller;
 
+import FileUtil.RWFile;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -347,7 +348,9 @@ public class PatientController implements Initializable {
 
                     available--;
                     element.setQuantity(available);
+                    commonMethods.updateQuantity(element);
 
+                    RWFile.writeObject(RWFile.cartPath, cart);
                     tableView.refresh();
                 }
                 element.getCheckBox().setSelected(false);

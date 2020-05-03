@@ -13,6 +13,7 @@ public class Validation {
         alert.setResizable(true);
         alert.setTitle(titleBar);
         alert.setHeaderText(headerMessage);
+        alert.getDialogPane().setPrefSize(500, 200);
         alert.showAndWait();
     }
 
