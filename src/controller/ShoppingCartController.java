@@ -98,12 +98,7 @@ public class ShoppingCartController implements Initializable {
             totalCost_text.setText("0.0");
             totalVAT_text.setText("0.0");
         } else {
-            double cost = 0;
-            for (int i = 0; i < cart.size(); i++) {
-                cost = cost + cart.get(i).getPrice() * cart.get(i).getQuantity();
-            }
-            totalCost_text.setText(Double.toString(cost));
-            totalVAT_text.setText(Double.toString(cost * 0.2));
+            calcTotals();
         }
 
         back_button.setOnAction(event -> {
@@ -156,7 +151,7 @@ public class ShoppingCartController implements Initializable {
     }
 
     @FXML
-    private void backButtonHandle(ActionEvent event) throws IOException { //WHEN SWITCHING BACK TO SHOP the quantities become all wrong
+    private void backButtonHandle(ActionEvent event) throws IOException {
         userCommon.switchScene(event,"/view/patientView.fxml");
     }
 
@@ -179,11 +174,13 @@ public class ShoppingCartController implements Initializable {
                             medicineQuantity = medicine.getQuantity();
                             newQuantity = medicineQuantity - newQuantity;
                             medicine.setQuantity(newQuantity);
+                            calcTotals();  
                             commonMethods.updateQuantity(medicine);
 
 
                         } else {
                             t.getRowValue().setQuantity(q);
+                            calcTotals();
                             tableView.refresh();
                         }}
 
@@ -212,9 +209,19 @@ public class ShoppingCartController implements Initializable {
             } medList.removeAll(remove);
             cart.removeAll(remove);
             RWFile.writeObject(RWFile.cartPath, cart);
+            calcTotals();
             tableView.setItems(medList);
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
+    }
+
+    private void calcTotals(){
+        double cost = 0;
+        for (int i = 0; i < cart.size(); i++) {
+            cost = cost + cart.get(i).getPrice() * cart.get(i).getQuantity();
+        }
+        totalCost_text.setText(Double.toString(cost));
+        totalVAT_text.setText(Double.toString(cost * 0.2));
     }
 }
