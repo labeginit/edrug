@@ -152,6 +152,7 @@ public class ShoppingCartController implements Initializable {
 
     @FXML
     private void backButtonHandle(ActionEvent event) throws IOException {
+        RWFile.writeObject(RWFile.cartPath, cart);
         userCommon.switchScene(event,"/view/patientView.fxml");
     }
 
@@ -174,7 +175,7 @@ public class ShoppingCartController implements Initializable {
                             medicineQuantity = medicine.getQuantity();
                             newQuantity = medicineQuantity - newQuantity;
                             medicine.setQuantity(newQuantity);
-                            calcTotals();  
+                            calcTotals();
                             commonMethods.updateQuantity(medicine);
 
 
