@@ -7,8 +7,6 @@ import model.Doctor;
 import model.User;
 import model.UserSingleton;
 import model.dBConnection.CommonMethods;
-
-import javax.swing.table.TableColumn;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
@@ -41,19 +39,19 @@ public class DoctorController implements Initializable {
     private TableColumn d1Producer;
 
     @FXML
-    private TableColumn d2SSN;
+    private TreeTableColumn d2SSN;
 
     @FXML
-    private TableColumn d2Name;
+    private TreeTableColumn d2Name;
 
     @FXML
-    private TableColumn d2Phone;
+    private TreeTableColumn d2Phone;
 
     @FXML
-    private TableColumn d2Email;
+    private TreeTableColumn d2Email;
 
     @FXML
-    private TableColumn d2Prescriptions;
+    private TreeTableColumn d2Prescriptions;
 
     @FXML
     private TextField search_textField;
