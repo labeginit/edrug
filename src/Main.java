@@ -1,3 +1,4 @@
+import FileUtil.RWFile;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -5,6 +6,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.*;
 import model.dBConnection.DBConnection;
+
+import java.io.IOException;
 
 public class Main extends Application {
 
@@ -17,12 +20,23 @@ public class Main extends Application {
         
         primaryStage.show();
 
-       // if(DBConnection.getInstance() != null)
-        //    DBConnection.getInstance().disconnect();
         TestCode tst = new TestCode();
         tst.code();
 
     }
+
+    @Override
+    public void stop() throws Exception {
+        if(DBConnection.getInstance() != null)
+            DBConnection.getInstance().disconnect();
+        try {
+            RWFile.delete();
+        } catch (Exception exception){
+            exception.getSuppressed();
+        }
+        super.stop();
+    }
+
 
 
     public static void main(String[] args) {launch(args);}
