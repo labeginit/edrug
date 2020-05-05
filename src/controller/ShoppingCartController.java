@@ -123,7 +123,7 @@ public class ShoppingCartController implements Initializable {
                     }
                     cart.removeAll(cart);
                     RWFile.writeObject(RWFile.cartPath, cart);
-                    RWFile.delete();
+                    //RWFile.delete(); in handled by application stop() method
                 }
             } catch (IOException e) {
                 e.printStackTrace();

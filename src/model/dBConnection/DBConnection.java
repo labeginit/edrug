@@ -39,6 +39,7 @@ public class DBConnection {
     public void disconnect() {
 
         try {
+            System.out.println("Disconnecting from DB");
             if (dbConnection != null)
                 dbConnection.close();
             if (statement != null)
