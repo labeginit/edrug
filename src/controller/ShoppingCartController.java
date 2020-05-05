@@ -167,20 +167,21 @@ public class ShoppingCartController implements Initializable {
 
                     @Override
                     public void handle(TableColumn.CellEditEvent<OrderLine, Integer> t) {
-                        int q = commonMethods.getMedicine(t.getRowValue().getArticleNo()).getQuantity();
-                        int currentQuantity = t.getOldValue();
-                        int newQuantity = t.getNewValue() - currentQuantity;
-                        int medicineQuantity;
+                        int q = commonMethods.getMedicine(t.getRowValue().getArticleNo()).getQuantity() + t.getOldValue();
+                        Medicine medicine = commonMethods.getMedicine(t.getRowValue().getArticleNo());
+                        medicine.setQuantity(q);
+                        int newQuantity;
                         if(q >= t.getNewValue()) {
                             ((OrderLine) t.getTableView().getItems().get(
                                     t.getTablePosition().getRow())
                             ).setQuantity(t.getNewValue());
-                            Medicine medicine = commonMethods.getMedicine(t.getRowValue().getArticleNo());
-                            medicineQuantity = medicine.getQuantity();
-                            newQuantity = medicineQuantity - newQuantity;
+                            newQuantity = q - t.getNewValue();
                             medicine.setQuantity(newQuantity);
                             commonMethods.updateQuantity(medicine);
-
+                            t.getRowValue().setQuantity(t.getNewValue());
+                            cart.get(medList.indexOf(t.getRowValue())).setQuantity(t.getNewValue());
+                            medList.get(cart.indexOf(t.getRowValue())).setQuantity(t.getNewValue());
+                            RWFile.writeObject(RWFile.cartPath, cart);
 
                         } else {
                             t.getRowValue().setQuantity(q);

@@ -199,6 +199,7 @@ public class PatientController implements Initializable {
         logOut1_button.setOnAction(event -> {
             try {
                 userCommon.onLogOutButtonPressed(event);
+                clearCart();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -207,6 +208,7 @@ public class PatientController implements Initializable {
         logOut2_button.setOnAction(event -> {
             try {
                 userCommon.onLogOutButtonPressed(event);
+                clearCart();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -215,6 +217,7 @@ public class PatientController implements Initializable {
         logOut3_button.setOnAction(event -> {
             try {
                 userCommon.onLogOutButtonPressed(event);
+                clearCart();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -474,5 +477,24 @@ public class PatientController implements Initializable {
         address_text.setText(currentUser.getAddress());
         phoneNumber_text.setText(currentUser.getPhoneNumber());
         email_text.setText(currentUser.getEmail());
+    }
+    public void clearCart(){
+        try {
+            if (cart != null) {
+                for (int i = 0; i < cart.size(); i++) {
+                    int article = cart.get(i).getArticleNo();
+                    int quantity = cart.get(i).getQuantity();
+                    Medicine medicine = commonMethods.getMedicine(article);
+                    int newQuantity = medicine.getQuantity() + quantity;
+                    medicine.setQuantity(newQuantity);
+                    commonMethods.updateQuantity(medicine);
+                }
+                cart.removeAll(cart);
+                RWFile.writeObject(RWFile.cartPath, cart);
+                RWFile.delete();
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
 }
