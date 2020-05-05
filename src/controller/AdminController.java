@@ -38,8 +38,8 @@ public class AdminController implements Initializable {
     public TextField address_text;
     public TextField phone_text;
     public TextField email_text;
-    public TextField pass1_text;
-    public TextField pass2_text;
+    public PasswordField pass1_text;
+    public PasswordField pass2_text;
     public TableView<User> patientTableView;
     public TableColumn<User, String> patientSSNtable;
     public TableColumn<User, String> patientPhoneTable;
@@ -78,8 +78,8 @@ public class AdminController implements Initializable {
     public TextField address_textAdd;
     public TextField phone_textAdd;
     public TextField email_textAdd;
-    public TextField pass1_textAdd;
-    public TextField pass2_textAdd;
+    public PasswordField pass1_textAdd;
+    public PasswordField pass2_textAdd;
     public Label SSNstarAdd;
     public Label BDateStarAdd;
     public Label firstNameStarAdd;
@@ -165,8 +165,10 @@ public class AdminController implements Initializable {
             zip_textAdd.clear();
             address_textAdd.clear();
             email_textAdd.clear();
-            pass1_text.setText("******");
-            pass2_text.setText("******");
+            pass1_text.clear();
+            pass2_text.clear();
+           // pass1_text.setText("******");
+           // pass2_text.setText("******");
             roleTextAdd.clear();
 
             datePickerAdd.setValue(LocalDate.now());
@@ -187,9 +189,13 @@ public class AdminController implements Initializable {
                         currentUser.setEmail(email_text.getText());
                         currentUser.setPassword(pass1_text.getText());
                         methods.updateAdmin((Admin) currentUser);
-
-                        pass1_text.setText("******");
-                        pass2_text.setText("******");
+                        if (!pass1_text.getText().isEmpty() && !pass2_text.getText().isEmpty()) {
+                            methods.updatePassword(currentUser);
+                            pass1_text.clear();
+                            pass2_text.clear();
+                        }
+                      //  pass1_text.setText("******");
+                     //   pass2_text.setText("******");
 
 
                     } catch (Exception e) {
@@ -207,12 +213,12 @@ public class AdminController implements Initializable {
                     try {
                         if (Integer.parseInt(roleTextAdd.getText())==1) {
                             Patient patient = new Patient(SSNtextAdd.getText(), firstName_textAdd.getText(), lastName_textAdd.getText(),
-                                    Date.valueOf(datePickerAdd.getValue()), zip_textAdd.getText(), address_textAdd.getText(),
+                                    Date.valueOf(datePickerAdd.getValue().plusDays(1)), zip_textAdd.getText(), address_textAdd.getText(),
                                     email_textAdd.getText(), phone_textAdd.getText(), pass1_textAdd.getText(), true);
                             methods.addPatient(patient);
                         }else if (Integer.parseInt(roleTextAdd.getText())==2) {
                             Doctor doctor = new Doctor(SSNtextAdd.getText(), firstName_textAdd.getText(), lastName_textAdd.getText(),
-                                    Date.valueOf(datePickerAdd.getValue()), zip_textAdd.getText(), address_textAdd.getText(),
+                                    Date.valueOf(datePickerAdd.getValue().plusDays(1)), zip_textAdd.getText(), address_textAdd.getText(),
                                     email_textAdd.getText(), phone_textAdd.getText(), pass1_textAdd.getText(), true);
                             methods.addDoctor(doctor);
 
@@ -225,8 +231,11 @@ public class AdminController implements Initializable {
                         zip_textAdd.clear();
                         address_textAdd.clear();
                         email_textAdd.clear();
-                        pass1_textAdd.setText("******");
-                        pass2_textAdd.setText("******");
+                        datePicker.setValue(LocalDate.now());
+                        pass1_textAdd.clear();
+                        pass2_textAdd.clear();
+                        //pass1_textAdd.setText("******");
+                       // pass2_textAdd.setText("******");
                         roleTextAdd.clear();
 
                         datePickerAdd.setValue(LocalDate.now());
@@ -320,8 +329,8 @@ public class AdminController implements Initializable {
         address_text.setText(currentUser.getAddress());
         phone_text.setText(currentUser.getPhoneNumber());
         email_text.setText(currentUser.getEmail());
-        pass1_text.setText("******");
-        pass2_text.setText("******");
+        //pass1_text.setText("******");
+        //pass2_text.setText("******");
 
     }
 
@@ -350,12 +359,12 @@ public class AdminController implements Initializable {
             if (phone_text.getText().isEmpty()) {
                 phoneStar.setVisible(true);
             }
-            if (pass1_text.getText().isEmpty()) {
-                pass1star.setVisible(true);
-            }
-            if (pass2_text.getText().isEmpty()) {
-                pass2star.setVisible(true);
-            }
+          //  if (pass1_text.getText().isEmpty()) {
+          //      pass1star.setVisible(true);
+          //  }
+          //  if (pass2_text.getText().isEmpty()) {
+          //      pass2star.setVisible(true);
+          //  }
             Validation.alertPopup("Please enter your information into all fields", "Empty Fields", "Contains empty fields");
             return false;
         } else if (!pass1_text.getText().equals(pass2_text.getText())) {
