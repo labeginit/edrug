@@ -122,7 +122,7 @@
                                         <Font size="13.0" />
                                     </font>
                                 </Label>
-                                <Label layoutX="54.0" layoutY="481.0" prefHeight="18.0" prefWidth="166.0" text="Type (1=P, 2=No P)">
+                                <Label layoutX="54.0" layoutY="481.0" prefHeight="18.0" prefWidth="166.0" text="Type ">
                                     <font>
                                         <Font size="13.0" />
                                     </font>
