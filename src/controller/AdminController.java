@@ -15,6 +15,7 @@ import javafx.util.converter.IntegerStringConverter;
 import model.*;
 import model.dBConnection.CommonMethods;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 
@@ -31,6 +32,7 @@ public class AdminController implements Initializable {
     public Button confirmAddButton;
     public Button cancel_button;
     public Button save_button;
+    public Button logOutMy_button;
     public TextField SSNtext;
     public TextField firstName_text;
     public TextField lastName_text;
@@ -68,6 +70,7 @@ public class AdminController implements Initializable {
     public Label emailStar;
     public Label pass2star;
     public Label pass1star;
+    public Label passwordCheckLabel;
     public Button save_buttonAdd;
     public Button cancel_buttonAdd;
     public TextField SSNtextAdd;
@@ -107,6 +110,7 @@ public class AdminController implements Initializable {
     public ComboBox storeFilterCombo;
 
     public CommonMethods methods = new CommonMethods();
+    private UserCommon userCommon = new UserCommon();
     public User currentUser = UserSingleton.getOurInstance().getUser();
 
     @Override
@@ -129,6 +133,15 @@ public class AdminController implements Initializable {
             setVisibleAdd(false);
             clearFieldsAdd();
         });
+
+        logOutMy_button.setOnAction(event -> {
+            try {
+                userCommon.onLogOutButtonPressed(event);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
         save_button.setOnAction(actionEvent -> {
             if (isItOk()) {
                 if (Validation.isName(firstName_text.getText(), firstNameStar) && Validation.isName(lastName_text.getText(), lastNameStar) &&
@@ -204,6 +217,7 @@ public class AdminController implements Initializable {
         emailStar.setVisible(on);
         pass1star.setVisible(on);
         pass2star.setVisible(on);
+        passwordCheckLabel.setVisible(on);
     }
 
     private void setVisibleAdd(boolean on) {
@@ -333,8 +347,9 @@ public class AdminController implements Initializable {
             return false;
         } else if (!pass1_text.getText().isEmpty() || !pass2_text.getText().isEmpty()) {
             if (!pass1_text.getText().equals(pass2_text.getText())) {
-                pass1star.setVisible(true);
-                pass2star.setVisible(true);
+             //   pass1star.setVisible(true);
+             //   pass2star.setVisible(true);
+                passwordCheckLabel.setVisible(true);
                 Validation.alertPopup("Password does not match", "Password Mismatch", "Password doesn't match");
                 return false;
             } else return Validation.isPassword(pass1_text.getText(), pass1star);
