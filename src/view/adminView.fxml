@@ -120,41 +120,39 @@
                         </AnchorPane>
                     </content>
                 </Tab>
-                <Tab closable="false" text="Edit user">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="555.0" prefWidth="789.0">
-                            <children>
-                                <Label layoutX="10.0" layoutY="26.0" prefHeight="17.0" prefWidth="323.0" text="Edit different roles">
-                                    <font>
-                                        <Font size="13.0" />
-                                    </font>
-                                </Label>
-                                <Button fx:id="confirmAddButton" layoutX="699.0" layoutY="485.0" mnemonicParsing="false" text="Confirm" />
-                                <TableView fx:id="changeTable" editable="true" focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0">
-                                    <columns>
-                                        <TableColumn fx:id="changeSSNTable" prefWidth="114.0" text="SSN" />
-                                        <TableColumn fx:id="changeLastNameTable" prefWidth="172.6667022705078" text="Last name" />
-                                        <TableColumn fx:id="changeFirstNameTable" prefWidth="116.6666259765625" text="First name" />
-                                        <TableColumn fx:id="changePhoneTable" prefWidth="110.66659545898438" text="Phone number" />
-                                        <TableColumn fx:id="changeEmailTable" prefWidth="130.66668701171875" text="Email" />
-                                        <TableColumn fx:id="changeRoleTable" prefWidth="63.3333740234375" text="Role" />
-                              <TableColumn fx:id="isActiveUser" prefWidth="63.3333740234375" text="Active" />
-                                    </columns>
-                                </TableView>
+            <Tab closable="false" text="Admins">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="555.0" prefWidth="784.0">
+                     <children>
+                        <Label layoutX="10.0" layoutY="26.0" prefHeight="17.0" prefWidth="323.0" text="Here you can view all admins">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <TableView fx:id="adminTable" focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0">
+                           <columns>
+                              <TableColumn fx:id="adminSSNtable" prefWidth="142.0" text="SSN" />
+                              <TableColumn fx:id="adminLastNameTable" prefWidth="174.0" text="Last name" />
+                              <TableColumn fx:id="adminFirstNameTable" prefWidth="128.0" text="First name" />
+                              <TableColumn fx:id="adminPhoneTable" prefWidth="143.0" text="Phone number" />
+                              <TableColumn fx:id="adminEmailTable" prefWidth="128.00006103515625" text="Email" />
+                              <TableColumn fx:id="adminActiveTable" editable="false" prefWidth="52.666748046875" text="Active" />
+                           </columns>
+                        </TableView>
                         <ButtonBar layoutX="6.0" layoutY="514.0" prefHeight="40.0" prefWidth="771.0">
                            <buttons>
-                              <Button fx:id="logOutEdit_button" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Logout" />
+                              <Button fx:id="logOutAdminButton" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Logout" />
                               <Label prefHeight="17.0" prefWidth="261.0" />
                               <Label prefHeight="17.0" prefWidth="261.0" />
                               <Label prefHeight="17.0" prefWidth="261.0" />
                               <Label prefHeight="17.0" prefWidth="261.0" />
                            </buttons>
                         </ButtonBar>
-                        <TextField fx:id="editSearchTextField" layoutX="502.0" layoutY="22.0" prefHeight="26.0" prefWidth="274.0" promptText="enter  name or SSN here" />
-                            </children>
-                        </AnchorPane>
-                    </content>
-                </Tab>
+                        <TextField fx:id="adminSearchTextField" layoutX="502.0" layoutY="22.0" prefHeight="26.0" prefWidth="274.0" promptText="enter  name or SSN here" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
                 <Tab closable="false" text="Add user">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="200.0">
@@ -252,6 +250,41 @@
                            </font>
                         </Label>
                         <Label fx:id="passwordCheckAddLabel" layoutX="488.0" layoutY="431.0" prefHeight="26.0" prefWidth="200.0" text="* The Password must match" textFill="#f20202" />
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab closable="false" text="Edit user">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="555.0" prefWidth="789.0">
+                            <children>
+                                <Label layoutX="10.0" layoutY="26.0" prefHeight="17.0" prefWidth="323.0" text="Edit different roles">
+                                    <font>
+                                        <Font size="13.0" />
+                                    </font>
+                                </Label>
+                                <Button fx:id="confirmAddButton" layoutX="699.0" layoutY="485.0" mnemonicParsing="false" text="Confirm" />
+                                <TableView fx:id="changeTable" editable="true" focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0">
+                                    <columns>
+                                        <TableColumn fx:id="changeSSNTable" prefWidth="114.0" text="SSN" />
+                                        <TableColumn fx:id="changeLastNameTable" prefWidth="172.6667022705078" text="Last name" />
+                                        <TableColumn fx:id="changeFirstNameTable" prefWidth="116.6666259765625" text="First name" />
+                                        <TableColumn fx:id="changePhoneTable" prefWidth="110.66659545898438" text="Phone number" />
+                                        <TableColumn fx:id="changeEmailTable" prefWidth="130.66668701171875" text="Email" />
+                                        <TableColumn fx:id="changeRoleTable" prefWidth="63.3333740234375" text="Role" />
+                              <TableColumn fx:id="isActiveUser" prefWidth="63.3333740234375" text="Active" />
+                                    </columns>
+                                </TableView>
+                        <ButtonBar layoutX="6.0" layoutY="514.0" prefHeight="40.0" prefWidth="771.0">
+                           <buttons>
+                              <Button fx:id="logOutEdit_button" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Logout" />
+                              <Label prefHeight="17.0" prefWidth="261.0" />
+                              <Label prefHeight="17.0" prefWidth="261.0" />
+                              <Label prefHeight="17.0" prefWidth="261.0" />
+                              <Label prefHeight="17.0" prefWidth="261.0" />
+                           </buttons>
+                        </ButtonBar>
+                        <TextField fx:id="editSearchTextField" layoutX="502.0" layoutY="22.0" prefHeight="26.0" prefWidth="274.0" promptText="enter  name or SSN here" />
                             </children>
                         </AnchorPane>
                     </content>
