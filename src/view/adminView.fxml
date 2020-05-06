@@ -6,6 +6,7 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -57,196 +58,91 @@
                                         <Font size="13.0" />
                                     </font>
                                 </Label>
-                        <TableView fx:id="patientTableView" layoutX="3.0" layoutY="52.0" prefHeight="475.0" prefWidth="784.0">
-                          <columns>
-                            <TableColumn fx:id="patientSSNtable" prefWidth="144.0" text="SSN" />
-                            <TableColumn fx:id="patientLastNameTable" prefWidth="176.0" text="Last Name" />
-                              <TableColumn fx:id="patientFirstNameTable" prefWidth="131.0" text="First Name" />
-                              <TableColumn fx:id="patientPhoneTable" prefWidth="139.0" text="Phone Number" />
-                              <TableColumn fx:id="patientEmailTable" prefWidth="268.0" text="Email" />
-                          </columns>
-                        </TableView>
+                                <TableView fx:id="patientTableView" layoutX="3.0" layoutY="52.0" prefHeight="475.0" prefWidth="784.0">
+                                    <columns>
+                                        <TableColumn fx:id="patientSSNtable" prefWidth="144.0" text="SSN" />
+                                        <TableColumn fx:id="patientLastNameTable" prefWidth="176.0" text="Last Name" />
+                                        <TableColumn fx:id="patientFirstNameTable" prefWidth="131.0" text="First Name" />
+                                        <TableColumn fx:id="patientPhoneTable" prefWidth="139.0" text="Phone Number" />
+                                        <TableColumn fx:id="patientEmailTable" prefWidth="268.0" text="Email" />
+                                    </columns>
+                                </TableView>
                             </children>
                         </AnchorPane>
                     </content>
                 </Tab>
-            <Tab closable="false" text="Doctors">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="555.0" prefWidth="789.0">
-                     <children>
-                        <ComboBox fx:id="doctorFilter" layoutX="607.0" layoutY="22.0" prefHeight="25.0" prefWidth="170.0" />
-                        <Label layoutX="10.0" layoutY="26.0" prefHeight="19.0" prefWidth="323.0" text="Here you can view all doctors">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Label>
-                        <TableView fx:id="doctorTable" layoutX="1.0" layoutY="57.0" prefHeight="470.0" prefWidth="784.0">
-                          <columns>
-                            <TableColumn fx:id="doctorSSNtable" prefWidth="142.0" text="SSN" />
-                            <TableColumn fx:id="doctorLastNameTable" prefWidth="174.0" text="Last name" />
-                              <TableColumn fx:id="doctorFirstNameTable" prefWidth="128.0" text="First name" />
-                              <TableColumn fx:id="doctorPhoneTable" prefWidth="143.0" text="Phone number" />
-                              <TableColumn fx:id="doctorEmailTable" prefWidth="196.0" text="Email" />
-                          </columns>
-                        </TableView>
-                     </children>
-                  </AnchorPane>
-               </content>
-            </Tab>
-            <Tab closable="false" text="Edit user">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="555.0" prefWidth="789.0">
-                     <children>
-                        <ComboBox fx:id="addFilter" layoutX="607.0" layoutY="22.0" prefHeight="25.0" prefWidth="170.0" />
-                        <Label layoutX="10.0" layoutY="26.0" prefHeight="19.0" prefWidth="323.0" text="Edit or add different roles">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Label>
-                        <Button fx:id="confirmAddButton" layoutX="699.0" layoutY="485.0" mnemonicParsing="false" text="Confirm" />
-                        <TableView fx:id="changeTable" editable="true" layoutX="-2.0" layoutY="51.0" prefHeight="481.0" prefWidth="791.0">
-                          <columns>
-                            <TableColumn fx:id="changeSSNTable" prefWidth="114.0" text="SSN" />
-                            <TableColumn fx:id="changeLastNameTable" prefWidth="134.0" text="Last name" />
-                              <TableColumn fx:id="changeFirstNameTable" prefWidth="105.0" text="First name" />
-                              <TableColumn fx:id="changePhoneTable" prefWidth="164.0" text="Phone number" />
-                              <TableColumn fx:id="changeEmailTable" prefWidth="179.0" text="Email" />
-                              <TableColumn fx:id="changeRoleTable" prefWidth="94.0" text="Role" />
-                          </columns>
-                        </TableView>
-                     </children>
-                  </AnchorPane>
-               </content>
-            </Tab>
-            <Tab closable="false" text="Add user">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="200.0">
-                     <children>
-                        <ButtonBar layoutX="6.0" layoutY="514.0" prefHeight="40.0" prefWidth="771.0">
-                           <buttons>
-                              <Button fx:id="logOutAdd_button" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Logout" />
-                              <Label prefHeight="17.0" prefWidth="261.0" />
-                              <Label prefHeight="17.0" prefWidth="261.0" />
-                              <Button fx:id="save_buttonAdd" minWidth="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="184.0" text="Add user" />
-                              <Button fx:id="cancel_buttonAdd" mnemonicParsing="false" text="Cancel" />
-                           </buttons>
-                        </ButtonBar>
-                        <ListView focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0" />
-                        <TextField fx:id="SSNtextAdd" layoutX="235.0" layoutY="72.0" prefHeight="25.0" prefWidth="220.0" />
-                        <TextField fx:id="firstName_textAdd" layoutX="235.0" layoutY="159.0" prefHeight="25.0" prefWidth="220.0" />
-                        <TextField fx:id="lastName_textAdd" layoutX="235.0" layoutY="203.0" prefHeight="25.0" prefWidth="220.0" />
-                        <TextField fx:id="zip_textAdd" layoutX="235.0" layoutY="250.0" prefHeight="25.0" prefWidth="67.0" />
-                        <TextField fx:id="address_textAdd" layoutX="394.0" layoutY="250.0" prefHeight="25.0" prefWidth="220.0" />
-                        <TextField fx:id="phone_textAdd" layoutX="235.0" layoutY="291.0" prefHeight="25.0" prefWidth="220.0" />
-                        <TextField fx:id="email_textAdd" layoutX="235.0" layoutY="338.0" prefHeight="25.0" prefWidth="220.0" />
-                        <TextField fx:id="pass1_textAdd" layoutX="235.0" layoutY="385.0" prefHeight="25.0" prefWidth="220.0" text=" * * * * * * * * * * * " />
-                        <TextField fx:id="pass2_textAdd" layoutX="235.0" layoutY="432.0" prefHeight="25.0" prefWidth="220.0" text=" * * * * * * * * * * * " />
-                        <Label layoutX="54.0" layoutY="76.0" text="Social Security Number">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="54.0" layoutY="207.0" prefHeight="17.0" prefWidth="139.0" text="Family Name">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="54.0" layoutY="253.0" prefHeight="17.0" prefWidth="135.0" text="Zip Code">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="54.0" layoutY="295.0" prefHeight="17.0" prefWidth="139.0" text="Phone">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="54.0" layoutY="342.0" prefHeight="17.0" prefWidth="138.0" text="E-mail">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="54.0" layoutY="164.0" prefHeight="17.0" prefWidth="137.0" text="First Name">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="54.0" layoutY="120.0" prefHeight="17.0" prefWidth="139.0" text="Birth Date">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="54.0" layoutY="388.0" prefHeight="17.0" prefWidth="136.0" text="Password">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="53.0" layoutY="437.0" prefHeight="17.0" prefWidth="136.0" text="Confirm Password">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Label>
-                        <Label layoutX="313.0" layoutY="253.0" prefHeight="19.0" prefWidth="84.0" text="Address">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="SSNstarAdd" layoutX="214.0" layoutY="77.0" text="*" textFill="RED" />
-                        <Label fx:id="BDateStarAdd" layoutX="214.0" layoutY="120.0" text="*" textFill="RED" />
-                        <Label fx:id="firstNameStarAdd" layoutX="214.0" layoutY="164.0" text="*" textFill="RED" />
-                        <Label fx:id="lastNameStarAdd" layoutX="214.0" layoutY="208.0" text="*" textFill="RED" />
-                        <Label fx:id="zipStarAdd" layoutX="214.0" layoutY="254.0" text="*" textFill="RED" />
-                        <Label fx:id="addressStarAdd" layoutX="375.0" layoutY="254.0" text="*" textFill="RED" />
-                        <Label fx:id="phoneStarAdd" layoutX="214.0" layoutY="296.0" text="*" textFill="RED" />
-                        <Label fx:id="emailStarAdd" layoutX="214.0" layoutY="343.0" text="*" textFill="RED" />
-                        <Label fx:id="pass2starAdd" layoutX="214.0" layoutY="437.0" text="*" textFill="RED" />
-                        <Label fx:id="pass1starAdd" layoutX="214.0" layoutY="388.0" text="*" textFill="RED" />
-                        <TextField fx:id="roleTextAdd" layoutX="235.0" layoutY="474.0" prefHeight="25.0" prefWidth="220.0" />
-                        <Label layoutX="54.0" layoutY="478.0" prefHeight="19.0" prefWidth="116.0" text="Role (1=P 2=D)">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="roleStarAdd" layoutX="214.0" layoutY="478.0" text="*" textFill="RED" />
-                        <DatePicker fx:id="datePickerAdd" layoutX="235.0" layoutY="116.0" prefHeight="26.0" prefWidth="226.0" />
-                        <Label layoutX="10.0" layoutY="26.0" prefHeight="17.0" prefWidth="577.0" text="Here you can add a patient (Role 1) or a doctor (Role 2)">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </AnchorPane>
-               </content>
-            </Tab>
-                <Tab closable="false" text="My Profile">
+                <Tab closable="false" text="Doctors">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="555.0" prefWidth="789.0">
+                            <children>
+                                <ComboBox fx:id="doctorFilter" layoutX="607.0" layoutY="22.0" prefHeight="25.0" prefWidth="170.0" />
+                                <Label layoutX="10.0" layoutY="26.0" prefHeight="19.0" prefWidth="323.0" text="Here you can view all doctors">
+                                    <font>
+                                        <Font size="13.0" />
+                                    </font>
+                                </Label>
+                                <TableView fx:id="doctorTable" layoutX="1.0" layoutY="57.0" prefHeight="470.0" prefWidth="784.0">
+                                    <columns>
+                                        <TableColumn fx:id="doctorSSNtable" prefWidth="142.0" text="SSN" />
+                                        <TableColumn fx:id="doctorLastNameTable" prefWidth="174.0" text="Last name" />
+                                        <TableColumn fx:id="doctorFirstNameTable" prefWidth="128.0" text="First name" />
+                                        <TableColumn fx:id="doctorPhoneTable" prefWidth="143.0" text="Phone number" />
+                                        <TableColumn fx:id="doctorEmailTable" prefWidth="196.0" text="Email" />
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab closable="false" text="Edit user">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="555.0" prefWidth="789.0">
+                            <children>
+                                <ComboBox fx:id="addFilter" layoutX="607.0" layoutY="22.0" prefHeight="25.0" prefWidth="170.0" />
+                                <Label layoutX="10.0" layoutY="26.0" prefHeight="19.0" prefWidth="323.0" text="Edit or add different roles">
+                                    <font>
+                                        <Font size="13.0" />
+                                    </font>
+                                </Label>
+                                <Button fx:id="confirmAddButton" layoutX="699.0" layoutY="485.0" mnemonicParsing="false" text="Confirm" />
+                                <TableView fx:id="changeTable" editable="true" layoutX="-2.0" layoutY="51.0" prefHeight="481.0" prefWidth="791.0">
+                                    <columns>
+                                        <TableColumn fx:id="changeSSNTable" prefWidth="114.0" text="SSN" />
+                                        <TableColumn fx:id="changeLastNameTable" prefWidth="134.0" text="Last name" />
+                                        <TableColumn fx:id="changeFirstNameTable" prefWidth="105.0" text="First name" />
+                                        <TableColumn fx:id="changePhoneTable" prefWidth="164.0" text="Phone number" />
+                                        <TableColumn fx:id="changeEmailTable" prefWidth="179.0" text="Email" />
+                                        <TableColumn fx:id="changeRoleTable" prefWidth="94.0" text="Role" />
+                                    </columns>
+                                </TableView>
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab closable="false" text="Add user">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="200.0">
                             <children>
                                 <ButtonBar layoutX="6.0" layoutY="514.0" prefHeight="40.0" prefWidth="771.0">
                                     <buttons>
-                              <Button fx:id="logOutMy_button" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Logout" />
-                              <Label prefHeight="17.0" prefWidth="261.0" />
-                              <Label prefHeight="17.0" prefWidth="261.0" />
-                                        <Button fx:id="save_button" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" text="Save" />
-                                        <Button fx:id="cancel_button" mnemonicParsing="false" text="Cancel" />
+                                        <Button fx:id="cancel_buttonAdd" mnemonicParsing="false" text="Cancel" />
+                                        <Button fx:id="save_buttonAdd" minWidth="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="184.0" text="Add user" />
                                     </buttons>
                                 </ButtonBar>
-                                <ListView focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0" />
-                                <TextField fx:id="SSNtext" editable="false" layoutX="235.0" layoutY="72.0" prefHeight="25.0" prefWidth="220.0" />
-                                <TextField fx:id="firstName_text" layoutX="235.0" layoutY="159.0" prefHeight="25.0" prefWidth="220.0" />
-                                <TextField fx:id="lastName_text" layoutX="235.0" layoutY="203.0" prefHeight="25.0" prefWidth="220.0" />
-                                <TextField fx:id="zip_text" layoutX="235.0" layoutY="250.0" prefHeight="25.0" prefWidth="67.0" />
-                                <TextField fx:id="address_text" layoutX="394.0" layoutY="250.0" prefHeight="25.0" prefWidth="220.0" />
-                                <TextField fx:id="phone_text" layoutX="235.0" layoutY="291.0" prefHeight="25.0" prefWidth="220.0" />
-                                <TextField fx:id="email_text" layoutX="235.0" layoutY="338.0" prefHeight="25.0" prefWidth="220.0" />
-                                <TextField fx:id="pass1_text" layoutX="235.0" layoutY="385.0" prefHeight="25.0" prefWidth="220.0" text=" * * * * * * * * * * * " />
-                                <TextField fx:id="pass2_text" layoutX="235.0" layoutY="432.0" prefHeight="25.0" prefWidth="220.0" text=" * * * * * * * * * * * " />
-                                <Label layoutX="54.0" layoutY="76.0" text="Social Security Number">
+                                <ListView focusTraversable="false" layoutX="6.0" layoutY="64.0" prefHeight="447.0" prefWidth="771.0" />
+                                <TextField fx:id="SSNtextAdd" layoutX="200.0" layoutY="73.0" prefHeight="25.0" prefWidth="220.0" />
+                                <TextField fx:id="firstName_textAdd" layoutX="200.0" layoutY="164.0" prefHeight="25.0" prefWidth="220.0" />
+                                <TextField fx:id="lastName_textAdd" layoutX="200.0" layoutY="208.0" prefHeight="25.0" prefWidth="220.0" />
+                                <TextField fx:id="zip_textAdd" layoutX="200.0" layoutY="250.0" prefHeight="25.0" prefWidth="67.0" />
+                                <TextField fx:id="address_textAdd" layoutX="342.0" layoutY="250.0" prefHeight="25.0" prefWidth="414.0" />
+                                <TextField fx:id="phone_textAdd" layoutX="200.0" layoutY="291.0" prefHeight="25.0" prefWidth="220.0" />
+                                <TextField fx:id="email_textAdd" layoutX="200.0" layoutY="338.0" prefHeight="25.0" prefWidth="220.0" />
+                                <Label layoutX="54.0" layoutY="77.0" text="Social Security Number">
                                     <font>
                                         <Font size="13.0" />
                                     </font>
                                 </Label>
-                                <Label layoutX="54.0" layoutY="207.0" prefHeight="17.0" prefWidth="139.0" text="Last Name">
+                                <Label layoutX="54.0" layoutY="212.0" prefHeight="17.0" prefWidth="139.0" text="Family name">
                                     <font>
                                         <Font size="13.0" />
                                     </font>
@@ -261,17 +157,17 @@
                                         <Font size="13.0" />
                                     </font>
                                 </Label>
-                                <Label layoutX="54.0" layoutY="342.0" prefHeight="17.0" prefWidth="138.0" text="E-mail">
+                                <Label layoutX="54.0" layoutY="342.0" prefHeight="17.0" prefWidth="138.0" text="e-mail address">
                                     <font>
                                         <Font size="13.0" />
                                     </font>
                                 </Label>
-                                <Label layoutX="54.0" layoutY="164.0" prefHeight="17.0" prefWidth="137.0" text="First Name">
+                                <Label layoutX="54.0" layoutY="168.0" prefHeight="17.0" prefWidth="137.0" text="First name">
                                     <font>
                                         <Font size="13.0" />
                                     </font>
                                 </Label>
-                                <Label layoutX="54.0" layoutY="120.0" prefHeight="17.0" prefWidth="127.0" text="Birth Date">
+                                <Label layoutX="54.0" layoutY="120.0" prefHeight="17.0" prefWidth="127.0" text="Birth date">
                                     <font>
                                         <Font size="13.0" />
                                     </font>
@@ -281,31 +177,120 @@
                                         <Font size="13.0" />
                                     </font>
                                 </Label>
-                                <Label layoutX="53.0" layoutY="437.0" prefHeight="17.0" prefWidth="136.0" text="Confirm Password">
+                                <Label layoutX="53.0" layoutY="437.0" prefHeight="17.0" prefWidth="136.0" text="Repeat password">
                                     <font>
                                         <Font size="13.0" />
                                     </font>
                                 </Label>
-                                <Label layoutX="313.0" layoutY="253.0" prefHeight="19.0" prefWidth="84.0" text="Address">
+                                <Label layoutX="284.0" layoutY="253.0" prefHeight="19.0" prefWidth="84.0" text="Address">
                                     <font>
                                         <Font size="13.0" />
                                     </font>
                                 </Label>
-                        <Label fx:id="BDateStar" layoutX="434.0" layoutY="120.0" text="*" textFill="RED" />
-                        <Label fx:id="firstNameStar" layoutX="214.0" layoutY="159.0" text="*" textFill="RED" />
-                        <Label fx:id="lastNameStar" layoutX="214.0" layoutY="207.0" text="*" textFill="RED" />
-                        <Label fx:id="zipStar" layoutX="214.0" layoutY="254.0" text="*" textFill="RED" />
-                        <Label fx:id="addressStar" layoutX="375.0" layoutY="254.0" text="*" textFill="RED" />
-                        <Label fx:id="phoneStar" layoutX="214.0" layoutY="295.0" text="*" textFill="RED" />
-                        <Label fx:id="emailStar" layoutX="214.0" layoutY="342.0" text="*" textFill="RED" />
-                        <Label fx:id="pass2star" layoutX="214.0" layoutY="437.0" text="*" textFill="RED" />
-                        <Label fx:id="pass1star" layoutX="214.0" layoutY="388.0" text="*" textFill="RED" />
-                        <DatePicker fx:id="datePicker" layoutX="235.0" layoutY="116.0" prefHeight="26.0" prefWidth="226.0" />
-                        <Label layoutX="10.0" layoutY="26.0" prefHeight="17.0" prefWidth="577.0" text="Here you can modify your personal information and change password">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Label>
+                                <Label fx:id="SSNstarAdd" layoutX="434.0" layoutY="78.0" text="*" textFill="RED" />
+                                <Label fx:id="BDateStarAdd" layoutX="434.0" layoutY="120.0" text="*" textFill="RED" />
+                                <Label fx:id="firstNameStarAdd" layoutX="434.0" layoutY="168.0" text="*" textFill="RED" />
+                                <Label fx:id="lastNameStarAdd" layoutX="434.0" layoutY="212.0" text="*" textFill="RED" />
+                                <Label fx:id="zipStarAdd" layoutX="264.0" layoutY="254.0" text="*" textFill="RED" />
+                                <Label fx:id="addressStarAdd" layoutX="753.0" layoutY="254.0" text="*" textFill="RED" />
+                                <Label fx:id="phoneStarAdd" layoutX="434.0" layoutY="295.0" text="*" textFill="RED" />
+                                <Label fx:id="emailStarAdd" layoutX="434.0" layoutY="342.0" text="*" textFill="RED" />
+                                <Label fx:id="pass2starAdd" layoutX="434.0" layoutY="437.0" text="*" textFill="RED" />
+                                <Label fx:id="pass1starAdd" layoutX="434.0" layoutY="388.0" text="*" textFill="RED" />
+                                <TextField fx:id="roleTextAdd" layoutX="200.0" layoutY="474.0" prefHeight="25.0" prefWidth="220.0" />
+                                <Label layoutX="20.0" layoutY="478.0" prefHeight="18.0" prefWidth="166.0" text="Role (1=Patient, 2=Doctor)">
+                                    <font>
+                                        <Font size="13.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="roleStarAdd" layoutX="434.0" layoutY="478.0" text="*" textFill="RED" />
+                                <DatePicker fx:id="datePickerAdd" layoutX="197.0" layoutY="116.0" prefHeight="26.0" prefWidth="226.0" />
+                                <PasswordField fx:id="pass1_textAdd" layoutX="200.0" layoutY="384.0" prefHeight="25.0" prefWidth="220.0" promptText=" * * * * * * * * * * * " />
+                                <PasswordField fx:id="pass2_textAdd" layoutX="200.0" layoutY="431.0" prefHeight="25.0" prefWidth="220.0" promptText=" * * * * * * * * * * * " />
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
+                <Tab closable="false" text="My Profile">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="200.0">
+                            <children>
+                                <ButtonBar layoutX="6.0" layoutY="514.0" prefHeight="40.0" prefWidth="771.0">
+                                    <buttons>
+                                        <Button fx:id="cancel_button" mnemonicParsing="false" text="Cancel" />
+                                        <Button fx:id="save_button" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" text="Save" />
+                                    </buttons>
+                                </ButtonBar>
+                                <ListView focusTraversable="false" layoutX="6.0" layoutY="64.0" prefHeight="454.0" prefWidth="771.0" />
+                                <TextField fx:id="SSNtext" editable="false" layoutX="200.0" layoutY="73.0" prefHeight="25.0" prefWidth="220.0" />
+                                <TextField fx:id="firstName_text" layoutX="200.0" layoutY="164.0" prefHeight="25.0" prefWidth="220.0" />
+                                <TextField fx:id="lastName_text" layoutX="200.0" layoutY="208.0" prefHeight="25.0" prefWidth="220.0" />
+                                <TextField fx:id="zip_text" layoutX="200.0" layoutY="250.0" prefHeight="25.0" prefWidth="67.0" />
+                                <TextField fx:id="address_text" layoutX="342.0" layoutY="250.0" prefHeight="25.0" prefWidth="414.0" />
+                                <TextField fx:id="phone_text" layoutX="200.0" layoutY="291.0" prefHeight="25.0" prefWidth="220.0" />
+                                <TextField fx:id="email_text" layoutX="200.0" layoutY="338.0" prefHeight="25.0" prefWidth="220.0" />
+                                <Label layoutX="54.0" layoutY="77.0" text="Social Security Number">
+                                    <font>
+                                        <Font size="13.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="54.0" layoutY="212.0" prefHeight="17.0" prefWidth="139.0" text="Family name">
+                                    <font>
+                                        <Font size="13.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="54.0" layoutY="253.0" prefHeight="17.0" prefWidth="135.0" text="Zip Code">
+                                    <font>
+                                        <Font size="13.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="54.0" layoutY="295.0" prefHeight="17.0" prefWidth="139.0" text="Phone">
+                                    <font>
+                                        <Font size="13.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="54.0" layoutY="342.0" prefHeight="17.0" prefWidth="138.0" text="e-mail address">
+                                    <font>
+                                        <Font size="13.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="54.0" layoutY="168.0" prefHeight="17.0" prefWidth="137.0" text="First name">
+                                    <font>
+                                        <Font size="13.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="54.0" layoutY="120.0" prefHeight="17.0" prefWidth="127.0" text="Birth date">
+                                    <font>
+                                        <Font size="13.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="54.0" layoutY="388.0" prefHeight="17.0" prefWidth="136.0" text="New password">
+                                    <font>
+                                        <Font size="13.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="53.0" layoutY="437.0" prefHeight="17.0" prefWidth="136.0" text="Repeat password">
+                                    <font>
+                                        <Font size="13.0" />
+                                    </font>
+                                </Label>
+                                <Label layoutX="284.0" layoutY="253.0" prefHeight="19.0" prefWidth="84.0" text="Address">
+                                    <font>
+                                        <Font size="13.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="BDateStar" layoutX="434.0" layoutY="120.0" text="*" textFill="RED" />
+                                <Label fx:id="firstNameStar" layoutX="434.0" layoutY="168.0" text="*" textFill="RED" />
+                                <Label fx:id="lastNameStar" layoutX="434.0" layoutY="212.0" text="*" textFill="RED" />
+                                <Label fx:id="zipStar" layoutX="264.0" layoutY="254.0" text="*" textFill="RED" />
+                                <Label fx:id="addressStar" layoutX="753.0" layoutY="254.0" text="*" textFill="RED" />
+                                <Label fx:id="phoneStar" layoutX="434.0" layoutY="295.0" text="*" textFill="RED" />
+                                <Label fx:id="emailStar" layoutX="434.0" layoutY="342.0" text="*" textFill="RED" />
+                                <Label fx:id="pass2star" layoutX="434.0" layoutY="437.0" text="*" textFill="RED" />
+                                <Label fx:id="pass1star" layoutX="434.0" layoutY="388.0" text="*" textFill="RED" />
+                                <DatePicker fx:id="datePicker" layoutX="197.0" layoutY="116.0" prefHeight="26.0" prefWidth="226.0" />
+                                <PasswordField fx:id="pass1_text" layoutX="200.0" layoutY="384.0" prefHeight="25.0" prefWidth="220.0" promptText=" * * * * * * * * * * * " />
+                                <PasswordField fx:id="pass2_text" layoutX="200.0" layoutY="431.0" maxHeight="0.0" prefHeight="25.0" prefWidth="220.0" promptText=" * * * * * * * * * * * " />
                             </children>
                         </AnchorPane>
                     </content>
