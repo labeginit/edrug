@@ -71,8 +71,14 @@ public class AdminController implements Initializable {
     public Label pass2star;
     public Label pass1star;
     public Label passwordCheckLabel;
+    public Label passwordCheckAddLabel;
     public Button save_buttonAdd;
     public Button cancel_buttonAdd;
+    public Button logOutPat_button;
+    public Button logOutDoc_button;
+    public Button logOutAdd_button;
+    public Button logOutEdit_button;
+    public Button logOutMed_button;
     public TextField SSNtextAdd;
     public TextField firstName_textAdd;
     public DatePicker datePicker;
@@ -135,6 +141,46 @@ public class AdminController implements Initializable {
         });
 
         logOutMy_button.setOnAction(event -> {
+            try {
+                userCommon.onLogOutButtonPressed(event);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        logOutAdd_button.setOnAction(event -> {
+            try {
+                userCommon.onLogOutButtonPressed(event);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        logOutDoc_button.setOnAction(event -> {
+            try {
+                userCommon.onLogOutButtonPressed(event);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        logOutEdit_button.setOnAction(event -> {
+            try {
+                userCommon.onLogOutButtonPressed(event);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        logOutPat_button.setOnAction(event -> {
+            try {
+                userCommon.onLogOutButtonPressed(event);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        logOutMed_button.setOnAction(event -> {
             try {
                 userCommon.onLogOutButtonPressed(event);
             } catch (IOException e) {
@@ -232,6 +278,7 @@ public class AdminController implements Initializable {
         pass1starAdd.setVisible(on);
         pass2starAdd.setVisible(on);
         roleStarAdd.setVisible(on);
+        passwordCheckAddLabel.setVisible(on);
     }
 
     private void clearFieldsAdd() {
