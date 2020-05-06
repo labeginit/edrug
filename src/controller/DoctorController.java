@@ -144,7 +144,7 @@ public class DoctorController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         hideAllWarningLabels(false);
         currentUser = UserSingleton.getOurInstance().getUser();
-        setProfileData(currentUser);
+        setProfileData();
         cancel_Button.setOnAction(event -> handleCancelButton());
         save_Button.setOnAction(event -> handleSaveButton());
 
@@ -171,7 +171,7 @@ public class DoctorController implements Initializable {
         });
     }
 
-    private void setProfileData(User currentUser) {
+    private void setProfileData() {
         ssn_Label.setText(currentUser.getSsn());
         datePicker.setValue(datePicker.getValue());
         firstName_text.setText(currentUser.getFirstName());
@@ -221,7 +221,7 @@ public class DoctorController implements Initializable {
 
     @FXML
     private void handleCancelButton() {
-        setProfileData(currentUser);
+        setProfileData();
         hideAllWarningLabels(false);
     }
 
