@@ -298,31 +298,6 @@ public class AdminController implements Initializable {
         datePickerAdd.setValue(LocalDate.now());
     }
 
-    private void search(FilteredList<Medicine> filteredData, TextField field, TableView<Medicine> tableView){
-        field.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredData.setPredicate(medicine -> {
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
-
-                String lowerCaseFilter = newValue.toLowerCase();
-
-                if (medicine.getName().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (medicine.getSearchTerms().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (String.valueOf(medicine.getArticleNo()).contains(lowerCaseFilter)) {
-                    return true;
-                }
-                return false;
-            });
-        });
-        SortedList<Medicine> sortedData = new SortedList<>(filteredData);
-
-        sortedData.comparatorProperty().bind(tableView.comparatorProperty());
-        tableView.setItems(sortedData);
-    }
-
     public void fillPatientTable() {
 
         patientSSNtable.setCellValueFactory(new PropertyValueFactory<>("Ssn"));
