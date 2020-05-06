@@ -156,7 +156,7 @@
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <Label layoutX="53.0" layoutY="437.0" prefHeight="17.0" prefWidth="136.0" text="Confirm Password">
+                        <Label layoutX="54.0" layoutY="437.0" prefHeight="17.0" prefWidth="136.0" text="Confirm Password">
                            <font>
                               <Font size="13.0" />
                            </font>
@@ -174,7 +174,7 @@
                         <Label fx:id="emailStar" layoutX="214.0" layoutY="343.0" text="*" textFill="#f20101" />
                         <Label fx:id="addressStar" layoutX="375.0" layoutY="254.0" text="*" textFill="#f20101" />
                         <Label fx:id="passwordCheckLabel" layoutX="488.0" layoutY="431.0" prefHeight="26.0" prefWidth="200.0" text="* The Password must match" textFill="#f20202" />
-                        <Label layoutX="10.0" layoutY="26.0" prefHeight="17.0" prefWidth="577.0" text="Here you can modity your personal information and change password">
+                        <Label layoutX="10.0" layoutY="26.0" prefHeight="17.0" prefWidth="577.0" text="Here you can modify your personal information and change password">
                            <font>
                               <Font size="13.0" />
                            </font>
