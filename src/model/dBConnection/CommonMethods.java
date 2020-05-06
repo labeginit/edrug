@@ -22,7 +22,7 @@ public class CommonMethods {
 
     //**********************
 
-    //returns all active users
+    //returns all users
     public List<User> getUserList(){
         return daoUser.getUserList("0");
     }
@@ -32,12 +32,12 @@ public class CommonMethods {
         return daoUser.retrieveUserList(isActive);
     }
 
-    //returns all active admins
+    //returns all admins
     public List<User> getAdminList(){
         return daoUser.getUserList("3");
     }
 
-    //returns all active doctors
+    //returns all doctors
     public List<User> getDoctorList(){
         return daoUser.getUserList("2");
     }

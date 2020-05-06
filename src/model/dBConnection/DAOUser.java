@@ -35,7 +35,7 @@ public class DAOUser {
         userList.clear();
         try {
             if (!DBConnection.dbConnection.isClosed()) {
-                resultSet = common.retrieveSet("SELECT * FROM User where type = ? and active = 1;", usType);
+                resultSet = common.retrieveSet("SELECT * FROM User where type = ?;", usType); //2020-05-06 removed isActive=1
                 if (resultSet != null) {
                     while (resultSet.next()) {
                         userList.add(createObjects(resultSet));
@@ -63,7 +63,7 @@ public class DAOUser {
         userList.clear();
         try {
             if (!DBConnection.dbConnection.isClosed()) {
-                resultSet = common.retrieveSet("SELECT * FROM User where active = 1;");
+                resultSet = common.retrieveSet("SELECT * FROM User;");  //2020-05-06 removed isActive=1
                 if (resultSet != null) {
                     while (resultSet.next()) {
                         userList.add(createObjects(resultSet));

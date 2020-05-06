@@ -1,5 +1,6 @@
 package model;
 
+import javafx.scene.control.CheckBox;
 import model.dBConnection.DAOUser;
 
 import java.sql.Date;
@@ -17,6 +18,7 @@ public abstract class User {
     private String phoneNumber;
     private String password;
     private boolean isActive;
+    private CheckBox checkBox;
 
     public User(){}
 
@@ -32,6 +34,7 @@ public abstract class User {
         setPhoneNumber(phoneNumber);
         setPassword(password);
         setActive(isActive);
+        setCheckBox(new CheckBox());
     }
 
     public User(String sSN, int userType, String firstName, String lastName, java.sql.Date birthDate, String zipCode, String address, String email, String phoneNumber, String password) {
@@ -126,6 +129,13 @@ public abstract class User {
         return isActive;
     }
 
+    public void setCheckBox(CheckBox checkBox) {
+        this.checkBox = checkBox;
+    }
+
+    public CheckBox getCheckBox() {
+        return checkBox;
+    }
 
     @Override
     public String toString() {

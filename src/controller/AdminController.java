@@ -60,6 +60,7 @@ public class AdminController implements Initializable {
     public TableColumn<User, String> changePhoneTable;
     public TableColumn<User, String> changeEmailTable;
     public TableColumn<User, String> changeSSNTable;
+    public TableColumn<User, CheckBox> isActiveUser;
     public TableView<User> changeTable;
     public TableColumn<User, Integer> changeRoleTable;
     public Label BDateStar;
@@ -113,6 +114,7 @@ public class AdminController implements Initializable {
     public TableColumn<Medicine, String> storeProducer;
     public TextField storeSearchTextField;
     public ComboBox storeFilterCombo;
+    public TableColumn<Medicine, CheckBox> isActiveMed;
 
     public CommonMethods methods = new CommonMethods();
     private UserCommon userCommon = new UserCommon();
@@ -333,12 +335,18 @@ public class AdminController implements Initializable {
         changePhoneTable.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
         changeEmailTable.setCellValueFactory(new PropertyValueFactory<>("Email"));
         changeRoleTable.setCellValueFactory(new PropertyValueFactory<>("userType"));
-
+        isActiveUser.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
+       
         ObservableList<User> listOfAll = FXCollections.observableArrayList(methods.getDoctorList());
         listOfAll.addAll(FXCollections.observableArrayList(methods.getPatientList()));
 
         FilteredList<User> filteredData = new FilteredList<>(listOfAll, p -> true);
         changeTable.setItems(userCommon.userFilter(filteredData, editSearchTextField, changeTable));
+        for (int i = 0; i < changeTable.getItems().size(); i++) {
+            if (changeTable.getItems().get(i).getActive()) {
+                isActiveUser.getCellData(i).setSelected(true);
+            } else isActiveUser.getCellData(i).setSelected(false);
+        }
 
     }
 
