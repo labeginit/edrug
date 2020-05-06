@@ -19,7 +19,7 @@
     <children>
         <TabPane layoutX="7.0" layoutY="7.0" prefHeight="585.0" prefWidth="784.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
-                <Tab closable="false" text="Medicine">
+                <Tab closable="false" text="Edit Medicine">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="379.0" prefWidth="586.0">
                             <children>
@@ -54,7 +54,7 @@
                         </AnchorPane>
                     </content>
                 </Tab>
-                <Tab closable="false" text="Patients">
+                <Tab closable="false" text="Patients List">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="425.0" prefWidth="586.0">
                             <children>
@@ -87,7 +87,7 @@
                         </AnchorPane>
                     </content>
                 </Tab>
-                <Tab closable="false" text="Doctors">
+                <Tab closable="false" text="Doctors List">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="555.0" prefWidth="789.0">
                             <children>
@@ -120,7 +120,7 @@
                         </AnchorPane>
                     </content>
                 </Tab>
-                <Tab closable="false" text="Edit user">
+                <Tab closable="false" text="Edit User">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="555.0" prefWidth="789.0">
                             <children>
@@ -155,7 +155,7 @@
                         </AnchorPane>
                     </content>
                 </Tab>
-                <Tab closable="false" text="Add user">
+                <Tab closable="false" text="Add User">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="200.0">
                             <children>
