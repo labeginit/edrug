@@ -48,8 +48,6 @@
                                     </font>
                                 </Label>
                                 <TextField fx:id="storeSearchTextField" layoutX="100.0" layoutY="22.0" prefHeight="26.0" prefWidth="274.0" promptText="enter active ingredient etc. here" />
-                                <Button fx:id="storeGoButton" layoutX="383.0" layoutY="22.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="41.0" text="Go!" />
-                                <ComboBox fx:id="storeSearchCombo" layoutX="433.0" layoutY="22.0" prefHeight="26.0" prefWidth="166.0" />
                                 <ComboBox fx:id="storeFilterCombo" layoutX="607.0" layoutY="22.0" prefHeight="25.0" prefWidth="170.0" />
                             </children>
                         </AnchorPane>

@@ -1,12 +1,16 @@
 package controller;
 
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TableView;
 import javafx.stage.Stage;
+import model.Medicine;
 import model.User;
 import model.UserSingleton;
 import javafx.scene.control.TextField;
@@ -38,5 +42,30 @@ public class UserCommon {
 
         window.setScene(tableViewScene);
         window.show();
+    }
+
+    public void search(FilteredList<Medicine> filteredData, TextField field, TableView<Medicine> tableView){
+        field.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(medicine -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (medicine.getName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (medicine.getSearchTerms().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (String.valueOf(medicine.getArticleNo()).contains(lowerCaseFilter)) {
+                    return true;
+                }
+                return false;
+            });
+        });
+        SortedList<Medicine> sortedData = new SortedList<>(filteredData);
+
+        sortedData.comparatorProperty().bind(tableView.comparatorProperty());
+        tableView.setItems(sortedData);
     }
 }

@@ -2,6 +2,8 @@ package controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -111,13 +113,13 @@ public class AdminController implements Initializable {
     public TableColumn<Medicine, String> storeDescription;
     public TableColumn<Medicine, String> storeProducer;
     public TextField storeSearchTextField;
-    public Button storeGoButton;
-    public ComboBox storeSearchCombo;
     public ComboBox storeFilterCombo;
 
     public CommonMethods methods = new CommonMethods();
     private UserCommon userCommon = new UserCommon();
     public User currentUser = UserSingleton.getOurInstance().getUser();
+    private ObservableList<Medicine> listOfAllMed = FXCollections.observableArrayList(methods.getMedicineList());
+    private FilteredList<Medicine> filteredData = new FilteredList<>(listOfAllMed, p -> true);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -130,6 +132,7 @@ public class AdminController implements Initializable {
         fillMe();
         makeEditable();
 
+        userCommon.search(filteredData, storeSearchTextField, storeView);
 
         cancel_button.setOnAction(actionEvent -> {
             fillMe();
@@ -295,6 +298,31 @@ public class AdminController implements Initializable {
         datePickerAdd.setValue(LocalDate.now());
     }
 
+    private void search(FilteredList<Medicine> filteredData, TextField field, TableView<Medicine> tableView){
+        field.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(medicine -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (medicine.getName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (medicine.getSearchTerms().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (String.valueOf(medicine.getArticleNo()).contains(lowerCaseFilter)) {
+                    return true;
+                }
+                return false;
+            });
+        });
+        SortedList<Medicine> sortedData = new SortedList<>(filteredData);
+
+        sortedData.comparatorProperty().bind(tableView.comparatorProperty());
+        tableView.setItems(sortedData);
+    }
+
     public void fillPatientTable() {
 
         patientSSNtable.setCellValueFactory(new PropertyValueFactory<>("Ssn"));
@@ -347,10 +375,9 @@ public class AdminController implements Initializable {
         storeProducer.setCellValueFactory(new PropertyValueFactory<>("producer"));
         storeSize.setCellValueFactory(new PropertyValueFactory<>("packageSize"));
 
-        ObservableList<Medicine> listOfAll = FXCollections.observableArrayList(methods.getMedicineList());
-        listOfAll.addAll(FXCollections.observableArrayList(methods.getMedicineList()));
+        listOfAllMed = FXCollections.observableArrayList(methods.getMedicineList());
 
-        storeView.setItems(listOfAll);
+        storeView.setItems(listOfAllMed);
 
     }
 
