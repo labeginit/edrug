@@ -49,14 +49,15 @@ public class AdminController implements Initializable {
     public TableColumn<User, String> patientEmailTable;
     public TableColumn<User, String> patientLastNameTable;
     public TableColumn<User, String> patientFirstNameTable;
-    public TableColumn<User, CheckBox> isPatientActive;
+    public TableColumn<User, Boolean> patientActive;
+
     public TableView<User> doctorTable;
     public TableColumn<User, String> doctorSSNtable;
     public TableColumn<User, String> doctorLastNameTable;
     public TableColumn<User, String> doctorFirstNameTable;
     public TableColumn<User, String> doctorPhoneTable;
     public TableColumn<User, String> doctorEmailTable;
-    public TableColumn<User, CheckBox> isDoctorActive;
+    public TableColumn<User, Boolean> doctorActive;
     public TableColumn<User, String> changeLastNameTable;
     public TableColumn<User, String> changeFirstNameTable;
     public TableColumn<User, String> changePhoneTable;
@@ -305,17 +306,12 @@ public class AdminController implements Initializable {
         patientLastNameTable.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         patientPhoneTable.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
         patientEmailTable.setCellValueFactory(new PropertyValueFactory<>("Email"));
-        isPatientActive.setCellValueFactory(new PropertyValueFactory<>("checkBox"));  //need to find  a way to make this column non-editable
+        patientActive.setCellValueFactory(new PropertyValueFactory<>("active"));
 
         ObservableList<User> listOfPatients = FXCollections.observableArrayList(methods.getPatientList());
 
         FilteredList<User> filteredData = new FilteredList<>(listOfPatients, p -> true);
         patientTableView.setItems(userCommon.userFilter(filteredData, patientSearchTextField, patientTableView));
-        for (int i = 0; i < patientTableView.getItems().size(); i++) {
-            if (patientTableView.getItems().get(i).getActive()) {
-                isPatientActive.getCellData(i).setSelected(true);
-            } else isPatientActive.getCellData(i).setSelected(false);
-        }
 
     }
 
@@ -325,18 +321,12 @@ public class AdminController implements Initializable {
         doctorLastNameTable.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         doctorPhoneTable.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
         doctorEmailTable.setCellValueFactory(new PropertyValueFactory<>("Email"));
-        isDoctorActive.setCellValueFactory(new PropertyValueFactory<>("checkBox"));  //need to find  a way to make this column non-editable
+        doctorActive.setCellValueFactory(new PropertyValueFactory<>("active"));
 
         ObservableList<User> listOfDoctors = FXCollections.observableArrayList(methods.getDoctorList());
 
         FilteredList<User> filteredData = new FilteredList<>(listOfDoctors, p -> true);
         doctorTable.setItems(userCommon.userFilter(filteredData, doctorSearchTextField, doctorTable));
-        for (int i = 0; i < doctorTable.getItems().size(); i++) {
-            if (doctorTable.getItems().get(i).getActive()) {
-                isDoctorActive.getCellData(i).setSelected(true);
-            } else isDoctorActive.getCellData(i).setSelected(false);
-        }
-
     }
 
     public void fillEditTable() {
