@@ -31,15 +31,16 @@
                               <Label prefHeight="17.0" prefWidth="261.0" />
                               <Label prefHeight="17.0" prefWidth="261.0" />
                            </buttons></ButtonBar>
-                                <TableView fx:id="storeView" editable="true" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0">
+                                <TableView fx:id="storeView" editable="true" focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0">
                                     <columns>
                                         <TableColumn fx:id="storeArticle" prefWidth="85.0" text="Article" />
-                                        <TableColumn fx:id="storeName" minWidth="4.0" prefWidth="250.0" text="Name" />
-                                        <TableColumn fx:id="storeSize" text="Size" />
-                                        <TableColumn fx:id="storePrice" prefWidth="56.0" text="Price" />
-                                        <TableColumn fx:id="storeAvailability" prefWidth="72.0" text="Availability" />
-                                        <TableColumn fx:id="storeDescription" prefWidth="149.0" text="Description" />
-                                        <TableColumn fx:id="storeProducer" prefWidth="81.333251953125" text="Producer" />
+                                        <TableColumn fx:id="storeName" minWidth="4.0" prefWidth="213.60000610351562" text="Name" />
+                                        <TableColumn fx:id="storeSize" prefWidth="44.79998779296875" text="Size" />
+                                        <TableColumn fx:id="storePrice" prefWidth="59.20001220703125" text="Price" />
+                                        <TableColumn fx:id="storeAvailability" prefWidth="77.60003662109375" text="Availability" />
+                                        <TableColumn fx:id="storeDescription" prefWidth="149.60003662109375" text="Description" />
+                                        <TableColumn fx:id="storeProducer" prefWidth="83.199951171875" text="Producer" />
+                              <TableColumn fx:id="isActiveMed" prefWidth="50.400146484375" text="Active" />
                                     </columns>
                                 </TableView>
                                 <Label layoutX="14.0" layoutY="26.0" prefHeight="17.0" prefWidth="84.0" text="Search terms:">
@@ -62,13 +63,14 @@
                                         <Font size="13.0" />
                                     </font>
                                 </Label>
-                                <TableView fx:id="patientTableView" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0">
+                                <TableView fx:id="patientTableView" focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0">
                                     <columns>
                                         <TableColumn fx:id="patientSSNtable" prefWidth="144.0" text="SSN" />
                                         <TableColumn fx:id="patientLastNameTable" prefWidth="176.0" text="Last Name" />
                                         <TableColumn fx:id="patientFirstNameTable" prefWidth="131.0" text="First Name" />
                                         <TableColumn fx:id="patientPhoneTable" prefWidth="139.0" text="Phone Number" />
-                                        <TableColumn fx:id="patientEmailTable" prefWidth="268.0" text="Email" />
+                                        <TableColumn fx:id="patientEmailTable" prefWidth="122.66668701171875" text="Email" />
+                              <TableColumn fx:id="isPatientActive" editable="false" prefWidth="56.0" text="Active" />
                                     </columns>
                                 </TableView>
                         <ButtonBar layoutX="6.0" layoutY="514.0" prefHeight="40.0" prefWidth="771.0">
@@ -94,13 +96,14 @@
                                         <Font size="13.0" />
                                     </font>
                                 </Label>
-                                <TableView fx:id="doctorTable" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0">
+                                <TableView fx:id="doctorTable" focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0">
                                     <columns>
                                         <TableColumn fx:id="doctorSSNtable" prefWidth="142.0" text="SSN" />
                                         <TableColumn fx:id="doctorLastNameTable" prefWidth="174.0" text="Last name" />
                                         <TableColumn fx:id="doctorFirstNameTable" prefWidth="128.0" text="First name" />
                                         <TableColumn fx:id="doctorPhoneTable" prefWidth="143.0" text="Phone number" />
-                                        <TableColumn fx:id="doctorEmailTable" prefWidth="196.0" text="Email" />
+                                        <TableColumn fx:id="doctorEmailTable" prefWidth="128.00006103515625" text="Email" />
+                              <TableColumn fx:id="isDoctorActive" editable="false" prefWidth="52.666748046875" text="Active" />
                                     </columns>
                                 </TableView>
                         <ButtonBar layoutX="6.0" layoutY="514.0" prefHeight="40.0" prefWidth="771.0">
@@ -127,7 +130,7 @@
                                     </font>
                                 </Label>
                                 <Button fx:id="confirmAddButton" layoutX="699.0" layoutY="485.0" mnemonicParsing="false" text="Confirm" />
-                                <TableView fx:id="changeTable" editable="true" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0">
+                                <TableView fx:id="changeTable" editable="true" focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0">
                                     <columns>
                                         <TableColumn fx:id="changeSSNTable" prefWidth="114.0" text="SSN" />
                                         <TableColumn fx:id="changeLastNameTable" prefWidth="172.6667022705078" text="Last name" />

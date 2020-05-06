@@ -49,12 +49,14 @@ public class AdminController implements Initializable {
     public TableColumn<User, String> patientEmailTable;
     public TableColumn<User, String> patientLastNameTable;
     public TableColumn<User, String> patientFirstNameTable;
+    public TableColumn<User, CheckBox> isPatientActive;
     public TableView<User> doctorTable;
     public TableColumn<User, String> doctorSSNtable;
     public TableColumn<User, String> doctorLastNameTable;
     public TableColumn<User, String> doctorFirstNameTable;
     public TableColumn<User, String> doctorPhoneTable;
     public TableColumn<User, String> doctorEmailTable;
+    public TableColumn<User, CheckBox> isDoctorActive;
     public TableColumn<User, String> changeLastNameTable;
     public TableColumn<User, String> changeFirstNameTable;
     public TableColumn<User, String> changePhoneTable;
@@ -112,15 +114,14 @@ public class AdminController implements Initializable {
     public TableColumn<Medicine, Integer> storeAvailability;
     public TableColumn<Medicine, String> storeDescription;
     public TableColumn<Medicine, String> storeProducer;
+    public TableColumn<Medicine, CheckBox> isActiveMed;
     public TextField storeSearchTextField;
     public ComboBox storeFilterCombo;
-    public TableColumn<Medicine, CheckBox> isActiveMed;
+
 
     public CommonMethods methods = new CommonMethods();
     private UserCommon userCommon = new UserCommon();
     public User currentUser = UserSingleton.getOurInstance().getUser();
-    private ObservableList<Medicine> listOfAllMed = FXCollections.observableArrayList(methods.getMedicineList());
-    private FilteredList<Medicine> filteredData = new FilteredList<>(listOfAllMed, p -> true);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -132,8 +133,6 @@ public class AdminController implements Initializable {
         fillEditTable();
         fillMe();
         makeEditable();
-
-        userCommon.medFilter(filteredData, storeSearchTextField, storeView);
 
         cancel_button.setOnAction(actionEvent -> {
             fillMe();
@@ -306,11 +305,17 @@ public class AdminController implements Initializable {
         patientLastNameTable.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         patientPhoneTable.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
         patientEmailTable.setCellValueFactory(new PropertyValueFactory<>("Email"));
+        isPatientActive.setCellValueFactory(new PropertyValueFactory<>("checkBox"));  //need to find  a way to make this column non-editable
 
         ObservableList<User> listOfPatients = FXCollections.observableArrayList(methods.getPatientList());
 
         FilteredList<User> filteredData = new FilteredList<>(listOfPatients, p -> true);
         patientTableView.setItems(userCommon.userFilter(filteredData, patientSearchTextField, patientTableView));
+        for (int i = 0; i < patientTableView.getItems().size(); i++) {
+            if (patientTableView.getItems().get(i).getActive()) {
+                isPatientActive.getCellData(i).setSelected(true);
+            } else isPatientActive.getCellData(i).setSelected(false);
+        }
 
     }
 
@@ -320,11 +325,17 @@ public class AdminController implements Initializable {
         doctorLastNameTable.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         doctorPhoneTable.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
         doctorEmailTable.setCellValueFactory(new PropertyValueFactory<>("Email"));
+        isDoctorActive.setCellValueFactory(new PropertyValueFactory<>("checkBox"));  //need to find  a way to make this column non-editable
 
         ObservableList<User> listOfDoctors = FXCollections.observableArrayList(methods.getDoctorList());
 
         FilteredList<User> filteredData = new FilteredList<>(listOfDoctors, p -> true);
         doctorTable.setItems(userCommon.userFilter(filteredData, doctorSearchTextField, doctorTable));
+        for (int i = 0; i < doctorTable.getItems().size(); i++) {
+            if (doctorTable.getItems().get(i).getActive()) {
+                isDoctorActive.getCellData(i).setSelected(true);
+            } else isDoctorActive.getCellData(i).setSelected(false);
+        }
 
     }
 
@@ -336,7 +347,7 @@ public class AdminController implements Initializable {
         changeEmailTable.setCellValueFactory(new PropertyValueFactory<>("Email"));
         changeRoleTable.setCellValueFactory(new PropertyValueFactory<>("userType"));
         isActiveUser.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
-       
+
         ObservableList<User> listOfAll = FXCollections.observableArrayList(methods.getDoctorList());
         listOfAll.addAll(FXCollections.observableArrayList(methods.getPatientList()));
 
@@ -358,11 +369,17 @@ public class AdminController implements Initializable {
         storePrice.setCellValueFactory(new PropertyValueFactory<>("price"));
         storeProducer.setCellValueFactory(new PropertyValueFactory<>("producer"));
         storeSize.setCellValueFactory(new PropertyValueFactory<>("packageSize"));
+        isActiveMed.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
 
-        listOfAllMed = FXCollections.observableArrayList(methods.getMedicineList());
-        if (!storeSearchTextField.getText().isEmpty()){
-            storeView.setItems(filteredData);
-        } else storeView.setItems(listOfAllMed);
+        ObservableList<Medicine> listOfAllMed = FXCollections.observableArrayList(methods.getMedicineList());
+        FilteredList<Medicine> filteredData = new FilteredList<>(listOfAllMed, p -> true);
+        storeView.setItems(userCommon.medFilter(filteredData, editSearchTextField, storeView));
+
+        for (int i = 0; i < filteredData.size(); i++) {
+            if (filteredData.get(i).getActive()) {
+                isActiveMed.getCellData(i).setSelected(true);
+            } else isActiveMed.getCellData(i).setSelected(false);
+        }
 
     }
 
