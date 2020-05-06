@@ -347,8 +347,8 @@ public class AdminController implements Initializable {
             return false;
         } else if (!pass1_text.getText().isEmpty() || !pass2_text.getText().isEmpty()) {
             if (!pass1_text.getText().equals(pass2_text.getText())) {
-             //   pass1star.setVisible(true);
-             //   pass2star.setVisible(true);
+                pass1star.setVisible(true);
+                pass2star.setVisible(true);
                 passwordCheckLabel.setVisible(true);
                 Validation.alertPopup("Password does not match", "Password Mismatch", "Password doesn't match");
                 return false;
