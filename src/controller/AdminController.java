@@ -376,8 +376,9 @@ public class AdminController implements Initializable {
         storeSize.setCellValueFactory(new PropertyValueFactory<>("packageSize"));
 
         listOfAllMed = FXCollections.observableArrayList(methods.getMedicineList());
-
-        storeView.setItems(listOfAllMed);
+        if (!storeSearchTextField.getText().isEmpty()){
+            storeView.setItems(filteredData);
+        } else storeView.setItems(listOfAllMed);
 
     }
 

@@ -199,7 +199,7 @@ public class PatientController implements Initializable {
         logOut1_button.setOnAction(event -> {
             try {
                 userCommon.onLogOutButtonPressed(event);
-                clearCart();
+                userCommon.clearCart(cart);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -208,7 +208,7 @@ public class PatientController implements Initializable {
         logOut2_button.setOnAction(event -> {
             try {
                 userCommon.onLogOutButtonPressed(event);
-                clearCart();
+                userCommon.clearCart(cart);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -217,7 +217,7 @@ public class PatientController implements Initializable {
         logOut3_button.setOnAction(event -> {
             try {
                 userCommon.onLogOutButtonPressed(event);
-                clearCart();
+                userCommon.clearCart(cart);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -249,26 +249,7 @@ public class PatientController implements Initializable {
         c8.setCellValueFactory(new PropertyValueFactory<Medicine, CheckBox>("checkBox"));
 
         // currently the combination of different filters is not working after value in the comboBox has been changed
-
-        search_textField.textProperty().addListener((observable, oldValue, newValue) -> {
-            maxPrice_text.setText("");
-            filteredData.setPredicate(medicine -> {
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
-
-                String lowerCaseFilter = newValue.toLowerCase();
-
-                if (medicine.getName().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (medicine.getSearchTerms().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (String.valueOf(medicine.getArticleNo()).contains(lowerCaseFilter)) {
-                    return true;
-                }
-                return false;
-            });
-        });
+        userCommon.search(filteredData, search_textField, tableView);
 
            groupFilter_combo.setOnAction((event) -> {
                String val = groupFilter_combo.getValue();
@@ -477,24 +458,5 @@ public class PatientController implements Initializable {
         address_text.setText(currentUser.getAddress());
         phoneNumber_text.setText(currentUser.getPhoneNumber());
         email_text.setText(currentUser.getEmail());
-    }
-    public void clearCart(){
-        try {
-            if (cart != null) {
-                for (int i = 0; i < cart.size(); i++) {
-                    int article = cart.get(i).getArticleNo();
-                    int quantity = cart.get(i).getQuantity();
-                    Medicine medicine = commonMethods.getMedicine(article);
-                    int newQuantity = medicine.getQuantity() + quantity;
-                    medicine.setQuantity(newQuantity);
-                    commonMethods.updateQuantity(medicine);
-                }
-                cart.removeAll(cart);
-                RWFile.writeObject(RWFile.cartPath, cart);
-                RWFile.delete();
-            }
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
     }
 }
