@@ -22,6 +22,7 @@ import java.net.URL;
 import java.sql.Date;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class AdminController implements Initializable {
@@ -50,14 +51,15 @@ public class AdminController implements Initializable {
     public TableColumn<User, String> patientEmailTable;
     public TableColumn<User, String> patientLastNameTable;
     public TableColumn<User, String> patientFirstNameTable;
-    public TableColumn<User, CheckBox> isPatientActive;
+    public TableColumn<User, Boolean> patientActive;
+
     public TableView<User> doctorTable;
     public TableColumn<User, String> doctorSSNtable;
     public TableColumn<User, String> doctorLastNameTable;
     public TableColumn<User, String> doctorFirstNameTable;
     public TableColumn<User, String> doctorPhoneTable;
     public TableColumn<User, String> doctorEmailTable;
-    public TableColumn<User, CheckBox> isDoctorActive;
+    public TableColumn<User, Boolean> doctorActive;
     public TableColumn<User, String> changeLastNameTable;
     public TableColumn<User, String> changeFirstNameTable;
     public TableColumn<User, String> changePhoneTable;
@@ -127,17 +129,46 @@ public class AdminController implements Initializable {
     public TableColumn<User, CheckBox> adminActiveTable;
     public Button logOutAdminButton;
     public TextField adminSearchTextField;
+    public TextField articleM;
+    public ChoiceBox<ProdGroup> prodGroupM;
+    public TextField nameM;
+    public TextField packageM;
+    public TextField producerM;
+    public TextField descriptM;
+    public TextField priceM;
+    public TextField qtyM;
+    public TextField searchTermsM;
+    public ChoiceBox<String> onPrescrM;
+    public Button logOutM_button;
+    public Button save_buttonM;
+    public Button cancel_buttonM;
+    public Label articleStar;
+    public Label prodGroupStar;
+    public Label nameMStar;
+    public Label packageStar;
+    public Label producerStar;
+    public Label descriptStar;
+    public Label priceStar;
+    public Label quantityStar;
+    public Label searchStar;
+    public Label typeStar;
 
 
+    private final String withP = "Needs a Prescription";
+    private final String withoutP = "No Prescription required";
 
     public CommonMethods methods = new CommonMethods();
     private UserCommon userCommon = new UserCommon();
     public User currentUser = UserSingleton.getOurInstance().getUser();
+    private List<ProdGroup> groups = methods.getProductGroupList();
+    private ObservableList<ProdGroup> groupsObserve = FXCollections.observableArrayList(groups);
+    private ObservableList<String> typeObserve = FXCollections.observableArrayList(withP, withoutP);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setVisible(false);
         setVisibleAdd(false);
+        setVisibleAddM(false);
         fillStore();
         fillPatientTable();
         fillDoctorTable();
@@ -145,6 +176,8 @@ public class AdminController implements Initializable {
         fillEditTable();
         fillMe();
         makeEditable();
+        prodGroupM.setItems(groupsObserve);
+        onPrescrM.setItems(typeObserve);
 
         cancel_button.setOnAction(actionEvent -> {
             fillMe();
@@ -153,6 +186,11 @@ public class AdminController implements Initializable {
         cancel_buttonAdd.setOnAction(actionEvent -> {
             setVisibleAdd(false);
             clearFieldsAdd();
+        });
+
+        cancel_buttonM.setOnAction(actionEvent -> {
+            setVisibleAddM(false);
+            clearFieldsAddM();
         });
 
         logOutMy_button.setOnAction(event -> {
@@ -203,7 +241,16 @@ public class AdminController implements Initializable {
             }
         });
 
+
         logOutAdminButton.setOnAction(event -> {
+            try {
+                userCommon.onLogOutButtonPressed(event);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        logOutM_button.setOnAction(event -> {
             try {
                 userCommon.onLogOutButtonPressed(event);
             } catch (IOException e) {
@@ -274,6 +321,36 @@ public class AdminController implements Initializable {
                 }
             }
         });
+
+        save_buttonM.setOnAction(actionEvent -> {
+            Medicine newMed = null;
+                    try {
+                        if (methods.getMedicine(Integer.parseInt(articleM.getText())) == null) {
+                            boolean prescription;
+                            if (onPrescrM.getValue().equalsIgnoreCase(withP)){
+                                prescription = true;
+                            } else prescription = false;
+                            if (prescription) {
+                                newMed = new OnPrescription(Integer.parseInt(articleM.getText()), prodGroupM.getValue().getId(), nameM.getText(), producerM.getText(), packageM.getText(), descriptM.getText(), Integer.parseInt(qtyM.getText()),
+                                        Double.parseDouble(priceM.getText()), searchTermsM.getText(), true);
+                            } else {
+                                newMed = new PrescriptionFree(Integer.parseInt(articleM.getText()), prodGroupM.getValue().getId(), nameM.getText(), producerM.getText(), packageM.getText(), descriptM.getText(), Integer.parseInt(qtyM.getText()),
+                                        Double.parseDouble(priceM.getText()), searchTermsM.getText(), true);
+                            }
+                            System.out.println(newMed);
+                            methods.addMedicine(newMed);
+                            clearFieldsAddM();
+                            fillStore();
+                            setVisibleAddM(false);
+                        } else {
+                            setVisibleAddM(false);
+                            articleStar.setVisible(true);
+                            Validation.alertPopup("Medicine with article = " + articleM.getText() + " already exists. It might be inactive.", "Item exists", "Medicine item already exists");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+        });
     }
 
     private void setVisible(boolean on) {
@@ -304,6 +381,19 @@ public class AdminController implements Initializable {
         passwordCheckAddLabel.setVisible(on);
     }
 
+    private void setVisibleAddM(boolean on){
+        articleStar.setVisible(on);
+        prodGroupStar.setVisible(on);
+        nameMStar.setVisible(on);
+        packageStar.setVisible(on);
+        producerStar.setVisible(on);
+        descriptStar.setVisible(on);
+        priceStar.setVisible(on);
+        quantityStar.setVisible(on);
+        searchStar.setVisible(on);
+        typeStar.setVisible(on);
+    }
+
     private void clearFieldsAdd() {
         SSNtextAdd.clear();
         firstName_textAdd.clear();
@@ -318,6 +408,19 @@ public class AdminController implements Initializable {
         datePickerAdd.setValue(LocalDate.now());
     }
 
+    private void clearFieldsAddM(){
+        articleM.clear();
+        //prodGroupM;
+        nameM.clear();
+        packageM.clear();
+        producerM.clear();
+        descriptM.clear();
+        priceM.clear();
+        qtyM.clear();
+        searchTermsM.clear();
+        //onPrescrM;
+    }
+
     public void fillPatientTable() {
 
         patientSSNtable.setCellValueFactory(new PropertyValueFactory<>("Ssn"));
@@ -325,17 +428,12 @@ public class AdminController implements Initializable {
         patientLastNameTable.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         patientPhoneTable.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
         patientEmailTable.setCellValueFactory(new PropertyValueFactory<>("Email"));
-        isPatientActive.setCellValueFactory(new PropertyValueFactory<>("checkBox"));  //need to find  a way to make this column non-editable
+        patientActive.setCellValueFactory(new PropertyValueFactory<>("active"));
 
         ObservableList<User> listOfPatients = FXCollections.observableArrayList(methods.getPatientList());
 
         FilteredList<User> filteredData = new FilteredList<>(listOfPatients, p -> true);
         patientTableView.setItems(userCommon.userFilter(filteredData, patientSearchTextField, patientTableView));
-        for (int i = 0; i < patientTableView.getItems().size(); i++) {
-            if (patientTableView.getItems().get(i).getActive()) {
-                isPatientActive.getCellData(i).setSelected(true);
-            } else isPatientActive.getCellData(i).setSelected(false);
-        }
 
     }
 
@@ -345,17 +443,32 @@ public class AdminController implements Initializable {
         doctorLastNameTable.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         doctorPhoneTable.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
         doctorEmailTable.setCellValueFactory(new PropertyValueFactory<>("Email"));
-        isDoctorActive.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
+        doctorActive.setCellValueFactory(new PropertyValueFactory<>("active"));
 
         ObservableList<User> listOfDoctors = FXCollections.observableArrayList(methods.getDoctorList());
 
         FilteredList<User> filteredData = new FilteredList<>(listOfDoctors, p -> true);
         doctorTable.setItems(userCommon.userFilter(filteredData, doctorSearchTextField, doctorTable));
-        for (int i = 0; i < doctorTable.getItems().size(); i++) {
-            if (doctorTable.getItems().get(i).getActive()) {
-                isDoctorActive.getCellData(i).setSelected(true);
-            } else isDoctorActive.getCellData(i).setSelected(false);
+    }
 
+    public void fillEditTable() {
+        changeSSNTable.setCellValueFactory(new PropertyValueFactory<>("Ssn"));
+        changeFirstNameTable.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        changeLastNameTable.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        changePhoneTable.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+        changeEmailTable.setCellValueFactory(new PropertyValueFactory<>("Email"));
+        changeRoleTable.setCellValueFactory(new PropertyValueFactory<>("userType"));
+        isActiveUser.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
+
+        ObservableList<User> listOfAll = FXCollections.observableArrayList(methods.getDoctorList());
+        listOfAll.addAll(FXCollections.observableArrayList(methods.getPatientList()));
+
+        FilteredList<User> filteredData = new FilteredList<>(listOfAll, p -> true);
+        changeTable.setItems(userCommon.userFilter(filteredData, editSearchTextField, changeTable));
+        for (int i = 0; i < changeTable.getItems().size(); i++) {
+            if (changeTable.getItems().get(i).getActive()) {
+                isActiveUser.getCellData(i).setSelected(true);
+            } else isActiveUser.getCellData(i).setSelected(false);
         }
     }
     public void fillAdminTable() {
@@ -364,42 +477,14 @@ public class AdminController implements Initializable {
         adminLastNameTable.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         adminPhoneTable.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
         adminEmailTable.setCellValueFactory(new PropertyValueFactory<>("Email"));
-        adminActiveTable.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
+        adminActiveTable.setCellValueFactory(new PropertyValueFactory<>("active"));
 
         ObservableList<User> listOfAdmins = FXCollections.observableArrayList(methods.getAdminList());
 
         FilteredList<User> filteredData = new FilteredList<>(listOfAdmins, p -> true);
         adminTable.setItems(userCommon.userFilter(filteredData, adminSearchTextField, adminTable));
-        for (int i = 0; i < adminTable.getItems().size(); i++) {
-            if (adminTable.getItems().get(i).getActive()) {
-                adminActiveTable.getCellData(i).setSelected(true);
-            } else adminActiveTable.getCellData(i).setSelected(false);
-
-        }
     }
 
-
-                public void fillEditTable() {
-                    changeSSNTable.setCellValueFactory(new PropertyValueFactory<>("Ssn"));
-                    changeFirstNameTable.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-                    changeLastNameTable.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-                    changePhoneTable.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
-                    changeEmailTable.setCellValueFactory(new PropertyValueFactory<>("Email"));
-                    changeRoleTable.setCellValueFactory(new PropertyValueFactory<>("userType"));
-                    isActiveUser.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
-
-                    ObservableList<User> listOfAll = FXCollections.observableArrayList(methods.getDoctorList());
-                    listOfAll.addAll(FXCollections.observableArrayList(methods.getPatientList()));
-
-                    FilteredList<User> filteredData = new FilteredList<>(listOfAll, p -> true);
-                    changeTable.setItems(userCommon.userFilter(filteredData, editSearchTextField, changeTable));
-                    for (int i = 0; i < changeTable.getItems().size(); i++) {
-                        if (changeTable.getItems().get(i).getActive()) {
-                            isActiveUser.getCellData(i).setSelected(true);
-                        } else isActiveUser.getCellData(i).setSelected(false);
-                    }
-
-                }
 
                 public void fillStore() {
                     storeArticle.setCellValueFactory(new PropertyValueFactory<>("articleNo"));

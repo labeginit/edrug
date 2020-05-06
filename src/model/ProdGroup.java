@@ -31,10 +31,6 @@ public class ProdGroup {
 
     @Override
     public String toString() {
-        return "ProdGroup{" +
-                "id=" + getId() +
-                ", name='" + getName() + '\'' +
-                ", path='" + getPath() + '\'' +
-                '}';
+        return getPath();
     }
 }
