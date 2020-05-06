@@ -21,6 +21,7 @@ import java.net.URL;
 import java.sql.Date;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class AdminController implements Initializable {
@@ -120,7 +121,7 @@ public class AdminController implements Initializable {
     public ComboBox storeFilterCombo;
     //add medicine:
     public TextField articleM;
-    public ChoiceBox<Integer> prodGroupM;
+    public ChoiceBox<ProdGroup> prodGroupM;
     public TextField nameM;
     public TextField packageM;
     public TextField producerM;
@@ -128,7 +129,7 @@ public class AdminController implements Initializable {
     public TextField priceM;
     public TextField qtyM;
     public TextField searchTermsM;
-    public ChoiceBox<Boolean> onPrescrM;
+    public ChoiceBox<String> onPrescrM;
     public Button logOutM_button;
     public Button save_buttonM;
     public Button cancel_buttonM;
@@ -142,22 +143,30 @@ public class AdminController implements Initializable {
     public Label quantityStar;
     public Label searchStar;
     public Label typeStar;
+    private final String withP = "Needs a Prescription";
+    private final String withoutP = "No Prescription required";
 
 
     public CommonMethods methods = new CommonMethods();
     private UserCommon userCommon = new UserCommon();
     public User currentUser = UserSingleton.getOurInstance().getUser();
+    private List<ProdGroup> groups = methods.getProductGroupList();
+    private ObservableList<ProdGroup> groupsObserve = FXCollections.observableArrayList(groups);
+    private ObservableList<String> typeObserve = FXCollections.observableArrayList(withP, withoutP);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setVisible(false);
         setVisibleAdd(false);
+        setVisibleAddM(false);
         fillStore();
         fillPatientTable();
         fillDoctorTable();
         fillEditTable();
         fillMe();
         makeEditable();
+        prodGroupM.setItems(groupsObserve);
+        onPrescrM.setItems(typeObserve);
 
         cancel_button.setOnAction(actionEvent -> {
             fillMe();
@@ -166,6 +175,11 @@ public class AdminController implements Initializable {
         cancel_buttonAdd.setOnAction(actionEvent -> {
             setVisibleAdd(false);
             clearFieldsAdd();
+        });
+
+        cancel_buttonM.setOnAction(actionEvent -> {
+            setVisibleAddM(false);
+            clearFieldsAddM();
         });
 
         logOutMy_button.setOnAction(event -> {
@@ -209,6 +223,14 @@ public class AdminController implements Initializable {
         });
 
         logOutMed_button.setOnAction(event -> {
+            try {
+                userCommon.onLogOutButtonPressed(event);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        logOutM_button.setOnAction(event -> {
             try {
                 userCommon.onLogOutButtonPressed(event);
             } catch (IOException e) {
@@ -279,6 +301,42 @@ public class AdminController implements Initializable {
                 }
             }
         });
+
+        save_buttonM.setOnAction(actionEvent -> {
+            Medicine newMed = null;
+           // if (isItOkAdd()) {  methods to be developed
+              //  if (Validation.isSSN(SSNtextAdd.getText(), SSNstarAdd) && Validation.isName(firstName_textAdd.getText(), firstNameStarAdd) && Validation.isName(lastName_textAdd.getText(), lastNameStarAdd) &&
+              //          Validation.isZipcode(zip_textAdd.getText(), zipStarAdd) && Validation.isPhoneNumber(phone_textAdd.getText(), phoneStarAdd)
+              //          && Validation.isEmail(email_textAdd.getText(), emailStarAdd) && Validation.isRole(roleTextAdd.getText())) {
+                    try {
+                        if (methods.getMedicine(Integer.parseInt(articleM.getText())) == null) {
+                            boolean prescription;
+                            if (onPrescrM.getValue().equalsIgnoreCase(withP)){
+                                prescription = true;
+                            } else prescription = false;
+                            if (prescription) {
+                                newMed = new OnPrescription(Integer.parseInt(articleM.getText()), prodGroupM.getValue().getId(), nameM.getText(), producerM.getText(), packageM.getText(), descriptM.getText(), Integer.parseInt(qtyM.getText()),
+                                        Double.parseDouble(priceM.getText()), searchTermsM.getText(), true);
+                            } else {
+                                newMed = new PrescriptionFree(Integer.parseInt(articleM.getText()), prodGroupM.getValue().getId(), nameM.getText(), producerM.getText(), packageM.getText(), descriptM.getText(), Integer.parseInt(qtyM.getText()),
+                                        Double.parseDouble(priceM.getText()), searchTermsM.getText(), true);
+                            }
+                            System.out.println(newMed);
+                            methods.addMedicine(newMed);
+                            clearFieldsAddM();
+                            fillStore();
+                            setVisibleAddM(false);
+                        } else {
+                            setVisibleAddM(false);
+                            articleStar.setVisible(true);
+                            Validation.alertPopup("Medicine with article = " + articleM.getText() + " already exists. It might be inactive.", "Item exists", "Medicine item already exists");
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+         //       }
+        //    }
+        });
     }
 
     private void setVisible(boolean on) {
@@ -309,6 +367,19 @@ public class AdminController implements Initializable {
         passwordCheckAddLabel.setVisible(on);
     }
 
+    private void setVisibleAddM(boolean on){
+        articleStar.setVisible(on);
+        prodGroupStar.setVisible(on);
+        nameMStar.setVisible(on);
+        packageStar.setVisible(on);
+        producerStar.setVisible(on);
+        descriptStar.setVisible(on);
+        priceStar.setVisible(on);
+        quantityStar.setVisible(on);
+        searchStar.setVisible(on);
+        typeStar.setVisible(on);
+    }
+
     private void clearFieldsAdd() {
         SSNtextAdd.clear();
         firstName_textAdd.clear();
@@ -321,6 +392,19 @@ public class AdminController implements Initializable {
         pass2_textAdd.clear();
         roleTextAdd.clear();
         datePickerAdd.setValue(LocalDate.now());
+    }
+
+    private void clearFieldsAddM(){
+        articleM.clear();
+        //prodGroupM;
+        nameM.clear();
+        packageM.clear();
+        producerM.clear();
+        descriptM.clear();
+        priceM.clear();
+        qtyM.clear();
+        searchTermsM.clear();
+        //onPrescrM;
     }
 
     public void fillPatientTable() {
