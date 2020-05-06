@@ -57,7 +57,6 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="425.0" prefWidth="586.0">
                             <children>
-                                <ComboBox fx:id="filterPatient" layoutX="607.0" layoutY="22.0" prefHeight="25.0" prefWidth="170.0" />
                                 <Label layoutX="10.0" layoutY="26.0" prefHeight="17.0" prefWidth="323.0" text="Here you can view all patients">
                                     <font>
                                         <Font size="13.0" />
@@ -81,6 +80,7 @@
                               <Label prefHeight="17.0" prefWidth="261.0" />
                            </buttons>
                         </ButtonBar>
+                        <TextField fx:id="patientSearchTextField" layoutX="502.0" layoutY="22.0" prefHeight="26.0" prefWidth="274.0" promptText="enter  name or SSN here" />
                             </children>
                         </AnchorPane>
                     </content>
@@ -89,7 +89,6 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="555.0" prefWidth="789.0">
                             <children>
-                                <ComboBox fx:id="doctorFilter" layoutX="607.0" layoutY="22.0" prefHeight="25.0" prefWidth="170.0" />
                                 <Label layoutX="10.0" layoutY="26.0" prefHeight="17.0" prefWidth="323.0" text="Here you can view all doctors">
                                     <font>
                                         <Font size="13.0" />
@@ -113,6 +112,7 @@
                               <Label prefHeight="17.0" prefWidth="261.0" />
                            </buttons>
                         </ButtonBar>
+                        <TextField fx:id="doctorSearchTextField" layoutX="502.0" layoutY="22.0" prefHeight="26.0" prefWidth="274.0" promptText="enter  name or SSN here" />
                             </children>
                         </AnchorPane>
                     </content>
@@ -121,7 +121,6 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="555.0" prefWidth="789.0">
                             <children>
-                                <ComboBox fx:id="addFilter" layoutX="607.0" layoutY="22.0" prefHeight="25.0" prefWidth="170.0" />
                                 <Label layoutX="10.0" layoutY="26.0" prefHeight="17.0" prefWidth="323.0" text="Edit different roles">
                                     <font>
                                         <Font size="13.0" />
@@ -147,6 +146,7 @@
                               <Label prefHeight="17.0" prefWidth="261.0" />
                            </buttons>
                         </ButtonBar>
+                        <TextField fx:id="editSearchTextField" layoutX="502.0" layoutY="22.0" prefHeight="26.0" prefWidth="274.0" promptText="enter  name or SSN here" />
                             </children>
                         </AnchorPane>
                     </content>

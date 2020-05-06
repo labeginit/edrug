@@ -49,7 +49,7 @@ public class UserCommon {
         window.show();
     }
 
-    public SortedList<Medicine> search(FilteredList<Medicine> filteredData, TextField field, TableView<Medicine> tableView){
+    public SortedList<Medicine> medFilter(FilteredList<Medicine> filteredData, TextField field, TableView<Medicine> tableView){
         field.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(medicine -> {
                 if (newValue == null || newValue.isEmpty()) {
@@ -69,6 +69,32 @@ public class UserCommon {
             });
         });
         SortedList<Medicine> sortedData = new SortedList<>(filteredData);
+
+        sortedData.comparatorProperty().bind(tableView.comparatorProperty());
+        tableView.setItems(sortedData);
+        return sortedData;
+    }
+
+    public SortedList<User> userFilter(FilteredList<User> filteredData, TextField field, TableView<User> tableView){
+        field.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(user -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (user.getFirstName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (user.getLastName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (user.getSsn().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                }
+                return false;
+            });
+        });
+        SortedList<User> sortedData = new SortedList<>(filteredData);
 
         sortedData.comparatorProperty().bind(tableView.comparatorProperty());
         tableView.setItems(sortedData);

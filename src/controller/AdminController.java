@@ -3,7 +3,6 @@ package controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -28,9 +27,9 @@ public class AdminController implements Initializable {
 
 
     @FXML
-    public ComboBox filterPatient;
-    public ComboBox doctorFilter;
-    public ComboBox addFilter;
+    public TextField patientSearchTextField;
+    public TextField doctorSearchTextField;
+    public TextField editSearchTextField;
     public Button confirmAddButton;
     public Button cancel_button;
     public Button save_button;
@@ -132,7 +131,7 @@ public class AdminController implements Initializable {
         fillMe();
         makeEditable();
 
-        userCommon.search(filteredData, storeSearchTextField, storeView);
+        userCommon.medFilter(filteredData, storeSearchTextField, storeView);
 
         cancel_button.setOnAction(actionEvent -> {
             fillMe();
@@ -308,7 +307,8 @@ public class AdminController implements Initializable {
 
         ObservableList<User> listOfPatients = FXCollections.observableArrayList(methods.getPatientList());
 
-        patientTableView.setItems(listOfPatients);
+        FilteredList<User> filteredData = new FilteredList<>(listOfPatients, p -> true);
+        patientTableView.setItems(userCommon.userFilter(filteredData, patientSearchTextField, patientTableView));
 
     }
 
@@ -321,8 +321,8 @@ public class AdminController implements Initializable {
 
         ObservableList<User> listOfDoctors = FXCollections.observableArrayList(methods.getDoctorList());
 
-        doctorTable.setItems(listOfDoctors);
-        doctorPhoneTable.setEditable(true);
+        FilteredList<User> filteredData = new FilteredList<>(listOfDoctors, p -> true);
+        doctorTable.setItems(userCommon.userFilter(filteredData, doctorSearchTextField, doctorTable));
 
     }
 
@@ -337,7 +337,8 @@ public class AdminController implements Initializable {
         ObservableList<User> listOfAll = FXCollections.observableArrayList(methods.getDoctorList());
         listOfAll.addAll(FXCollections.observableArrayList(methods.getPatientList()));
 
-        changeTable.setItems(listOfAll);
+        FilteredList<User> filteredData = new FilteredList<>(listOfAll, p -> true);
+        changeTable.setItems(userCommon.userFilter(filteredData, editSearchTextField, changeTable));
 
     }
 

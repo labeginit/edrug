@@ -249,7 +249,7 @@ public class PatientController implements Initializable {
         c8.setCellValueFactory(new PropertyValueFactory<Medicine, CheckBox>("checkBox"));
 
         // currently the combination of different filters is not working after value in the comboBox has been changed
-        userCommon.search(filteredData, search_textField, tableView);
+        userCommon.medFilter(filteredData, search_textField, tableView);
 
            groupFilter_combo.setOnAction((event) -> {
                String val = groupFilter_combo.getValue();
