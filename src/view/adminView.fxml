@@ -64,19 +64,19 @@
                                         <Button fx:id="logOutM_button" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Logout" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
-                                        <Button fx:id="save_buttonM" minWidth="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="184.0" text="Add user" />
+                                        <Button fx:id="save_buttonM" minWidth="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="184.0" text="Add Medicine" />
                                         <Button fx:id="cancel_buttonM" mnemonicParsing="false" text="Cancel" />
                                     </buttons>
                                 </ButtonBar>
                                 <ListView focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0" />
-                                <TextField fx:id="nameM" layoutX="235.0" layoutY="159.0" prefHeight="26.0" prefWidth="220.0" />
+                                <TextField fx:id="nameM" layoutX="235.0" layoutY="159.0" prefHeight="26.0" prefWidth="440.0" />
                                 <TextField fx:id="articleM" layoutX="235.0" layoutY="72.0" prefHeight="25.0" prefWidth="220.0" />
                                 <TextField fx:id="packageM" layoutX="235.0" layoutY="204.0" prefHeight="25.0" prefWidth="220.0" />
                                 <TextField fx:id="producerM" layoutX="235.0" layoutY="250.0" prefHeight="26.0" prefWidth="220.0" />
-                                <TextField fx:id="descriptM" layoutX="235.0" layoutY="291.0" prefHeight="25.0" prefWidth="461.0" />
+                                <TextField fx:id="descriptM" layoutX="235.0" layoutY="291.0" prefHeight="25.0" prefWidth="440.0" />
                                 <TextField fx:id="priceM" layoutX="235.0" layoutY="338.0" prefHeight="25.0" prefWidth="220.0" />
                                 <TextField fx:id="qtyM" layoutX="235.0" layoutY="384.0" prefHeight="25.0" prefWidth="220.0" />
-                                <TextField fx:id="searchTermsM" layoutX="235.0" layoutY="428.0" prefHeight="25.0" prefWidth="220.0" />
+                                <TextField fx:id="searchTermsM" layoutX="235.0" layoutY="432.0" prefHeight="25.0" prefWidth="440.0" />
                                 <Label layoutX="54.0" layoutY="164.0" text="Name">
                                     <font>
                                         <Font size="13.0" />
@@ -122,7 +122,7 @@
                                         <Font size="13.0" />
                                     </font>
                                 </Label>
-                                <Label layoutX="54.0" layoutY="478.0" prefHeight="18.0" prefWidth="166.0" text="Role (1=P, 2=D)">
+                                <Label layoutX="54.0" layoutY="481.0" prefHeight="18.0" prefWidth="166.0" text="Type (1=P, 2=No P)">
                                     <font>
                                         <Font size="13.0" />
                                     </font>
@@ -133,7 +133,17 @@
                                     </font>
                                 </Label>
                         <ChoiceBox fx:id="prodGroupM" layoutX="235.0" layoutY="116.0" prefWidth="220.0" />
-                        <ChoiceBox fx:id="onPrescrM" layoutX="235.0" layoutY="470.0" prefWidth="220.0" />
+                        <ChoiceBox fx:id="onPrescrM" layoutX="235.0" layoutY="476.0" prefWidth="220.0" />
+                        <Label fx:id="articleStar" layoutX="214.0" layoutY="77.0" text="*" textFill="RED" />
+                        <Label fx:id="prodGroupStar" layoutX="214.0" layoutY="120.0" text="*" textFill="RED" />
+                        <Label fx:id="nameMStar" layoutX="214.0" layoutY="164.0" text="*" textFill="RED" />
+                        <Label fx:id="packageStar" layoutX="214.0" layoutY="207.0" text="*" textFill="RED" />
+                        <Label fx:id="producerStar" layoutX="214.0" layoutY="254.0" text="*" textFill="RED" />
+                        <Label fx:id="descriptStar" layoutX="214.0" layoutY="295.0" text="*" textFill="RED" />
+                        <Label fx:id="priceStar" layoutX="214.0" layoutY="342.0" text="*" textFill="RED" />
+                        <Label fx:id="quantityStar" layoutX="214.0" layoutY="388.0" prefHeight="17.0" prefWidth="3.0" text="*" textFill="RED" />
+                        <Label fx:id="searchStar" layoutX="214.0" layoutY="437.0" text="*" textFill="RED" />
+                        <Label fx:id="typeStar" layoutX="214.0" layoutY="481.0" text="*" textFill="RED" />
                             </children>
                         </AnchorPane>
                     </content>

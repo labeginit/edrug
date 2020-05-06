@@ -118,6 +118,30 @@ public class AdminController implements Initializable {
     public TableColumn<Medicine, CheckBox> isActiveMed;
     public TextField storeSearchTextField;
     public ComboBox storeFilterCombo;
+    //add medicine:
+    public TextField articleM;
+    public ChoiceBox<Integer> prodGroupM;
+    public TextField nameM;
+    public TextField packageM;
+    public TextField producerM;
+    public TextField descriptM;
+    public TextField priceM;
+    public TextField qtyM;
+    public TextField searchTermsM;
+    public ChoiceBox<Boolean> onPrescrM;
+    public Button logOutM_button;
+    public Button save_buttonM;
+    public Button cancel_buttonM;
+    public Label articleStar;
+    public Label prodGroupStar;
+    public Label nameMStar;
+    public Label packageStar;
+    public Label producerStar;
+    public Label descriptStar;
+    public Label priceStar;
+    public Label quantityStar;
+    public Label searchStar;
+    public Label typeStar;
 
 
     public CommonMethods methods = new CommonMethods();
