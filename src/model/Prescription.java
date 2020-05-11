@@ -10,7 +10,6 @@ public class Prescription extends PrescriptionParent{
     private Date date;
     private String diagnosis;
     private List<PrescriptionLine> specification;
- //   private String doctorName;
 
     public Prescription(int id, Doctor doctor, Patient patient, Date date,  String diagnosis, List<PrescriptionLine> specification){
         setId(id);

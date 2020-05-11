@@ -115,9 +115,6 @@ public class PatientController implements Initializable {
     private TreeTableColumn<PrescriptionLine, Integer> c14;
 
     @FXML
-    private TreeItem<PrescriptionParent> pre1 = new TreeItem<>();
-
-    @FXML
     private Button cancel_button;
 
     @FXML
@@ -311,7 +308,6 @@ public class PatientController implements Initializable {
 
         Prescription prescription2 = new Prescription(4, (Doctor) commonMethods.getUser("111111-1111"), (Patient) commonMethods.getUser("660530-3910"), java.sql.Date.valueOf("2020-05-10"), "cough", lines2);
 
-
         prescrList.add(prescription1);
         prescrList.add(prescription2);
 
@@ -341,6 +337,7 @@ public class PatientController implements Initializable {
     private void drawTreeTable(ObservableList<Prescription> prescriptions) {
         TreeItem<PrescriptionParent> dep0Node = null;
         this.rootNode = new TreeItem<>();
+        rootNode.setExpanded(true);
         for (Prescription element : prescriptions) {
             TreeItem<PrescriptionParent> empLeaf = new TreeItem<>(element);
             rootNode.getChildren().add(empLeaf);
