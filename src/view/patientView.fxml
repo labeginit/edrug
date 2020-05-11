@@ -67,12 +67,12 @@
                      <children>
                         <TreeTableView fx:id="treeTableView" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0">
                           <columns>
-                            <TreeTableColumn fx:id="c9" prefWidth="75.0" text="Date" />
-                            <TreeTableColumn fx:id="c10" prefWidth="156.00000762939453" text="Doctor" />
-                              <TreeTableColumn fx:id="c11" prefWidth="93.0" text="Article" />
-                              <TreeTableColumn fx:id="c12" prefWidth="299.9999084472656" text="Name" />
-                              <TreeTableColumn fx:id="c13" prefWidth="70.0" text="Quantity" />
-                              <TreeTableColumn fx:id="c14" prefWidth="75.0" text="Status" />
+                            <TreeTableColumn fx:id="c9" prefWidth="97.60000610351562" text="Date" />
+                            <TreeTableColumn fx:id="c10" prefWidth="112.79998779296875" text="Doctor" />
+                              <TreeTableColumn fx:id="c11" prefWidth="74.39996337890625" text="Article" />
+                              <TreeTableColumn fx:id="c12" prefWidth="325.60003662109375" text="Name" />
+                              <TreeTableColumn fx:id="c13" prefWidth="88.0" text="Quantity" />
+                              <TreeTableColumn fx:id="c14" prefWidth="75.0" text="Consumed" />
                           </columns>
                         </TreeTableView>
                         <ComboBox fx:id="prescFilter_combo" layoutX="607.0" layoutY="22.0" prefHeight="25.0" prefWidth="170.0" />

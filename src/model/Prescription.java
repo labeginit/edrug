@@ -3,13 +3,14 @@ package model;
 import java.sql.Date;
 import java.util.List;
 
-public class Prescription {
+public class Prescription extends PrescriptionParent{
     private int id;
     private Patient patient;
     private Doctor doctor;
     private Date date;
     private String diagnosis;
     private List<PrescriptionLine> specification;
+    private String doctorName;
 
     public Prescription(int id, Doctor doctor, Patient patient, Date date,  String diagnosis, List<PrescriptionLine> specification){
         setId(id);
@@ -68,15 +69,19 @@ public class Prescription {
         return specification;
     }
 
+    public String getDoctorName() {
+        return this.doctor.getFirstName() + " " + this.doctor.getLastName();
+    }
+
     @Override
     public String toString() {
         return "Prescription{" +
-                "id=" + id +
-                ", patient=" + patient +
-                ", doctor=" + doctor +
-                ", date=" + date +
-                ", diagnosis='" + diagnosis + '\'' +
-                ", specification=" + specification +
+                "id=" + getId() +
+                ", patient=" + getPatient() +
+                ", doctor=" + getDoctor() +
+                ", date=" + getDate() +
+                ", diagnosis='" + getDiagnosis() + '\'' +
+                ", specification=" + getSpecification() +
                 '}';
     }
 }

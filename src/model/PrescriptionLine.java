@@ -1,6 +1,6 @@
 package model;
 
-public class PrescriptionLine{
+public class PrescriptionLine extends PrescriptionParent{
     private int prescId;
     private Medicine medicine;
     private Patient patient;

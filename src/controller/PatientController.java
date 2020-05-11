@@ -1,6 +1,7 @@
 package controller;
 
 import FileUtil.RWFile;
+import com.sun.source.tree.Tree;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -11,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import model.*;
 import java.io.IOException;
 import java.net.URL;
@@ -95,25 +97,28 @@ public class PatientController implements Initializable {
     private TableColumn<Medicine, CheckBox> c8;
 
     @FXML
-    private TreeTableView<?> treeTableView;
+    private TreeTableView<PrescriptionParent> treeTableView;
 
     @FXML
-    private TreeTableColumn<?, ?> c9;
+    private TreeTableColumn<PrescriptionParent, Date> c9;
 
     @FXML
-    private TreeTableColumn<?, ?> c10;
+    private TreeTableColumn<Prescription, String> c10;
 
     @FXML
-    private TreeTableColumn<?, ?> c11;
+    private TreeTableColumn<PrescriptionLine, Medicine> c11;
 
     @FXML
-    private TreeTableColumn<?, ?> c12;
+    private TreeTableColumn<PrescriptionLine, String> c12;
 
     @FXML
-    private TreeTableColumn<?, ?> c13;
+    private TreeTableColumn<PrescriptionLine, Integer> c13;
 
     @FXML
-    private TreeTableColumn<?, ?> c14;
+    private TreeTableColumn<PrescriptionLine, Integer> c14;
+
+    @FXML
+    private TreeItem<PrescriptionParent> pre1 = new TreeItem<>();
 
     @FXML
     private Button cancel_button;
@@ -170,6 +175,7 @@ public class PatientController implements Initializable {
     private List<String> groupPaths = new ArrayList<>();
     private ObservableList<Medicine> medList = FXCollections.observableArrayList(commonMethods.getMedicineList(false)); // here will probably need to add those from Prescriptions
     private FilteredList<Medicine> filteredData = new FilteredList<>(medList, p -> true);
+
 
     private List<String> fillList(List<ProdGroup> groups) {
         groupPaths.add("");
@@ -288,6 +294,53 @@ public class PatientController implements Initializable {
 
         //TableView end
 
+        //TreeTableView begin
+        List<PrescriptionLine> lines1 = new ArrayList<>();
+        PrescriptionLine line1 = new PrescriptionLine(4, (Patient) commonMethods.getUser("660530-3910"), commonMethods.getMedicine(10001), 3, 1, "1 pill a day 4 days");
+        lines1.add(line1);
+        PrescriptionLine line2 = new PrescriptionLine(4, (Patient) commonMethods.getUser("660530-3910"), commonMethods.getMedicine(10003), 2, 0, "2 pills a day 1 month");
+        lines1.add(line2);
+
+        Prescription prescription1 = new Prescription(4, (Doctor) commonMethods.getUser("860305-0731"), (Patient) commonMethods.getUser("660530-3910"), java.sql.Date.valueOf("2020-04-30"), "fever", lines1);
+
+        List<PrescriptionLine> lines2 = new ArrayList<>();
+        PrescriptionLine line3 = new PrescriptionLine(4, (Patient) commonMethods.getUser("660530-3910"), commonMethods.getMedicine(10002), 1, 0, "1 pill a day 4 days");
+        lines2.add(line1);
+        PrescriptionLine line4 = new PrescriptionLine(4, (Patient) commonMethods.getUser("660530-3910"), commonMethods.getMedicine(10005), 6, 2, "2 pills a day 1 month");
+        lines2.add(line2);
+
+        Prescription prescription2 = new Prescription(4, (Doctor) commonMethods.getUser("111111-1111"), (Patient) commonMethods.getUser("660530-3910"), java.sql.Date.valueOf("2020-05-10"), "cough", lines2);
+
+
+        ObservableList<Prescription> prescrList = FXCollections.observableArrayList();
+        prescrList.add(prescription1);
+        prescrList.add(prescription2);
+
+    /*    TreeItem<PrescriptionParent> pre1 = new TreeItem<>(prescription1);
+        TreeItem<PrescriptionParent> preLine1 = new TreeItem<>(line1);
+        TreeItem<PrescriptionParent> preLine2 = new TreeItem<>(line2);
+        pre1.getChildren().setAll(preLine1, preLine2);
+
+        TreeItem<PrescriptionParent> pre2 = new TreeItem<>(prescription2);
+        TreeItem<PrescriptionParent> preLine3 = new TreeItem<>(line3);
+        TreeItem<PrescriptionParent> preLine4 = new TreeItem<>(line4);
+        pre2.getChildren().setAll(preLine3, preLine4);
+        TreeItem<PrescriptionParent> root = new TreeItem<>();
+        root.getChildren().setAll(pre1,pre2);*/
+
+
+
+
+        c9.setCellValueFactory(new TreeItemPropertyValueFactory<PrescriptionParent, Date>("date"));
+        c10.setCellValueFactory(new TreeItemPropertyValueFactory<Prescription, String>("doctorName"));
+        c11.setCellValueFactory(new TreeItemPropertyValueFactory<PrescriptionLine, Medicine>("article"));
+        c12.setCellValueFactory(new TreeItemPropertyValueFactory<PrescriptionLine, String>("name"));
+        c13.setCellValueFactory(new TreeItemPropertyValueFactory<PrescriptionLine, Integer>("quantityPrescribed"));
+        c14.setCellValueFactory(new TreeItemPropertyValueFactory<PrescriptionLine, Integer>("quantityConsumed"));
+      //  treeTableView.setRoot(root);
+
+
+        //TreeTableView end
     }
 
     private ObservableList<String> getFilters1() {
@@ -303,8 +356,10 @@ public class PatientController implements Initializable {
        userCommon.switchScene(event, "/view/shoppingCartView.fxml");
     }
 
-    @FXML
 
+
+
+    @FXML
     private void addToCartButtonHandle(ActionEvent event) {
         int available;
         int qtyReserved;
