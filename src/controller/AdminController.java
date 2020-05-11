@@ -787,16 +787,20 @@ public class AdminController implements Initializable {
                         @Override
                         public String toString(CheckBox checkBox) {
                             if (checkBox.isSelected()){
-                                return "1";
-                            } else {return "0";}
+                                return "true";
+                            } else {return "false";}
                         }
 
                         @Override
                         public CheckBox fromString(String s) {
                             CheckBox checkBox = new CheckBox();
-                            if (s.equalsIgnoreCase("1")){
+                            if (s.equalsIgnoreCase("true")){
                               checkBox.setSelected(true);
-                            } else checkBox.setSelected(false);
+                            } if (s.equalsIgnoreCase("false")) {
+                                    checkBox.setSelected(false);}
+                            else {
+                                Validation.alertPopup("Must be true or false", "Active can only be true or false", "Input error");
+                            }
                             return checkBox;
                         }
                     }));
@@ -810,6 +814,42 @@ public class AdminController implements Initializable {
                                         methods.updateMedicine(t.getTableView().getItems().get(t.getTablePosition().getRow()));
 
                                         fillStore();
+                                }
+                            });
+
+
+                    isActiveUser.setCellFactory(TextFieldTableCell.<User, CheckBox>forTableColumn(new StringConverter<CheckBox>() {
+                        @Override
+                        public String toString(CheckBox checkBox) {
+                            if (checkBox.isSelected()){
+                                return "true";
+                            } else {return "false";}
+                        }
+
+                        @Override
+                        public CheckBox fromString(String s) {
+                            CheckBox checkBox = new CheckBox();
+                            if (s.equalsIgnoreCase("true")){
+                                checkBox.setSelected(true);
+                            } if (s.equalsIgnoreCase("false")) {
+                                checkBox.setSelected(false);}
+                            else {
+                                Validation.alertPopup("Must be true or false", "Active can only be true or false", "Input error");
+                            }
+                            return checkBox;
+                        }
+                    }));
+                    isActiveUser.setOnEditCommit(
+                            new EventHandler<TableColumn.CellEditEvent<User, CheckBox>>() {
+                                @Override
+                                public void handle(TableColumn.CellEditEvent<User, CheckBox> t) {
+                                    ((User) t.getTableView().getItems().get(
+                                            t.getTablePosition().getRow())
+                                    ).setActive(t.getNewValue().isSelected());
+                                    methods.updateUser(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+
+                                   fillDoctorTable();
+                                   fillPatientTable();
                                 }
                             });
 
