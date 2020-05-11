@@ -12,6 +12,7 @@ import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.StringConverter;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import model.*;
@@ -781,7 +782,35 @@ public class AdminController implements Initializable {
                                     }
                                 }
                             });
+                    isActiveMed.setCellFactory(TextFieldTableCell.<Medicine, CheckBox>forTableColumn(new StringConverter<CheckBox>() {
+                        @Override
+                        public String toString(CheckBox checkBox) {
+                            if (checkBox.isSelected()){
+                                return "1";
+                            }
+                            else return "0";
+                        }
 
+                        @Override
+                        public CheckBox fromString(String s) {
+                            CheckBox checkBox = new CheckBox();
+                            if (s.equalsIgnoreCase("1")){
+                                return checkBox;
+                            } else return checkBox;
+                        }
+                    }));
+                    isActiveMed.setOnEditCommit(
+                            new EventHandler<TableColumn.CellEditEvent<Medicine, CheckBox>>() {
+                                @Override
+                                public void handle(TableColumn.CellEditEvent<Medicine, CheckBox> t) {
+                                        ((Medicine) t.getTableView().getItems().get(
+                                                t.getTablePosition().getRow())
+                                        ).setActive(Boolean.parseBoolean(t.getNewValue().toString()));
+                                        methods.updateMedicine(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+
+                                        fillStore();
+                                }
+                            });
 
                 }
 
