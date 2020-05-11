@@ -72,7 +72,7 @@ public class PrescriptionParent {
         return specification;
     }
 
-    public Integer getArticle(){
+    public int getArticle(){
         return this.getMedicine().getArticleNo();
     }
 

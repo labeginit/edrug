@@ -10,7 +10,7 @@ public class Prescription extends PrescriptionParent{
     private Date date;
     private String diagnosis;
     private List<PrescriptionLine> specification;
-    private String doctorName;
+ //   private String doctorName;
 
     public Prescription(int id, Doctor doctor, Patient patient, Date date,  String diagnosis, List<PrescriptionLine> specification){
         setId(id);
@@ -72,6 +72,7 @@ public class Prescription extends PrescriptionParent{
     public String getDoctorName() {
         return this.doctor.getFirstName() + " " + this.doctor.getLastName();
     }
+
 
     @Override
     public String toString() {
