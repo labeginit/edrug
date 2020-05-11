@@ -112,19 +112,7 @@ public class ShoppingCartController implements Initializable {
         logOut_button.setOnAction(event -> {
             try {
                 userCommon.onLogOutButtonPressed(event);
-                if (cart != null) {
-                    for (int i = 0; i < cart.size(); i++) {
-                        int article = cart.get(i).getArticleNo();
-                        int quantity = cart.get(i).getQuantity();
-                        Medicine medicine = commonMethods.getMedicine(article);
-                        int newQuantity = medicine.getQuantity() + quantity;
-                        medicine.setQuantity(newQuantity);
-                        commonMethods.updateQuantity(medicine);
-                    }
-                    cart.removeAll(cart);
-                    RWFile.writeObject(RWFile.cartPath, cart);
-                    //RWFile.delete(); in handled by application stop() method
-                }
+                userCommon.clearCart(cart);
             } catch (IOException e) {
                 e.printStackTrace();
             }
