@@ -18,6 +18,7 @@ import javafx.util.converter.IntegerStringConverter;
 import model.*;
 import model.dBConnection.CommonMethods;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
@@ -787,16 +788,16 @@ public class AdminController implements Initializable {
                         public String toString(CheckBox checkBox) {
                             if (checkBox.isSelected()){
                                 return "1";
-                            }
-                            else return "0";
+                            } else {return "0";}
                         }
 
                         @Override
                         public CheckBox fromString(String s) {
                             CheckBox checkBox = new CheckBox();
                             if (s.equalsIgnoreCase("1")){
-                                return checkBox;
-                            } else return checkBox;
+                              checkBox.setSelected(true);
+                            } else checkBox.setSelected(false);
+                            return checkBox;
                         }
                     }));
                     isActiveMed.setOnEditCommit(
@@ -805,7 +806,7 @@ public class AdminController implements Initializable {
                                 public void handle(TableColumn.CellEditEvent<Medicine, CheckBox> t) {
                                         ((Medicine) t.getTableView().getItems().get(
                                                 t.getTablePosition().getRow())
-                                        ).setActive(Boolean.parseBoolean(t.getNewValue().toString()));
+                                        ).setActive(t.getNewValue().isSelected());
                                         methods.updateMedicine(t.getTableView().getItems().get(t.getTablePosition().getRow()));
 
                                         fillStore();
