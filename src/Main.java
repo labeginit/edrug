@@ -23,6 +23,7 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("view/loginView.fxml"));
         primaryStage.setTitle("e-DRUGS");
         primaryStage.setScene(new Scene(root));
+        root.getStylesheets().add(getClass().getResource("FileUtil/layout.css").toExternalForm());
         
         primaryStage.show();
 

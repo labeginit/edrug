@@ -8,7 +8,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
-import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -18,7 +17,6 @@ import javafx.util.converter.IntegerStringConverter;
 import model.*;
 import model.dBConnection.CommonMethods;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
@@ -31,129 +29,53 @@ public class AdminController implements Initializable {
 
 
     @FXML
-    public TextField patientSearchTextField;
-    public TextField doctorSearchTextField;
-    public TextField editSearchTextField;
-    public Button confirmAddButton;
-    public Button cancel_button;
-    public Button save_button;
-    public Button logOutMy_button;
-    public TextField SSNtext;
-    public TextField firstName_text;
-    public TextField lastName_text;
-    public TextField zip_text;
-    public TextField address_text;
-    public TextField phone_text;
-    public TextField email_text;
+    public TextField patientSearchTextField, doctorSearchTextField, editSearchTextField;
+    public Button confirmAddButton, cancelButton, saveButton, logOutMyButton;
+    public TextField SSNtext, firstNameText, lastNameText, zipText, addressText, phoneText, emailText;
     public PasswordField pass1_text;
     public PasswordField pass2_text;
     public TableView<User> patientTableView;
-    public TableColumn<User, String> patientSSNtable;
-    public TableColumn<User, String> patientPhoneTable;
-    public TableColumn<User, String> patientEmailTable;
-    public TableColumn<User, String> patientLastNameTable;
-    public TableColumn<User, String> patientFirstNameTable;
+    public TableColumn<User, String> patientSSNTable, patientPhoneTable, patientEmailTable, patientLastNameTable, patientFirstNameTable;
     public TableColumn<User, Boolean> patientActive;
-
-    public TableView<User> doctorTable;
-    public TableColumn<User, String> doctorSSNtable;
-    public TableColumn<User, String> doctorLastNameTable;
-    public TableColumn<User, String> doctorFirstNameTable;
-    public TableColumn<User, String> doctorPhoneTable;
-    public TableColumn<User, String> doctorEmailTable;
+    public TableView<User> doctorTableView;
+    public TableColumn<User, String> doctorSSNTable, doctorLastNameTable, doctorFirstNameTable, doctorPhoneTable, doctorEmailTable;
     public TableColumn<User, Boolean> doctorActive;
-    public TableColumn<User, String> changeLastNameTable;
-    public TableColumn<User, String> changeFirstNameTable;
-    public TableColumn<User, String> changePhoneTable;
-    public TableColumn<User, String> changeEmailTable;
-    public TableColumn<User, String> changeSSNTable;
-    public TableColumn<User, CheckBox> isActiveUser;
+    public TableColumn<User, String> changeLastNameTable, changeFirstNameTable, changePhoneTable, changeEmailTable, changeSSNTable;
+    public TableColumn<User, CheckBox> changeActive;
     public TableView<User> changeTable;
     public TableColumn<User, Integer> changeRoleTable;
-    public Label BDateStar;
-    public Label firstNameStar;
-    public Label lastNameStar;
-    public Label zipStar;
-    public Label addressStar;
-    public Label phoneStar;
-    public Label emailStar;
-    public Label pass2star;
-    public Label pass1star;
-    public Label passwordCheckLabel;
-    public Label passwordCheckAddLabel;
-    public Button save_buttonAdd;
-    public Button cancel_buttonAdd;
-    public Button logOutPat_button;
-    public Button logOutDoc_button;
-    public Button logOutAdd_button;
-    public Button logOutEdit_button;
-    public Button logOutMed_button;
-    public TextField SSNtextAdd;
-    public TextField firstName_textAdd;
+    public Label BDateStar, firstNameStar, lastNameStar, zipStar, addressStar, phoneStar, emailStar, pass2star, pass1star;
+    public Label passwordCheckLabel, passwordCheckAddLabel;
+    public Button saveButtonAdd, cancelButtonAdd, logOutPatButton, logOutDocButton, logOutAddButton, logOutEditButton, logOutMedButton;
+
+    public TextField SSNtextAdd, firstNameTextAdd, lastNameTextAdd, zipTextAdd, addressTextAdd, phoneTextAdd, emailTextAdd;
     public DatePicker datePicker;
-    public TextField lastName_textAdd;
-    public TextField zip_textAdd;
-    public TextField address_textAdd;
-    public TextField phone_textAdd;
-    public TextField email_textAdd;
     public PasswordField pass1_textAdd;
     public PasswordField pass2_textAdd;
-    public Label SSNstarAdd;
-    public Label BDateStarAdd;
-    public Label firstNameStarAdd;
-    public Label lastNameStarAdd;
-    public Label zipStarAdd;
-    public Label addressStarAdd;
-    public Label phoneStarAdd;
-    public Label emailStarAdd;
-    public Label pass2starAdd;
-    public Label pass1starAdd;
+    public Label SSNstarAdd, BDateStarAdd, firstNameStarAdd, lastNameStarAdd, zipStarAdd, addressStarAdd, phoneStarAdd, emailStarAdd;
+    public Label pass2starAdd, pass1starAdd, roleStarAdd;
     public TextField roleTextAdd;
     public DatePicker datePickerAdd;
-    public Label roleStarAdd;
     public TableView<Medicine> storeView;
     public TableColumn<Medicine, Integer> storeArticle;
-    public TableColumn<Medicine, String> storeName;
-    public TableColumn<Medicine, String> storeSize;
+    public TableColumn<Medicine, String> storeName, storeSize, storeDescription, storeProducer;
     public TableColumn<Medicine, Double> storePrice;
     public TableColumn<Medicine, Integer> storeAvailability;
-    public TableColumn<Medicine, String> storeDescription;
-    public TableColumn<Medicine, String> storeProducer;
+
     public TableColumn<Medicine, CheckBox> isActiveMed;
     public TextField storeSearchTextField;
     public ComboBox storeFilterCombo;
     public TableView<User> adminTable;
-    public TableColumn<User, String> adminSSNtable;
-    public TableColumn<User, String> adminLastNameTable;
-    public TableColumn<User, String> adminFirstNameTable;
-    public TableColumn<User, String> adminPhoneTable;
-    public TableColumn<User, String> adminEmailTable;
+    public TableColumn<User, String> adminSSNtable, adminLastNameTable, adminFirstNameTable, adminPhoneTable, adminEmailTable;
     public TableColumn<User, CheckBox> adminActiveTable;
     public Button logOutAdminButton;
-    public TextField adminSearchTextField;
-    public TextField articleM;
-    public ChoiceBox<ProdGroup> prodGroupM;
-    public TextField nameM;
-    public TextField packageM;
-    public TextField producerM;
-    public TextField descriptM;
-    public TextField priceM;
-    public TextField qtyM;
-    public TextField searchTermsM;
-    public ChoiceBox<String> onPrescrM;
-    public Button logOutM_button;
-    public Button save_buttonM;
-    public Button cancel_buttonM;
-    public Label articleStar;
-    public Label prodGroupStar;
-    public Label nameMStar;
-    public Label packageStar;
-    public Label producerStar;
-    public Label descriptStar;
-    public Label priceStar;
-    public Label quantityStar;
-    public Label searchStar;
-    public Label typeStar;
+    public TextField adminSearchTextField, articleMedicine, nameMedicine, packageMedicine, producerMedicine, descriptionMedicine, priceMedicine, quantityMedicine, searchTermsMedicine;
+    public ChoiceBox<ProdGroup> prodGroupMedicine;
+
+    public ChoiceBox<String> onPrescrMedicine;
+    public Button logOutMedicineButton, saveButtonMedicine, cancelButtonMedicine;
+
+    public Label articleStar, prodGroupStar, nameMedicineStar, packageStar, producerStar, descriptionStar, priceStar, quantityStar, searchStar, typeStar;
 
 
     private final String withP = "Needs a Prescription";
@@ -178,24 +100,24 @@ public class AdminController implements Initializable {
         fillEditTable();
         fillMe();
         makeEditable();
-        prodGroupM.setItems(groupsObserve);
-        onPrescrM.setItems(typeObserve);
+        prodGroupMedicine.setItems(groupsObserve);
+        onPrescrMedicine.setItems(typeObserve);
 
-        cancel_button.setOnAction(actionEvent -> {
+        cancelButton.setOnAction(actionEvent -> {
             fillMe();
             setVisible(false);
         });
-        cancel_buttonAdd.setOnAction(actionEvent -> {
+        cancelButtonAdd.setOnAction(actionEvent -> {
             setVisibleAdd(false);
             clearFieldsAdd();
         });
 
-        cancel_buttonM.setOnAction(actionEvent -> {
+        cancelButtonMedicine.setOnAction(actionEvent -> {
             setVisibleAddM(false);
             clearFieldsAddM();
         });
 
-        logOutMy_button.setOnAction(event -> {
+        logOutMyButton.setOnAction(event -> {
             try {
                 userCommon.onLogOutButtonPressed(event);
             } catch (IOException e) {
@@ -203,7 +125,7 @@ public class AdminController implements Initializable {
             }
         });
 
-        logOutAdd_button.setOnAction(event -> {
+        logOutAddButton.setOnAction(event -> {
             try {
                 userCommon.onLogOutButtonPressed(event);
             } catch (IOException e) {
@@ -211,7 +133,7 @@ public class AdminController implements Initializable {
             }
         });
 
-        logOutDoc_button.setOnAction(event -> {
+        logOutDocButton.setOnAction(event -> {
             try {
                 userCommon.onLogOutButtonPressed(event);
             } catch (IOException e) {
@@ -219,7 +141,7 @@ public class AdminController implements Initializable {
             }
         });
 
-        logOutEdit_button.setOnAction(event -> {
+        logOutEditButton.setOnAction(event -> {
             try {
                 userCommon.onLogOutButtonPressed(event);
             } catch (IOException e) {
@@ -227,7 +149,7 @@ public class AdminController implements Initializable {
             }
         });
 
-        logOutPat_button.setOnAction(event -> {
+        logOutPatButton.setOnAction(event -> {
             try {
                 userCommon.onLogOutButtonPressed(event);
             } catch (IOException e) {
@@ -235,7 +157,7 @@ public class AdminController implements Initializable {
             }
         });
 
-        logOutMed_button.setOnAction(event -> {
+        logOutMedButton.setOnAction(event -> {
             try {
                 userCommon.onLogOutButtonPressed(event);
             } catch (IOException e) {
@@ -252,7 +174,7 @@ public class AdminController implements Initializable {
             }
         });
 
-        logOutM_button.setOnAction(event -> {
+        logOutMedicineButton.setOnAction(event -> {
             try {
                 userCommon.onLogOutButtonPressed(event);
             } catch (IOException e) {
@@ -260,19 +182,19 @@ public class AdminController implements Initializable {
             }
         });
 
-        save_button.setOnAction(actionEvent -> {
+        saveButton.setOnAction(actionEvent -> {
             if (isItOk()) {
-                if (Validation.isName(firstName_text.getText(), firstNameStar) && Validation.isName(lastName_text.getText(), lastNameStar) &&
-                        Validation.isZipcode(zip_text.getText(), zipStar) && Validation.isPhoneNumber(phone_text.getText(), phoneStar)
-                        && Validation.isEmail(email_text.getText(), emailStar)) {
+                if (Validation.isName(firstNameText.getText(), firstNameStar) && Validation.isName(lastNameText.getText(), lastNameStar) &&
+                        Validation.isZipcode(zipText.getText(), zipStar) && Validation.isPhoneNumber(phoneText.getText(), phoneStar)
+                        && Validation.isEmail(emailText.getText(), emailStar)) {
                     try {
                         currentUser.setSsn(SSNtext.getText());
-                        currentUser.setLastName(lastName_text.getText());
+                        currentUser.setLastName(lastNameText.getText());
                         currentUser.setBDate(Date.valueOf(datePicker.getValue().plusDays(1)));
-                        currentUser.setZipCode(zip_text.getText());
-                        currentUser.setAddress(address_text.getText());
-                        currentUser.setPhoneNumber(phone_text.getText());
-                        currentUser.setEmail(email_text.getText());
+                        currentUser.setZipCode(zipText.getText());
+                        currentUser.setAddress(addressText.getText());
+                        currentUser.setPhoneNumber(phoneText.getText());
+                        currentUser.setEmail(emailText.getText());
                         currentUser.setPassword(pass1_text.getText());
                         methods.updateAdmin((Admin) currentUser);
                         if (!pass1_text.getText().isEmpty() && !pass2_text.getText().isEmpty()) {
@@ -288,22 +210,22 @@ public class AdminController implements Initializable {
             }
         });
 
-        save_buttonAdd.setOnAction(actionEvent -> {
+        saveButtonAdd.setOnAction(actionEvent -> {
             if (isItOkAdd()) {
-                if (Validation.isSSN(SSNtextAdd.getText(), SSNstarAdd) && Validation.isName(firstName_textAdd.getText(), firstNameStarAdd) && Validation.isName(lastName_textAdd.getText(), lastNameStarAdd) &&
-                        Validation.isZipcode(zip_textAdd.getText(), zipStarAdd) && Validation.isPhoneNumber(phone_textAdd.getText(), phoneStarAdd)
-                        && Validation.isEmail(email_textAdd.getText(), emailStarAdd) && Validation.isRole(roleTextAdd.getText())) {
+                if (Validation.isSSN(SSNtextAdd.getText(), SSNstarAdd) && Validation.isName(firstNameTextAdd.getText(), firstNameStarAdd) && Validation.isName(lastNameTextAdd.getText(), lastNameStarAdd) &&
+                        Validation.isZipcode(zipTextAdd.getText(), zipStarAdd) && Validation.isPhoneNumber(phoneTextAdd.getText(), phoneStarAdd)
+                        && Validation.isEmail(emailTextAdd.getText(), emailStarAdd) && Validation.isRole(roleTextAdd.getText())) {
                     try {
                         if (methods.getUser(SSNtextAdd.getText()) == null) {
                             if (Integer.parseInt(roleTextAdd.getText()) == 1) {
-                                Patient patient = new Patient(SSNtextAdd.getText(), firstName_textAdd.getText(), lastName_textAdd.getText(),
-                                        Date.valueOf(datePickerAdd.getValue().plusDays(1)), zip_textAdd.getText(), address_textAdd.getText(),
-                                        email_textAdd.getText(), phone_textAdd.getText(), pass1_textAdd.getText(), true);
+                                Patient patient = new Patient(SSNtextAdd.getText(), firstNameTextAdd.getText(), lastNameTextAdd.getText(),
+                                        Date.valueOf(datePickerAdd.getValue().plusDays(1)), zipTextAdd.getText(), addressTextAdd.getText(),
+                                        emailTextAdd.getText(), phoneTextAdd.getText(), pass1_textAdd.getText(), true);
                                 methods.addPatient(patient);
                             } else if (Integer.parseInt(roleTextAdd.getText()) == 2) {
-                                Doctor doctor = new Doctor(SSNtextAdd.getText(), firstName_textAdd.getText(), lastName_textAdd.getText(),
-                                        Date.valueOf(datePickerAdd.getValue().plusDays(1)), zip_textAdd.getText(), address_textAdd.getText(),
-                                        email_textAdd.getText(), phone_textAdd.getText(), pass1_textAdd.getText(), true);
+                                Doctor doctor = new Doctor(SSNtextAdd.getText(), firstNameTextAdd.getText(), lastNameTextAdd.getText(),
+                                        Date.valueOf(datePickerAdd.getValue().plusDays(1)), zipTextAdd.getText(), addressTextAdd.getText(),
+                                        emailTextAdd.getText(), phoneTextAdd.getText(), pass1_textAdd.getText(), true);
                                 methods.addDoctor(doctor);
 
                             }
@@ -324,20 +246,20 @@ public class AdminController implements Initializable {
             }
         });
 
-        save_buttonM.setOnAction(actionEvent -> {
+        saveButtonMedicine.setOnAction(actionEvent -> {
             Medicine newMed = null;
                     try {
-                        if (methods.getMedicine(Integer.parseInt(articleM.getText())) == null) {
+                        if (methods.getMedicine(Integer.parseInt(articleMedicine.getText())) == null) {
                             boolean prescription;
-                            if (onPrescrM.getValue().equalsIgnoreCase(withP)){
+                            if (onPrescrMedicine.getValue().equalsIgnoreCase(withP)){
                                 prescription = true;
                             } else prescription = false;
                             if (prescription) {
-                                newMed = new OnPrescription(Integer.parseInt(articleM.getText()), prodGroupM.getValue().getId(), nameM.getText(), producerM.getText(), packageM.getText(), descriptM.getText(), Integer.parseInt(qtyM.getText()),
-                                        Double.parseDouble(priceM.getText()), searchTermsM.getText(), true);
+                                newMed = new OnPrescription(Integer.parseInt(articleMedicine.getText()), prodGroupMedicine.getValue().getId(), nameMedicine.getText(), producerMedicine.getText(), packageMedicine.getText(), descriptionMedicine.getText(), Integer.parseInt(quantityMedicine.getText()),
+                                        Double.parseDouble(priceMedicine.getText()), searchTermsMedicine.getText(), true);
                             } else {
-                                newMed = new PrescriptionFree(Integer.parseInt(articleM.getText()), prodGroupM.getValue().getId(), nameM.getText(), producerM.getText(), packageM.getText(), descriptM.getText(), Integer.parseInt(qtyM.getText()),
-                                        Double.parseDouble(priceM.getText()), searchTermsM.getText(), true);
+                                newMed = new PrescriptionFree(Integer.parseInt(articleMedicine.getText()), prodGroupMedicine.getValue().getId(), nameMedicine.getText(), producerMedicine.getText(), packageMedicine.getText(), descriptionMedicine.getText(), Integer.parseInt(quantityMedicine.getText()),
+                                        Double.parseDouble(priceMedicine.getText()), searchTermsMedicine.getText(), true);
                             }
                             System.out.println(newMed);
                             methods.addMedicine(newMed);
@@ -347,7 +269,7 @@ public class AdminController implements Initializable {
                         } else {
                             setVisibleAddM(false);
                             articleStar.setVisible(true);
-                            Validation.alertPopup("Medicine with article = " + articleM.getText() + " already exists. It might be inactive.", "Item exists", "Medicine item already exists");
+                            Validation.alertPopup("Medicine with article = " + articleMedicine.getText() + " already exists. It might be inactive.", "Item exists", "Medicine item already exists");
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -386,10 +308,10 @@ public class AdminController implements Initializable {
     private void setVisibleAddM(boolean on){
         articleStar.setVisible(on);
         prodGroupStar.setVisible(on);
-        nameMStar.setVisible(on);
+        nameMedicineStar.setVisible(on);
         packageStar.setVisible(on);
         producerStar.setVisible(on);
-        descriptStar.setVisible(on);
+        descriptionStar.setVisible(on);
         priceStar.setVisible(on);
         quantityStar.setVisible(on);
         searchStar.setVisible(on);
@@ -398,12 +320,12 @@ public class AdminController implements Initializable {
 
     private void clearFieldsAdd() {
         SSNtextAdd.clear();
-        firstName_textAdd.clear();
-        lastName_textAdd.clear();
-        phone_textAdd.clear();
-        zip_textAdd.clear();
-        address_textAdd.clear();
-        email_textAdd.clear();
+        firstNameTextAdd.clear();
+        lastNameTextAdd.clear();
+        phoneTextAdd.clear();
+        zipTextAdd.clear();
+        addressTextAdd.clear();
+        emailTextAdd.clear();
         pass1_textAdd.clear();
         pass2_textAdd.clear();
         roleTextAdd.clear();
@@ -411,21 +333,21 @@ public class AdminController implements Initializable {
     }
 
     private void clearFieldsAddM(){
-        articleM.clear();
+        articleMedicine.clear();
         //prodGroupM;
-        nameM.clear();
-        packageM.clear();
-        producerM.clear();
-        descriptM.clear();
-        priceM.clear();
-        qtyM.clear();
-        searchTermsM.clear();
+        nameMedicine.clear();
+        packageMedicine.clear();
+        producerMedicine.clear();
+        descriptionMedicine.clear();
+        priceMedicine.clear();
+        quantityMedicine.clear();
+        searchTermsMedicine.clear();
         //onPrescrM;
     }
 
     public void fillPatientTable() {
 
-        patientSSNtable.setCellValueFactory(new PropertyValueFactory<>("Ssn"));
+        patientSSNTable.setCellValueFactory(new PropertyValueFactory<>("Ssn"));
         patientFirstNameTable.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         patientLastNameTable.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         patientPhoneTable.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
@@ -440,7 +362,7 @@ public class AdminController implements Initializable {
     }
 
     public void fillDoctorTable() {
-        doctorSSNtable.setCellValueFactory(new PropertyValueFactory<>("Ssn"));
+        doctorSSNTable.setCellValueFactory(new PropertyValueFactory<>("Ssn"));
         doctorFirstNameTable.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         doctorLastNameTable.setCellValueFactory(new PropertyValueFactory<>("lastName"));
         doctorPhoneTable.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
@@ -450,7 +372,7 @@ public class AdminController implements Initializable {
         ObservableList<User> listOfDoctors = FXCollections.observableArrayList(methods.getDoctorList());
 
         FilteredList<User> filteredData = new FilteredList<>(listOfDoctors, p -> true);
-        doctorTable.setItems(userCommon.userFilter(filteredData, doctorSearchTextField, doctorTable));
+        doctorTableView.setItems(userCommon.userFilter(filteredData, doctorSearchTextField, doctorTableView));
     }
 
     public void fillEditTable() {
@@ -460,7 +382,7 @@ public class AdminController implements Initializable {
         changePhoneTable.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
         changeEmailTable.setCellValueFactory(new PropertyValueFactory<>("Email"));
         changeRoleTable.setCellValueFactory(new PropertyValueFactory<>("userType"));
-        isActiveUser.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
+        changeActive.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
 
         ObservableList<User> listOfAll = FXCollections.observableArrayList(methods.getDoctorList());
         listOfAll.addAll(FXCollections.observableArrayList(methods.getPatientList()));
@@ -469,8 +391,8 @@ public class AdminController implements Initializable {
         changeTable.setItems(userCommon.userFilter(filteredData, editSearchTextField, changeTable));
         for (int i = 0; i < changeTable.getItems().size(); i++) {
             if (changeTable.getItems().get(i).getActive()) {
-                isActiveUser.getCellData(i).setSelected(true);
-            } else isActiveUser.getCellData(i).setSelected(false);
+                changeActive.getCellData(i).setSelected(true);
+            } else changeActive.getCellData(i).setSelected(false);
         }
     }
     public void fillAdminTable() {
@@ -513,37 +435,37 @@ public class AdminController implements Initializable {
                 public void fillMe() {
                     SSNtext.setText(currentUser.getSsn());
                     datePicker.setValue(currentUser.getBDate().toLocalDate());
-                    firstName_text.setText(currentUser.getFirstName());
-                    lastName_text.setText(currentUser.getLastName());
-                    zip_text.setText(currentUser.getZipCode());
-                    address_text.setText(currentUser.getAddress());
-                    phone_text.setText(currentUser.getPhoneNumber());
-                    email_text.setText(currentUser.getEmail());
+                    firstNameText.setText(currentUser.getFirstName());
+                    lastNameText.setText(currentUser.getLastName());
+                    zipText.setText(currentUser.getZipCode());
+                    addressText.setText(currentUser.getAddress());
+                    phoneText.setText(currentUser.getPhoneNumber());
+                    emailText.setText(currentUser.getEmail());
                 }
 
 
                 private boolean isItOk() {
-                    if (firstName_text.getText().isEmpty() || lastName_text.getText().isEmpty() || datePicker.getValue() == null
-                            || zip_text.getText().isEmpty() || address_text.getText().isEmpty() || email_text.getText().isEmpty() || phone_text.getText().isEmpty()) {
-                        if (firstName_text.getText().isEmpty()) {
+                    if (firstNameText.getText().isEmpty() || lastNameText.getText().isEmpty() || datePicker.getValue() == null
+                            || zipText.getText().isEmpty() || addressText.getText().isEmpty() || emailText.getText().isEmpty() || phoneText.getText().isEmpty()) {
+                        if (firstNameText.getText().isEmpty()) {
                             firstNameStar.setVisible(true);
                         }
-                        if (lastName_text.getText().isEmpty()) {
+                        if (lastNameText.getText().isEmpty()) {
                             lastNameStar.setVisible(true);
                         }
                         if (datePicker.getValue() == null) {
                             BDateStar.setVisible(true);
                         }
-                        if (zip_text.getText().isEmpty()) {
+                        if (zipText.getText().isEmpty()) {
                             zipStar.setVisible(true);
                         }
-                        if (address_text.getText().isEmpty()) {
+                        if (addressText.getText().isEmpty()) {
                             addressStar.setVisible(true);
                         }
-                        if (email_text.getText().isEmpty()) {
+                        if (emailText.getText().isEmpty()) {
                             emailStar.setVisible(true);
                         }
-                        if (phone_text.getText().isEmpty()) {
+                        if (phoneText.getText().isEmpty()) {
                             phoneStar.setVisible(true);
                         }
                         Validation.alertPopup("Please enter your information into all fields", "Empty Fields", "Contains empty fields");
@@ -562,32 +484,32 @@ public class AdminController implements Initializable {
                 }
 
                 private boolean isItOkAdd() {
-                    if (SSNtextAdd.getText().isEmpty() || firstName_textAdd.getText().isEmpty() || lastName_textAdd.getText().isEmpty() || datePickerAdd.getValue() == null
-                            || zip_textAdd.getText().isEmpty() || address_textAdd.getText().isEmpty() || email_textAdd.getText().isEmpty() || phone_textAdd.getText().isEmpty()
+                    if (SSNtextAdd.getText().isEmpty() || firstNameTextAdd.getText().isEmpty() || lastNameTextAdd.getText().isEmpty() || datePickerAdd.getValue() == null
+                            || zipTextAdd.getText().isEmpty() || addressTextAdd.getText().isEmpty() || emailTextAdd.getText().isEmpty() || phoneTextAdd.getText().isEmpty()
                             || roleTextAdd.getText().isEmpty()) {
 
                         if (SSNtextAdd.getText().isEmpty()) {
                             SSNstarAdd.setVisible(true);
                         }
-                        if (firstName_textAdd.getText().isEmpty()) {
+                        if (firstNameTextAdd.getText().isEmpty()) {
                             firstNameStarAdd.setVisible(true);
                         }
-                        if (lastName_textAdd.getText().isEmpty()) {
+                        if (lastNameTextAdd.getText().isEmpty()) {
                             lastNameStarAdd.setVisible(true);
                         }
                         if (datePickerAdd.getValue() == null) {
                             BDateStarAdd.setVisible(true);
                         }
-                        if (zip_textAdd.getText().isEmpty()) {
+                        if (zipTextAdd.getText().isEmpty()) {
                             zipStarAdd.setVisible(true);
                         }
-                        if (address_textAdd.getText().isEmpty()) {
+                        if (addressTextAdd.getText().isEmpty()) {
                             addressStarAdd.setVisible(true);
                         }
-                        if (email_textAdd.getText().isEmpty()) {
+                        if (emailTextAdd.getText().isEmpty()) {
                             emailStarAdd.setVisible(true);
                         }
-                        if (phone_textAdd.getText().isEmpty()) {
+                        if (phoneTextAdd.getText().isEmpty()) {
                             phoneStarAdd.setVisible(true);
                         }
                         if (pass1_textAdd.getText().isEmpty()) {
@@ -818,7 +740,7 @@ public class AdminController implements Initializable {
                             });
 
 
-                    isActiveUser.setCellFactory(TextFieldTableCell.<User, CheckBox>forTableColumn(new StringConverter<CheckBox>() {
+                    changeActive.setCellFactory(TextFieldTableCell.<User, CheckBox>forTableColumn(new StringConverter<CheckBox>() {
                         @Override
                         public String toString(CheckBox checkBox) {
                             if (checkBox.isSelected()){
@@ -839,7 +761,7 @@ public class AdminController implements Initializable {
                             return checkBox;
                         }
                     }));
-                    isActiveUser.setOnEditCommit(
+                    changeActive.setOnEditCommit(
                             new EventHandler<TableColumn.CellEditEvent<User, CheckBox>>() {
                                 @Override
                                 public void handle(TableColumn.CellEditEvent<User, CheckBox> t) {
