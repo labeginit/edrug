@@ -12,14 +12,19 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
    <children>
+      <AnchorPane layoutX="-32.0" layoutY="-88.0">
+         <children>
+            <ImageView fitHeight="316.0" fitWidth="347.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@image/Logo.png" />
+               </image>
+            </ImageView>
+         </children>
+      </AnchorPane>
       <Button fx:id="loginButton" layoutX="263.0" layoutY="274.0" minWidth="75.0" mnemonicParsing="false" prefHeight="25.6" text="Login" textFill="#030303" AnchorPane.bottomAnchor="70.0">
          <font>
             <Font size="13.0" />
          </font></Button>
-      <Label alignment="CENTER" layoutX="191.0" layoutY="85.0" prefHeight="26.0" prefWidth="220.0" text="Welcome to e-Drugs">
-         <font>
-            <Font size="17.0" />
-         </font></Label>
       <Button fx:id="registerButton" layoutX="493.0" layoutY="30.0" minWidth="75.0" mnemonicParsing="false" prefHeight="25.6" text="Sign-up" AnchorPane.rightAnchor="25.0" AnchorPane.topAnchor="25.0">
          <font>
             <Font size="13.0" />
@@ -42,11 +47,6 @@
             <Image url="@image/iconfinder_Lock_4473012.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="310.0" fitWidth="290.0" layoutX="-49.0" layoutY="-69.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@image/Logo.png" />
-         </image>
-      </ImageView>
       <ImageView fx:id="progress" fitHeight="150.0" fitWidth="200.0" layoutX="201.0" layoutY="339.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="25.0">
          <image>
             <Image url="@image/30.gif" />
@@ -54,5 +54,9 @@
       </ImageView>
       <TextField fx:id="ssnTextField" layoutX="189.0" layoutY="135.0" prefHeight="26.0" prefWidth="220.0" promptText="SSN" />
       <PasswordField fx:id="passwordField" layoutX="189.0" layoutY="173.0" prefHeight="26.0" prefWidth="220.0" promptText="Password" />
+      <Label id="welcome " alignment="CENTER" layoutX="191.0" layoutY="85.0" prefHeight="26.0" prefWidth="220.0" text="Welcome to e-Drugs">
+         <font>
+            <Font size="23.0" />
+         </font></Label>
    </children>
 </AnchorPane>

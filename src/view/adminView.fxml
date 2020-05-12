@@ -163,8 +163,8 @@
                                         <Button id="logOutButton" fx:id="logOutMedicineButton" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Logout" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
-                                        <Button fx:id="saveButtonMedicine" minWidth="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="184.0" text="Add Medicine" />
-                                        <Button fx:id="cancelButtonMedicine" mnemonicParsing="false" text="Cancel" />
+                                        <Button id="saveButton" fx:id="saveButtonMedicine" minWidth="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="184.0" text="Add Medicine" />
+                                        <Button id="cancelButton" fx:id="cancelButtonMedicine" mnemonicParsing="false" text="Cancel" />
                                     </buttons>
                                 </ButtonBar>
                                 <ListView focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0" />
@@ -291,8 +291,8 @@
                                         <Button id="logOutButton" fx:id="logOutAddButton" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Logout" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
-                                        <Button fx:id="saveButtonAdd" minWidth="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="184.0" text="Add user" />
-                                        <Button fx:id="cancelButtonAdd" mnemonicParsing="false" text="Cancel" />
+                                        <Button id="addUserButton" fx:id="saveButtonAdd" minWidth="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="184.0" text="Add user" />
+                                        <Button id="cancelButton" fx:id="cancelButtonAdd" mnemonicParsing="false" text="Cancel" />
                                     </buttons>
                                 </ButtonBar>
                                 <ListView focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0" />
@@ -392,8 +392,8 @@
                                         <Button id="logOutButton" fx:id="logOutMyButton" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Logout" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
-                                        <Button fx:id="saveButton" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" text="Save" />
-                                        <Button fx:id="cancelButton" mnemonicParsing="false" text="Cancel" />
+                                        <Button id="saveButton" fx:id="saveButton" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" text="Save" />
+                                        <Button id="cancelButton" fx:id="cancelButton" mnemonicParsing="false" text="Cancel" />
                                     </buttons>
                                 </ButtonBar>
                                 <ListView focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0" />

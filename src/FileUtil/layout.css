@@ -39,3 +39,33 @@
         -fx-font-family: 'Helvetica', Arial, sans-serif;
          -fx-font-size: 14px;
         }
+
+      .tab-pane .tab:selected
+      {
+          -fx-background-color: cornflowerblue;
+
+      }
+      .tab-pane .tab-header-area .tab-header-background {
+          -fx-opacity: 60%;
+      }
+      .tab .tab-label {
+          -fx-alignment: CENTER;
+          -fx-font-size: 16px;
+          -fx-font-weight: bold;
+      }
+      #addUserButton:hover, #saveButton:hover {
+      -fx-background-color: #4CAF50;
+      }
+      #cancelButton:hover {
+      -fx-background-color: coral
+      }
+
+      .table-view .column-header {
+      -fx-background-color: #20B2AA
+      }
+
+      #welcome {
+      -fx-font-size: 23px;
+       -fx-font-weight: bold;
+       //WHAT??
+      }
