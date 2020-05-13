@@ -298,7 +298,7 @@ public class PatientController implements Initializable {
         PrescriptionLine line2 = new PrescriptionLine(4, (Patient) commonMethods.getUser("660530-3910"), commonMethods.getMedicine(10003), 2, 0, "2 pills a day 1 month");
         lines1.add(line2);
 
-        Prescription prescription1 = new Prescription(4, (Doctor) commonMethods.getUser("860305-0731"), (Patient) commonMethods.getUser("660530-3910"), java.sql.Date.valueOf("2020-04-30"), "fever", lines1);
+        Prescription prescription1 = new Prescription(4, (Doctor) commonMethods.getUser("860305-0731"), (Patient) commonMethods.getUser("660530-3910"), java.sql.Date.valueOf("2020-04-30"), java.sql.Date.valueOf("2021-04-30"),  "fever", lines1);
 
         List<PrescriptionLine> lines2 = new ArrayList<>();
         PrescriptionLine line3 = new PrescriptionLine(4, (Patient) commonMethods.getUser("660530-3910"), commonMethods.getMedicine(10002), 1, 0, "1 pill a day 4 days");
@@ -306,7 +306,7 @@ public class PatientController implements Initializable {
         PrescriptionLine line4 = new PrescriptionLine(4, (Patient) commonMethods.getUser("660530-3910"), commonMethods.getMedicine(10005), 6, 2, "2 pills a day 1 month");
         lines2.add(line4);
 
-        Prescription prescription2 = new Prescription(4, (Doctor) commonMethods.getUser("111111-1111"), (Patient) commonMethods.getUser("660530-3910"), java.sql.Date.valueOf("2020-05-10"), "cough", lines2);
+        Prescription prescription2 = new Prescription(4, (Doctor) commonMethods.getUser("111111-1111"), (Patient) commonMethods.getUser("660530-3910"), java.sql.Date.valueOf("2020-05-10"), java.sql.Date.valueOf("2021-05-10"), "cough", lines2);
 
         prescrList.add(prescription1);
         prescrList.add(prescription2);
