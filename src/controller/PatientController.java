@@ -106,7 +106,7 @@ public class PatientController implements Initializable {
     private TableColumn<Prescription, Date> c101;
 
     @FXML
-    private TableView<Prescription> prescriptionLineTableView;
+    private TableView<PrescriptionLine> prescriptionLineTableView;
 
     @FXML
     private TableColumn<PrescriptionLine, Medicine> c11;
@@ -190,6 +190,7 @@ public class PatientController implements Initializable {
 
     private ObservableList<String> filters1 = FXCollections.observableArrayList(fillList(groups));
     ObservableList<Prescription> prescrList = FXCollections.observableArrayList();
+    ObservableList<PrescriptionLine> prescrLines = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -305,7 +306,7 @@ public class PatientController implements Initializable {
         PrescriptionLine line2 = new PrescriptionLine(4, (Patient) commonMethods.getUser("660530-3910"), commonMethods.getMedicine(10003), 2, 0, "2 pills a day 1 month");
         lines1.add(line2);
 
-        Prescription prescription1 = new Prescription(4, (Doctor) commonMethods.getUser("860305-0731"), (Patient) commonMethods.getUser("200910-3168"), java.sql.Date.valueOf("2020-04-30"), "fever", lines1);
+        Prescription prescription1 = new Prescription(4, (Doctor) commonMethods.getUser("860305-0731"), (Patient) commonMethods.getUser("200910-3168"), java.sql.Date.valueOf("2020-04-30"), java.sql.Date.valueOf("2021-04-29"), "fever", lines1);
 
         List<PrescriptionLine> lines2 = new ArrayList<>();
         PrescriptionLine line3 = new PrescriptionLine(4, (Patient) commonMethods.getUser("660530-3910"), commonMethods.getMedicine(10002), 1, 0, "1 pill a day 4 days");
@@ -314,27 +315,16 @@ public class PatientController implements Initializable {
         lines2.add(line4);
 
 
-        Prescription prescription2 = new Prescription(4, (Doctor) commonMethods.getUser("111111-1111"), (Patient) commonMethods.getUser("200910-3168"), java.sql.Date.valueOf("2020-05-10"), "cough", lines2);
+        Prescription prescription2 = new Prescription(4, (Doctor) commonMethods.getUser("111111-1111"), (Patient) commonMethods.getUser("200910-3168"), java.sql.Date.valueOf("2020-05-10"), java.sql.Date.valueOf("2021-05-09"),"cough", lines2);
         ArrayList<Prescription> arr = new ArrayList<>();
         arr.add(prescription1);
         arr.add(prescription2);
-        ObservableList<Prescription> prescrList = FXCollections.observableArrayList(arr);
-
-     //   prescrList.add(prescription1);
-     //   prescrList.add(prescription2);
-        for (Prescription el: prescrList) {
-            System.out.println(el);
-        }
+        prescrList = FXCollections.observableArrayList(arr);
+        prescrLines = FXCollections.observableArrayList();
 
 
+        drawPrescriptionTables(prescrList);
 
-
-        drawPrescriptionTable(prescrList);
-
-        c11.setCellValueFactory(new PropertyValueFactory<PrescriptionLine, Medicine>("article"));
-        c12.setCellValueFactory(new PropertyValueFactory<PrescriptionLine, String>("name"));
-        c13.setCellValueFactory(new PropertyValueFactory<PrescriptionLine, Integer>("quantityPrescribed"));
-        c14.setCellValueFactory(new PropertyValueFactory<PrescriptionLine, Integer>("quantityConsumed"));
 
         //TreeTableView end
     }
@@ -348,14 +338,13 @@ public class PatientController implements Initializable {
         userCommon.switchScene(event, "/view/shoppingCartView.fxml");
     }
 
-    private void drawPrescriptionTable(ObservableList<Prescription> prescriptions) {
+    private void drawPrescriptionTables(ObservableList<Prescription> prescriptions) {
 
        /* TreeItem<PrescriptionParent> dep0Node = null;
         this.rootNode = new TreeItem<>();
         rootNode.setExpanded(true);
         for (Prescription element : prescriptions) {
             TreeItem<PrescriptionParent> empLeaf = new TreeItem<>(element);
-            rootNode.getChildren().add(empLeaf);
             for (PrescriptionLine depNode : element.getSpecification()) {
                 if ((depNode.getPrescId() == (element.getId()) && (depNode.getPatient() == element.getPatient()))) {
                     dep0Node = new TreeItem<>(depNode);
@@ -364,13 +353,27 @@ public class PatientController implements Initializable {
             }
             dep0Node = null;
         }*/
-        c9.setCellValueFactory(new PropertyValueFactory<Prescription, Date>("date"));
+        c9.setCellValueFactory(new PropertyValueFactory<Prescription, Date>("startDate"));
         c10.setCellValueFactory(new PropertyValueFactory<Prescription, String>("doctorName"));
-        // c101.setCellValueFactory(new PropertyValueFactory<Prescription, Date>("expDate"));
+        c101.setCellValueFactory(new PropertyValueFactory<Prescription, Date>("endDate"));
+        c11.setCellValueFactory(new PropertyValueFactory<PrescriptionLine, Medicine>("article"));
+        c12.setCellValueFactory(new PropertyValueFactory<PrescriptionLine, String>("name"));
+        c13.setCellValueFactory(new PropertyValueFactory<PrescriptionLine, Integer>("quantityPrescribed"));
+        c14.setCellValueFactory(new PropertyValueFactory<PrescriptionLine, Integer>("quantityConsumed"));
 
         prescriptionTableView.setItems(prescriptions);
+        prescriptionTableView.setOnMouseClicked(e ->{
+            loadRowData();
+        });
     }
 
+    private void loadRowData(){
+        for (Prescription selectedRow: prescriptionTableView.getSelectionModel().getSelectedItems()) {
+            //selectedRow.getId(), selectedRow.getPatient().getSsn()
+            prescrLines.setAll(selectedRow.getSpecification());
+        }
+        prescriptionLineTableView.setItems(prescrLines);
+    }
 
     @FXML
     private void addToCartButtonHandle(ActionEvent event) {
