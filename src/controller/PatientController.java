@@ -94,25 +94,31 @@ public class PatientController implements Initializable {
     private TableColumn<Medicine, CheckBox> c8;
 
     @FXML
-    private TreeTableView<PrescriptionParent> treeTableView;
+    private TableView<Prescription> prescriptionTableView;
 
     @FXML
-    private TreeTableColumn<PrescriptionParent, Date> c9;
+    private TableColumn<Prescription, Date> c9;
 
     @FXML
-    private TreeTableColumn<Prescription, String> c10;
+    private TableColumn<Prescription, String> c10;
 
     @FXML
-    private TreeTableColumn<PrescriptionLine, Medicine> c11;
+    private TableColumn<Prescription, Date> c101;
 
     @FXML
-    private TreeTableColumn<PrescriptionLine, String> c12;
+    private TableView<Prescription> prescriptionLineTableView;
 
     @FXML
-    private TreeTableColumn<PrescriptionLine, Integer> c13;
+    private TableColumn<PrescriptionLine, Medicine> c11;
 
     @FXML
-    private TreeTableColumn<PrescriptionLine, Integer> c14;
+    private TableColumn<PrescriptionLine, String> c12;
+
+    @FXML
+    private TableColumn<PrescriptionLine, Integer> c13;
+
+    @FXML
+    private TableColumn<PrescriptionLine, Integer> c14;
 
     @FXML
     private Button cancel_button;
@@ -312,12 +318,13 @@ public class PatientController implements Initializable {
         prescrList.add(prescription2);
 
 
-        c9.setCellValueFactory(new TreeItemPropertyValueFactory<PrescriptionParent, Date>("date"));
-        c10.setCellValueFactory(new TreeItemPropertyValueFactory<Prescription, String>("doctorName"));
-        c11.setCellValueFactory(new TreeItemPropertyValueFactory<PrescriptionLine, Medicine>("article"));
-        c12.setCellValueFactory(new TreeItemPropertyValueFactory<PrescriptionLine, String>("name"));
-        c13.setCellValueFactory(new TreeItemPropertyValueFactory<PrescriptionLine, Integer>("quantityPrescribed"));
-        c14.setCellValueFactory(new TreeItemPropertyValueFactory<PrescriptionLine, Integer>("quantityConsumed"));
+        c9.setCellValueFactory(new PropertyValueFactory<Prescription, Date>("date"));
+        c10.setCellValueFactory(new PropertyValueFactory<Prescription, String>("doctorName"));
+        c101.setCellValueFactory(new PropertyValueFactory<Prescription, Date>("expDate"));
+        c11.setCellValueFactory(new PropertyValueFactory<PrescriptionLine, Medicine>("article"));
+        c12.setCellValueFactory(new PropertyValueFactory<PrescriptionLine, String>("name"));
+        c13.setCellValueFactory(new PropertyValueFactory<PrescriptionLine, Integer>("quantityPrescribed"));
+        c14.setCellValueFactory(new PropertyValueFactory<PrescriptionLine, Integer>("quantityConsumed"));
 
 
         drawTreeTable(prescrList);
