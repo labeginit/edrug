@@ -31,34 +31,17 @@ import javax.mail.internet.MimeMessage;
 public class ForgottenPasswordController implements Initializable {
 
     @FXML
-    private TextField emailText;
+    private TextField emailText, ssnTextField, confirmationTextField;
 
     @FXML
-    private TextField ssnTextField;
+    private Button sendButton, cancelButton, enterButton, confirmButton;
 
     @FXML
-    private Button sendButton;
-
-    @FXML
-    private Button cancelButton;
-
-    @FXML
-    private TextField confirmationTextField;
-
-    @FXML
-    private Button enterButton;
-
-    @FXML
-    private PasswordField passwordField1;
-
-    @FXML
-    private PasswordField passwordField2;
-
-    @FXML
-    private Button confirmButton;
+    private PasswordField passwordField1, passwordField2;
 
     public String confirmationCode;
     public CommonMethods common = new CommonMethods();
+    public UserCommon userCommon = new UserCommon();
     public User temp;
 
     @Override
@@ -78,12 +61,11 @@ public class ForgottenPasswordController implements Initializable {
     @FXML
     public void sendEmail() {
 
-        // Add sender
+        // sender info
         String from = "edrugspwhelp@gmail.com";
         final String username = "edrugspwhelp@gmail.com";//your Gmail username
         final String password = "EDrugspwProtection";//your Gmail password
 
-        // Add recipient
         String to = addRecipient();
 
         String host = "smtp.gmail.com";
@@ -103,29 +85,18 @@ public class ForgottenPasswordController implements Initializable {
                 });
 
         try {
-            // Create a default MimeMessage object
             Message message = new MimeMessage(session);
-
             message.setFrom(new InternetAddress(from));
-
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(to));
 
             confirmationCode = confirmationStringGenerator();
-
-            // Set Subject
+            //Create subject & message
             message.setSubject("Password Reset");
-
-            // Put the content of your message
             message.setText("Hi there,your confirmation code is: " + confirmationCode);
-
-            // Send message
             Transport.send(message);
 
-            System.out.println("Succesfully sent");
-
         } catch (MessagingException ignored) {
-            System.out.println("Email failed");
         }
         confirmationTextField.setVisible(true);
         enterButton.setVisible(true);
@@ -136,12 +107,12 @@ public class ForgottenPasswordController implements Initializable {
         String recipient = "";
         try {
             temp = common.getUser(ssnTextField.getText());
-            
+
             if (temp.getEmail().equals(emailText.getText())) {
                 recipient = emailText.getText();
             }
         } catch (Exception ex) {
-        ex.printStackTrace();
+            ex.printStackTrace();
         }
         return recipient;
     }
@@ -159,16 +130,7 @@ public class ForgottenPasswordController implements Initializable {
     @FXML
     public void handleCancelButton(ActionEvent ae) {
         try {
-            Node node = (Node) ae.getSource();
-            Scene scene = node.getScene();
-            Stage stage = (Stage) scene.getWindow();
-
-            Parent root = FXMLLoader.load(getClass().getResource("/view/loginView.fxml"));
-            Scene newScene = new Scene(root);
-
-            stage.setTitle("e-DRUGS");
-            stage.setScene(newScene);
-
+            userCommon.switchScene(ae, "/view/loginView.fxml");
         } catch (Exception ex) {
             ex.getMessage();
         }
@@ -186,13 +148,13 @@ public class ForgottenPasswordController implements Initializable {
 
     public void confirmButtonHandler(ActionEvent ae) {
         try {
-        if (passwordField1.getText().equals(passwordField2.getText()) && passwordField1.getText().length() > 5) {
-            temp.setPassword(passwordField1.getText());
-            common.updatePassword(temp);
-            handleCancelButton(ae);
-        } else {
-            throw new Exception();
-        }
+            if (passwordField1.getText().equals(passwordField2.getText()) && passwordField1.getText().length() > 5) {
+                temp.setPassword(passwordField1.getText());
+                common.updatePassword(temp);
+                handleCancelButton(ae);
+            } else {
+                throw new Exception();
+            }
         } catch (Exception ignored) {
             Validation.alertPopup("Both passwords must be the same and at least 6 characters long",
                     "Password incorrect",

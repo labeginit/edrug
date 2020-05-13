@@ -17,7 +17,8 @@ public class DAOPrescription {
     private String patientSSN;
     private Doctor doctor;
     private String doctorSSN;
-    private Date date;
+    private Date startdate;
+    private Date endDate;
     private String diagnosis;
     private List<PrescriptionLine> specification = new ArrayList<>();
     private Medicine medicine;
@@ -36,11 +37,12 @@ public class DAOPrescription {
                     id = prescription.getId();
                     patientSSN = prescription.getPatient().getSsn();
                     doctorSSN = prescription.getDoctor().getSsn();
-                    date = prescription.getDate();
+                    startdate = prescription.getStartDate();
+                    endDate = prescription.getEndDate();
                     diagnosis = prescription.getDiagnosis();
 
-                    String queryHeader = "INSERT INTO `edrugs_test`.`Prescription` (`id`, `patient_ssn`, `user_ssn`, `date`, `diagnosis`) VALUES (?, ?, ?, ?, ?);";
-                    linesAffected = common.insertPrescriptionHeader(queryHeader, id, patientSSN, doctorSSN, date, diagnosis);
+                    String queryHeader = "INSERT INTO `edrugs_test`.`Prescription` (`id`, `patient_ssn`, `user_ssn`, `date`, `end_date`, `diagnosis`) VALUES (?, ?, ?, ?, ?, ?);";
+                    linesAffected = common.insertPrescriptionHeader(queryHeader, id, patientSSN, doctorSSN, startdate, diagnosis);
 
                     specification = prescription.getSpecification();
                     for (PrescriptionLine element: specification) {

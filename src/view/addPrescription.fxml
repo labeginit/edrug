@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AddPrescription">
+   <children>
+      <TabPane prefHeight="600.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Add Prescriptions">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="24.0" layoutY="36.0" text="Name:" />
+                        <Label layoutX="34.0" layoutY="18.0" text="SSN:" />
+                        <Button fx:id="addPrescriptionsButton" layoutX="649.0" layoutY="529.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="136.0" text="Add Prescriptions" />
+                        <TableView fx:id="addPrescriptionTable" layoutX="14.0" layoutY="118.0" prefHeight="403.0" prefWidth="771.0">
+                          <columns>
+                            <TableColumn fx:id="aArticle" prefWidth="92.00003051757812" text="Article" />
+                            <TableColumn fx:id="aName" prefWidth="154.40005493164062" text="Name" />
+                              <TableColumn fx:id="aDescription" prefWidth="255.2000732421875" text="Description" />
+                              <TableColumn fx:id="aProducer" prefWidth="132.0" text="Producer" />
+                              <TableColumn fx:id="aSize" prefWidth="47.199951171875" text="Size" />
+                              <TableColumn fx:id="aAmount" prefWidth="93.5999755859375" text="Amount Prs." />
+                          </columns>
+                        </TableView>
+                        <Label fx:id="nameLabel" layoutX="74.0" layoutY="35.0" prefHeight="18.0" prefWidth="148.0" />
+                        <TextArea fx:id="DiagnosisTextArea" layoutX="363.0" layoutY="16.0" prefHeight="96.0" prefWidth="422.0" />
+                        <Label layoutX="297.0" layoutY="18.0" text="Diagnosis:" />
+                        <Label fx:id="ssnLabel" layoutX="74.0" layoutY="18.0" prefHeight="18.0" prefWidth="148.0" />
+                        <DatePicker fx:id="endDatePicker" layoutX="188.0" layoutY="86.0" promptText="Prescription End Date" />
+                        <Label layoutX="110.0" layoutY="64.0" prefHeight="18.0" prefWidth="74.0" text="Current Date:" />
+                        <Label layoutX="130.0" layoutY="89.0" prefHeight="18.0" prefWidth="53.0" text="End Date:" />
+                        <Label fx:id="currentDateLabel" layoutX="188.0" layoutY="65.0" prefHeight="18.0" prefWidth="150.0" />
+                        <Button fx:id="cancelButton" layoutX="14.0" layoutY="529.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="136.0" text="Cancel" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Current Prescriptions">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="516.0" prefWidth="800.0">
+                     <children>
+                        <TableView fx:id="currentPrescriptionsTable" layoutX="14.0" layoutY="118.0" prefHeight="403.0" prefWidth="771.0">
+                          <columns>
+                            <TableColumn fx:id="aArticle1" prefWidth="92.00003051757812" text="Article" />
+                            <TableColumn fx:id="aName1" prefWidth="154.40005493164062" text="Name" />
+                              <TableColumn fx:id="aDescription1" prefWidth="193.60003662109375" text="Description" />
+                              <TableColumn fx:id="aProducer1" prefWidth="94.39996337890625" text="Producer" />
+                              <TableColumn fx:id="aStartDate1" prefWidth="75.0" text="Start Date" />
+                              <TableColumn fx:id="aEndDate1" prefWidth="75.0" text="End Date" />
+                              <TableColumn fx:id="aAmount1" prefWidth="84.00004882812505" text="Amount Prs." />
+                          </columns>
+                        </TableView>
+                        <Label layoutX="34.0" layoutY="18.0" text="SSN:" />
+                        <Label layoutX="24.0" layoutY="36.0" text="Name:" />
+                        <Label fx:id="ssnLabel1" layoutX="74.0" layoutY="18.0" prefHeight="18.0" prefWidth="148.0" />
+                        <Label fx:id="nameLabel1" layoutX="74.0" layoutY="35.0" prefHeight="18.0" prefWidth="148.0" />
+                        <Button fx:id="cancelButton1" layoutX="14.0" layoutY="529.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="136.0" text="Cancel" />
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

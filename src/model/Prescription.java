@@ -7,15 +7,17 @@ public class Prescription {
     private int id;
     private Patient patient;
     private Doctor doctor;
-    private Date date;
+    private Date startDate;
+    private Date endDate;
     private String diagnosis;
     private List<PrescriptionLine> specification;
 
-    public Prescription(int id, Doctor doctor, Patient patient, Date date,  String diagnosis, List<PrescriptionLine> specification){
+    public Prescription(int id, Doctor doctor, Patient patient, Date startDate, Date endDate,  String diagnosis, List<PrescriptionLine> specification){
         setId(id);
         setCurrentUser(doctor);
         setPatient(patient);
-        setDate(date);
+        setStartDate(startDate);
+        setEndDate(endDate);
         setDiagnosis(diagnosis);
         setSpecification(specification);
     }
@@ -32,8 +34,10 @@ public class Prescription {
         this.patient = patient;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setStartDate(Date date) {this.startDate = date;}
+
+    public void setEndDate(Date date) {
+        this.endDate = date;
     }
 
     public void setDiagnosis(String diagnosis) {
@@ -56,9 +60,11 @@ public class Prescription {
         return patient;
     }
 
-    public Date getDate() {
-        return date;
-    }
+    public Date getStartDate() {return startDate;}
+
+    public Date getEndDate() {return endDate;}
+
+
 
     public String getDiagnosis() {
         return diagnosis;
@@ -74,7 +80,8 @@ public class Prescription {
                 "id=" + id +
                 ", patient=" + patient +
                 ", doctor=" + doctor +
-                ", date=" + date +
+                ", startDate=" + startDate +
+                ", endDate=" + endDate +
                 ", diagnosis='" + diagnosis + '\'' +
                 ", specification=" + specification +
                 '}';

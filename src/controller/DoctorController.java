@@ -3,159 +3,70 @@ package controller;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Stage;
 import model.Medicine;
 import model.Patient;
 import model.User;
 import model.UserSingleton;
 import model.dBConnection.CommonMethods;
-import controller.Validation;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class DoctorController implements Initializable {
     private User currentUser;
     private UserCommon userCommon = new UserCommon();
     CommonMethods commonMethods = new CommonMethods();
-    Validation validation = new Validation();
 
     @FXML
     private TableView<Medicine> storeTable;
 
     @FXML
-    private TableColumn<Medicine, Integer> d1Article;
+    private TableColumn<Medicine, Integer> d1Article, d1Stock;
 
     @FXML
-    private TableColumn<Medicine, String> d1Name;
-
-    @FXML
-    private TableColumn<Medicine, String> d1Size;
+    private TableColumn<Medicine, String> d1Name, d1Size, d1Description, d1Producer;
 
     @FXML
     private TableColumn<Medicine, Double> d1Price;
 
     @FXML
-    private TableColumn<Medicine, Integer> d1Stock;
-
-    @FXML
-    private TableColumn<Medicine, String> d1Description;
-
-    @FXML
-    private TableColumn<Medicine, String> d1Producer;
-
-    @FXML
     private TableView<User> patientTable;
 
     @FXML
-    private TableColumn<User, String> d2SSN;
+    private TableColumn<User, String> d2SSN, d2Name, d2Surname, d2Phone, d2Email;
 
     @FXML
-    private TableColumn<User, String> d2Name;
+    private TextField search_textField, sSN_textField, firstName_text, lastName_text, zip_text, address_text,
+            phone_text, email_text;
 
     @FXML
-    private TableColumn<User, String> d2Surname;
-
-    @FXML
-    private TableColumn<User, String> d2Phone;
-
-    @FXML
-    private TableColumn<User, String> d2Email;
-
-    @FXML
-    private TextField search_textField;
-
-    @FXML
-    private TextField sSN_textField;
-
-    @FXML
-    private Label patientSearchStar;
-
-    @FXML
-    private Label ssn_Label;
+    private Label patientSearchStar, ssn_Label, birthDateStar, firstNameStar, lastNameStar, zipCodeStar, addressStar, phoneStar, emailStar,
+            passwordCheckLabel;
 
     @FXML
     private DatePicker datePicker;
 
     @FXML
-    private TextField firstName_text;
+    private PasswordField password_Text, password_Text2;
 
     @FXML
-    private TextField lastName_text;
+    private Button logOut_button1, logOut_button2, logOut_button3, cancel_Button, save_Button, go_Button, SSN_Go_Button;
 
     @FXML
-    private TextField zip_text;
-
-    @FXML
-    private TextField address_text;
-
-    @FXML
-    private TextField phone_text;
-
-    @FXML
-    private TextField email_text;
-
-    @FXML
-    private PasswordField password_Text;
-
-    @FXML
-    private PasswordField password_Text2;
-
-    @FXML
-    private Button logOut_button1;
-
-    @FXML
-    private Button logOut_button2;
-
-    @FXML
-    private Button logOut_button3;
-
-    @FXML
-    private Button cancel_Button;
-
-    @FXML
-    private Button save_Button;
-
-    @FXML
-    private Button go_Button;
-
-    @FXML
-    private Button SSN_Go_Button;
-
-    @FXML
-    private ComboBox<String> sort_Combo;
-
-    @FXML
-    private ComboBox<String> filter_Combo;
-
-    @FXML
-    private Label birthDateStar;
-
-    @FXML
-    private Label firstNameStar;
-
-    @FXML
-    private Label lastNameStar;
-
-    @FXML
-    private Label zipCodeStar;
-
-    @FXML
-    private Label addressStar;
-
-    @FXML
-    private Label phoneStar;
-
-    @FXML
-    private Label emailStar;
-
-    @FXML
-    private Label passwordCheckLabel;
+    private ComboBox<String> sort_Combo, filter_Combo;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -164,6 +75,7 @@ public class DoctorController implements Initializable {
         setProfileData();
         cancel_Button.setOnAction(event -> handleCancelButton());
         save_Button.setOnAction(event -> handleSaveButton());
+        SSN_Go_Button.setOnAction(this::handleSSNGoButton);
         storeInitialize();
         patientInitialize();
 
@@ -284,52 +196,79 @@ public class DoctorController implements Initializable {
     }
 
     @FXML
-    public void handleSSNGoButton() {
-        try {
-            if (Validation.isSSN(sSN_textField.getText(), patientSearchStar)) {
+    public void handleSSNGoButton(ActionEvent ae) {
 
+        /*
+                                String ssn = sSN_textField.getText();
+                AddPrescription addPrescription = new AddPrescription();
+
+                userCommon.switchScene(ae, "/view/addPrescription.fxml");
+                addPrescription.receiveData(ssn);
+         */
+
+        try {
+            if (Validation.isSSN(sSN_textField.getText(), patientSearchStar) && checkForPatient(sSN_textField.getText())) {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/addPrescription.fxml"));
+                Parent root = loader.load();
+
+                AddPrescription addPrescription = loader.getController();
+                addPrescription.receiveData(sSN_textField.getText());
+                Stage stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
+                stage.setScene(new Scene(root));
+                stage.setTitle("Prescription for: " + sSN_textField.getText());
+                stage.show();
             } else {
                 throw new Exception();
             }
         } catch (Exception ex) {
-            Validation.alertPopup("Please check the SSN you entered is correct!", "SSN Error", "Unable to search specified SSN");
+            ex.printStackTrace();
         }
     }
 
-    public void hideAllWarningLabels(boolean state) {
-        birthDateStar.setVisible(state);
-        firstNameStar.setVisible(state);
-        lastNameStar.setVisible(state);
-        zipCodeStar.setVisible(state);
-        addressStar.setVisible(state);
-        phoneStar.setVisible(state);
-        emailStar.setVisible(state);
-        passwordCheckLabel.setVisible(state);
+    public boolean checkForPatient(String ssn) {
+        List<User> patientList = commonMethods.getPatientList();
+        for (User patient : patientList) {
+            if (ssn.equals(patient.getSsn())) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    public void storeInitialize() {
-        d1Article.setCellValueFactory(new PropertyValueFactory<>("articleNo"));
-        d1Description.setCellValueFactory(new PropertyValueFactory<>("description"));
-        d1Name.setCellValueFactory(new PropertyValueFactory<>("name"));
-        d1Price.setCellValueFactory(new PropertyValueFactory<>("price"));
-        d1Producer.setCellValueFactory(new PropertyValueFactory<>("producer"));
-        d1Size.setCellValueFactory(new PropertyValueFactory<>("packageSize"));
-        d1Stock.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        public void hideAllWarningLabels ( boolean state){
+            birthDateStar.setVisible(state);
+            firstNameStar.setVisible(state);
+            lastNameStar.setVisible(state);
+            zipCodeStar.setVisible(state);
+            addressStar.setVisible(state);
+            phoneStar.setVisible(state);
+            emailStar.setVisible(state);
+            passwordCheckLabel.setVisible(state);
+        }
 
-        ObservableList<Medicine> medicineList = FXCollections.observableArrayList(commonMethods.getMedicineList());
-        medicineList.addAll(FXCollections.observableArrayList(commonMethods.getMedicineList()));
+        public void storeInitialize () {
+            d1Article.setCellValueFactory(new PropertyValueFactory<>("articleNo"));
+            d1Description.setCellValueFactory(new PropertyValueFactory<>("description"));
+            d1Name.setCellValueFactory(new PropertyValueFactory<>("name"));
+            d1Price.setCellValueFactory(new PropertyValueFactory<>("price"));
+            d1Producer.setCellValueFactory(new PropertyValueFactory<>("producer"));
+            d1Size.setCellValueFactory(new PropertyValueFactory<>("packageSize"));
+            d1Stock.setCellValueFactory(new PropertyValueFactory<>("quantity"));
 
-        storeTable.setItems(medicineList);
+            ObservableList<Medicine> medicineList = FXCollections.observableArrayList(commonMethods.getMedicineList());
+            medicineList.addAll(FXCollections.observableArrayList(commonMethods.getMedicineList()));
+
+            storeTable.setItems(medicineList);
+        }
+
+        public void patientInitialize () {
+            d2SSN.setCellValueFactory(new PropertyValueFactory<>("Ssn"));
+            d2Name.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+            d2Surname.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+            d2Email.setCellValueFactory(new PropertyValueFactory<>("email"));
+            d2Phone.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+
+            ObservableList<User> patientList = FXCollections.observableArrayList(commonMethods.getPatientList());
+            patientTable.setItems(patientList);
+        }
     }
-
-    public void patientInitialize() {
-        d2SSN.setCellValueFactory(new PropertyValueFactory<>("Ssn"));
-        d2Name.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-        d2Surname.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-        d2Email.setCellValueFactory(new PropertyValueFactory<>("email"));
-        d2Phone.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
-
-        ObservableList<User> patientList = FXCollections.observableArrayList(commonMethods.getPatientList());
-        patientTable.setItems(patientList);
-    }
-}
