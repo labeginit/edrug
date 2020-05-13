@@ -6,7 +6,7 @@
             -fx-background-radius: 8,7,6;
             -fx-background-insets: 0,1,2;
             -fx-text-fill: black;
-            -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+            -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
         }
 
         .button:hover {
@@ -21,20 +21,6 @@
                       }
 
 
-   #logOutButton:hover   {
-            -fx-padding: 8 15 15 15;
-            -fx-background-insets: 0,0 0 5 0, 0 0 6 0, 0 0 7 0;
-            -fx-background-radius: 8;
-            -fx-background-color:
-                linear-gradient(from 0% 93% to 0% 100%, #a34313 0%, #903b12 100%),
-                #9d4024,
-                #d86e3a,
-                radial-gradient(center 50% 50%, radius 100%, #d86e3a, #c54e2c);
-            -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.75) , 4,0,0,1 );
-            -fx-font-weight: bold;
-            -fx-font-size: 1.1em;
-        }
-
         * {
         -fx-font-family: 'Helvetica', Arial, sans-serif;
          -fx-font-size: 14px;
@@ -42,7 +28,8 @@
 
       .tab-pane .tab:selected
       {
-          -fx-background-color: cornflowerblue;
+          -fx-background-color: #4475C0;
+
 
       }
       .tab-pane .tab-header-area .tab-header-background {
@@ -53,19 +40,20 @@
           -fx-font-size: 16px;
           -fx-font-weight: bold;
       }
-      #addUserButton:hover, #saveButton:hover {
-      -fx-background-color: #4CAF50;
-      }
-      #cancelButton:hover {
-      -fx-background-color: coral
-      }
+
+
 
       .table-view .column-header {
-      -fx-background-color: #20B2AA
+      -fx-background-color: #76A0DF
       }
 
       #welcome {
       -fx-font-size: 23px;
        -fx-font-weight: bold;
        //WHAT??
+      }
+
+      .table-row-cell:selected {
+         -fx-background-color: #C0DAFF;
+
       }

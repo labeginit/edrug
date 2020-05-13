@@ -165,6 +165,7 @@ public class ForgottenPasswordController implements Initializable {
 
             Parent root = FXMLLoader.load(getClass().getResource("/view/loginView.fxml"));
             Scene newScene = new Scene(root);
+            root.getStylesheets().add(getClass().getResource("../FileUtil/layout.css").toExternalForm());
 
             stage.setTitle("e-DRUGS");
             stage.setScene(newScene);
