@@ -11,7 +11,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import model.*;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
@@ -28,7 +30,7 @@ public class PatientController implements Initializable {
     private UserCommon userCommon = new UserCommon();
     private User currentUser;
     public LocalDate localDate;
-    public static List <OrderLine> cart = new ArrayList<>();
+    public static List<OrderLine> cart = new ArrayList<>();
 
 
     @FXML
@@ -36,9 +38,6 @@ public class PatientController implements Initializable {
 
     @FXML
     private TextField search_textField;
-
-    @FXML
-    private ComboBox<String> prescFilter_combo;
 
     @FXML
     private Button cartButton;
@@ -95,25 +94,25 @@ public class PatientController implements Initializable {
     private TableColumn<Medicine, CheckBox> c8;
 
     @FXML
-    private TreeTableView<?> treeTableView;
+    private TreeTableView<PrescriptionParent> treeTableView;
 
     @FXML
-    private TreeTableColumn<?, ?> c9;
+    private TreeTableColumn<PrescriptionParent, Date> c9;
 
     @FXML
-    private TreeTableColumn<?, ?> c10;
+    private TreeTableColumn<Prescription, String> c10;
 
     @FXML
-    private TreeTableColumn<?, ?> c11;
+    private TreeTableColumn<PrescriptionLine, Medicine> c11;
 
     @FXML
-    private TreeTableColumn<?, ?> c12;
+    private TreeTableColumn<PrescriptionLine, String> c12;
 
     @FXML
-    private TreeTableColumn<?, ?> c13;
+    private TreeTableColumn<PrescriptionLine, Integer> c13;
 
     @FXML
-    private TreeTableColumn<?, ?> c14;
+    private TreeTableColumn<PrescriptionLine, Integer> c14;
 
     @FXML
     private Button cancel_button;
@@ -166,10 +165,14 @@ public class PatientController implements Initializable {
     @FXML
     private Label passwordCheckLabel;
 
+    @FXML
+    private TreeItem<PrescriptionParent> rootNode;
+
     private List<ProdGroup> groups = commonMethods.getProductGroupList();
     private List<String> groupPaths = new ArrayList<>();
     private ObservableList<Medicine> medList = FXCollections.observableArrayList(commonMethods.getMedicineList(false)); // here will probably need to add those from Prescriptions
     private FilteredList<Medicine> filteredData = new FilteredList<>(medList, p -> true);
+
 
     private List<String> fillList(List<ProdGroup> groups) {
         groupPaths.add("");
@@ -180,7 +183,7 @@ public class PatientController implements Initializable {
     }
 
     private ObservableList<String> filters1 = FXCollections.observableArrayList(fillList(groups));
-    private ObservableList<String> filters2 = FXCollections.observableArrayList("", "Only Current", "Only Consumed");
+    ObservableList<Prescription> prescrList = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -188,7 +191,6 @@ public class PatientController implements Initializable {
         cancel_button.setCancelButton(true);
         currentUser = UserSingleton.getOurInstance().getUser();
         groupFilter_combo.setItems(filters1);
-        prescFilter_combo.setItems(filters2);
         setInitialValues(currentUser);
         dPicker.setOnAction(e -> {
             localDate = dPicker.getValue();
@@ -251,19 +253,19 @@ public class PatientController implements Initializable {
         // currently the combination of different filters is not working after value in the comboBox has been changed
         userCommon.medFilter(filteredData, search_textField, tableView);
 
-           groupFilter_combo.setOnAction((event) -> {
-               String val = groupFilter_combo.getValue();
-               ObservableList<Medicine> newList = FXCollections.observableArrayList(commonMethods.getMedicineByProductGroupPath(val));
-               for (int i = 0; i < newList.size(); i++) {
-                   if (newList.get(i).isOnPrescription()){  //add more here - if these ids are from the prescription - do not delete
-                       newList.remove(i);
-                    }
+        groupFilter_combo.setOnAction((event) -> {
+            String val = groupFilter_combo.getValue();
+            ObservableList<Medicine> newList = FXCollections.observableArrayList(commonMethods.getMedicineByProductGroupPath(val));
+            for (int i = 0; i < newList.size(); i++) {
+                if (newList.get(i).isOnPrescription()) {  //add more here - if these ids are from the prescription - do not delete
+                    newList.remove(i);
                 }
-               SortedList<Medicine> sortedData2 = new SortedList<>(newList);
-               sortedData2.comparatorProperty().bind(tableView.comparatorProperty());
-               tableView.setItems(sortedData2);
+            }
+            SortedList<Medicine> sortedData2 = new SortedList<>(newList);
+            sortedData2.comparatorProperty().bind(tableView.comparatorProperty());
+            tableView.setItems(sortedData2);
 
-            });
+        });
 
         maxPrice_text.textProperty().addListener((observable, oldValue, newValue) -> {
             search_textField.setText("");
@@ -288,30 +290,75 @@ public class PatientController implements Initializable {
 
         //TableView end
 
+        //TreeTableView begin
+        // temporary data
+        List<PrescriptionLine> lines1 = new ArrayList<>();
+        PrescriptionLine line1 = new PrescriptionLine(4, (Patient) commonMethods.getUser("660530-3910"), commonMethods.getMedicine(10001), 3, 1, "1 pill a day 4 days");
+        lines1.add(line1);
+        PrescriptionLine line2 = new PrescriptionLine(4, (Patient) commonMethods.getUser("660530-3910"), commonMethods.getMedicine(10003), 2, 0, "2 pills a day 1 month");
+        lines1.add(line2);
+
+        Prescription prescription1 = new Prescription(4, (Doctor) commonMethods.getUser("860305-0731"), (Patient) commonMethods.getUser("660530-3910"), java.sql.Date.valueOf("2020-04-30"), "fever", lines1);
+
+        List<PrescriptionLine> lines2 = new ArrayList<>();
+        PrescriptionLine line3 = new PrescriptionLine(4, (Patient) commonMethods.getUser("660530-3910"), commonMethods.getMedicine(10002), 1, 0, "1 pill a day 4 days");
+        lines2.add(line3);
+        PrescriptionLine line4 = new PrescriptionLine(4, (Patient) commonMethods.getUser("660530-3910"), commonMethods.getMedicine(10005), 6, 2, "2 pills a day 1 month");
+        lines2.add(line4);
+
+        Prescription prescription2 = new Prescription(4, (Doctor) commonMethods.getUser("111111-1111"), (Patient) commonMethods.getUser("660530-3910"), java.sql.Date.valueOf("2020-05-10"), "cough", lines2);
+
+        prescrList.add(prescription1);
+        prescrList.add(prescription2);
+
+
+        c9.setCellValueFactory(new TreeItemPropertyValueFactory<PrescriptionParent, Date>("date"));
+        c10.setCellValueFactory(new TreeItemPropertyValueFactory<Prescription, String>("doctorName"));
+        c11.setCellValueFactory(new TreeItemPropertyValueFactory<PrescriptionLine, Medicine>("article"));
+        c12.setCellValueFactory(new TreeItemPropertyValueFactory<PrescriptionLine, String>("name"));
+        c13.setCellValueFactory(new TreeItemPropertyValueFactory<PrescriptionLine, Integer>("quantityPrescribed"));
+        c14.setCellValueFactory(new TreeItemPropertyValueFactory<PrescriptionLine, Integer>("quantityConsumed"));
+
+
+        drawTreeTable(prescrList);
+
+        //TreeTableView end
     }
 
     private ObservableList<String> getFilters1() {
         return filters1;
     }
 
-    private ObservableList<String> getFilters2() {
-        return filters2;
-    }
-
     @FXML
     private void cartButtonHandle(ActionEvent event) throws IOException {
-       userCommon.switchScene(event, "/view/shoppingCartView.fxml");
+        userCommon.switchScene(event, "/view/shoppingCartView.fxml");
     }
 
-    @FXML
+    private void drawTreeTable(ObservableList<Prescription> prescriptions) {
+        TreeItem<PrescriptionParent> dep0Node = null;
+        this.rootNode = new TreeItem<>();
+        rootNode.setExpanded(true);
+        for (Prescription element : prescriptions) {
+            TreeItem<PrescriptionParent> empLeaf = new TreeItem<>(element);
+            rootNode.getChildren().add(empLeaf);
+            for (PrescriptionLine depNode : element.getSpecification()) {
+                if ((depNode.getPrescId() == (element.getId()) && (depNode.getPatient() == element.getPatient()))) {
+                    dep0Node = new TreeItem<>(depNode);
+                    empLeaf.getChildren().add(dep0Node);
+                }
+            }
+            dep0Node = null;
+        }
+        treeTableView.setRoot(rootNode);
+    }
 
+
+    @FXML
     private void addToCartButtonHandle(ActionEvent event) {
         int available;
         int qtyReserved;
-        for(Medicine element : filteredData)
-        {
-            if(element.getCheckBox().isSelected())
-            {
+        for (Medicine element : filteredData) {
+            if (element.getCheckBox().isSelected()) {
                 available = element.getQuantity();
                 qtyReserved = element.getQuantityReserved();
                 OrderLine line = new OrderLine(0, currentUser, element, element.getPrice(), qtyReserved);
@@ -323,10 +370,10 @@ public class PatientController implements Initializable {
                     if (cart.size() == 0) {
                         cart.add(line);
                     } else if (!cartElementPresenceCheck(element)) {
-                            cart.add(line);
+                        cart.add(line);
 
                     }
-                    qtyReserved=++qtyReserved;
+                    qtyReserved = ++qtyReserved;
                     element.setQuantityReserved(qtyReserved);
                     line.setQuantity(qtyReserved);
 
@@ -340,17 +387,10 @@ public class PatientController implements Initializable {
                 element.getCheckBox().setSelected(false);
             }
         }
-//deleteme
-        for (int i = 0; i < cart.size(); i++) {
-            System.out.println("med qty=" + cart.get(i).getMedicine().getQuantity() + " med qres=" + cart.get(i).getMedicine().getQuantityReserved() + " art=" + cart.get(i).getArticleNo() + " qty" + cart.get(i).getQuantity());
-        }
-        System.out.println();
     }
 
 
-
-
-    private boolean cartElementPresenceCheck(Medicine selectedElement){
+    private boolean cartElementPresenceCheck(Medicine selectedElement) {
         for (int i = 0; i < cart.size(); i++) {
             if (cart.get(i).getMedicine().getArticleNo() == selectedElement.getArticleNo()) {
                 cart.get(i).getMedicine().setQuantity(cart.get(i).getMedicine().getQuantity() + 1);

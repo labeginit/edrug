@@ -130,7 +130,16 @@ public class ForgottenPasswordController implements Initializable {
     @FXML
     public void handleCancelButton(ActionEvent ae) {
         try {
-            userCommon.switchScene(ae, "/view/loginView.fxml");
+            Node node = (Node) ae.getSource();
+            Scene scene = node.getScene();
+            Stage stage = (Stage) scene.getWindow();
+
+            Parent root = FXMLLoader.load(getClass().getResource("/view/loginView.fxml"));
+            Scene newScene = new Scene(root);
+            root.getStylesheets().add(getClass().getResource("../FileUtil/layout.css").toExternalForm());
+
+            stage.setTitle("e-DRUGS");
+            stage.setScene(newScene);
         } catch (Exception ex) {
             ex.getMessage();
         }

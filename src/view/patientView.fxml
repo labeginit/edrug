@@ -25,15 +25,16 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="379.0" prefWidth="586.0">
                      <children>
-                        <ButtonBar layoutX="6.0" layoutY="514.0" prefHeight="40.0" prefWidth="770.0">
+                        <ButtonBar layoutX="6.0" layoutY="501.0" prefHeight="54.0" prefWidth="770.0">
                           <buttons>
                               <Button fx:id="logOut1_button" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Logout" />
+                              <Label prefHeight="17.0" prefWidth="261.0" />
                               <Label prefHeight="17.0" prefWidth="261.0" />
                               <Button fx:id="buy_button" minWidth="64.0" mnemonicParsing="false" onAction="#addToCartButtonHandle" prefHeight="25.0" prefWidth="64.0" text="Add" />
                               <Button fx:id="cartButton" minWidth="64.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="64.0" text="Go to Cart" />
                           </buttons>
                         </ButtonBar>
-                        <TableView fx:id="tableView" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0">
+                        <TableView fx:id="tableView" layoutX="6.0" layoutY="55.0" prefHeight="447.0" prefWidth="771.0">
                           <columns>
                             <TableColumn fx:id="c1" prefWidth="57.600006103515625" text="Article" />
                             <TableColumn fx:id="c2" minWidth="4.0" prefWidth="175.20001220703125" text="Name" />
@@ -65,23 +66,22 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="425.0" prefWidth="586.0">
                      <children>
-                        <TreeTableView fx:id="treeTableView" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0">
+                        <TreeTableView fx:id="treeTableView" layoutX="6.0" layoutY="55.0" prefHeight="447.0" prefWidth="771.0">
                           <columns>
-                            <TreeTableColumn fx:id="c9" prefWidth="75.0" text="Date" />
-                            <TreeTableColumn fx:id="c10" prefWidth="156.00000762939453" text="Doctor" />
-                              <TreeTableColumn fx:id="c11" prefWidth="93.0" text="Article" />
-                              <TreeTableColumn fx:id="c12" prefWidth="299.9999084472656" text="Name" />
-                              <TreeTableColumn fx:id="c13" prefWidth="70.0" text="Quantity" />
-                              <TreeTableColumn fx:id="c14" prefWidth="75.0" text="Status" />
+                            <TreeTableColumn fx:id="c9" prefWidth="97.60000610351562" text="Date" />
+                            <TreeTableColumn fx:id="c10" prefWidth="112.79998779296875" text="Doctor" />
+                              <TreeTableColumn fx:id="c11" prefWidth="74.39996337890625" text="Article" />
+                              <TreeTableColumn fx:id="c12" prefWidth="325.60003662109375" text="Name" />
+                              <TreeTableColumn fx:id="c13" prefWidth="88.0" text="Quantity" />
+                              <TreeTableColumn fx:id="c14" prefWidth="75.0" text="Consumed" />
                           </columns>
                         </TreeTableView>
-                        <ComboBox fx:id="prescFilter_combo" layoutX="607.0" layoutY="22.0" prefHeight="25.0" prefWidth="170.0" />
                         <Label layoutX="10.0" layoutY="26.0" prefHeight="17.0" prefWidth="577.0" text="Here you can see all the prescriptions ever issued to you">
                            <font>
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <ButtonBar layoutX="6.0" layoutY="514.0" prefHeight="40.0" prefWidth="768.0">
+                        <ButtonBar layoutX="6.0" layoutY="501.0" prefHeight="54.0" prefWidth="770.0">
                           <buttons>
                             <Button fx:id="logOut2_button" mnemonicParsing="false" text="Logout" />
                               <Label prefHeight="17.0" prefWidth="261.0" />
@@ -97,7 +97,7 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="200.0">
                      <children>
-                        <ButtonBar focusTraversable="false" layoutX="6.0" layoutY="514.0" prefHeight="40.0" prefWidth="771.0">
+                        <ButtonBar focusTraversable="false" layoutX="6.0" layoutY="501.0" prefHeight="54.0" prefWidth="770.0">
                           <buttons>
                               <Button fx:id="logOut3_button" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Logout" />
                               <Label prefHeight="17.0" prefWidth="261.0" />
@@ -106,7 +106,7 @@
                               <Button fx:id="cancel_button" mnemonicParsing="false" text="Cancel" />
                           </buttons>
                         </ButtonBar>
-                        <ListView focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0" />
+                        <ListView focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="447.0" prefWidth="771.0" />
                         <TextField fx:id="firstName_text" layoutX="235.0" layoutY="72.0" prefHeight="26.0" prefWidth="220.0" />
                         <TextField fx:id="lastName_text" layoutX="235.0" layoutY="116.0" prefHeight="26.0" prefWidth="220.0" />
                         <DatePicker fx:id="dPicker" layoutX="235.0" layoutY="203.0" maxHeight="26.0" prefHeight="26.0" prefWidth="220.0" />

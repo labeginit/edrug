@@ -23,7 +23,8 @@ public class DAOPrescription {
     private List<PrescriptionLine> specification = new ArrayList<>();
     private Medicine medicine;
     private int article;
-    private int quantity;
+    private int quantityPrescribed;
+    private int quantityConsumed;
     private String instructions;
     private int linesAffected = 0;
     private DAOCommon common = new DAOCommon();
@@ -47,10 +48,10 @@ public class DAOPrescription {
                     specification = prescription.getSpecification();
                     for (PrescriptionLine element: specification) {
                         article = element.getMedicine().getArticleNo();
-                        quantity = element.getQuantity();
+                        quantityPrescribed = element.getQuantityPrescribed();
                         instructions = element.getInstructions();
                         String queryLine = "INSERT INTO `edrugs_test`.`Prescription_has_Medicine` (`prescription_id`, `prescription_patient_ssn`, `article`, `quantity_prescribed`, `quantity_consumed`, `instructions`) VALUES (?, ?, ?, ?, 0, ?);";
-                        linesAffected = linesAffected + common.insertPrescriptionLine(queryLine, id, patientSSN, article, quantity, instructions);
+                        linesAffected = linesAffected + common.insertPrescriptionLine(queryLine, id, patientSSN, article, quantityPrescribed, instructions);
                     }
                 } else {
                     throw new NullPointerException("The prescription object is null");

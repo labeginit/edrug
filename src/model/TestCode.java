@@ -131,10 +131,10 @@ public class TestCode {
         commonMethods.updateMedicine(medicine);*/
 
   /*      List<PrescriptionLine> lines = new ArrayList<>();
-        PrescriptionLine line1 = new PrescriptionLine(3, (Patient) commonMethods.getUser("660530-3910"), commonMethods.getMedicine(10001), 1, "1 pill a day 4 days");
+        PrescriptionLine line1 = new PrescriptionLine(4, (Patient) commonMethods.getUser("660530-3910"), commonMethods.getMedicine(10001), 1, "1 pill a day 4 days");
         lines.add(line1);
 
-        Prescription prescription = new Prescription(3, (Doctor) commonMethods.getUser("860305-0731"), (Patient) commonMethods.getUser("660530-3910"), java.sql.Date.valueOf("2020-04-30"), "fever", lines);
+        Prescription prescription = new Prescription(4, (Doctor) commonMethods.getUser("860305-0731"), (Patient) commonMethods.getUser("660530-3910"), java.sql.Date.valueOf("2020-04-30"), "fever", lines);
         int added = commonMethods.addPrescription(prescription);
         System.out.println(added);
 */

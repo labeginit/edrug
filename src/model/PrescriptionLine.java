@@ -1,17 +1,19 @@
 package model;
 
-public class PrescriptionLine {
+public class PrescriptionLine extends PrescriptionParent{
     private int prescId;
     private Medicine medicine;
     private Patient patient;
-    private int quantity;
+    private int quantityPrescribed;
+    private int quantityConsumed;
     private String instructions;
 
-    public PrescriptionLine(int prescId, Patient patient, Medicine medicine, int quantity, String instructions){
+    public PrescriptionLine(int prescId, Patient patient, Medicine medicine, int quantityPrescribed, int quantityConsumed, String instructions){
         setPrescId(prescId);
         setPatient(patient);
         setMedicine(medicine);
-        setQuantity(quantity);
+        setQuantityPrescribed(quantityPrescribed);
+        setQuantityConsumed(quantityConsumed);
         setInstructions(instructions);
     }
 
@@ -27,8 +29,12 @@ public class PrescriptionLine {
         this.medicine = medicine;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setQuantityPrescribed(int quantityPrescribed) {
+        this.quantityPrescribed = quantityPrescribed;
+    }
+
+    public void setQuantityConsumed(int quantityConsumed) {
+        this.quantityConsumed = quantityConsumed;
     }
 
     public void setInstructions(String instructions) {
@@ -47,22 +53,28 @@ public class PrescriptionLine {
         return medicine;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public int getQuantityPrescribed() {
+        return quantityPrescribed;
+    }
+
+    public int getQuantityConsumed() {
+        return quantityConsumed;
     }
 
     public String getInstructions() {
         return instructions;
     }
 
+
     @Override
     public String toString() {
         return "PrescriptionLine{" +
-                "prescId=" + prescId +
-                ", medicine=" + medicine +
-                ", patient=" + patient +
-                ", quantity=" + quantity +
-                ", instructions='" + instructions + '\'' +
+                "prescId=" + getPrescId() +
+                ", medicine=" + getMedicine() +
+                ", patient=" + getPatient() +
+                ", quantityPrescribed=" + getQuantityPrescribed() +
+                ", quantityConsumed=" + getQuantityConsumed() +
+                ", instructions='" + getInstructions() + '\'' +
                 '}';
     }
 }
