@@ -79,15 +79,15 @@
                               <Label prefHeight="17.0" prefWidth="261.0" />
                           </buttons>
                         </ButtonBar>
-                        <SplitPane dividerPositions="0.29797979797979796" focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="447.0" prefWidth="771.0">
+                        <SplitPane dividerPositions="0.3782495667244367" focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="447.0" prefWidth="771.0">
                           <items>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                  <children>
                                     <TableView fx:id="prescriptionTableView" focusTraversable="false" prefHeight="445.0" prefWidth="226.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                       <columns>
-                                        <TableColumn fx:id="c9" maxWidth="76.6666568517685" prefWidth="76.6666568517685" text="Date" />
-                                        <TableColumn fx:id="c10" maxWidth="110.66659164428711" minWidth="40.0" prefWidth="76.66671752929688" text="Doctor" />
-                                          <TableColumn fx:id="c101" maxWidth="72.6666259765625" prefWidth="72.6666259765625" text="Due Date" />
+                                        <TableColumn fx:id="c9" maxWidth="102.00000035762787" prefWidth="94.6666568517685" text="Date" />
+                                        <TableColumn fx:id="c10" maxWidth="105.33331298828125" minWidth="40.0" prefWidth="105.33331298828125" text="Doctor" />
+                                          <TableColumn fx:id="c101" maxWidth="108.66668701171875" minWidth="0.0" prefWidth="0.0" text="Due Date" />
                                       </columns>
                                        <columnResizePolicy>
                                           <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -100,9 +100,9 @@
                                     <TableView fx:id="prescriptionLineTableView" focusTraversable="false" prefHeight="445.0" prefWidth="537.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                       <columns>
                                         <TableColumn fx:id="c11" prefWidth="62.66664254665375" text="Article" />
-                                        <TableColumn fx:id="c12" prefWidth="317.3333320617676" text="Name" />
-                                          <TableColumn fx:id="c13" prefWidth="58.6666259765625" text="Quantity" />
-                                          <TableColumn fx:id="c14" prefWidth="97.33328247070312" text="Qty Consumed" />
+                                        <TableColumn fx:id="c12" prefWidth="277.99996185302734" text="Name" />
+                                          <TableColumn fx:id="c13" prefWidth="46.6666259765625" text="Q-ty" />
+                                          <TableColumn fx:id="c14" prefWidth="86.66673787434894" text="Q-ty Consumed" />
                                       </columns>
                                     </TableView>
                                  </children>

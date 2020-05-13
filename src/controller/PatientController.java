@@ -298,33 +298,10 @@ public class PatientController implements Initializable {
         //TableView end
 
         //TreeTableView begin
-        // temporary data
 
-        List<PrescriptionLine> lines1 = new ArrayList<>();
-        PrescriptionLine line1 = new PrescriptionLine(4, (Patient) commonMethods.getUser("660530-3910"), commonMethods.getMedicine(10001), 3, 1, "1 pill a day 4 days");
-        lines1.add(line1);
-        PrescriptionLine line2 = new PrescriptionLine(4, (Patient) commonMethods.getUser("660530-3910"), commonMethods.getMedicine(10003), 2, 0, "2 pills a day 1 month");
-        lines1.add(line2);
-
-        Prescription prescription1 = new Prescription(4, (Doctor) commonMethods.getUser("860305-0731"), (Patient) commonMethods.getUser("200910-3168"), java.sql.Date.valueOf("2020-04-30"), java.sql.Date.valueOf("2021-04-29"), "fever", lines1);
-
-        List<PrescriptionLine> lines2 = new ArrayList<>();
-        PrescriptionLine line3 = new PrescriptionLine(4, (Patient) commonMethods.getUser("660530-3910"), commonMethods.getMedicine(10002), 1, 0, "1 pill a day 4 days");
-        lines2.add(line3);
-        PrescriptionLine line4 = new PrescriptionLine(4, (Patient) commonMethods.getUser("660530-3910"), commonMethods.getMedicine(10005), 6, 2, "2 pills a day 1 month");
-        lines2.add(line4);
-
-
-        Prescription prescription2 = new Prescription(4, (Doctor) commonMethods.getUser("111111-1111"), (Patient) commonMethods.getUser("200910-3168"), java.sql.Date.valueOf("2020-05-10"), java.sql.Date.valueOf("2021-05-09"),"cough", lines2);
-        ArrayList<Prescription> arr = new ArrayList<>();
-        arr.add(prescription1);
-        arr.add(prescription2);
-        prescrList = FXCollections.observableArrayList(commonMethods.getPrescriptionList(UserSingleton.getOurInstance().getUser()));
+        prescrList = FXCollections.observableArrayList(commonMethods.getPrescriptionList(currentUser));
         prescrLines = FXCollections.observableArrayList();
-
-
         drawPrescriptionTables(prescrList);
-
 
         //TreeTableView end
     }
@@ -356,9 +333,7 @@ public class PatientController implements Initializable {
 
     private void loadRowData(){
         for (Prescription selectedRow: prescriptionTableView.getSelectionModel().getSelectedItems()) {
-            prescrLines.setAll(commonMethods.getPrescriptionLineList(selectedRow.getId(), UserSingleton.getOurInstance().getUser()));
-
-            //prescrLines.setAll(selectedRow.getSpecification());
+            prescrLines.setAll(commonMethods.getPrescriptionLineList(selectedRow.getId(), currentUser));
         }
         prescriptionLineTableView.setItems(prescrLines);
     }

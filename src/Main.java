@@ -9,8 +9,6 @@ import model.*;
 import model.dBConnection.CommonMethods;
 import model.dBConnection.DBConnection;
 
-import java.io.IOException;
-
 import static controller.PatientController.cart;
 
 public class Main extends Application {
@@ -21,7 +19,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         DBConnection.getInstance();
         Parent root = FXMLLoader.load(getClass().getResource("view/loginView.fxml"));
-        primaryStage.setTitle("e-DRUGS");
+        primaryStage.setTitle("e-Drugs");
         primaryStage.setScene(new Scene(root));
         root.getStylesheets().add(getClass().getResource("FileUtil/layout.css").toExternalForm());
         

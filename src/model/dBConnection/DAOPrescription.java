@@ -124,11 +124,11 @@ protected List<PrescriptionLine> retrievePrescriptionLines(int prescriptionId, U
     try {
         if (!DBConnection.dbConnection.isClosed()) {
             if (currentUser instanceof Patient) {
-                resultSet = common.retrieveSet("SELECT * FROM Prescription_has_Medicine WHERE prescription_id = ? and prescription_patient_ssn = '?';", String.valueOf(prescriptionId), currentUser.getSsn());
+                resultSet = common.retrieveSet("SELECT * FROM Prescription_has_Medicine WHERE prescription_id = ? and prescription_patient_ssn = ?;", String.valueOf(prescriptionId), currentUser.getSsn());
             } else if (currentUser instanceof Doctor){
                 resultSet = common.retrieveSet("SELECT prescription_id, prescription_patient_ssn, article, quantity_prescribed, quantity_consumed, instructions FROM Prescription_has_Medicine " +
                         "JOIN Prescription ON id = prescription_id AND prescription_patient_ssn = patient_ssn " +
-                        "WHERE id = ? AND user_ssn = '?' " +
+                        "WHERE id = ? AND user_ssn = ? " +
                         "ORDER BY id, prescription_patient_ssn;", String.valueOf(prescriptionId), currentUser.getSsn());
             } else {
                 resultSet = common.retrieveSet("SELECT * FROM Prescription_has_Medicine WHERE prescription_id = ?;", String.valueOf(prescriptionId));
@@ -164,9 +164,9 @@ protected List<PrescriptionLine> retrievePrescriptionLines(int prescriptionId, U
         String query = "";
         List<Prescription> prescList = new ArrayList<>();
         if (currentUser instanceof Patient) {
-            query = "SELECT * from Prescription WHERE patient_ssn = '?';";
+            query = "SELECT * from Prescription WHERE patient_ssn = ?;";
         } else if (currentUser instanceof Doctor){
-            query = "SELECT * from Prescription WHERE user_ssn = '?';";
+            query = "SELECT * from Prescription WHERE user_ssn = ?;";
         } else {
             query = "SELECT * from Prescription;";
         }
@@ -181,7 +181,7 @@ protected List<PrescriptionLine> retrievePrescriptionLines(int prescriptionId, U
                     }
                 } else {
                     System.out.println("Empty resultSet");
-                    //return prescList;
+                    return prescList;
                 }
             }
         } catch (SQLException ex) {
@@ -193,7 +193,7 @@ protected List<PrescriptionLine> retrievePrescriptionLines(int prescriptionId, U
             try {
                 resultSet.close();
             }catch (Exception ex) {
-                ex.printStackTrace();
+                ex.getSuppressed();
             }
             return prescList;
         }
