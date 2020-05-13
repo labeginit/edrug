@@ -298,13 +298,14 @@ public class PatientController implements Initializable {
 
         //TreeTableView begin
         // temporary data
+
         List<PrescriptionLine> lines1 = new ArrayList<>();
         PrescriptionLine line1 = new PrescriptionLine(4, (Patient) commonMethods.getUser("660530-3910"), commonMethods.getMedicine(10001), 3, 1, "1 pill a day 4 days");
         lines1.add(line1);
         PrescriptionLine line2 = new PrescriptionLine(4, (Patient) commonMethods.getUser("660530-3910"), commonMethods.getMedicine(10003), 2, 0, "2 pills a day 1 month");
         lines1.add(line2);
 
-        Prescription prescription1 = new Prescription(4, (Doctor) commonMethods.getUser("860305-0731"), (Patient) commonMethods.getUser("660530-3910"), java.sql.Date.valueOf("2020-04-30"), "fever", lines1);
+        Prescription prescription1 = new Prescription(4, (Doctor) commonMethods.getUser("860305-0731"), (Patient) commonMethods.getUser("200910-3168"), java.sql.Date.valueOf("2020-04-30"), "fever", lines1);
 
         List<PrescriptionLine> lines2 = new ArrayList<>();
         PrescriptionLine line3 = new PrescriptionLine(4, (Patient) commonMethods.getUser("660530-3910"), commonMethods.getMedicine(10002), 1, 0, "1 pill a day 4 days");
@@ -312,22 +313,28 @@ public class PatientController implements Initializable {
         PrescriptionLine line4 = new PrescriptionLine(4, (Patient) commonMethods.getUser("660530-3910"), commonMethods.getMedicine(10005), 6, 2, "2 pills a day 1 month");
         lines2.add(line4);
 
-        Prescription prescription2 = new Prescription(4, (Doctor) commonMethods.getUser("111111-1111"), (Patient) commonMethods.getUser("660530-3910"), java.sql.Date.valueOf("2020-05-10"), "cough", lines2);
 
-        prescrList.add(prescription1);
-        prescrList.add(prescription2);
+        Prescription prescription2 = new Prescription(4, (Doctor) commonMethods.getUser("111111-1111"), (Patient) commonMethods.getUser("200910-3168"), java.sql.Date.valueOf("2020-05-10"), "cough", lines2);
+        ArrayList<Prescription> arr = new ArrayList<>();
+        arr.add(prescription1);
+        arr.add(prescription2);
+        ObservableList<Prescription> prescrList = FXCollections.observableArrayList(arr);
+
+     //   prescrList.add(prescription1);
+     //   prescrList.add(prescription2);
+        for (Prescription el: prescrList) {
+            System.out.println(el);
+        }
 
 
-        c9.setCellValueFactory(new PropertyValueFactory<Prescription, Date>("date"));
-        c10.setCellValueFactory(new PropertyValueFactory<Prescription, String>("doctorName"));
-        c101.setCellValueFactory(new PropertyValueFactory<Prescription, Date>("expDate"));
+
+
+        drawPrescriptionTable(prescrList);
+
         c11.setCellValueFactory(new PropertyValueFactory<PrescriptionLine, Medicine>("article"));
         c12.setCellValueFactory(new PropertyValueFactory<PrescriptionLine, String>("name"));
         c13.setCellValueFactory(new PropertyValueFactory<PrescriptionLine, Integer>("quantityPrescribed"));
         c14.setCellValueFactory(new PropertyValueFactory<PrescriptionLine, Integer>("quantityConsumed"));
-
-
-        drawTreeTable(prescrList);
 
         //TreeTableView end
     }
@@ -341,8 +348,9 @@ public class PatientController implements Initializable {
         userCommon.switchScene(event, "/view/shoppingCartView.fxml");
     }
 
-    private void drawTreeTable(ObservableList<Prescription> prescriptions) {
-        TreeItem<PrescriptionParent> dep0Node = null;
+    private void drawPrescriptionTable(ObservableList<Prescription> prescriptions) {
+
+       /* TreeItem<PrescriptionParent> dep0Node = null;
         this.rootNode = new TreeItem<>();
         rootNode.setExpanded(true);
         for (Prescription element : prescriptions) {
@@ -355,8 +363,12 @@ public class PatientController implements Initializable {
                 }
             }
             dep0Node = null;
-        }
-        treeTableView.setRoot(rootNode);
+        }*/
+        c9.setCellValueFactory(new PropertyValueFactory<Prescription, Date>("date"));
+        c10.setCellValueFactory(new PropertyValueFactory<Prescription, String>("doctorName"));
+        // c101.setCellValueFactory(new PropertyValueFactory<Prescription, Date>("expDate"));
+
+        prescriptionTableView.setItems(prescriptions);
     }
 
 

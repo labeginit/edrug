@@ -9,6 +9,7 @@ public class Prescription extends PrescriptionParent{
     private Doctor doctor;
     private Date date;
     private String diagnosis;
+    private String doctorName;
     private List<PrescriptionLine> specification;
 
     public Prescription(int id, Doctor doctor, Patient patient, Date date,  String diagnosis, List<PrescriptionLine> specification){
@@ -18,6 +19,7 @@ public class Prescription extends PrescriptionParent{
         setDate(date);
         setDiagnosis(diagnosis);
         setSpecification(specification);
+        setDoctorName(doctor);
     }
 
     public void setId(int id) {
@@ -69,9 +71,12 @@ public class Prescription extends PrescriptionParent{
     }
 
     public String getDoctorName() {
-        return this.doctor.getFirstName() + " " + this.doctor.getLastName();
+        return doctorName;
     }
 
+    public void setDoctorName(Doctor doctor) {
+        this.doctorName = doctor.getFirstName() + " " + doctor.getLastName();
+    }
 
     @Override
     public String toString() {

@@ -83,7 +83,7 @@
                           <items>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                  <children>
-                                    <TableView prefHeight="445.0" prefWidth="226.0">
+                                    <TableView fx:id="prescriptionTableView" prefHeight="445.0" prefWidth="226.0">
                                       <columns>
                                         <TableColumn fx:id="c9" prefWidth="75.0" text="Date" />
                                         <TableColumn fx:id="c10" prefWidth="75.0" text="Doctor" />
@@ -94,7 +94,7 @@
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                  <children>
-                                    <TableView prefHeight="445.0" prefWidth="537.0">
+                                    <TableView fx:id="prescriptionLineTableView" prefHeight="445.0" prefWidth="537.0">
                                       <columns>
                                         <TableColumn fx:id="c11" prefWidth="62.66664254665375" text="Article" />
                                         <TableColumn fx:id="c12" prefWidth="317.3333320617676" text="Name" />
