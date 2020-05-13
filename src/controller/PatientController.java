@@ -319,7 +319,7 @@ public class PatientController implements Initializable {
         ArrayList<Prescription> arr = new ArrayList<>();
         arr.add(prescription1);
         arr.add(prescription2);
-        prescrList = FXCollections.observableArrayList(arr);
+        prescrList = FXCollections.observableArrayList(commonMethods.getPrescriptionList(UserSingleton.getOurInstance().getUser()));
         prescrLines = FXCollections.observableArrayList();
 
 
@@ -340,19 +340,6 @@ public class PatientController implements Initializable {
 
     private void drawPrescriptionTables(ObservableList<Prescription> prescriptions) {
 
-       /* TreeItem<PrescriptionParent> dep0Node = null;
-        this.rootNode = new TreeItem<>();
-        rootNode.setExpanded(true);
-        for (Prescription element : prescriptions) {
-            TreeItem<PrescriptionParent> empLeaf = new TreeItem<>(element);
-            for (PrescriptionLine depNode : element.getSpecification()) {
-                if ((depNode.getPrescId() == (element.getId()) && (depNode.getPatient() == element.getPatient()))) {
-                    dep0Node = new TreeItem<>(depNode);
-                    empLeaf.getChildren().add(dep0Node);
-                }
-            }
-            dep0Node = null;
-        }*/
         c9.setCellValueFactory(new PropertyValueFactory<Prescription, Date>("startDate"));
         c10.setCellValueFactory(new PropertyValueFactory<Prescription, String>("doctorName"));
         c101.setCellValueFactory(new PropertyValueFactory<Prescription, Date>("endDate"));
@@ -369,8 +356,9 @@ public class PatientController implements Initializable {
 
     private void loadRowData(){
         for (Prescription selectedRow: prescriptionTableView.getSelectionModel().getSelectedItems()) {
-            //selectedRow.getId(), selectedRow.getPatient().getSsn()
-            prescrLines.setAll(selectedRow.getSpecification());
+            prescrLines.setAll(commonMethods.getPrescriptionLineList(selectedRow.getId(), UserSingleton.getOurInstance().getUser()));
+
+            //prescrLines.setAll(selectedRow.getSpecification());
         }
         prescriptionLineTableView.setItems(prescrLines);
     }
