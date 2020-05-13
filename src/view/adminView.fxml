@@ -29,7 +29,7 @@
                                         <Font size="13.0" />
                                     </font>
                                 </Label>
-                                <TableView fx:id="patientTableView" focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0">
+                                <TableView fx:id="patientTableView" focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="447.0" prefWidth="771.0">
                                     <columns>
                                         <TableColumn fx:id="patientSSNTable" prefWidth="144.0" text="SSN" />
                                         <TableColumn fx:id="patientLastNameTable" prefWidth="176.0" text="Last Name" />
@@ -39,7 +39,7 @@
                                         <TableColumn fx:id="patientActive" editable="false" prefWidth="56.0" text="Active" />
                                     </columns>
                                 </TableView>
-                                <ButtonBar layoutX="6.0" layoutY="514.0" prefHeight="40.0" prefWidth="771.0">
+                                <ButtonBar layoutX="6.0" layoutY="501.0" prefHeight="54.0" prefWidth="770.0">
                                     <buttons>
                                         <Button id="logOutButton" fx:id="logOutPatButton" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Logout" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
@@ -62,7 +62,7 @@
                                         <Font size="13.0" />
                                     </font>
                                 </Label>
-                                <TableView fx:id="doctorTableView" focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0">
+                                <TableView fx:id="doctorTableView" focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="447.0" prefWidth="771.0">
                                     <columns>
                                         <TableColumn fx:id="doctorSSNTable" prefWidth="142.0" text="SSN" />
                                         <TableColumn fx:id="doctorLastNameTable" prefWidth="174.0" text="Last name" />
@@ -72,7 +72,7 @@
                                         <TableColumn fx:id="doctorActive" editable="false" prefWidth="52.666748046875" text="Active" />
                                     </columns>
                                 </TableView>
-                                <ButtonBar layoutX="6.0" layoutY="514.0" prefHeight="40.0" prefWidth="771.0">
+                                <ButtonBar layoutX="6.0" layoutY="501.0" prefHeight="54.0" prefWidth="770.0">
                                     <buttons>
                                         <Button id="logOutButton" fx:id="logOutDocButton" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Logout" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
@@ -95,7 +95,7 @@
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <TableView fx:id="adminTable" focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0">
+                        <TableView fx:id="adminTable" focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="447.0" prefWidth="771.0">
                            <columns>
                               <TableColumn fx:id="adminSSNtable" prefWidth="142.0" text="SSN" />
                               <TableColumn fx:id="adminLastNameTable" prefWidth="174.0" text="Last name" />
@@ -105,7 +105,7 @@
                               <TableColumn fx:id="adminActiveTable" editable="false" prefWidth="52.666748046875" text="Active" />
                            </columns>
                         </TableView>
-                        <ButtonBar layoutX="6.0" layoutY="514.0" prefHeight="40.0" prefWidth="771.0">
+                        <ButtonBar layoutX="6.0" layoutY="501.0" prefHeight="54.0" prefWidth="770.0">
                            <buttons>
                               <Button id="logOutButton" fx:id="logOutAdminButton" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Logout" />
                               <Label prefHeight="17.0" prefWidth="261.0" />
@@ -123,7 +123,7 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="379.0" prefWidth="586.0">
                             <children>
-                                <ButtonBar layoutX="6.0" layoutY="514.0" prefHeight="40.0" prefWidth="771.0">
+                                <ButtonBar layoutX="6.0" layoutY="501.0" prefHeight="54.0" prefWidth="770.0">
                                     <buttons>
                                         <Button id="logOutButton" fx:id="logOutMedButton" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Logout" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
@@ -131,7 +131,7 @@
                                         <Label prefHeight="17.0" prefWidth="261.0" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
                                     </buttons></ButtonBar>
-                                <TableView fx:id="storeView" editable="true" focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0">
+                                <TableView fx:id="storeView" editable="true" focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="447.0" prefWidth="771.0">
                                     <columns>
                                         <TableColumn fx:id="storeArticle" prefWidth="85.0" text="Article" />
                                         <TableColumn fx:id="storeName" minWidth="4.0" prefWidth="213.60000610351562" text="Name" />
@@ -158,7 +158,7 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="200.0">
                             <children>
-                                <ButtonBar layoutX="6.0" layoutY="514.0" prefHeight="40.0" prefWidth="771.0">
+                                <ButtonBar layoutX="6.0" layoutY="501.0" prefHeight="54.0" prefWidth="770.0">
                                     <buttons>
                                         <Button id="logOutButton" fx:id="logOutMedicineButton" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Logout" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
@@ -167,7 +167,7 @@
                                         <Button id="cancelButton" fx:id="cancelButtonMedicine" mnemonicParsing="false" text="Cancel" />
                                     </buttons>
                                 </ButtonBar>
-                                <ListView focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0" />
+                                <ListView focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="447.0" prefWidth="771.0" />
                                 <TextField fx:id="nameMedicine" layoutX="235.0" layoutY="159.0" prefHeight="26.0" prefWidth="440.0" />
                                 <TextField fx:id="articleMedicine" layoutX="235.0" layoutY="72.0" prefHeight="25.0" prefWidth="220.0" />
                                 <TextField fx:id="packageMedicine" layoutX="235.0" layoutY="204.0" prefHeight="25.0" prefWidth="220.0" />
@@ -221,7 +221,7 @@
                                         <Font size="13.0" />
                                     </font>
                                 </Label>
-                                <Label layoutX="54.0" layoutY="481.0" prefHeight="18.0" prefWidth="166.0" text="Type ">
+                                <Label layoutX="471.0" layoutY="77.0" prefHeight="19.0" prefWidth="40.0" text="Type ">
                                     <font>
                                         <Font size="13.0" />
                                     </font>
@@ -232,7 +232,7 @@
                                     </font>
                                 </Label>
                                 <ChoiceBox fx:id="prodGroupMedicine" layoutX="235.0" layoutY="116.0" prefWidth="220.0" />
-                                <ChoiceBox fx:id="onPrescrMedicine" layoutX="235.0" layoutY="476.0" prefWidth="220.0" />
+                                <ChoiceBox fx:id="onPrescrMedicine" layoutX="532.0" layoutY="72.0" prefWidth="220.0" />
                                 <Label fx:id="articleStar" layoutX="214.0" layoutY="77.0" text="*" textFill="RED" />
                                 <Label fx:id="prodGroupStar" layoutX="214.0" layoutY="120.0" text="*" textFill="RED" />
                                 <Label fx:id="nameMedicineStar" layoutX="214.0" layoutY="164.0" text="*" textFill="RED" />
@@ -242,7 +242,7 @@
                                 <Label fx:id="priceStar" layoutX="214.0" layoutY="342.0" text="*" textFill="RED" />
                                 <Label fx:id="quantityStar" layoutX="214.0" layoutY="388.0" prefHeight="17.0" prefWidth="3.0" text="*" textFill="RED" />
                                 <Label fx:id="searchStar" layoutX="214.0" layoutY="437.0" text="*" textFill="RED" />
-                                <Label fx:id="typeStar" layoutX="214.0" layoutY="481.0" text="*" textFill="RED" />
+                                <Label fx:id="typeStar" layoutX="512.0" layoutY="77.0" text="*" textFill="RED" />
                             </children>
                         </AnchorPane>
                     </content>
@@ -256,8 +256,7 @@
                                         <Font size="13.0" />
                                     </font>
                                 </Label>
-                                <Button fx:id="confirmAddButton" layoutX="699.0" layoutY="485.0" mnemonicParsing="false" text="Confirm" />
-                                <TableView fx:id="changeTable" editable="true" focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0">
+                                <TableView fx:id="changeTable" editable="true" focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="447.0" prefWidth="771.0">
                                     <columns>
                                         <TableColumn fx:id="changeSSNTable" prefWidth="114.0" text="SSN" />
                                         <TableColumn fx:id="changeLastNameTable" prefWidth="172.6667022705078" text="Last name" />
@@ -268,7 +267,7 @@
                                         <TableColumn fx:id="changeActive" prefWidth="63.3333740234375" text="Active" />
                                     </columns>
                                 </TableView>
-                                <ButtonBar layoutX="6.0" layoutY="514.0" prefHeight="40.0" prefWidth="771.0">
+                                <ButtonBar layoutX="6.0" layoutY="501.0" prefHeight="54.0" prefWidth="770.0">
                                     <buttons>
                                         <Button id="logOutButton" fx:id="logOutEditButton" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Logout" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
@@ -286,7 +285,7 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="200.0">
                             <children>
-                                <ButtonBar layoutX="6.0" layoutY="514.0" prefHeight="40.0" prefWidth="771.0">
+                                <ButtonBar layoutX="6.0" layoutY="501.0" prefHeight="54.0" prefWidth="770.0">
                                     <buttons>
                                         <Button id="logOutButton" fx:id="logOutAddButton" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Logout" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
@@ -295,7 +294,7 @@
                                         <Button id="cancelButton" fx:id="cancelButtonAdd" mnemonicParsing="false" text="Cancel" />
                                     </buttons>
                                 </ButtonBar>
-                                <ListView focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0" />
+                                <ListView focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="447.0" prefWidth="771.0" />
                                 <TextField fx:id="SSNtextAdd" layoutX="235.0" layoutY="159.0" prefHeight="26.0" prefWidth="220.0" />
                                 <TextField fx:id="firstNameTextAdd" layoutX="235.0" layoutY="72.0" prefHeight="25.0" prefWidth="220.0" />
                                 <TextField fx:id="lastNameTextAdd" layoutX="235.0" layoutY="116.0" prefHeight="25.0" prefWidth="220.0" />
@@ -363,13 +362,13 @@
                                 <Label fx:id="emailStarAdd" layoutX="214.0" layoutY="342.0" text="*" textFill="RED" />
                                 <Label fx:id="pass2starAdd" layoutX="214.0" layoutY="437.0" text="*" textFill="RED" />
                                 <Label fx:id="pass1starAdd" layoutX="214.0" layoutY="388.0" text="*" textFill="RED" />
-                                <TextField fx:id="roleTextAdd" layoutX="235.0" layoutY="474.0" prefHeight="25.0" prefWidth="220.0" />
-                                <Label layoutX="54.0" layoutY="478.0" prefHeight="18.0" prefWidth="166.0" text="Role (1=P, 2=D)">
+                                <TextField fx:id="roleTextAdd" layoutX="601.0" layoutY="72.0" prefHeight="25.0" prefWidth="151.0" />
+                                <Label layoutX="472.0" layoutY="77.0" prefHeight="19.0" prefWidth="98.0" text="Role (1=P, 2=D)">
                                     <font>
                                         <Font size="13.0" />
                                     </font>
                                 </Label>
-                                <Label fx:id="roleStarAdd" layoutX="214.0" layoutY="478.0" text="*" textFill="RED" />
+                                <Label fx:id="roleStarAdd" layoutX="580.0" layoutY="77.0" text="*" textFill="RED" />
                                 <DatePicker fx:id="datePickerAdd" layoutX="235.0" layoutY="203.0" prefHeight="26.0" prefWidth="226.0" />
                                 <PasswordField fx:id="pass1_textAdd" layoutX="235.0" layoutY="385.0" prefHeight="25.0" prefWidth="220.0" promptText=" * * * * * * * * * * * " />
                                 <PasswordField fx:id="pass2_textAdd" layoutX="235.0" layoutY="432.0" prefHeight="25.0" prefWidth="220.0" promptText=" * * * * * * * * * * * " />
@@ -387,7 +386,7 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="200.0">
                             <children>
-                                <ButtonBar layoutX="6.0" layoutY="514.0" prefHeight="40.0" prefWidth="771.0">
+                                <ButtonBar layoutX="6.0" layoutY="501.0" prefHeight="54.0" prefWidth="770.0">
                                     <buttons>
                                         <Button id="logOutButton" fx:id="logOutMyButton" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Logout" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
@@ -396,7 +395,7 @@
                                         <Button id="cancelButton" fx:id="cancelButton" mnemonicParsing="false" text="Cancel" />
                                     </buttons>
                                 </ButtonBar>
-                                <ListView focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="454.0" prefWidth="771.0" />
+                                <ListView focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="447.0" prefWidth="771.0" />
                                 <TextField fx:id="SSNtext" editable="false" layoutX="235.0" layoutY="159.0" prefHeight="26.0" prefWidth="220.0" />
                                 <TextField fx:id="firstNameText" layoutX="235.0" layoutY="72.0" prefHeight="26.0" prefWidth="220.0" />
                                 <TextField fx:id="lastNameText" layoutX="235.0" layoutY="116.0" prefHeight="26.0" prefWidth="220.0" />
