@@ -30,7 +30,7 @@ public class PatientController implements Initializable {
     private UserCommon userCommon = new UserCommon();
     private User currentUser;
     public LocalDate localDate;
-    public static List<OrderLine> cart = new ArrayList<>();
+    private static List<OrderLine> cart = CartSingleton.getOurInstance().getCart();
 
 
     @FXML
@@ -366,7 +366,7 @@ public class PatientController implements Initializable {
                     element.setQuantity(available);
                     commonMethods.updateQuantity(element);
 
-                    RWFile.writeObject(RWFile.cartPath, cart);
+                    //RWFile.writeObject(RWFile.cartPath, cart);
                     tableView.refresh();
                 }
                 element.getCheckBox().setSelected(false);
@@ -379,7 +379,7 @@ public class PatientController implements Initializable {
         for (int i = 0; i < cart.size(); i++) {
             if (cart.get(i).getMedicine().getArticleNo() == selectedElement.getArticleNo()) {
                 cart.get(i).getMedicine().setQuantity(cart.get(i).getMedicine().getQuantity() + 1);
-                cart.get(i).setQuantity(selectedElement.getQuantityReserved() + 1);
+                cart.get(i).setQuantity(cart.get(i).getMedicine().getQuantityReserved() + 1);
                 return true;
             }
         }

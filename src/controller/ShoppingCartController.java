@@ -19,12 +19,11 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
-import static controller.PatientController.cart;
-
 public class ShoppingCartController implements Initializable {
     private User currentUser;
     private CommonMethods commonMethods = new CommonMethods();
     private UserCommon userCommon = new UserCommon();
+    private static List<OrderLine> cart = CartSingleton.getOurInstance().getCart();
 
     @FXML
     private Button logOut_button;
@@ -86,10 +85,10 @@ public class ShoppingCartController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        if (RWFile.readObject(RWFile.cartPath) != null) {
-            cart = RWFile.readObject(RWFile.cartPath);
+        //if (RWFile.readObject(RWFile.cartPath) != null) {
+        //    cart = RWFile.readObject(RWFile.cartPath);
             medList = FXCollections.observableList(cart);
-        }
+        //}
         currentUser = UserSingleton.getOurInstance().getUser();
         delivery_combo.setItems(deliveryMethodsCombo);
         payment_combo.setItems(paymentMethodsCombo);
@@ -140,7 +139,7 @@ public class ShoppingCartController implements Initializable {
 
     @FXML
     private void backButtonHandle(ActionEvent event) throws IOException {
-        RWFile.writeObject(RWFile.cartPath, cart);
+       // RWFile.writeObject(RWFile.cartPath, cart);
         userCommon.switchScene(event,"/view/patientView.fxml");
     }
 
@@ -152,24 +151,36 @@ public class ShoppingCartController implements Initializable {
                     @Override
                     public void handle(TableColumn.CellEditEvent<OrderLine, Integer> t) {
                         int q = commonMethods.getMedicine(t.getRowValue().getArticleNo()).getQuantity() + t.getOldValue();
+                        System.out.println(q + " commonMethods.getMedicine(t.getRowValue().getArticleNo()).getQuantity() + t.getOldValue()");
                         Medicine medicine = commonMethods.getMedicine(t.getRowValue().getArticleNo());
                         medicine.setQuantity(q);
+                        System.out.println(medicine.getQuantity() + " med.qty "  +  medicine.getQuantityReserved()+ " med.reserve");
                         int newQuantity;
                         if(q >= t.getNewValue()) {
                             ((OrderLine) t.getTableView().getItems().get(
                                     t.getTablePosition().getRow())
                             ).setQuantity(t.getNewValue());
+                            ((OrderLine) t.getTableView().getItems().get(
+                                    t.getTablePosition().getRow())
+                            ).getMedicine().setQuantityReserved(t.getNewValue());
                             newQuantity = q - t.getNewValue();
+                            System.out.println(newQuantity + " new qty");
                             medicine.setQuantity(newQuantity);
+                          //  System.out.println(medicine.getQuantity() + " med.qty2 "  +  medicine.getQuantityReserved()+ " med.reserve2");
                             calcTotals();
                             commonMethods.updateQuantity(medicine);
                             t.getRowValue().setQuantity(t.getNewValue());
+                            System.out.println(t.getRowValue().getQuantity());
                             cart.get(medList.indexOf(t.getRowValue())).setQuantity(t.getNewValue());
                             medList.get(cart.indexOf(t.getRowValue())).setQuantity(t.getNewValue());
-                            RWFile.writeObject(RWFile.cartPath, cart);
+                        //    RWFile.writeObject(RWFile.cartPath, cart);
 
-                        } else {
+                        } else { // When the user tries to buy more than there is in stock
                             t.getRowValue().setQuantity(q);
+                            System.out.println(t.getRowValue().getQuantity() + " else statement");
+                            medicine.setQuantityReserved(t.getRowValue().getQuantity());
+                            medicine.setQuantity(medicine.getQuantity()-medicine.getQuantityReserved());
+                            commonMethods.updateQuantity(medicine);
                             calcTotals();
                             tableView.refresh();
                         }}
@@ -189,7 +200,9 @@ public class ShoppingCartController implements Initializable {
                     articleNo = element.getArticleNo();
                     medicine = commonMethods.getMedicine(articleNo);
                     quantity = element.getQuantity();
+                    System.out.println(quantity + " qty3");
                     medicine.setQuantity(quantity + medicine.getQuantity());
+                    System.out.println(medicine.getQuantity() + " med qty3");
                     commonMethods.updateQuantity(medicine);
                     remove.add(element);
                     System.out.println(medList.toString() + "removed");
@@ -198,7 +211,7 @@ public class ShoppingCartController implements Initializable {
                 }
             } medList.removeAll(remove);
             cart.removeAll(remove);
-            RWFile.writeObject(RWFile.cartPath, cart);
+         //   RWFile.writeObject(RWFile.cartPath, cart);
             calcTotals();
             tableView.setItems(medList);
         } catch (Exception ex) {

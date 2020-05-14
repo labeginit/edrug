@@ -9,11 +9,12 @@ import model.*;
 import model.dBConnection.CommonMethods;
 import model.dBConnection.DBConnection;
 
-import static controller.PatientController.cart;
+import java.util.List;
 
 public class Main extends Application {
     private CommonMethods commonMethods = new CommonMethods();
     private UserCommon userCommon = new UserCommon();
+    private static List<OrderLine> cart = CartSingleton.getOurInstance().getCart();
 
     @Override
     public void start(Stage primaryStage) throws Exception{
