@@ -85,9 +85,9 @@ public class ShoppingCartController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //if (RWFile.readObject(RWFile.cartPath) != null) {
+        //if (RWFile.readObject(RWFile.cartPath) != null) {  LA: there is no need for file anymore
         //    cart = RWFile.readObject(RWFile.cartPath);
-            medList = FXCollections.observableList(cart);
+        medList = FXCollections.observableList(cart);
         //}
         currentUser = UserSingleton.getOurInstance().getUser();
         delivery_combo.setItems(deliveryMethodsCombo);
@@ -139,7 +139,7 @@ public class ShoppingCartController implements Initializable {
 
     @FXML
     private void backButtonHandle(ActionEvent event) throws IOException {
-       // RWFile.writeObject(RWFile.cartPath, cart);
+       // RWFile.writeObject(RWFile.cartPath, cart);      LA: there is no need for this anymore
         userCommon.switchScene(event,"/view/patientView.fxml");
     }
 
@@ -184,7 +184,7 @@ public class ShoppingCartController implements Initializable {
     }
     @FXML public void onDeleteButtonPressed(ActionEvent ae) {
         try {
-            RWFile.delete();
+          //  RWFile.delete();
             Medicine medicine;
             int quantity;
             int articleNo;

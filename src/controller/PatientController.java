@@ -62,9 +62,6 @@ public class PatientController implements Initializable {
     private TextField maxPrice_text;
 
     @FXML
-    private Button buy_button;
-
-    @FXML
     private TableView<Medicine> tableView;
 
     @FXML
