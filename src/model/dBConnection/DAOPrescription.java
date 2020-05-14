@@ -46,7 +46,7 @@ public class DAOPrescription {
                     linesAffected = common.insertPrescriptionHeader(queryHeader, id, patientSSN, doctorSSN, startdate, diagnosis);
 
                     specification = prescription.getSpecification();
-                    for (PrescriptionLine element: specification) {
+                    for (PrescriptionLine element : specification) {
                         article = element.getMedicine().getArticleNo();
                         quantityPrescribed = element.getQuantityPrescribed();
                         instructions = element.getInstructions();
@@ -67,47 +67,51 @@ public class DAOPrescription {
         }
     }
 
-protected List<PrescriptionLine> retrievePrescriptionLines(String prescriptionId, User currentUser) {
-    specification.clear();
-    try {
-        if (!DBConnection.dbConnection.isClosed()) {
-            if (currentUser instanceof Patient) {
-                if (prescriptionId.equalsIgnoreCase("0")){
-                    resultSet = common.retrieveSet("SELECT * FROM Prescription_has_Medicine WHERE prescription_patient_ssn = ?;", currentUser.getSsn());
-                } else {resultSet = common.retrieveSet("SELECT * FROM Prescription_has_Medicine WHERE prescription_id = ? and prescription_patient_ssn = ?;", String.valueOf(prescriptionId), currentUser.getSsn());}
-            } else if (currentUser instanceof Doctor){
-                if (prescriptionId.equalsIgnoreCase("0")){
-                    resultSet = common.retrieveSet("SELECT prescription_id, prescription_patient_ssn, article, quantity_prescribed, quantity_consumed, instructions FROM Prescription_has_Medicine " +
-                            "JOIN Prescription ON id = prescription_id AND prescription_patient_ssn = patient_ssn " +
-                            "WHERE user_ssn = ? " +
-                            "ORDER BY id, prescription_patient_ssn;", currentUser.getSsn());
-                }else {
-                    resultSet = common.retrieveSet("SELECT prescription_id, prescription_patient_ssn, article, quantity_prescribed, quantity_consumed, instructions FROM Prescription_has_Medicine " +
-                        "JOIN Prescription ON id = prescription_id AND prescription_patient_ssn = patient_ssn " +
-                        "WHERE id = ? AND user_ssn = ? " +
-                        "ORDER BY id, prescription_patient_ssn;", prescriptionId, currentUser.getSsn());
+    protected List<PrescriptionLine> retrievePrescriptionLines(String prescriptionId, User currentUser) {
+        specification.clear();
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                if (currentUser instanceof Patient) {
+                    if (prescriptionId.equalsIgnoreCase("0")) {
+                        resultSet = common.retrieveSet("SELECT * FROM Prescription_has_Medicine WHERE prescription_patient_ssn = ?;", currentUser.getSsn());
+                    } else {
+                        resultSet = common.retrieveSet("SELECT * FROM Prescription_has_Medicine WHERE prescription_id = ? and prescription_patient_ssn = ?;", String.valueOf(prescriptionId), currentUser.getSsn());
+                    }
+                } else if (currentUser instanceof Doctor) {
+                    if (prescriptionId.equalsIgnoreCase("0")) {
+                        resultSet = common.retrieveSet("SELECT prescription_id, prescription_patient_ssn, article, quantity_prescribed, quantity_consumed, instructions FROM Prescription_has_Medicine " +
+                                "JOIN Prescription ON id = prescription_id AND prescription_patient_ssn = patient_ssn " +
+                                "WHERE user_ssn = ? " +
+                                "ORDER BY id, prescription_patient_ssn;", currentUser.getSsn());
+                    } else {
+                        resultSet = common.retrieveSet("SELECT prescription_id, prescription_patient_ssn, article, quantity_prescribed, quantity_consumed, instructions FROM Prescription_has_Medicine " +
+                                "JOIN Prescription ON id = prescription_id AND prescription_patient_ssn = patient_ssn " +
+                                "WHERE id = ? AND user_ssn = ? " +
+                                "ORDER BY id, prescription_patient_ssn;", prescriptionId, currentUser.getSsn());
+                    }
+                } else {
+                    if (prescriptionId.equalsIgnoreCase("0")) {
+                        resultSet = common.retrieveSet("SELECT * FROM Prescription_has_Medicine;");
+                    } else {
+                        resultSet = common.retrieveSet("SELECT * FROM Prescription_has_Medicine WHERE prescription_id = ?;", prescriptionId);
+                    }
                 }
-            } else {
-                if (prescriptionId.equalsIgnoreCase("0")){
-                    resultSet = common.retrieveSet("SELECT * FROM Prescription_has_Medicine;");
-                }else {resultSet = common.retrieveSet("SELECT * FROM Prescription_has_Medicine WHERE prescription_id = ?;", prescriptionId);}
-            }
 
-            if (resultSet != null) {
-                while (resultSet.next()) {
-                    specification.add(createPrescriptionLineObject(resultSet));
+                if (resultSet != null) {
+                    while (resultSet.next()) {
+                        specification.add(createPrescriptionLineObject(resultSet));
+                    }
                 }
             }
+        } catch (SQLException ex) {
+            System.out.println("Error while working with ResultSet!");
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            return specification;
         }
-    } catch (SQLException ex) {
-        System.out.println("Error while working with ResultSet!");
-        ex.printStackTrace();
-    } catch (Exception ex) {
-        ex.printStackTrace();
-    } finally {
-        return specification;
     }
-}
 
     private PrescriptionLine createPrescriptionLineObject(ResultSet resultSet) throws SQLException {
         id = resultSet.getInt("prescription_id");
@@ -124,16 +128,20 @@ protected List<PrescriptionLine> retrievePrescriptionLines(String prescriptionId
         List<Prescription> prescList = new ArrayList<>();
         if (currentUser instanceof Patient) {
             query = "SELECT * from Prescription WHERE patient_ssn = ?;";
-        } else if (currentUser instanceof Doctor){
+        } else if (currentUser instanceof Doctor) {
             query = "SELECT * from Prescription WHERE user_ssn = ?;";
         } else {
-            query = "SELECT * from Prescription;";  //possible bug here since we are not using the parameter
+            query = "SELECT * from Prescription;";
         }
         prescription = null;
         specification.clear();
         try {
             if (!DBConnection.dbConnection.isClosed()) {
-                resultSet = common.retrieveSet(query, currentUser.getSsn());
+                if (currentUser instanceof Admin) {
+                    resultSet = common.retrieveSet(query);
+                } else {
+                    resultSet = common.retrieveSet(query, currentUser.getSsn());
+                }
                 if (resultSet != null) {
                     while (resultSet.next()) {
                         prescList.add(createPrescriptionObject(currentUser, resultSet));
@@ -151,15 +159,15 @@ protected List<PrescriptionLine> retrievePrescriptionLines(String prescriptionId
         } finally {
             try {
                 resultSet.close();
-            }catch (Exception ex) {
+            } catch (Exception ex) {
                 ex.getSuppressed();
             }
             return prescList;
         }
     }
 
-    private Prescription createPrescriptionObject(User currentUser, ResultSet resultSet) throws SQLException{
-    Prescription prescription;
+    private Prescription createPrescriptionObject(User currentUser, ResultSet resultSet) throws SQLException {
+        Prescription prescription;
         id = resultSet.getInt("id");
         startdate = resultSet.getDate("date");
         endDate = resultSet.getDate("end_date");
@@ -167,7 +175,7 @@ protected List<PrescriptionLine> retrievePrescriptionLines(String prescriptionId
         if (currentUser instanceof Patient) {
             doctor = (Doctor) user.getUser(resultSet.getString("user_ssn"));
             prescription = new Prescription(id, doctor, (Patient) currentUser, startdate, endDate, diagnosis, specification);
-        } else if (currentUser instanceof Doctor){
+        } else if (currentUser instanceof Doctor) {
             patient = (Patient) user.getUser(resultSet.getString("patient_ssn"));
             prescription = new Prescription(id, (Doctor) currentUser, patient, startdate, endDate, diagnosis, specification);
         } else {
