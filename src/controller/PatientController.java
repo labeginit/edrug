@@ -262,6 +262,10 @@ public class PatientController implements Initializable {
 
         groupFilter_combo.setOnAction((event) -> {
             String val = groupFilter_combo.getValue();
+            if (val.isEmpty()) {
+                userCommon.medFilter(filteredData, search_textField, tableView);
+                return;
+            }
             ObservableList<Medicine> newList = FXCollections.observableArrayList(commonMethods.getMedicineByProductGroupPath(val));
             for (int i = 0; i < newList.size(); i++) {
                 if (newList.get(i).isOnPrescription()) {  //add more here - if these ids are from the prescription - do not delete
