@@ -342,7 +342,7 @@ public class PatientController implements Initializable {
     private void addToCartButtonHandle(ActionEvent event) {
         int available;
         int qtyReserved;
-        for (Medicine element : filteredData) {
+        for (Medicine element : tableView.getItems()) {
             if (element.getCheckBox().isSelected()) {
                 available = element.getQuantity();
                 qtyReserved = element.getQuantityReserved();
