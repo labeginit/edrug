@@ -170,7 +170,7 @@ public class CommonMethods {
 
     //returns all lines of a specific Prescription header
     public List<PrescriptionLine> getPrescriptionLineList(int prescriptionId, User currentUser){
-        return daoPrescription.retrievePrescriptionLines(prescriptionId, currentUser);
+        return daoPrescription.retrievePrescriptionLines(String.valueOf(prescriptionId), currentUser);
     }
 
     public List<Prescription> getPrescriptionList(User currentUser){

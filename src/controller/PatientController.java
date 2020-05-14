@@ -169,7 +169,7 @@ public class PatientController implements Initializable {
     private List<ProdGroup> groups = commonMethods.getProductGroupList();
     private List<String> groupPaths = new ArrayList<>();
     private ObservableList<Medicine> medList = FXCollections.observableArrayList(commonMethods.getMedicineList(false)); // here will probably need to add those from Prescriptions
-    private FilteredList<Medicine> filteredData = new FilteredList<>(medList, p -> true);
+ //   private FilteredList<Medicine> filteredData = new FilteredList<>(medList, p -> true);
 
 
     private List<String> fillList(List<ProdGroup> groups) {
@@ -186,9 +186,30 @@ public class PatientController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        currentUser = UserSingleton.getOurInstance().getUser();
+        List<PrescriptionLine> temp = new ArrayList<>();
+        temp.addAll(commonMethods.getPrescriptionLineList(0, currentUser));
+
+        //DELETEME
+        System.out.println("______");
+        for (PrescriptionLine lin : temp) {
+            System.out.println(lin.getMedicine());
+        }
+        System.out.println("______");
+        //DELETEME END
+
+        for (int i = 0; i < temp.size(); i++) {
+            if ((temp.get(i).getQuantityPrescribed()-temp.get(i).getQuantityConsumed()) > 0){
+                if (temp.get(i).getMedicine().getActive()) {
+                    medList.add(temp.get(i).getMedicine());
+                }
+            }
+        }
+        FilteredList<Medicine> filteredData = new FilteredList<>(medList, p -> true);
+
         setVisible(false);
         cancel_button.setCancelButton(true);
-        currentUser = UserSingleton.getOurInstance().getUser();
+
         groupFilter_combo.setItems(filters1);
         setInitialValues(currentUser);
         dPicker.setOnAction(e -> {

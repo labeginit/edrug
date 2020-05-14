@@ -67,19 +67,30 @@ public class DAOPrescription {
         }
     }
 
-protected List<PrescriptionLine> retrievePrescriptionLines(int prescriptionId, User currentUser) {
+protected List<PrescriptionLine> retrievePrescriptionLines(String prescriptionId, User currentUser) {
     specification.clear();
     try {
         if (!DBConnection.dbConnection.isClosed()) {
             if (currentUser instanceof Patient) {
-                resultSet = common.retrieveSet("SELECT * FROM Prescription_has_Medicine WHERE prescription_id = ? and prescription_patient_ssn = ?;", String.valueOf(prescriptionId), currentUser.getSsn());
+                if (prescriptionId.equalsIgnoreCase("0")){
+                    resultSet = common.retrieveSet("SELECT * FROM Prescription_has_Medicine WHERE prescription_patient_ssn = ?;", currentUser.getSsn());
+                } else {resultSet = common.retrieveSet("SELECT * FROM Prescription_has_Medicine WHERE prescription_id = ? and prescription_patient_ssn = ?;", String.valueOf(prescriptionId), currentUser.getSsn());}
             } else if (currentUser instanceof Doctor){
-                resultSet = common.retrieveSet("SELECT prescription_id, prescription_patient_ssn, article, quantity_prescribed, quantity_consumed, instructions FROM Prescription_has_Medicine " +
+                if (prescriptionId.equalsIgnoreCase("0")){
+                    resultSet = common.retrieveSet("SELECT prescription_id, prescription_patient_ssn, article, quantity_prescribed, quantity_consumed, instructions FROM Prescription_has_Medicine " +
+                            "JOIN Prescription ON id = prescription_id AND prescription_patient_ssn = patient_ssn " +
+                            "WHERE user_ssn = ? " +
+                            "ORDER BY id, prescription_patient_ssn;", currentUser.getSsn());
+                }else {
+                    resultSet = common.retrieveSet("SELECT prescription_id, prescription_patient_ssn, article, quantity_prescribed, quantity_consumed, instructions FROM Prescription_has_Medicine " +
                         "JOIN Prescription ON id = prescription_id AND prescription_patient_ssn = patient_ssn " +
                         "WHERE id = ? AND user_ssn = ? " +
-                        "ORDER BY id, prescription_patient_ssn;", String.valueOf(prescriptionId), currentUser.getSsn());
+                        "ORDER BY id, prescription_patient_ssn;", prescriptionId, currentUser.getSsn());
+                }
             } else {
-                resultSet = common.retrieveSet("SELECT * FROM Prescription_has_Medicine WHERE prescription_id = ?;", String.valueOf(prescriptionId));
+                if (prescriptionId.equalsIgnoreCase("0")){
+                    resultSet = common.retrieveSet("SELECT * FROM Prescription_has_Medicine;");
+                }else {resultSet = common.retrieveSet("SELECT * FROM Prescription_has_Medicine WHERE prescription_id = ?;", prescriptionId);}
             }
 
             if (resultSet != null) {
