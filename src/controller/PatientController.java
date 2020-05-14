@@ -297,7 +297,6 @@ public class PatientController implements Initializable {
         //TableView end
 
         //TreeTableView begin
-
         prescrList = FXCollections.observableArrayList(commonMethods.getPrescriptionList(currentUser));
         prescrLines = FXCollections.observableArrayList();
         drawPrescriptionTables(prescrList);

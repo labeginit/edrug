@@ -66,8 +66,6 @@ public class Prescription{
 
     public Date getEndDate() {return endDate;}
 
-
-
     public String getDiagnosis() {
         return diagnosis;
     }

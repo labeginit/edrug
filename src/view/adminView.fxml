@@ -86,39 +86,39 @@
                         </AnchorPane>
                     </content>
                 </Tab>
-            <Tab closable="false" text="List of admins">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="555.0" prefWidth="789.0">
-                     <children>
-                        <Label layoutX="10.0" layoutY="26.0" prefHeight="17.0" prefWidth="323.0" text="Here you can view all admins">
-                           <font>
-                              <Font size="13.0" />
-                           </font>
-                        </Label>
-                        <TableView fx:id="adminTable" focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="447.0" prefWidth="771.0">
-                           <columns>
-                              <TableColumn fx:id="adminSSNtable" prefWidth="142.0" text="SSN" />
-                              <TableColumn fx:id="adminLastNameTable" prefWidth="174.0" text="Last name" />
-                              <TableColumn fx:id="adminFirstNameTable" prefWidth="128.0" text="First name" />
-                              <TableColumn fx:id="adminPhoneTable" prefWidth="143.0" text="Phone number" />
-                              <TableColumn fx:id="adminEmailTable" prefWidth="128.00006103515625" text="Email" />
-                              <TableColumn fx:id="adminActiveTable" editable="false" prefWidth="52.666748046875" text="Active" />
-                           </columns>
-                        </TableView>
-                        <ButtonBar layoutX="6.0" layoutY="501.0" prefHeight="54.0" prefWidth="770.0">
-                           <buttons>
-                              <Button id="logOutButton" fx:id="logOutAdminButton" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Logout" />
-                              <Label prefHeight="17.0" prefWidth="261.0" />
-                              <Label prefHeight="17.0" prefWidth="261.0" />
-                              <Label prefHeight="17.0" prefWidth="261.0" />
-                              <Label prefHeight="17.0" prefWidth="261.0" />
-                           </buttons>
-                        </ButtonBar>
-                        <TextField fx:id="adminSearchTextField" layoutX="502.0" layoutY="22.0" prefHeight="26.0" prefWidth="274.0" promptText="enter  name or SSN here" />
-                     </children>
-                  </AnchorPane>
-               </content>
-            </Tab>
+                <Tab closable="false" text="List of admins">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="555.0" prefWidth="789.0">
+                            <children>
+                                <Label layoutX="10.0" layoutY="26.0" prefHeight="17.0" prefWidth="323.0" text="Here you can view all admins">
+                                    <font>
+                                        <Font size="13.0" />
+                                    </font>
+                                </Label>
+                                <TableView fx:id="adminTable" focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="447.0" prefWidth="771.0">
+                                    <columns>
+                                        <TableColumn fx:id="adminSSNtable" prefWidth="142.0" text="SSN" />
+                                        <TableColumn fx:id="adminLastNameTable" prefWidth="174.0" text="Last name" />
+                                        <TableColumn fx:id="adminFirstNameTable" prefWidth="128.0" text="First name" />
+                                        <TableColumn fx:id="adminPhoneTable" prefWidth="143.0" text="Phone number" />
+                                        <TableColumn fx:id="adminEmailTable" prefWidth="128.00006103515625" text="Email" />
+                                        <TableColumn fx:id="adminActiveTable" editable="false" prefWidth="52.666748046875" text="Active" />
+                                    </columns>
+                                </TableView>
+                                <ButtonBar layoutX="6.0" layoutY="501.0" prefHeight="54.0" prefWidth="770.0">
+                                    <buttons>
+                                        <Button id="logOutButton" fx:id="logOutAdminButton" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Logout" />
+                                        <Label prefHeight="17.0" prefWidth="261.0" />
+                                        <Label prefHeight="17.0" prefWidth="261.0" />
+                                        <Label prefHeight="17.0" prefWidth="261.0" />
+                                        <Label prefHeight="17.0" prefWidth="261.0" />
+                                    </buttons>
+                                </ButtonBar>
+                                <TextField fx:id="adminSearchTextField" layoutX="502.0" layoutY="22.0" prefHeight="26.0" prefWidth="274.0" promptText="enter  name or SSN here" />
+                            </children>
+                        </AnchorPane>
+                    </content>
+                </Tab>
                 <Tab closable="false" text="Edit Medicine">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="379.0" prefWidth="586.0">

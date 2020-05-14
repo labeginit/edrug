@@ -46,6 +46,7 @@ public class UserCommon {
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
         window.setScene(tableViewScene);
+        tableViewScene.getStylesheets().add(getClass().getResource("../FileUtil/layout.css").toExternalForm());
         window.show();
     }
 
