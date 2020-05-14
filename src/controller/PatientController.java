@@ -169,9 +169,6 @@ public class PatientController implements Initializable {
     @FXML
     private Label passwordCheckLabel;
 
-    @FXML
-    private TreeItem<PrescriptionParent> rootNode;
-
     private List<ProdGroup> groups = commonMethods.getProductGroupList();
     private List<String> groupPaths = new ArrayList<>();
     private ObservableList<Medicine> medList = FXCollections.observableArrayList(commonMethods.getMedicineList(false)); // here will probably need to add those from Prescriptions

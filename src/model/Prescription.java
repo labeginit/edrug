@@ -3,7 +3,7 @@ package model;
 import java.sql.Date;
 import java.util.List;
 
-public class Prescription extends PrescriptionParent{
+public class Prescription{
     private int id;
     private Patient patient;
     private Doctor doctor;
