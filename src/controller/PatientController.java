@@ -194,7 +194,7 @@ public class PatientController implements Initializable {
         System.out.println("______");
         for (PrescriptionLine lin : temp) {
             System.out.println(lin.getMedicine());
-        } // for now some records duplicated (because in prescriptions we have both - prescription free and on prescription types)
+        } // for now some records are duplicated (because in prescriptions we have both - prescription free and on prescription types)
         System.out.println("______");
         //DELETEME END
 

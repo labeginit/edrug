@@ -168,7 +168,8 @@ public class CommonMethods {
         return daoPrescription.addPrescription(prescription);
     }
 
-    //returns all lines of a specific Prescription header
+    //returns all lines of a specific Prescription header (id and user)
+    // or all prescriptions (enter 0 as argument #1). For Admin it will return lines without filtering for user.
     public List<PrescriptionLine> getPrescriptionLineList(int prescriptionId, User currentUser){
         return daoPrescription.retrievePrescriptionLines(String.valueOf(prescriptionId), currentUser);
     }
