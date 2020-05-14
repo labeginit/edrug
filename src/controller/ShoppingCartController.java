@@ -151,10 +151,8 @@ public class ShoppingCartController implements Initializable {
                     @Override
                     public void handle(TableColumn.CellEditEvent<OrderLine, Integer> t) {
                         int q = commonMethods.getMedicine(t.getRowValue().getArticleNo()).getQuantity() + t.getOldValue();
-                        System.out.println(q + " commonMethods.getMedicine(t.getRowValue().getArticleNo()).getQuantity() + t.getOldValue()");
                         Medicine medicine = commonMethods.getMedicine(t.getRowValue().getArticleNo());
                         medicine.setQuantity(q);
-                        System.out.println(medicine.getQuantity() + " med.qty "  +  medicine.getQuantityReserved()+ " med.reserve");
                         int newQuantity;
                         if(q >= t.getNewValue()) {
                             ((OrderLine) t.getTableView().getItems().get(
@@ -164,20 +162,16 @@ public class ShoppingCartController implements Initializable {
                                     t.getTablePosition().getRow())
                             ).getMedicine().setQuantityReserved(t.getNewValue());
                             newQuantity = q - t.getNewValue();
-                            System.out.println(newQuantity + " new qty");
                             medicine.setQuantity(newQuantity);
-                          //  System.out.println(medicine.getQuantity() + " med.qty2 "  +  medicine.getQuantityReserved()+ " med.reserve2");
                             calcTotals();
                             commonMethods.updateQuantity(medicine);
                             t.getRowValue().setQuantity(t.getNewValue());
-                            System.out.println(t.getRowValue().getQuantity());
                             cart.get(medList.indexOf(t.getRowValue())).setQuantity(t.getNewValue());
                             medList.get(cart.indexOf(t.getRowValue())).setQuantity(t.getNewValue());
                         //    RWFile.writeObject(RWFile.cartPath, cart);
 
                         } else { // When the user tries to buy more than there is in stock
                             t.getRowValue().setQuantity(q);
-                            System.out.println(t.getRowValue().getQuantity() + " else statement");
                             medicine.setQuantityReserved(t.getRowValue().getQuantity());
                             medicine.setQuantity(medicine.getQuantity()-medicine.getQuantityReserved());
                             commonMethods.updateQuantity(medicine);
@@ -200,9 +194,7 @@ public class ShoppingCartController implements Initializable {
                     articleNo = element.getArticleNo();
                     medicine = commonMethods.getMedicine(articleNo);
                     quantity = element.getQuantity();
-                    System.out.println(quantity + " qty3");
                     medicine.setQuantity(quantity + medicine.getQuantity());
-                    System.out.println(medicine.getQuantity() + " med qty3");
                     commonMethods.updateQuantity(medicine);
                     remove.add(element);
                     System.out.println(medList.toString() + "removed");
@@ -215,7 +207,7 @@ public class ShoppingCartController implements Initializable {
             calcTotals();
             tableView.setItems(medList);
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
     }
 

@@ -1,6 +1,5 @@
 package controller;
 
-import FileUtil.RWFile;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -11,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import model.*;
 
 import java.io.IOException;
@@ -320,7 +318,6 @@ public class PatientController implements Initializable {
     }
 
     private void drawPrescriptionTables(ObservableList<Prescription> prescriptions) {
-
         c9.setCellValueFactory(new PropertyValueFactory<Prescription, Date>("startDate"));
         c10.setCellValueFactory(new PropertyValueFactory<Prescription, String>("doctorName"));
         c101.setCellValueFactory(new PropertyValueFactory<Prescription, Date>("endDate"));

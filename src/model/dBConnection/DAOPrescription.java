@@ -116,7 +116,7 @@ protected List<PrescriptionLine> retrievePrescriptionLines(int prescriptionId, U
         } else if (currentUser instanceof Doctor){
             query = "SELECT * from Prescription WHERE user_ssn = ?;";
         } else {
-            query = "SELECT * from Prescription;";
+            query = "SELECT * from Prescription;";  //possible bug here since we are not using the parameter
         }
         prescription = null;
         specification.clear();

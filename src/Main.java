@@ -37,7 +37,7 @@ public class Main extends Application {
         if(DBConnection.getInstance() != null)
             DBConnection.getInstance().disconnect();
         try {
-            RWFile.delete();
+          //  RWFile.delete();
         } catch (Exception exception){
             exception.getSuppressed();
         }
