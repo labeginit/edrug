@@ -197,15 +197,6 @@ public class DoctorController implements Initializable {
 
     @FXML
     public void handleSSNGoButton(ActionEvent ae) {
-
-        /*
-                                String ssn = sSN_textField.getText();
-                AddPrescription addPrescription = new AddPrescription();
-
-                userCommon.switchScene(ae, "/view/addPrescription.fxml");
-                addPrescription.receiveData(ssn);
-         */
-
         try {
             if (Validation.isSSN(sSN_textField.getText(), patientSearchStar) && checkForPatient(sSN_textField.getText())) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/addPrescription.fxml"));
