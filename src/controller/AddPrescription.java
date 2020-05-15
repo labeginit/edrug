@@ -125,7 +125,6 @@ public class AddPrescription implements Initializable {
 
         List<Integer> prsID = allPrescribedID();
         ObservableList<Medicine> medicineList = FXCollections.observableArrayList(commonMethods.getMedicineList());
-        ObservableList<PrescriptionLine> prescribedAmount = FXCollections.observableArrayList(commonMethods.getPrescriptionList(prsID, currentPatient));
         medicineList.addAll(FXCollections.observableArrayList(commonMethods.getMedicineList()));
 
         addPrescriptionTable.setItems(medicineList);
@@ -159,7 +158,7 @@ public class AddPrescription implements Initializable {
 
     public List<Integer> allPrescribedID() {
         List<Integer> allID = new ArrayList<>();
-        List<Prescription> list = commonMethods.getPrescription(currentPatient);
+        List<Prescription> list = commonMethods.getPrescriptionList(currentPatient);
         for (Prescription p :
                 list) {
             allID.add(p.getId());
