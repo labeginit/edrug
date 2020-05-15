@@ -185,4 +185,26 @@ public class DAOPrescription {
         }
         return prescription;
     }
+
+    protected int retrieveLastPrescriptionId() {
+        id = 0;
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                resultSet = common.retrieveSet("SELECT MAX(id) AS maxId FROM Prescription;");
+            }
+            if (resultSet != null) {
+                while (resultSet.next()) {
+                    return id = resultSet.getInt("maxId");
+                }
+            } else return id;
+
+        } catch (SQLException ex) {
+            System.out.println("Error while working with ResultSet!");
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            return id;
+        }
+    }
 }
