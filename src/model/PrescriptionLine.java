@@ -1,12 +1,14 @@
 package model;
 
-public class PrescriptionLine extends PrescriptionParent{
+public class PrescriptionLine{
     private int prescId;
     private Medicine medicine;
     private Patient patient;
     private int quantityPrescribed;
     private int quantityConsumed;
     private String instructions;
+    private String name;
+    private int article;
 
     public PrescriptionLine(int prescId, Patient patient, Medicine medicine, int quantityPrescribed, int quantityConsumed, String instructions){
         setPrescId(prescId);
@@ -15,6 +17,8 @@ public class PrescriptionLine extends PrescriptionParent{
         setQuantityPrescribed(quantityPrescribed);
         setQuantityConsumed(quantityConsumed);
         setInstructions(instructions);
+        setArticle(medicine);
+        setName(medicine);
     }
 
     public void setPrescId(int prescId) {
@@ -64,6 +68,23 @@ public class PrescriptionLine extends PrescriptionParent{
     public String getInstructions() {
         return instructions;
     }
+
+    public void setName(Medicine medicine) {
+        this.name = medicine.getName();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setArticle(Medicine medicine) {
+        this.article = medicine.getArticleNo();
+    }
+
+    public int getArticle() {
+        return article;
+    }
+
 
 
     @Override

@@ -168,12 +168,14 @@ public class CommonMethods {
         return daoPrescription.addPrescription(prescription);
     }
 
-    public List<PrescriptionLine> getPrescriptionList(List<Integer> prescriptionId, User currentUser) {
-        return  daoPrescription.retrievePrescriptionLines(prescriptionId, currentUser);
+    //returns all lines of a specific Prescription header (id and user)
+    // or all prescriptions (enter 0 as argument #1). For Admin it will return lines without filtering for user.
+    public List<PrescriptionLine> getPrescriptionLineList(int prescriptionId, User currentUser){
+        return daoPrescription.retrievePrescriptionLines(String.valueOf(prescriptionId), currentUser);
     }
 
-    public List<Prescription> getPrescription(User user) {
-        return daoPrescription.getPrescriptionList(user);
+    public List<Prescription> getPrescriptionList(User currentUser){
+        return daoPrescription.getPrescriptionList(currentUser);
     }
 
     //**********************

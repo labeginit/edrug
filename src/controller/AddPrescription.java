@@ -98,6 +98,7 @@ public class AddPrescription implements Initializable {
 
     @FXML
     private void handleAddPrescriptionsButton() {
+        /*
         List<PrescriptionLine> currentPrescriptions = commonMethods.getPrescriptionList(allPrescribedID(), currentUser);
         List<PrescriptionLine> prescriptionLine = instantiatePL();
 
@@ -108,6 +109,8 @@ public class AddPrescription implements Initializable {
         } else {
             Validation.alertPopup("No information was updated", "Unable to add prescription", "Prescription Error");
         }
+
+         */
     }
 
     public void prescriptionInitialize() {
@@ -164,8 +167,11 @@ public class AddPrescription implements Initializable {
         return allID;
     }
 
+    /*
     public List<PrescriptionLine> instantiatePL() {
 
         return
     }
+
+     */
 }
