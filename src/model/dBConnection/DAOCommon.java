@@ -248,4 +248,67 @@ public class DAOCommon {
         }
         return linesAffected;
     }
+    protected int insertPharmacy(String queryString, int storeId, String store_name, String address, int zipcode, String city, String phoneNumber, String email) {
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
+                prepStmt.setInt(1, storeId);
+                prepStmt.setString(2, store_name);
+                prepStmt.setString(3, address);
+                prepStmt.setInt(4, zipcode);
+                prepStmt.setString(5, city);
+                prepStmt.setString(6, phoneNumber);
+                prepStmt.setString(7, email);
+
+                linesAffected = prepStmt.executeUpdate();
+                prepStmt.close();
+            }
+        } catch (SQLException | NullPointerException ex) {
+            System.out.println("Error when executing statement!");
+            System.out.println(ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return linesAffected;
+    }
+    protected int updatePharmacy(String queryString, int storeId, String store_name, String address, int zipcode, String city, String phoneNumber, String email) {
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
+                prepStmt.setInt(1, storeId);
+                prepStmt.setString(2, store_name);
+                prepStmt.setString(3, address);
+                prepStmt.setInt(4, zipcode);
+                prepStmt.setString(5, city);
+                prepStmt.setString(6, phoneNumber);
+                prepStmt.setString(7, email);
+
+                linesAffected = prepStmt.executeUpdate();
+                prepStmt.close();
+            }
+        } catch (SQLException | NullPointerException ex) {
+            System.out.println("Error when executing statement!");
+            System.out.println(ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return linesAffected;
+    }
+    protected int removePharmacy(String queryString, int storeId) {
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
+                prepStmt.setInt(1, storeId);
+
+                linesAffected = prepStmt.executeUpdate();
+                prepStmt.close();
+            }
+        } catch (SQLException | NullPointerException ex) {
+            System.out.println("Error when executing statement!");
+            System.out.println(ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return linesAffected;
+    }
 }

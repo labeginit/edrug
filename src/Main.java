@@ -7,7 +7,6 @@ import javafx.stage.Stage;
 import model.*;
 import model.dBConnection.DBConnection;
 
-import java.io.IOException;
 
 public class Main extends Application {
 
