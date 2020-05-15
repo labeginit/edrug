@@ -182,7 +182,7 @@ public class CommonMethods {
     //**********************
 
     //gives the last used id number for Prescriptions and Orders
-    public int getLastID(Class myClass){
+    public int getLastId(Class myClass){
         int maxId = 0;
         if (myClass.getName().equalsIgnoreCase("model.Prescription")){
             maxId = daoPrescription.retrieveLastPrescriptionId();
