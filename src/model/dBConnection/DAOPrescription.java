@@ -67,37 +67,65 @@ public class DAOPrescription {
         }
     }
 
-/*  WIP
-    protected List<Prescription> getPrescriptionList(Doctor doctor) {
-        List<Prescription> prescList = null;
-        String query = "select id, patient_ssn, user_ssn, date, diagnosis, article, quantity, instructions from Prescription \n" +
-                "join Prescription_has_Medicine on id = prescription_id and prescription_patient_ssn = patient_ssn\n" +
-                "where user_ssn = ? order by id, prescription_patient_ssn;";
-        prescription = null;
-        specification = null;
+    protected List<PrescriptionLine> retrievePrescriptionLines(List<Integer> prescriptionId, User currentUser) {
+        specification.clear();
         try {
             if (!DBConnection.dbConnection.isClosed()) {
-                resultSet = common.retrieveSet(query, doctor.getSsn());
+                if (currentUser instanceof Patient) {
+                    resultSet = common.retrieveSet("SELECT * FROM Prescription_has_Medicine WHERE prescription_id = ? and prescription_patient_ssn = ?;", String.valueOf(prescriptionId), currentUser.getSsn());
+                } else if (currentUser instanceof Doctor){
+                    resultSet = common.retrieveSet("SELECT prescription_id, prescription_patient_ssn, article, quantity_prescribed, quantity_consumed, instructions FROM Prescription_has_Medicine " +
+                            "JOIN Prescription ON id = prescription_id AND prescription_patient_ssn = patient_ssn " +
+                            "WHERE id = ? AND user_ssn = ? " +
+                            "ORDER BY id, prescription_patient_ssn;", String.valueOf(prescriptionId), currentUser.getSsn());
+                } else {
+                    resultSet = common.retrieveSet("SELECT * FROM Prescription_has_Medicine WHERE prescription_id = ?;", String.valueOf(prescriptionId));
+                }
+
                 if (resultSet != null) {
                     while (resultSet.next()) {
-                        id = resultSet.getInt("id");
-                      //  if (id == )
-                        this.doctorSSN = resultSet.getString("user_ssn");
-                        patientSSN = resultSet.getString("patient_ssn");
-                        date = resultSet.getDate("date");
-                        diagnosis = resultSet.getString("diagnosis");
-                        prescription = new Prescription(id, (Doctor) user.getUser(doctorSSN), (Patient) user.getUser(patientSSN), date, diagnosis, specification);
-                        prescList.add(prescription);
+                        specification.add(createPrescriptionLineObject(resultSet));
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error while working with ResultSet!");
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            return specification;
+        }
+    }
 
-                        int prescId = resultSet.getInt("prescription_id");
-                        String prescPatientSSN = resultSet.getString("prescription_patient_ssn");
-                        article = resultSet.getInt("article");
-                        quantity = resultSet.getInt("quantity");
-                        instructions = resultSet.getString("instructions");
+    private PrescriptionLine createPrescriptionLineObject(ResultSet resultSet) throws SQLException {
+        id = resultSet.getInt("prescription_id");
+        patient = (Patient) user.getUser(resultSet.getString("prescription_patient_ssn"));
+        medicine = med.getMedicine(resultSet.getInt("article"));
+        quantityPrescribed = resultSet.getInt("quantity_prescribed");
+        quantityConsumed = resultSet.getInt("quantity_consumed");
+        instructions = resultSet.getString("instructions");
+        return new PrescriptionLine(id, patient, medicine, quantityPrescribed, quantityConsumed, instructions);
+    }
 
-                        line = new PrescriptionLine(id, (Patient) user.getUser(prescPatientSSN), (Medicine) med.getMedicine(article), quantity, instructions);
-                        specification.add(line);
-
+    protected List<Prescription> getPrescriptionList(User currentUser) {
+        String query = "";
+        List<Prescription> prescList = new ArrayList<>();
+        if (currentUser instanceof Patient) {
+            query = "SELECT * from Prescription WHERE patient_ssn = ?;";
+        } else if (currentUser instanceof Doctor){
+            query = "SELECT * from Prescription WHERE user_ssn = ?;";
+        } else {
+            query = "SELECT * from Prescription;";
+        }
+        prescription = null;
+        specification.clear();
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                resultSet = common.retrieveSet(query, currentUser.getSsn());
+                if (resultSet != null) {
+                    while (resultSet.next()) {
+                        prescList.add(createPrescriptionObject(currentUser, resultSet));
                     }
                 } else {
                     System.out.println("Empty resultSet");
@@ -107,27 +135,35 @@ public class DAOPrescription {
         } catch (SQLException ex) {
             System.out.println("Error while working with ResultSet!");
             ex.printStackTrace();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (NullPointerException ex) {
+            ex.getSuppressed();
         } finally {
             try {
                 resultSet.close();
             }catch (Exception ex) {
-                ex.printStackTrace();
+                ex.getSuppressed();
             }
-            return user;
+            return prescList;
         }
     }
 
-    private PrescriptionLine createLines(ResultSet resultSet) throws Exception {
+    private Prescription createPrescriptionObject(User currentUser, ResultSet resultSet) throws SQLException{
+        Prescription prescription;
         id = resultSet.getInt("id");
-        patient =
-        article = element.getMedicine().getArticleNo();
-        quantity = element.getQuantity();
-        instructions = element.getInstructions();
-        String queryLine = "INSERT INTO `edrugs_test`.`Prescription_has_Medicine` (`prescription_id`, `prescription_patient_ssn`, `article`, `quantity_prescribed`, `instructions`) VALUES (?, ?, ?, ?, ?);";
-        linesAffected = linesAffected + common.insertPrescriptionLine(queryLine, id, patientSSN, article, quantity, instructions);
-        return
-    }*/
-
+        startdate = resultSet.getDate("date");
+        endDate = resultSet.getDate("end_date");
+        diagnosis = resultSet.getString("diagnosis");
+        if (currentUser instanceof Patient) {
+            doctor = (Doctor) user.getUser(resultSet.getString("user_ssn"));
+            prescription = new Prescription(id, doctor, (Patient) currentUser, startdate, endDate, diagnosis, specification);
+        } else if (currentUser instanceof Doctor){
+            patient = (Patient) user.getUser(resultSet.getString("patient_ssn"));
+            prescription = new Prescription(id, (Doctor) currentUser, patient, startdate, endDate, diagnosis, specification);
+        } else {
+            doctor = (Doctor) user.getUser(resultSet.getString("user_ssn"));
+            patient = (Patient) user.getUser(resultSet.getString("patient_ssn"));
+            prescription = new Prescription(id, doctor, patient, startdate, endDate, diagnosis, specification);
+        }
+        return prescription;
+    }
 }

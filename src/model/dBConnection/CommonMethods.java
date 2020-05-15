@@ -168,5 +168,13 @@ public class CommonMethods {
         return daoPrescription.addPrescription(prescription);
     }
 
+    public List<PrescriptionLine> getPrescriptionList(List<Integer> prescriptionId, User currentUser) {
+        return  daoPrescription.retrievePrescriptionLines(prescriptionId, currentUser);
+    }
+
+    public List<Prescription> getPrescription(User user) {
+        return daoPrescription.getPrescriptionList(user);
+    }
+
     //**********************
     }

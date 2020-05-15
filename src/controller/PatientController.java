@@ -97,7 +97,7 @@ public class PatientController implements Initializable {
     private TreeTableView<PrescriptionParent> treeTableView;
 
     @FXML
-    private TreeTableColumn<PrescriptionParent, Date> c9;
+    private TreeTableColumn<Prescription, Date> c9;
 
     @FXML
     private TreeTableColumn<Prescription, String> c10;
@@ -312,7 +312,7 @@ public class PatientController implements Initializable {
         prescrList.add(prescription2);
 
 
-        c9.setCellValueFactory(new TreeItemPropertyValueFactory<PrescriptionParent, Date>("date"));
+        c9.setCellValueFactory(new TreeItemPropertyValueFactory<Prescription, Date>("startDate"));
         c10.setCellValueFactory(new TreeItemPropertyValueFactory<Prescription, String>("doctorName"));
         c11.setCellValueFactory(new TreeItemPropertyValueFactory<PrescriptionLine, Medicine>("article"));
         c12.setCellValueFactory(new TreeItemPropertyValueFactory<PrescriptionLine, String>("name"));
