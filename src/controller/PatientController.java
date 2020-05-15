@@ -169,7 +169,7 @@ public class PatientController implements Initializable {
     private List<ProdGroup> groups = commonMethods.getProductGroupList();
     private List<String> groupPaths = new ArrayList<>();
     private ObservableList<Medicine> medList = FXCollections.observableArrayList(commonMethods.getMedicineList(false)); // here will probably need to add those from Prescriptions
- //   private FilteredList<Medicine> filteredData = new FilteredList<>(medList, p -> true);
+    //   private FilteredList<Medicine> filteredData = new FilteredList<>(medList, p -> true);
 
 
     private List<String> fillList(List<ProdGroup> groups) {

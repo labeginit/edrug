@@ -64,9 +64,9 @@
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="sSN_textField" layoutX="584.0" layoutY="515.0" prefHeight="26.0" prefWidth="144.0" promptText="Enter patient SSN here" />
-                        <Button fx:id="SSN_Go_Button" layoutX="739.0" layoutY="515.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="37.0" text="Go!" />
-                        <Label layoutX="268.0" layoutY="515.0" prefHeight="26.0" prefWidth="298.0" text="Add SSN to edit/add a prescription for the patient:">
+                        <TextField fx:id="sSN_textField" layoutX="569.0" layoutY="515.0" prefHeight="26.0" prefWidth="144.0" promptText="Enter patient SSN here" />
+                        <Button fx:id="SSN_Go_Button" layoutX="723.0" layoutY="515.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="54.0" text="Go!" />
+                        <Label layoutX="250.0" layoutY="515.0" prefHeight="26.0" prefWidth="298.0" text="Add SSN to edit/add a prescription for the patient:">
                            <font>
                               <Font size="13.0" />
                            </font>
@@ -80,7 +80,7 @@
                               <TableColumn fx:id="d2Email" prefWidth="225.60003662109375" text="Email" />
                           </columns>
                         </TableView>
-                        <Label fx:id="patientSearchStar" layoutX="568.0" layoutY="520.0" text="*" textFill="#f20101" />
+                        <Label fx:id="patientSearchStar" layoutX="556.0" layoutY="519.0" text="*" textFill="#f20101" />
                         <ButtonBar layoutX="16.0" layoutY="501.0" prefHeight="54.0" prefWidth="190.0">
                           <buttons>
                               <Button fx:id="logOut_button2" minWidth="64.0" mnemonicParsing="false" prefHeight="25.333333333333332" prefWidth="203.0" text="Logout" />
