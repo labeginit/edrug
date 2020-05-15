@@ -12,8 +12,10 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminController">
@@ -24,6 +26,11 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="425.0" prefWidth="586.0">
                             <children>
+                        <Label layoutX="35.0" layoutY="6.0" text="Help">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
                                 <Label layoutX="10.0" layoutY="26.0" prefHeight="17.0" prefWidth="323.0" text="Here you can view all patients">
                                     <font>
                                         <Font size="13.0" />
@@ -49,6 +56,9 @@
                                     </buttons>
                                 </ButtonBar>
                                 <TextField fx:id="patientSearchTextField" layoutX="502.0" layoutY="22.0" prefHeight="26.0" prefWidth="274.0" promptText="enter  name or SSN here" />
+                        <Label layoutX="10.0" layoutY="6.0" prefHeight="18.0" prefWidth="13.0" text="?" />
+                        <Circle fx:id="helpCircle" fill="#1f93ff00" layoutX="14.0" layoutY="15.0" radius="12.0" stroke="BLACK" strokeType="INSIDE" />
+                        <TextArea fx:id="helpMenu" editable="false" layoutX="26.0" layoutY="9.0" prefHeight="306.0" prefWidth="252.0" />
                             </children>
                         </AnchorPane>
                     </content>
@@ -143,11 +153,7 @@
                                         <TableColumn fx:id="isActiveMed" prefWidth="50.400146484375" text="Active" />
                                     </columns>
                                 </TableView>
-                                <Label layoutX="14.0" layoutY="26.0" prefHeight="17.0" prefWidth="84.0" text="Search terms:">
-                                    <font>
-                                        <Font size="13.0" />
-                                    </font>
-                                </Label>
+                                <Label layoutX="4.0" layoutY="26.0" prefHeight="18.0" prefWidth="94.0" text="Search terms:" />
                                 <TextField fx:id="storeSearchTextField" layoutX="100.0" layoutY="22.0" prefHeight="26.0" prefWidth="274.0" promptText="enter active ingredient etc. here" />
                                 <ComboBox fx:id="storeFilterCombo" layoutX="607.0" layoutY="22.0" prefHeight="25.0" prefWidth="170.0" />
                             </children>
@@ -363,11 +369,6 @@
                                 <Label fx:id="pass2starAdd" layoutX="214.0" layoutY="437.0" text="*" textFill="RED" />
                                 <Label fx:id="pass1starAdd" layoutX="214.0" layoutY="388.0" text="*" textFill="RED" />
                                 <TextField fx:id="roleTextAdd" layoutX="601.0" layoutY="72.0" prefHeight="25.0" prefWidth="151.0" />
-                                <Label layoutX="472.0" layoutY="77.0" prefHeight="19.0" prefWidth="98.0" text="Role (1=P, 2=D)">
-                                    <font>
-                                        <Font size="13.0" />
-                                    </font>
-                                </Label>
                                 <Label fx:id="roleStarAdd" layoutX="580.0" layoutY="77.0" text="*" textFill="RED" />
                                 <DatePicker fx:id="datePickerAdd" layoutX="235.0" layoutY="203.0" prefHeight="26.0" prefWidth="226.0" />
                                 <PasswordField fx:id="pass1_textAdd" layoutX="235.0" layoutY="385.0" prefHeight="25.0" prefWidth="220.0" promptText=" * * * * * * * * * * * " />

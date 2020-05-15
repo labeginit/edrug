@@ -29,22 +29,29 @@
       .tab-pane .tab:selected
       {
           -fx-background-color: #4475C0;
+          -fx-focus-color: transparent;
 
 
       }
       .tab-pane .tab-header-area .tab-header-background {
           -fx-opacity: 60%;
+          -fx-focus-color: transparent;
       }
       .tab .tab-label {
           -fx-alignment: CENTER;
           -fx-font-size: 16px;
           -fx-font-weight: bold;
+
       }
 
 
 
       .table-view .column-header {
       -fx-background-color: #76A0DF
+
+      }
+      .table-view {
+      -fx-focus-color: transparent;
       }
 
       #welcome {
@@ -53,6 +60,17 @@
       }
 
       .table-row-cell:selected {
+
          -fx-background-color: #C0DAFF;
 
+      }
+      .table-row-cell:selected .text {
+             -fx-fill: black ;
+
+      }
+
+      #helpMenu {
+      -fx-focus-color: transparent;
+      -fx-border-color: #1B4B70 ;
+      -fx-border-width: 2px;
       }
