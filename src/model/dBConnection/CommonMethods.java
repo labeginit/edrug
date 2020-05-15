@@ -23,7 +23,7 @@ public class CommonMethods {
 
     //**********************
 
-    //returns all active users
+    //returns all users
     public List<User> getUserList(){
         return daoUser.getUserList("0");
     }
@@ -33,12 +33,12 @@ public class CommonMethods {
         return daoUser.retrieveUserList(isActive);
     }
 
-    //returns all active admins
+    //returns all admins
     public List<User> getAdminList(){
         return daoUser.getUserList("3");
     }
 
-    //returns all active doctors
+    //returns all doctors
     public List<User> getDoctorList(){
         return daoUser.getUserList("2");
     }
@@ -167,6 +167,16 @@ public class CommonMethods {
 
     public int addPrescription(Prescription prescription){
         return daoPrescription.addPrescription(prescription);
+    }
+
+    //returns all lines of a specific Prescription header (id and user)
+    // or all prescriptions (enter 0 as argument #1). For Admin it will return lines without filtering for user.
+    public List<PrescriptionLine> getPrescriptionLineList(int prescriptionId, User currentUser){
+        return daoPrescription.retrievePrescriptionLines(String.valueOf(prescriptionId), currentUser);
+    }
+
+    public List<Prescription> getPrescriptionList(User currentUser){
+        return daoPrescription.getPrescriptionList(currentUser);
     }
 
     //**********************

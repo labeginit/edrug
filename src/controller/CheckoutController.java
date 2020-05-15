@@ -22,7 +22,7 @@ public class CheckoutController implements Initializable {
     private User user = UserSingleton.getOurInstance().getUser();
     private CommonMethods commonMethods = new CommonMethods();
     private UserCommon userCommon = new UserCommon();
-    private ObservableList<OrderLine> medList = FXCollections.observableArrayList(cart);
+    private ObservableList<OrderLine> medList =
 
     @FXML
     private Tab deliveryTab, paymentTab, pickUpTab, confirmationTab;
@@ -59,7 +59,7 @@ public class CheckoutController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         if (RWFile.readObject(RWFile.cartPath) != null) {
-            cart = RWFile.readObject(RWFile.cartPath);
+            cart = RWF
             medList = FXCollections.observableList(cart);
         }
         c1.setCellValueFactory(new PropertyValueFactory<OrderLine, Integer>("articleNo"));

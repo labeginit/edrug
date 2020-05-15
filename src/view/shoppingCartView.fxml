@@ -20,7 +20,7 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="379.0" prefWidth="586.0">
                             <children>
-                                <ButtonBar layoutX="6.0" layoutY="514.0" prefHeight="40.0" prefWidth="771.0">
+                                <ButtonBar layoutX="6.0" layoutY="501.0" prefHeight="54.0" prefWidth="770.0">
                                     <buttons>
                                         <Button fx:id="logOut_button" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Cancel &amp; Logout" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
@@ -29,7 +29,7 @@
                               <Button fx:id="back_button" minWidth="64.0" mnemonicParsing="false" prefWidth="64.0" text="Back to Shop" />
                                     </buttons>
                                 </ButtonBar>
-                                <TableView fx:id="tableView" editable="true" layoutX="6.0" layoutY="193.0" prefHeight="316.0" prefWidth="771.0">
+                                <TableView fx:id="tableView" editable="true" layoutX="6.0" layoutY="193.0" prefHeight="309.0" prefWidth="771.0">
                                     <columns>
                                         <TableColumn fx:id="c1" editable="false" prefWidth="137.9999418258667" text="Article" />
                                         <TableColumn fx:id="c2" editable="false" minWidth="4.0" prefWidth="371.33341217041016" text="Name" />

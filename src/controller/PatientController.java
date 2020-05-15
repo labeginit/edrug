@@ -1,6 +1,5 @@
 package controller;
 
-import FileUtil.RWFile;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -12,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.*;
+
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
@@ -28,7 +28,7 @@ public class PatientController implements Initializable {
     private UserCommon userCommon = new UserCommon();
     private User currentUser;
     public LocalDate localDate;
-    public static List <OrderLine> cart = new ArrayList<>();
+    private static List<OrderLine> cart = CartSingleton.getOurInstance().getCart();
 
 
     @FXML
@@ -36,9 +36,6 @@ public class PatientController implements Initializable {
 
     @FXML
     private TextField search_textField;
-
-    @FXML
-    private ComboBox<String> prescFilter_combo;
 
     @FXML
     private Button cartButton;
@@ -63,9 +60,6 @@ public class PatientController implements Initializable {
 
     @FXML
     private TextField maxPrice_text;
-
-    @FXML
-    private Button buy_button;
 
     @FXML
     private TableView<Medicine> tableView;
@@ -95,25 +89,31 @@ public class PatientController implements Initializable {
     private TableColumn<Medicine, CheckBox> c8;
 
     @FXML
-    private TreeTableView<?> treeTableView;
+    private TableView<Prescription> prescriptionTableView;
 
     @FXML
-    private TreeTableColumn<?, ?> c9;
+    private TableColumn<Prescription, Date> c9;
 
     @FXML
-    private TreeTableColumn<?, ?> c10;
+    private TableColumn<Prescription, String> c10;
 
     @FXML
-    private TreeTableColumn<?, ?> c11;
+    private TableColumn<Prescription, Date> c101;
 
     @FXML
-    private TreeTableColumn<?, ?> c12;
+    private TableView<PrescriptionLine> prescriptionLineTableView;
 
     @FXML
-    private TreeTableColumn<?, ?> c13;
+    private TableColumn<PrescriptionLine, Medicine> c11;
 
     @FXML
-    private TreeTableColumn<?, ?> c14;
+    private TableColumn<PrescriptionLine, String> c12;
+
+    @FXML
+    private TableColumn<PrescriptionLine, Integer> c13;
+
+    @FXML
+    private TableColumn<PrescriptionLine, Integer> c14;
 
     @FXML
     private Button cancel_button;
@@ -169,7 +169,8 @@ public class PatientController implements Initializable {
     private List<ProdGroup> groups = commonMethods.getProductGroupList();
     private List<String> groupPaths = new ArrayList<>();
     private ObservableList<Medicine> medList = FXCollections.observableArrayList(commonMethods.getMedicineList(false)); // here will probably need to add those from Prescriptions
-    private FilteredList<Medicine> filteredData = new FilteredList<>(medList, p -> true);
+ //   private FilteredList<Medicine> filteredData = new FilteredList<>(medList, p -> true);
+
 
     private List<String> fillList(List<ProdGroup> groups) {
         groupPaths.add("");
@@ -180,15 +181,36 @@ public class PatientController implements Initializable {
     }
 
     private ObservableList<String> filters1 = FXCollections.observableArrayList(fillList(groups));
-    private ObservableList<String> filters2 = FXCollections.observableArrayList("", "Only Current", "Only Consumed");
+    ObservableList<Prescription> prescrList = FXCollections.observableArrayList();
+    ObservableList<PrescriptionLine> prescrLines = FXCollections.observableArrayList();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        currentUser = UserSingleton.getOurInstance().getUser();
+        List<PrescriptionLine> temp = new ArrayList<>();
+        temp.addAll(commonMethods.getPrescriptionLineList(0, currentUser));
+
+        //DELETEME
+        System.out.println("______");
+        for (PrescriptionLine lin : temp) {
+            System.out.println(lin.getMedicine());
+        } // for now some records are duplicated (because in prescriptions we have both - prescription free and on prescription types)
+        System.out.println("______");
+        //DELETEME END
+
+        for (int i = 0; i < temp.size(); i++) {
+            if ((temp.get(i).getQuantityPrescribed()-temp.get(i).getQuantityConsumed()) > 0){
+                if (temp.get(i).getMedicine().getActive()) {
+                    medList.add(temp.get(i).getMedicine());
+                }
+            }
+        }
+        FilteredList<Medicine> filteredData = new FilteredList<>(medList, p -> true);
+
         setVisible(false);
         cancel_button.setCancelButton(true);
-        currentUser = UserSingleton.getOurInstance().getUser();
+
         groupFilter_combo.setItems(filters1);
-        prescFilter_combo.setItems(filters2);
         setInitialValues(currentUser);
         dPicker.setOnAction(e -> {
             localDate = dPicker.getValue();
@@ -199,7 +221,7 @@ public class PatientController implements Initializable {
         logOut1_button.setOnAction(event -> {
             try {
                 userCommon.onLogOutButtonPressed(event);
-                clearCart();
+                userCommon.clearCart(cart);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -208,7 +230,7 @@ public class PatientController implements Initializable {
         logOut2_button.setOnAction(event -> {
             try {
                 userCommon.onLogOutButtonPressed(event);
-                clearCart();
+                userCommon.clearCart(cart);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -217,7 +239,7 @@ public class PatientController implements Initializable {
         logOut3_button.setOnAction(event -> {
             try {
                 userCommon.onLogOutButtonPressed(event);
-                clearCart();
+                userCommon.clearCart(cart);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -249,40 +271,25 @@ public class PatientController implements Initializable {
         c8.setCellValueFactory(new PropertyValueFactory<Medicine, CheckBox>("checkBox"));
 
         // currently the combination of different filters is not working after value in the comboBox has been changed
+        userCommon.medFilter(filteredData, search_textField, tableView);
 
-        search_textField.textProperty().addListener((observable, oldValue, newValue) -> {
-            maxPrice_text.setText("");
-            filteredData.setPredicate(medicine -> {
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
+        groupFilter_combo.setOnAction((event) -> {
+            String val = groupFilter_combo.getValue();
+            if (val.isEmpty()) {
+                userCommon.medFilter(filteredData, search_textField, tableView);
+                return;
+            }
+            ObservableList<Medicine> newList = FXCollections.observableArrayList(commonMethods.getMedicineByProductGroupPath(val));
+            for (int i = 0; i < newList.size(); i++) {
+                if (newList.get(i).isOnPrescription()) {  //add more here - if these ids are from the prescription - do not delete
+                    newList.remove(i);
                 }
+            }
+            SortedList<Medicine> sortedData2 = new SortedList<>(newList);
+            sortedData2.comparatorProperty().bind(tableView.comparatorProperty());
+            tableView.setItems(sortedData2);
 
-                String lowerCaseFilter = newValue.toLowerCase();
-
-                if (medicine.getName().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (medicine.getSearchTerms().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (String.valueOf(medicine.getArticleNo()).contains(lowerCaseFilter)) {
-                    return true;
-                }
-                return false;
-            });
         });
-
-           groupFilter_combo.setOnAction((event) -> {
-               String val = groupFilter_combo.getValue();
-               ObservableList<Medicine> newList = FXCollections.observableArrayList(commonMethods.getMedicineByProductGroupPath(val));
-               for (int i = 0; i < newList.size(); i++) {
-                   if (newList.get(i).isOnPrescription()){  //add more here - if these ids are from the prescription - do not delete
-                       newList.remove(i);
-                    }
-                }
-               SortedList<Medicine> sortedData2 = new SortedList<>(newList);
-               sortedData2.comparatorProperty().bind(tableView.comparatorProperty());
-               tableView.setItems(sortedData2);
-
-            });
 
         maxPrice_text.textProperty().addListener((observable, oldValue, newValue) -> {
             search_textField.setText("");
@@ -307,30 +314,51 @@ public class PatientController implements Initializable {
 
         //TableView end
 
+        //TreeTableView begin
+        prescrList = FXCollections.observableArrayList(commonMethods.getPrescriptionList(currentUser));
+        prescrLines = FXCollections.observableArrayList();
+        drawPrescriptionTables(prescrList);
+
+        //TreeTableView end
     }
 
     private ObservableList<String> getFilters1() {
         return filters1;
     }
 
-    private ObservableList<String> getFilters2() {
-        return filters2;
-    }
-
     @FXML
     private void cartButtonHandle(ActionEvent event) throws IOException {
-       userCommon.switchScene(event, "/view/shoppingCartView.fxml");
+        userCommon.switchScene(event, "/view/shoppingCartView.fxml");
+    }
+
+    private void drawPrescriptionTables(ObservableList<Prescription> prescriptions) {
+        c9.setCellValueFactory(new PropertyValueFactory<Prescription, Date>("startDate"));
+        c10.setCellValueFactory(new PropertyValueFactory<Prescription, String>("doctorName"));
+        c101.setCellValueFactory(new PropertyValueFactory<Prescription, Date>("endDate"));
+        c11.setCellValueFactory(new PropertyValueFactory<PrescriptionLine, Medicine>("article"));
+        c12.setCellValueFactory(new PropertyValueFactory<PrescriptionLine, String>("name"));
+        c13.setCellValueFactory(new PropertyValueFactory<PrescriptionLine, Integer>("quantityPrescribed"));
+        c14.setCellValueFactory(new PropertyValueFactory<PrescriptionLine, Integer>("quantityConsumed"));
+
+        prescriptionTableView.setItems(prescriptions);
+        prescriptionTableView.setOnMouseClicked(e ->{
+            loadRowData();
+        });
+    }
+
+    private void loadRowData(){
+        for (Prescription selectedRow: prescriptionTableView.getSelectionModel().getSelectedItems()) {
+            prescrLines.setAll(commonMethods.getPrescriptionLineList(selectedRow.getId(), currentUser));
+        }
+        prescriptionLineTableView.setItems(prescrLines);
     }
 
     @FXML
-
     private void addToCartButtonHandle(ActionEvent event) {
         int available;
         int qtyReserved;
-        for(Medicine element : filteredData)
-        {
-            if(element.getCheckBox().isSelected())
-            {
+        for (Medicine element : tableView.getItems()) {
+            if (element.getCheckBox().isSelected()) {
                 available = element.getQuantity();
                 qtyReserved = element.getQuantityReserved();
                 OrderLine line = new OrderLine(0, currentUser, element, element.getPrice(), qtyReserved);
@@ -342,10 +370,10 @@ public class PatientController implements Initializable {
                     if (cart.size() == 0) {
                         cart.add(line);
                     } else if (!cartElementPresenceCheck(element)) {
-                            cart.add(line);
+                        cart.add(line);
 
                     }
-                    qtyReserved=++qtyReserved;
+                    qtyReserved = ++qtyReserved;
                     element.setQuantityReserved(qtyReserved);
                     line.setQuantity(qtyReserved);
 
@@ -353,27 +381,20 @@ public class PatientController implements Initializable {
                     element.setQuantity(available);
                     commonMethods.updateQuantity(element);
 
-                    RWFile.writeObject(RWFile.cartPath, cart);
+                    //RWFile.writeObject(RWFile.cartPath, cart);
                     tableView.refresh();
                 }
                 element.getCheckBox().setSelected(false);
             }
         }
-//deleteme
-        for (int i = 0; i < cart.size(); i++) {
-            System.out.println("med qty=" + cart.get(i).getMedicine().getQuantity() + " med qres=" + cart.get(i).getMedicine().getQuantityReserved() + " art=" + cart.get(i).getArticleNo() + " qty" + cart.get(i).getQuantity());
-        }
-        System.out.println();
     }
 
 
-
-
-    private boolean cartElementPresenceCheck(Medicine selectedElement){
+    private boolean cartElementPresenceCheck(Medicine selectedElement) {
         for (int i = 0; i < cart.size(); i++) {
             if (cart.get(i).getMedicine().getArticleNo() == selectedElement.getArticleNo()) {
                 cart.get(i).getMedicine().setQuantity(cart.get(i).getMedicine().getQuantity() + 1);
-                cart.get(i).setQuantity(selectedElement.getQuantityReserved() + 1);
+                cart.get(i).setQuantity(cart.get(i).getMedicine().getQuantityReserved() + 1);
                 return true;
             }
         }
@@ -477,24 +498,5 @@ public class PatientController implements Initializable {
         address_text.setText(currentUser.getAddress());
         phoneNumber_text.setText(currentUser.getPhoneNumber());
         email_text.setText(currentUser.getEmail());
-    }
-    public void clearCart(){
-        try {
-            if (cart != null) {
-                for (int i = 0; i < cart.size(); i++) {
-                    int article = cart.get(i).getArticleNo();
-                    int quantity = cart.get(i).getQuantity();
-                    Medicine medicine = commonMethods.getMedicine(article);
-                    int newQuantity = medicine.getQuantity() + quantity;
-                    medicine.setQuantity(newQuantity);
-                    commonMethods.updateQuantity(medicine);
-                }
-                cart.removeAll(cart);
-                RWFile.writeObject(RWFile.cartPath, cart);
-                RWFile.delete();
-            }
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-        }
     }
 }

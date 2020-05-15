@@ -3,21 +3,25 @@ package model;
 import java.sql.Date;
 import java.util.List;
 
-public class Prescription {
+public class Prescription{
     private int id;
     private Patient patient;
     private Doctor doctor;
-    private Date date;
+    private Date startDate;
+    private Date endDate;
     private String diagnosis;
+    private String doctorName;
     private List<PrescriptionLine> specification;
 
-    public Prescription(int id, Doctor doctor, Patient patient, Date date,  String diagnosis, List<PrescriptionLine> specification){
+    public Prescription(int id, Doctor doctor, Patient patient, Date startDate, Date endDate,  String diagnosis, List<PrescriptionLine> specification){
         setId(id);
         setCurrentUser(doctor);
         setPatient(patient);
-        setDate(date);
+        setStartDate(startDate);
+        setEndDate(endDate);
         setDiagnosis(diagnosis);
         setSpecification(specification);
+        setDoctorName(doctor);
     }
 
     public void setId(int id) {
@@ -32,8 +36,10 @@ public class Prescription {
         this.patient = patient;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setStartDate(Date date) {this.startDate = date;}
+
+    public void setEndDate(Date date) {
+        this.endDate = date;
     }
 
     public void setDiagnosis(String diagnosis) {
@@ -56,9 +62,9 @@ public class Prescription {
         return patient;
     }
 
-    public Date getDate() {
-        return date;
-    }
+    public Date getStartDate() {return startDate;}
+
+    public Date getEndDate() {return endDate;}
 
     public String getDiagnosis() {
         return diagnosis;
@@ -68,15 +74,24 @@ public class Prescription {
         return specification;
     }
 
+    public String getDoctorName() {
+        return doctorName;
+    }
+
+    public void setDoctorName(Doctor doctor) {
+        this.doctorName = doctor.getFirstName() + " " + doctor.getLastName();
+    }
+
     @Override
     public String toString() {
         return "Prescription{" +
-                "id=" + id +
-                ", patient=" + patient +
-                ", doctor=" + doctor +
-                ", date=" + date +
-                ", diagnosis='" + diagnosis + '\'' +
-                ", specification=" + specification +
+                "id=" + getId() +
+                ", patient=" + getPatient() +
+                ", doctor=" + getDoctor() +
+                ", startDate=" + getStartDate() +
+                ", endDate=" + getEndDate() +
+                ", diagnosis='" + getDiagnosis() + '\'' +
+                ", specification=" + getSpecification() +
                 '}';
     }
 }
