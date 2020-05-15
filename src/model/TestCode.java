@@ -139,6 +139,8 @@ public class TestCode {
         System.out.println(added);
 */
 
+        System.out.println(commonMethods.getLastId(Prescription.class));
+        System.out.println(commonMethods.getLastId(Order.class));
 
     }
 }
