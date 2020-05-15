@@ -14,9 +14,9 @@
    <children>
       <AnchorPane layoutX="-32.0" layoutY="-88.0">
          <children>
-            <ImageView fitHeight="316.0" fitWidth="347.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="257.0" fitWidth="310.0" layoutX="-7.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@image/Logo.png" />
+                  <Image url="@image/output-onlinepngtools.png" />
                </image>
             </ImageView>
          </children>
