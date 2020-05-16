@@ -12,6 +12,7 @@ public class CommonMethods {
     public DAOMedicine daoMedicine = new DAOMedicine();
     public DAOPrescription daoPrescription = new DAOPrescription();
     public DAOPickupPharmacies daoPickupPharmacies = new DAOPickupPharmacies();
+    public DAOOrder daoOrder = new DAOOrder();
     public int linesAffected;
 
     //**********************
@@ -181,6 +182,7 @@ public class CommonMethods {
 
     //**********************
 
+
     public int addPharmacy(Pharmacy pharmacy) { return daoPickupPharmacies.addPharmacy(pharmacy); }
 
     public List<Pharmacy> retrievePharmacyList() { return  daoPickupPharmacies.retrievePharmacyList(); }
@@ -188,6 +190,18 @@ public class CommonMethods {
     public int updatePharmacy(Pharmacy pharmacy) { return daoPickupPharmacies.updatePharmacy(pharmacy); }
 
     public int removePharmacy(Pharmacy pharmacy) { return daoPickupPharmacies.removePharmacy(pharmacy); }
+
+    //gives the last used id number for Prescriptions and Orders
+    public int getLastId(Class myClass){
+        int maxId = 0;
+        if (myClass.getName().equalsIgnoreCase("model.Prescription")){
+            maxId = daoPrescription.retrieveLastPrescriptionId();
+        } else if (myClass.getName().equalsIgnoreCase("model.Order")) {
+            maxId = daoOrder.retrieveLastOrderId();
+        }
+        return maxId;
+    }
+
 
     //**********************
     }

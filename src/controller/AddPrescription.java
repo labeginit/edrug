@@ -1,13 +1,17 @@
 package controller;
 
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import controller.DoctorController;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.converter.IntegerStringConverter;
 import model.*;
 import model.dBConnection.CommonMethods;
 import model.dBConnection.DAOPrescription;
@@ -25,6 +29,8 @@ public class AddPrescription implements Initializable {
     CommonMethods commonMethods = new CommonMethods();
     UserCommon userCommon = new UserCommon();
     java.util.Date date = new java.util.Date();
+    ObservableList<PrescriptionLine> prescrLines = FXCollections.observableArrayList();
+    ObservableList<Prescription> prescrList = FXCollections.observableArrayList();
     User currentPatient;
 
     @FXML
@@ -40,31 +46,51 @@ public class AddPrescription implements Initializable {
     private DatePicker endDatePicker;
 
     @FXML
-    private TableView<Medicine> addPrescriptionTable, currentPrescriptionsTable;
+    private TableView<Medicine> addPrescriptionTable;
 
     @FXML
-    private TableColumn<Medicine, String> aName, aName1, aSize, aDescription, aDescription1, aProducer, aProducer1;
+    private TableView<PrescriptionLine> currentPrescriptionLineTable;
 
     @FXML
-    private TableColumn<Medicine, Integer> aArticle, aArticle1;
+    private TableView<Prescription> currentPrescriptionsTable;
 
     @FXML
-    private TableColumn<PrescriptionLine, Integer> aAmount;
+    private TableColumn<Medicine, String> aName, aSize, aDescription, aProducer;
 
     @FXML
-    private TableColumn<PrescriptionLine, Integer> aAmount1;
+    private TableColumn<Medicine, Integer> aArticle, aAmount;
+
+    @FXML
+    private TableColumn<PrescriptionLine, Integer> aprescrID1, aAmount1;
+
+    @FXML
+    private TableColumn<PrescriptionLine, String> aName1;
 
     @FXML
     private TableColumn<Prescription, Date> aStartDate1, aEndDate1;
+
+    @FXML
+    private TableColumn<Prescription, String> aDiagnosis1;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         currentUser = UserSingleton.getOurInstance().getUser();
         prescriptionInitialize();
-        currentPrescriptionInitialize();
+        currentPrescriptionLineInitialize();
 
-        addPrescriptionsButton.setOnAction(event -> handleAddPrescriptionsButton());
+        currentPrescriptionLineTable.setOnMouseClicked(event -> {
+            try {
+                currentPrescriptionInitialize();
+            } catch (Exception ignored) {
+            }
+        });
 
+        addPrescriptionsButton.setOnAction(event -> {
+            try {
+                handleAddPrescriptionsButton();
+            } catch (Exception ignored) {
+            }
+        });
 
         cancelButton.setOnAction(event -> {
             try {
@@ -80,6 +106,7 @@ public class AddPrescription implements Initializable {
                 e.printStackTrace();
             }
         });
+        makeaAmountEditable();
     }
 
     public void receiveData(String ssn) {
@@ -98,52 +125,64 @@ public class AddPrescription implements Initializable {
 
     @FXML
     private void handleAddPrescriptionsButton() {
-        /*
-        List<PrescriptionLine> currentPrescriptions = commonMethods.getPrescriptionList(allPrescribedID(), currentUser);
-        List<PrescriptionLine> prescriptionLine = instantiatePL();
-
-        if (checkNewPrescription(currentPrescriptions, )) {
-
-
-            currentPrescriptionInitialize();
-        } else {
-            Validation.alertPopup("No information was updated", "Unable to add prescription", "Prescription Error");
+        int i = 0;
+        while (true) {
+            Integer value = (Integer) addPrescriptionTable.getColumns().get(5).getCellObservableValue(i).getValue();
+            System.out.println(value);
+            i++;
+            if (i == 10) {
+                break;
+            }
         }
+        //if (checkNewPrescription(currentPrescriptions, )) {
 
-         */
+
+        currentPrescriptionInitialize();
+        //} else {
+        //Validation.alertPopup("No information was updated", "Unable to add prescription", "Prescription Error");
     }
 
     public void prescriptionInitialize() {
-
 
         aArticle.setCellValueFactory(new PropertyValueFactory<>("articleNo"));
         aDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         aName.setCellValueFactory(new PropertyValueFactory<>("name"));
         aProducer.setCellValueFactory(new PropertyValueFactory<>("producer"));
         aSize.setCellValueFactory(new PropertyValueFactory<>("packageSize"));
-        aAmount.setCellValueFactory(new PropertyValueFactory<>("quantityPrescribed"));
+        aAmount.setCellValueFactory(new PropertyValueFactory<>("quantityReserved"));
 
-        List<Integer> prsID = allPrescribedID();
         ObservableList<Medicine> medicineList = FXCollections.observableArrayList(commonMethods.getMedicineList());
-        ObservableList<PrescriptionLine> prescribedAmount = FXCollections.observableArrayList(commonMethods.getPrescriptionList(prsID, currentPatient));
-        medicineList.addAll(FXCollections.observableArrayList(commonMethods.getMedicineList()));
 
         addPrescriptionTable.setItems(medicineList);
     }
 
+    private Integer getSelectedRowID() {
+        return currentPrescriptionLineTable.getSelectionModel().getSelectedItem().getPrescId();
+    }
+
+
     public void currentPrescriptionInitialize() {
-        aArticle1.setCellValueFactory(new PropertyValueFactory<>("articleNo"));
-        aDescription1.setCellValueFactory(new PropertyValueFactory<>("description"));
-        aName1.setCellValueFactory(new PropertyValueFactory<>("name"));
-        aProducer1.setCellValueFactory(new PropertyValueFactory<>("producer"));
         aStartDate1.setCellValueFactory(new PropertyValueFactory<>("startDate"));
         aEndDate1.setCellValueFactory(new PropertyValueFactory<>("endDate"));
+        aDiagnosis1.setCellValueFactory(new PropertyValueFactory<>("diagnosis"));
+
+
+        Integer prescrID = getSelectedRowID();
+
+        ObservableList<Prescription> prescriptionList = FXCollections.observableArrayList(commonMethods.getPrescriptionList(currentPatient));
+        prescriptionList.removeIf(p -> p.getId() != prescrID);
+
+        currentPrescriptionsTable.setItems(prescriptionList);
+    }
+
+    public void currentPrescriptionLineInitialize() {
+        aprescrID1.setCellValueFactory(new PropertyValueFactory<>("prescId"));
+        aName1.setCellValueFactory(new PropertyValueFactory<>("name"));
         aAmount1.setCellValueFactory(new PropertyValueFactory<>("quantityPrescribed"));
 
-        ObservableList<Medicine> medicineList = FXCollections.observableArrayList(commonMethods.getMedicineList());
-        medicineList.addAll(FXCollections.observableArrayList(commonMethods.getMedicineList()));
+        ObservableList<PrescriptionLine> prescriptionLineList = FXCollections.observableArrayList(commonMethods.getPrescriptionLineList(0, currentPatient));
 
-        currentPrescriptionsTable.setItems(medicineList);
+        currentPrescriptionLineTable.setItems(prescriptionLineList);
     }
 
     public boolean checkNewPrescription(List<PrescriptionLine> currentPrescriptions, PrescriptionLine newPrescription) {
@@ -159,7 +198,7 @@ public class AddPrescription implements Initializable {
 
     public List<Integer> allPrescribedID() {
         List<Integer> allID = new ArrayList<>();
-        List<Prescription> list = commonMethods.getPrescription(currentPatient);
+        List<Prescription> list = commonMethods.getPrescriptionList(currentPatient);
         for (Prescription p :
                 list) {
             allID.add(p.getId());
@@ -167,11 +206,23 @@ public class AddPrescription implements Initializable {
         return allID;
     }
 
-    /*
-    public List<PrescriptionLine> instantiatePL() {
+    public void makeaAmountEditable() {
 
-        return
+        addPrescriptionTable.setEditable(true);
+        aAmount.setCellFactory(TextFieldTableCell.<Medicine, Integer>forTableColumn(new IntegerStringConverter()));
+        aAmount.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Medicine, Integer>>() {
+
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Medicine, Integer> t) {
+                        if (Validation.isQuantityMedicine(t.getNewValue().toString())) {
+
+                            ((Medicine) t.getTableView().getItems().get(
+                                    t.getTablePosition().getRow())
+                            ).setQuantity(t.getNewValue());
+                            
+                        }
+                    }
+                });
     }
-
-     */
 }

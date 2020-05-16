@@ -73,9 +73,28 @@ public class DoctorController implements Initializable {
         hideAllWarningLabels(false);
         currentUser = UserSingleton.getOurInstance().getUser();
         setProfileData();
-        cancel_Button.setOnAction(event -> handleCancelButton());
-        save_Button.setOnAction(event -> handleSaveButton());
-        SSN_Go_Button.setOnAction(this::handleSSNGoButton);
+
+        cancel_Button.setOnAction(event -> {
+            try {
+                handleCancelButton();
+            } catch (Exception ignored) {
+            }
+        });
+
+        save_Button.setOnAction(event -> {
+                    try {
+                        handleSaveButton();
+                    } catch (Exception ignored) {
+                    }
+                });
+
+        SSN_Go_Button.setOnAction(event -> {
+                    try {
+                        handleSSNGoButton(event);
+                    } catch (Exception ignored) {
+                    }
+                });
+
         storeInitialize();
         patientInitialize();
 
@@ -226,40 +245,40 @@ public class DoctorController implements Initializable {
         return false;
     }
 
-        public void hideAllWarningLabels ( boolean state){
-            birthDateStar.setVisible(state);
-            firstNameStar.setVisible(state);
-            lastNameStar.setVisible(state);
-            zipCodeStar.setVisible(state);
-            addressStar.setVisible(state);
-            phoneStar.setVisible(state);
-            emailStar.setVisible(state);
-            passwordCheckLabel.setVisible(state);
-        }
-
-        public void storeInitialize () {
-            d1Article.setCellValueFactory(new PropertyValueFactory<>("articleNo"));
-            d1Description.setCellValueFactory(new PropertyValueFactory<>("description"));
-            d1Name.setCellValueFactory(new PropertyValueFactory<>("name"));
-            d1Price.setCellValueFactory(new PropertyValueFactory<>("price"));
-            d1Producer.setCellValueFactory(new PropertyValueFactory<>("producer"));
-            d1Size.setCellValueFactory(new PropertyValueFactory<>("packageSize"));
-            d1Stock.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-
-            ObservableList<Medicine> medicineList = FXCollections.observableArrayList(commonMethods.getMedicineList());
-            medicineList.addAll(FXCollections.observableArrayList(commonMethods.getMedicineList()));
-
-            storeTable.setItems(medicineList);
-        }
-
-        public void patientInitialize () {
-            d2SSN.setCellValueFactory(new PropertyValueFactory<>("Ssn"));
-            d2Name.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-            d2Surname.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-            d2Email.setCellValueFactory(new PropertyValueFactory<>("email"));
-            d2Phone.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
-
-            ObservableList<User> patientList = FXCollections.observableArrayList(commonMethods.getPatientList());
-            patientTable.setItems(patientList);
-        }
+    public void hideAllWarningLabels(boolean state) {
+        birthDateStar.setVisible(state);
+        firstNameStar.setVisible(state);
+        lastNameStar.setVisible(state);
+        zipCodeStar.setVisible(state);
+        addressStar.setVisible(state);
+        phoneStar.setVisible(state);
+        emailStar.setVisible(state);
+        passwordCheckLabel.setVisible(state);
     }
+
+    public void storeInitialize() {
+        d1Article.setCellValueFactory(new PropertyValueFactory<>("articleNo"));
+        d1Description.setCellValueFactory(new PropertyValueFactory<>("description"));
+        d1Name.setCellValueFactory(new PropertyValueFactory<>("name"));
+        d1Price.setCellValueFactory(new PropertyValueFactory<>("price"));
+        d1Producer.setCellValueFactory(new PropertyValueFactory<>("producer"));
+        d1Size.setCellValueFactory(new PropertyValueFactory<>("packageSize"));
+        d1Stock.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+
+        ObservableList<Medicine> medicineList = FXCollections.observableArrayList(commonMethods.getMedicineList());
+        medicineList.addAll(FXCollections.observableArrayList(commonMethods.getMedicineList()));
+
+        storeTable.setItems(medicineList);
+    }
+
+    public void patientInitialize() {
+        d2SSN.setCellValueFactory(new PropertyValueFactory<>("Ssn"));
+        d2Name.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        d2Surname.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        d2Email.setCellValueFactory(new PropertyValueFactory<>("email"));
+        d2Phone.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+
+        ObservableList<User> patientList = FXCollections.observableArrayList(commonMethods.getPatientList());
+        patientTable.setItems(patientList);
+    }
+}

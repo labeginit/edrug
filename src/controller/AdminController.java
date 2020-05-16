@@ -3,23 +3,34 @@ package controller;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Popup;
+import javafx.stage.Stage;
 import javafx.util.StringConverter;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import model.*;
 import model.dBConnection.CommonMethods;
 
+import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.net.URL;
@@ -75,10 +86,12 @@ public class AdminController implements Initializable {
     public Button logOutAdminButton;
     public TextField adminSearchTextField, articleMedicine, nameMedicine, packageMedicine, producerMedicine, descriptionMedicine, priceMedicine, quantityMedicine, searchTermsMedicine;
     public ChoiceBox<ProdGroup> prodGroupMedicine;
+    public Circle helpCircle;
 
     public ChoiceBox<String> onPrescrMedicine;
     public Button logOutMedicineButton, saveButtonMedicine, cancelButtonMedicine;
 
+    public TextArea helpMenu;
     public Label articleStar, prodGroupStar, nameMedicineStar, packageStar, producerStar, descriptionStar, priceStar, quantityStar, searchStar, typeStar;
 
 
@@ -94,7 +107,23 @@ public class AdminController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        setVisible(false);
+
+        helpMenu.setVisible(false);
+
+
+        helpCircle.setOnMouseEntered(mouseEvent -> {
+            helpMenu.setVisible(true);
+            helpMenu.setText("bla bla la");
+
+
+                });
+        helpCircle.setOnMouseExited(mouseEvent -> {
+            helpMenu.setVisible(false);
+
+
+        });
+
+      setVisible(false);
         setVisibleAdd(false);
         setVisibleAddM(false);
         fillStore();
@@ -780,6 +809,7 @@ public class AdminController implements Initializable {
                             });
 
                 }
+
 
             }
 

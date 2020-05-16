@@ -14,7 +14,7 @@
                               #c3c4c4,
                               linear-gradient(#d6d6d6 50%, white 100%),
                               radial-gradient(center 50% -40%, radius 200%, #e6e6e6 45%, rgba(230,230,230,0) 50%);
-                          -fx-background-radius: 30;
+                          -fx-background-radius: 8,7,6;
                           -fx-background-insets: 0,1,1;
                           -fx-text-fill: black;
                           -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
@@ -29,31 +29,48 @@
       .tab-pane .tab:selected
       {
           -fx-background-color: #4475C0;
+          -fx-focus-color: transparent;
 
 
       }
       .tab-pane .tab-header-area .tab-header-background {
           -fx-opacity: 60%;
+          -fx-focus-color: transparent;
       }
       .tab .tab-label {
           -fx-alignment: CENTER;
           -fx-font-size: 16px;
           -fx-font-weight: bold;
+
       }
 
 
 
       .table-view .column-header {
       -fx-background-color: #76A0DF
+
+      }
+      .table-view {
+      -fx-focus-color: transparent;
       }
 
       #welcome {
       -fx-font-size: 23px;
        -fx-font-weight: bold;
-       //WHAT??
       }
 
       .table-row-cell:selected {
+
          -fx-background-color: #C0DAFF;
 
+      }
+      .table-row-cell:selected .text {
+             -fx-fill: black ;
+
+      }
+
+      #helpMenu {
+      -fx-focus-color: transparent;
+      -fx-border-color: #1B4B70 ;
+      -fx-border-width: 2px;
       }
