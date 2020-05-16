@@ -1,4 +1,3 @@
-import FileUtil.RWFile;
 import controller.UserCommon;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -8,7 +7,6 @@ import javafx.stage.Stage;
 import model.*;
 import model.dBConnection.CommonMethods;
 import model.dBConnection.DBConnection;
-
 import java.util.List;
 
 public class Main extends Application {
