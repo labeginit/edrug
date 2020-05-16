@@ -26,7 +26,7 @@ public class DAOPickupPharmacies {
         pharmacies.clear();
         try {
             if (!DBConnection.dbConnection.isClosed()) {
-                resultSet = common.retrieveSet("SELECT * FROM Pick-up_Location;");
+                resultSet = common.retrieveSet("SELECT * FROM Pharmacy;");
                 if (resultSet != null) {
                     while (resultSet.next()) {
                         pharmacies.add(createObjects(resultSet));
@@ -75,7 +75,7 @@ public class DAOPickupPharmacies {
                     email = pharmacy.getEmail();
                     phoneNumber = pharmacy.getPhoneNumber();
 
-                    String query = "INSERT INTO `edrugs_test`.`Pick-up_Location` ( `id` `store_name`, `address`, `zipcode`, `city`, `phone_number`, `email`) VALUES (?,?, ?, ?, ?, ?, ?);";
+                    String query = "INSERT INTO `edrugs_test`.`Pharmacy` ( `id` `store_name`, `address`, `zipcode`, `city`, `phone_number`, `email`) VALUES (?,?, ?, ?, ?, ?, ?);";
                     linesAffected = common.insertPharmacy(query, storeId, storeName, address, zipcode, city, phoneNumber, email);
                 } else {
                     throw new NullPointerException("The user object is null");
@@ -104,7 +104,7 @@ public class DAOPickupPharmacies {
                     email = pharmacy.getEmail();
                     phoneNumber = pharmacy.getPhoneNumber();
 
-                    String query = "UPDATE `edrugs_test`.`Pick-up_Location` SET `id` = ?, `store_name` = ?, `address` = ?, `zipcode` = ?, `city` = ?, `phone_number` = ?, `email` = ? WHERE (`id` = ?);";
+                    String query = "UPDATE `edrugs_test`.`Pharmacy` SET `id` = ?, `store_name` = ?, `address` = ?, `zipcode` = ?, `city` = ?, `phone_number` = ?, `email` = ? WHERE (`id` = ?);";
                     linesAffected = common.updatePharmacy(query, storeId, storeName, address, zipcode, city, phoneNumber, email);
                 } else {
                     throw new NullPointerException("The user object is null");
@@ -126,7 +126,7 @@ public class DAOPickupPharmacies {
                 if (pharmacy != null) {
                     storeId = pharmacy.getStoreId();
 
-                    String query = "DELETE `edrugs_test`.`Pick-up_Location` WHERE (`id` = ?);";
+                    String query = "DELETE `edrugs_test`.`Pharmacy` WHERE (`id` = ?);";
                     linesAffected = common.removePharmacy(query, storeId);
                 } else {
                     throw new NullPointerException("The user object is null");

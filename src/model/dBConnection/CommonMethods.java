@@ -188,4 +188,6 @@ public class CommonMethods {
     public int updatePharmacy(Pharmacy pharmacy) { return daoPickupPharmacies.updatePharmacy(pharmacy); }
 
     public int removePharmacy(Pharmacy pharmacy) { return daoPickupPharmacies.removePharmacy(pharmacy); }
+
+    //**********************
     }

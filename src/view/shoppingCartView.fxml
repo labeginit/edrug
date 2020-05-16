@@ -38,21 +38,21 @@
                                         <TableColumn fx:id="c8" prefWidth="61.0" text="Delete" />
                                     </columns>
                                 </TableView>
-                                <Label layoutX="14.0" layoutY="24.0" prefHeight="19.0" prefWidth="103.0" text="Payer:">
+                                <Label layoutX="14.0" layoutY="24.0" prefHeight="19.0" prefWidth="103.0" text="User:">
                                     <font>
                                         <Font size="13.0" />
                                     </font>
                                 </Label>
-                                <TextField fx:id="firstName_text" layoutX="137.0" layoutY="21.0" prefHeight="26.0" prefWidth="134.0" promptText="first name" />
+                                <TextField fx:id="firstName_text" layoutX="91.0" layoutY="21.0" prefHeight="26.0" prefWidth="228.0" promptText="first name" />
                                 <ComboBox fx:id="delivery_combo" layoutX="165.0" layoutY="101.0" prefHeight="26.0" prefWidth="192.0" promptText="select here..." />
                                 <TextField fx:id="totalCost_text" alignment="CENTER_RIGHT" editable="false" layoutX="491.0" layoutY="101.0" prefHeight="26.0" prefWidth="134.0" promptText="00.00" />
-                                <Label layoutX="14.0" layoutY="64.0" prefHeight="19.0" prefWidth="123.0" text="Delivery Address:">
+                                <Label layoutX="14.0" layoutY="64.0" prefHeight="19.0" prefWidth="123.0" text="Current Address: ">
                                     <font>
                                         <Font size="13.0" />
                                     </font>
                                 </Label>
                         <ComboBox fx:id="payment_combo" layoutX="165.0" layoutY="139.0" prefHeight="26.0" prefWidth="192.0" promptText="select here..." />
-                        <TextField fx:id="zipCode_text" layoutX="137.0" layoutY="61.0" prefHeight="26.0" prefWidth="134.0" promptText="zip code" />
+                        <TextField fx:id="zipCode_text" layoutX="491.0" layoutY="61.0" prefHeight="26.0" prefWidth="134.0" promptText="zip code" />
                         <Label layoutX="385.0" layoutY="105.0" prefHeight="19.0" prefWidth="82.0" text="Total Cost:">
                            <font>
                               <Font size="13.0" />
@@ -64,7 +64,7 @@
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="lastName_text" layoutX="294.0" layoutY="21.0" prefHeight="26.0" prefWidth="264.0" promptText="last name" />
+                        <TextField fx:id="lastName_text" layoutX="344.0" layoutY="21.0" prefHeight="26.0" prefWidth="264.0" promptText="last name" />
                         <Label layoutX="14.0" layoutY="104.0" prefHeight="19.0" prefWidth="127.0" text="Delivery Method:">
                            <font>
                               <Font size="13.0" />
@@ -75,7 +75,7 @@
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="address_text" layoutX="294.0" layoutY="61.0" prefHeight="26.0" prefWidth="264.0" promptText="address" />
+                        <TextField fx:id="address_text" layoutX="165.0" layoutY="61.0" prefHeight="26.0" prefWidth="264.0" promptText="address" />
                             </children></AnchorPane>
                     </content>
                 </Tab>

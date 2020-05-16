@@ -5,6 +5,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Pattern;
 
 public class Validation {
@@ -141,16 +146,42 @@ public class Validation {
         return false;
     }
     //creditcard validation { VISA ,MASTERCARD, AMEX, DISCOVER
-    public static boolean isValid(long number)
+    public static boolean isValid(long number, Label starLabel, Label CCPaymentLabel)
     {
-        return (getSize(number) >= 13 &&
-                getSize(number) <= 16) &&
-                (prefixMatched(number, 4) ||
-                        prefixMatched(number, 5) ||
-                        prefixMatched(number, 37) ||
-                        prefixMatched(number, 6)) &&
-                ((sumOfDoubleEvenPlace(number) +
-                        sumOfOddPlace(number)) % 10 == 0);
+        if (getSize(number) >= 13 && getSize(number) <= 16 ) {
+            if (prefixMatched(number, 4) ||
+                    prefixMatched(number, 5) ||
+                    prefixMatched(number, 37) ||
+                    prefixMatched(number, 6)) {
+                if (prefixMatched(number, 4)){
+                    CCPaymentLabel.setVisible(true);
+                    CCPaymentLabel.setText("VISA");
+                } else if (prefixMatched(number, 5)) {
+                    CCPaymentLabel.setVisible(true);
+                    CCPaymentLabel.setText("MASTERCARD");
+                } else if (prefixMatched(number, 37)) {
+                    CCPaymentLabel.setVisible(true);
+                    CCPaymentLabel.setText("AMEX");
+                } else if (prefixMatched(number, 4)) {
+                    CCPaymentLabel.setVisible(true);
+                    CCPaymentLabel.setText("DISCOVER");
+                }
+                if ((sumOfDoubleEvenPlace(number) +
+                        sumOfOddPlace(number)) % 10 == 0) {
+                    return true;
+                } else {
+                    starLabel.setVisible(true);
+                    return false;
+                }
+            } else {
+                starLabel.setVisible(true);
+                return false;
+            }
+        } else {
+            starLabel.setVisible(true);
+            return false;
+        }
+
     }
 
     // Get the result from Step 2
@@ -208,4 +239,70 @@ public class Validation {
         return number;
     }
     // } credit card validation
+
+    public static boolean isCCV(String ccv, Label starLabel, Label ccPaymentLabel) {
+        if (ccPaymentLabel.getText().equalsIgnoreCase("AMEX")) {
+            String regex = "^[0-9]{4}+$";
+            boolean aCCV = Pattern.compile(regex).matcher(ccv).find();
+            if (aCCV) {
+                starLabel.setVisible(false);
+                return true;
+            } else
+                alertPopup("Invalid CCV please enter the proper numerical characters", "Invalid CCV", "Please enter 4 integers");
+            starLabel.setVisible(true);
+            return false;
+        } else {
+            String regex = "^[0-9]{3}+$";
+            boolean aCCV = Pattern.compile(regex).matcher(ccv).find();
+            if (aCCV) {
+                starLabel.setVisible(false);
+                return true;
+            } else
+                alertPopup("Invalid CCV please enter the proper numerical characters", "Invalid CCV", "Please enter 3 integers");
+            starLabel.setVisible(true);
+            return false;
+        }
+    }
+    //MM/YY
+    public static boolean isValidEXPDate(String expDate, Label starLabel) {
+        String regex = "^(0[1-9]|1[0-2])\\/?([0-9]{2})$";
+        boolean aEXPDate = Pattern.compile(regex).matcher(expDate).find();
+        if (aEXPDate) {
+            String yy = "20";
+            char m1 = expDate.charAt(0);
+            char m2 = expDate.charAt(1);
+            char y1 = expDate.charAt(3);
+            char y2 = expDate.charAt(4);
+            char y = yy.charAt(0);
+            char y0 = yy.charAt(1);
+            char[] years = new char[4];
+            years[0] = y;
+            years[1] = y0;
+            years[2] = y1;
+            years[3] = y2;
+            System.out.println(years);
+            char[] months= new char[2];
+            months[0] = m1;
+            months[1] = m2;
+            System.out.println(months);
+            String yearString = String.valueOf(years);
+            String monthString = String.valueOf(months);
+            String date = yearString + "-" + monthString + "-28";
+            java.sql.Date dateEXP = java.sql.Date.valueOf(date);
+            java.util.Date todaysDate = new java.util.Date();
+            System.out.println(dateEXP);
+            System.out.println(todaysDate);
+            if (todaysDate.before(dateEXP)) {
+                return true;
+            } else {
+                starLabel.setVisible(true);
+                alertPopup("Card may be expired check to make sure the expiration is valid", "Expired", "Expired card or mistake");
+                return false;
+            }
+            } else {
+            starLabel.setVisible(true);
+            alertPopup("Please use the proper format MM/YY", "Improper Format","Please use Proper format");
+            return false;
+        }
+    }
 }

@@ -128,6 +128,7 @@ public class ShoppingCartController implements Initializable {
         tableView.setItems(medList);
 
         delete_button.setOnAction(event -> onDeleteButtonPressed(event));
+        checkOut_button.setOnAction(actionEvent -> onConfirmButtonPressed(actionEvent));
     }
 
     private void setInitialValues(User currentUser) {
@@ -218,5 +219,24 @@ public class ShoppingCartController implements Initializable {
         }
         totalCost_text.setText(Double.toString(cost));
         totalVAT_text.setText(Double.toString(cost * 0.2));
+    }
+
+    @FXML public void onConfirmButtonPressed (ActionEvent actionEvent) {
+        if (medList == null) {
+            Validation.alertPopup("Your shopping cart is empty","Empty Cart", "Cart must contain items");
+        } else {
+            if(delivery_combo.getValue() != null && payment_combo.getValue() != null) {
+                CartSingleton.getOurInstance().setCart(medList);
+                CartSingleton.getOurInstance().setDeliveryMethod(delivery_combo.getValue().toString());
+                CartSingleton.getOurInstance().setPaymentMethod(payment_combo.getValue().toString());
+                try {
+                    userCommon.switchScene(actionEvent, "/view/checkout.fxml");
+                } catch (Exception ex) {
+                    System.out.println(ex.getMessage());
+                }
+            } else {
+                Validation.alertPopup("Please choose delivery method and payment method", "Fill out fields", "Complete the form");
+            }
+        }
     }
 }

@@ -13,27 +13,35 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CheckoutController">
    <children>
-      <TabPane layoutX="-1.0" prefHeight="585.0" prefWidth="784.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane fx:id="tabPane" layoutX="-1.0" prefHeight="585.0" prefWidth="784.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab fx:id="deliveryTab" text="Delivery">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
                         <Label layoutX="73.0" layoutY="113.0" text="Delivery To:" />
-                        <Label layoutX="130.0" layoutY="170.0" text="First Name:" />
+                        <Label layoutX="114.0" layoutY="170.0" text="First Name:" />
                         <Label layoutX="73.0" layoutY="46.0" text="Delivery Method:" />
                         <Label fx:id="deliveryMethod1Label" layoutX="213.0" layoutY="46.0" prefHeight="16.0" prefWidth="187.0" text="Label" />
-                        <Label layoutX="439.0" layoutY="170.0" text="Last Name:" />
+                        <Label layoutX="424.0" layoutY="170.0" text="Last Name:" />
                         <TextField fx:id="firstName1TextField" layoutX="213.0" layoutY="165.0" prefHeight="26.0" prefWidth="206.0" />
                         <TextField fx:id="lastName1TextField" layoutX="525.0" layoutY="165.0" prefHeight="26.0" prefWidth="218.0" />
-                        <Label layoutX="129.0" layoutY="236.0" text="Address:" />
+                        <Label layoutX="114.0" layoutY="236.0" text="Address:" />
                         <Label layoutX="439.0" layoutY="236.0" text="Zipcode:" />
-                        <Label layoutX="129.0" layoutY="304.0" text="Phone Number:" />
-                        <TextField fx:id="address1TextField" layoutX="213.0" layoutY="231.0" prefHeight="26.0" prefWidth="205.0" />
+                        <Label layoutX="92.0" layoutY="304.0" text="Phone Number:" />
+                        <TextField fx:id="address1TextField" layoutX="197.0" layoutY="231.0" prefHeight="26.0" prefWidth="224.0" />
                         <TextField fx:id="zipcode1TextField" layoutX="525.0" layoutY="231.0" prefHeight="26.0" prefWidth="216.0" />
-                        <TextField fx:id="phoneNumber1TextField" layoutX="248.0" layoutY="299.0" prefHeight="26.0" prefWidth="213.0" />
+                        <TextField fx:id="phoneNumber1TextField" layoutX="213.0" layoutY="299.0" prefHeight="26.0" prefWidth="227.0" />
                         <Button fx:id="next1Button" layoutX="598.0" layoutY="431.0" mnemonicParsing="false" text="Next&gt;&gt;" />
                         <Button fx:id="back1Button" layoutX="468.0" layoutY="431.0" mnemonicParsing="false" text="&lt;&lt;Back" />
+                        <Label fx:id="fName1StarLabel" layoutX="197.0" layoutY="170.0" text="*" textFill="#f50303" />
+                        <Label fx:id="zipcode1StarLabel" layoutX="507.0" layoutY="236.0" text="*" textFill="#f50303" />
+                        <Label fx:id="lName1StarLabel" layoutX="507.0" layoutY="170.0" text="*" textFill="#f50303" />
+                        <Label fx:id="phoneNumber1StarLabel" layoutX="201.0" layoutY="304.0" prefHeight="16.0" prefWidth="6.0" text="*" textFill="#f50303" />
+                        <Label fx:id="address1StarLabel" layoutX="182.0" layoutY="236.0" text="*" textFill="#f50303" />
+                        <Label layoutX="461.0" layoutY="304.0" text="City:" />
+                        <Label fx:id="city1StarLabel" layoutX="507.0" layoutY="304.0" text="*" textFill="#f50303" />
+                        <TextField fx:id="city1TextField" layoutX="525.0" layoutY="299.0" prefHeight="26.0" prefWidth="215.0" />
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -44,23 +52,32 @@
                         <Button fx:id="back2Button" layoutX="459.0" layoutY="428.0" mnemonicParsing="false" text="&lt;&lt;Back" />
                         <Button fx:id="next2Button" layoutX="604.0" layoutY="428.0" mnemonicParsing="false" text="Next&gt;&gt;" />
                         <Label layoutX="67.0" layoutY="56.0" text="Credit Card Payment: " />
-                        <Label layoutX="104.0" layoutY="102.0" text="Credit Card Holder:" />
-                        <Label layoutX="104.0" layoutY="157.0" text="Credit Card Number:" />
-                        <Label layoutX="104.0" layoutY="214.0" text="Address: " />
+                        <Label layoutX="94.0" layoutY="102.0" text="Credit Card Holder:" />
+                        <Label layoutX="90.0" layoutY="157.0" text="Credit Card Number:" />
+                        <Label layoutX="94.0" layoutY="214.0" text="Address: " />
                         <Label layoutX="500.0" layoutY="157.0" text="CCV:" />
-                        <Label layoutX="495.0" layoutY="214.0" text="Zipcode: " />
-                        <Label layoutX="104.0" layoutY="268.0" text="City:" />
+                        <Label layoutX="474.0" layoutY="268.0" text="Zipcode: " />
+                        <Label layoutX="118.0" layoutY="268.0" text="City:" />
                         <TextField fx:id="creditCardNumber1TextField" layoutX="249.0" layoutY="152.0" prefHeight="26.0" prefWidth="225.0" />
                         <TextField fx:id="ccvTextField" layoutX="554.0" layoutY="152.0" prefHeight="26.0" prefWidth="135.0" />
-                        <TextField fx:id="zipcode2TextField" layoutX="554.0" layoutY="209.0" prefHeight="26.0" prefWidth="137.0" />
+                        <TextField fx:id="zipcode2TextField" layoutX="550.0" layoutY="263.0" prefHeight="26.0" prefWidth="140.0" />
                         <TextField fx:id="address2TextField" layoutX="178.0" layoutY="209.0" prefHeight="26.0" prefWidth="271.0" />
                         <TextField fx:id="city2TextField" layoutX="178.0" layoutY="263.0" />
-                        <Label layoutX="498.0" layoutY="268.0" text="Total VAT:" />
-                        <Label layoutX="498.0" layoutY="313.0" text="Total:" />
-                        <Label fx:id="totalVAT1Label" layoutX="578.0" layoutY="268.0" text="Label" />
-                        <Label fx:id="total1Label" layoutX="578.0" layoutY="313.0" text="Label" />
-                        <Label fx:id="creditCardPaymentLabel" layoutX="231.0" layoutY="56.0" text="Label" />
-                        <TextField fx:id="creditCardHolderTextField" layoutX="245.0" layoutY="97.0" prefHeight="26.0" prefWidth="409.0" />
+                        <Label layoutX="498.0" layoutY="321.0" text="Total VAT:" />
+                        <Label layoutX="498.0" layoutY="359.0" text="Total:" />
+                        <Label fx:id="totalVAT1Label" layoutX="578.0" layoutY="321.0" text="Label" />
+                        <Label fx:id="total1Label" layoutX="578.0" layoutY="359.0" text="Label" />
+                        <Label fx:id="creditCardPaymentLabel" layoutX="231.0" layoutY="56.0" />
+                        <TextField fx:id="creditCardHolderTextField" layoutX="245.0" layoutY="97.0" prefHeight="26.0" prefWidth="444.0" />
+                        <Label fx:id="cardHolderStarLabel" layoutX="228.0" layoutY="102.0" text="*" textFill="#f20101" />
+                        <Label fx:id="cardStarLabel" layoutX="232.0" layoutY="157.0" text="*" textFill="#f20101" />
+                        <Label fx:id="address2StarLabel" layoutX="162.0" layoutY="214.0" text="*" textFill="#f20101" />
+                        <Label fx:id="city2StarLabel" layoutX="162.0" layoutY="268.0" text="*" textFill="#f20101" />
+                        <Label fx:id="zipcode2StarLabel" layoutX="539.0" layoutY="268.0" text="*" textFill="#f20101" />
+                        <Label fx:id="ccvStarLabel" layoutX="539.0" layoutY="157.0" text="*" textFill="#f20101" />
+                        <Label layoutX="466.0" layoutY="214.0" text="Exp. Date:" />
+                        <Label fx:id="dPickerStarLabel" layoutX="539.0" layoutY="214.0" text="*" textFill="#f20101" />
+                        <TextField fx:id="expDateTextField" layoutX="554.0" layoutY="209.0" prefHeight="26.0" prefWidth="135.0" promptText="MM/YY" />
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -80,6 +97,10 @@
                         <Label fx:id="pharmacyAddressLabel" layoutX="206.0" layoutY="192.0" prefHeight="16.0" prefWidth="196.0" text="Label" />
                         <Label fx:id="zipcode3Label" layoutX="512.0" layoutY="192.0" prefHeight="16.0" prefWidth="140.0" text="Label" />
                         <Label fx:id="city2Label" layoutX="177.0" layoutY="252.0" prefHeight="16.0" prefWidth="188.0" text="Label" />
+                        <Label layoutX="433.0" layoutY="252.0" text="Phone Number:" />
+                        <Label fx:id="phoneNumber3Label" layoutX="553.0" layoutY="252.0" prefHeight="16.0" prefWidth="172.0" text="Label" />
+                        <Label layoutX="121.0" layoutY="314.0" text="Email: " />
+                        <Label fx:id="emailLabel" layoutX="177.0" layoutY="314.0" prefHeight="16.0" prefWidth="233.0" text="Label" />
                      </children></AnchorPane>
               </content>
             </Tab>

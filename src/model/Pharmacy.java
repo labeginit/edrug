@@ -75,14 +75,9 @@ public class Pharmacy {
 
     @Override
     public String toString() {
-        return "Pharmacy{" +
-                "storeId=" + storeId +
-                ", storeName='" + storeName + '\'' +
-                ", address='" + address + '\'' +
-                ", zipcode=" + zipcode +
-                ", city='" + city + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+        return
+                 storeName + ' ' +
+                 address + ' ' +
+                 city ;
     }
 }
