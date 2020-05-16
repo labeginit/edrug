@@ -24,6 +24,7 @@ import javafx.event.ActionEvent;
 import model.dBConnection.CommonMethods;
 
 public class PatientController implements Initializable {
+
     private CommonMethods commonMethods = new CommonMethods();
     private UserCommon userCommon = new UserCommon();
     private User currentUser;
@@ -165,6 +166,8 @@ public class PatientController implements Initializable {
 
     @FXML
     private Label passwordCheckLabel;
+    public Label helpMyPrescriptions;
+    public TextArea helpMenuMyPrescriptions;
 
     private List<ProdGroup> groups = commonMethods.getProductGroupList();
     private List<String> groupPaths = new ArrayList<>();
@@ -189,6 +192,9 @@ public class PatientController implements Initializable {
         currentUser = UserSingleton.getOurInstance().getUser();
         List<PrescriptionLine> temp = new ArrayList<>();
         temp.addAll(commonMethods.getPrescriptionLineList(0, currentUser));
+
+
+        userCommon.handleHelpMenus(helpMenuMyPrescriptions, helpMyPrescriptions, "This is the quantity you\nhave, respectively the quantity you\nhave consumed");
 
         //DELETEME
         System.out.println("______");

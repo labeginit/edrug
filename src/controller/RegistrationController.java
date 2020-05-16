@@ -22,6 +22,7 @@ import java.util.ResourceBundle;
 import java.sql.Date;
 
 public class RegistrationController implements Initializable {
+
     CommonMethods common = new CommonMethods();
     public LocalDate localDate;
 
@@ -96,9 +97,16 @@ public class RegistrationController implements Initializable {
 
     @FXML
     private Label confirmPasswordStar;
+    public Label helpNewUser;
+    public TextArea helpMenuNewUser;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        UserCommon userCommon = new UserCommon();
+
+        userCommon.handleHelpMenus(helpMenuNewUser, helpNewUser, "New to e-Drugs?\n\nVery welcome!\nPlease enter all your information\nas correctly as possible and\nlook forward to using e-Drugs");
+
+
         setVisibleFalse();
         dPicker.setOnAction(e -> {localDate = dPicker.getValue();});
         registerButton.setOnAction(this::onRegisterButtonPressed);

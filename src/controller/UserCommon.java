@@ -9,14 +9,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.Medicine;
 import model.OrderLine;
 import model.User;
 import model.UserSingleton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.PasswordField;
 import model.dBConnection.CommonMethods;
 
 
@@ -120,5 +118,16 @@ public class UserCommon {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
+    }
+    public void handleHelpMenus(TextArea helpMenu, Label helpCircle, String text) {
+        helpMenu.setVisible(false);
+
+        helpCircle.setOnMouseEntered(mouseEvent -> {
+            helpMenu.setVisible(true);
+            helpMenu.setText(text);
+
+
+        });
+        helpCircle.setOnMouseExited(mouseEvent -> helpMenu.setVisible(false));
     }
 }

@@ -4,6 +4,7 @@
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -48,9 +49,9 @@
          <font>
             <Font size="13.0" />
          </font></Label>
-      <ImageView fitHeight="310.0" fitWidth="290.0" layoutX="523.0" layoutY="-49.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="310.0" fitWidth="290.0" layoutX="570.0" layoutY="-43.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@image/Logo.png" />
+            <Image url="@image/output-onlinepngtools.png" />
          </image>
       </ImageView>
       <ImageView fx:id="progress" fitHeight="106.0" fitWidth="200.0" layoutX="306.0" layoutY="552.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="25.0">
@@ -95,5 +96,7 @@
       <Label fx:id="passwordStar" layoutX="274.0" layoutY="407.0" text="*" textFill="#f20101" />
       <Label fx:id="confirmPasswordStar" layoutX="274.0" layoutY="445.0" text="*" textFill="#f20101" />
       <DatePicker fx:id="dPicker" layoutX="291.0" layoutY="221.0" prefHeight="26.0" prefWidth="230.0" />
+      <Label fx:id="helpNewUser" layoutX="259.0" layoutY="57.0" text="?" />
+      <TextArea fx:id="helpMenuNewUser" layoutX="48.0" layoutY="78.0" prefHeight="195.0" prefWidth="213.0" />
    </children>
 </AnchorPane>
