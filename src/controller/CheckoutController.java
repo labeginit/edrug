@@ -238,7 +238,7 @@ public class CheckoutController implements Initializable {
             zipcode4Label.setText(zipcode3Label.getText());
             city4Label.setText(city2Label.getText());
         } else {
-            Validation.alertPopup("Please choose a Pharmacy to pick up prescription", "No Pick up Loactaion", "Select Pickup location");
+            Validation.alertPopup("Please choose a Pharmacy to pick up prescription", "No Pick up Location", "Select Pickup location");
         }
     }
 
@@ -256,8 +256,7 @@ public class CheckoutController implements Initializable {
     @FXML private void confirmOrderButtonPressed(ActionEvent actionEvent) {
         Random rand = new Random();
         int OCR = rand.nextInt(100000000);
-        Order order = null;
-        int id = 1 + commonMethods.getLastId(order.getClass());
+        int id = 1 + commonMethods.getLastId(Order.class);
         java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
         String paymentMessage;
         String orderMessage;
@@ -313,7 +312,7 @@ public class CheckoutController implements Initializable {
             fileArrayList.add("\tOCR Number: " + OCR + "\t Bank Giro: 00000-00000");
         }
 
-        order = new Order(id,user,date, orderMethod, paymentMethod, medList, Double.valueOf(total4Label.getText()),Double.valueOf(totalVAT4Label.getText()));
+        Order order = new Order(id,user,date, orderMethod, paymentMethod, medList, Double.valueOf(total4Label.getText()),Double.valueOf(totalVAT4Label.getText()));
         RWFile.saveToFile(RWFile.invoice, fileArrayList);
         sendEmail(orderMessage,paymentMessage);
         commonMethods.addOrder(order);
