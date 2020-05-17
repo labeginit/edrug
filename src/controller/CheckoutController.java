@@ -257,13 +257,25 @@ public class CheckoutController implements Initializable {
         Random rand = new Random();
         int OCR = rand.nextInt(100000000);
         Order order = null;
-        int id = 1 + commonMethods.getLastId(order);
+        int id = 1 + commonMethods.getLastId(order.getClass());
         java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
         String paymentMessage;
         String orderMessage;
         Order.DeliveryMethod orderMethod;
         Order.PaymentMethod paymentMethod;
         ArrayList<String> fileArrayList = new ArrayList<>();
+        String company = ""
+                + "e-Drugs AB\n"
+                + "ElmetorpsVagen 15, 291 39, Kristianstad\n"
+                + "Land: +460712254630 Mob: +460712205220 Fax: 812254639\n"
+                + " \n"
+                + "CUSTOMER INVOICE\n"
+                + " \n";
+        List<String> t1Headers = Arrays.asList("INFO", "CUSTOMER");
+        List<List<String>> t1Rows = Arrays.asList(
+                Arrays.asList("DATE: " + date, user.getFirstName() + " " + user.getLastName()),
+                Arrays.asList("TIME: " + date.getTime(), "MOB: " + user.getPhoneNumber()),
+                Arrays.asList("ORDER NO: " + id, "ADDRES: " + user.getAddress() + city4Label.getText() + user.getZipCode()));
         String table = "|Article Number | Name\t\t\t | Quantity | Price|\n";
         fileArrayList.add(table);
         for (int i = 0; i < medList.size(); i++) {
