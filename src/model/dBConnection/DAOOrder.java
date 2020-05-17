@@ -149,37 +149,19 @@ public class DAOOrder {
                     totalVAT = order.getTotalVAT();
                     specification = order.getSpecification();
                     String query = "INSERT INTO `edrugs_test`.`Order` (`id`, `user_ssn`, `date`, `delivery_method`, `payment_method`, `total`, `total_VAT`) VALUES (?, ?, ?, ?, ?, ?, ?);";
-                    linesAffected = common.insertOrder(query, id, user.getSsn(), date, deliveryMethod, paymentMethod, totalSum, totalVAT) + addOrderHasMedicine(specification);
-                } else {
-                    throw new NullPointerException("The order object is null");
-                }
-            }
-        } catch (SQLException ex) {
-            System.out.println("Error while working with statement!");
-            ex.printStackTrace();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        } finally {
-            return linesAffected;
-        }
-    }
-    protected int addOrderHasMedicine(List<OrderLine> specification) {
-        try {
-            if (!DBConnection.dbConnection.isClosed()) {
-                if (specification != null) {
-                    for (int i = 0; i < specification.size(); i++) {
-                        orderId = specification.get(i).getOrderId();
-                        medicine = specification.get(i).getMedicine();
-                        articleNo = specification.get(i).getArticleNo();
-                        name = specification.get(i).getName();
-                        user = specification.get(i).getUser();
-                        price = specification.get(i).getPrice();
-                        quantity = specification.get(i).getQuantity();
-                        String query = "INSERT INTO `edrugs_test`.`Order_has_Medicine` (`order_id`, `user_ssn`, `article`, `price`, `quantity`) VALUES (?, ?, ?, ?, ?);";
-                        linesAffected = common.insertOrderHasMedicine(query, orderId, user.getSsn(), articleNo, price, quantity);
+                    linesAffected = common.insertOrder(query, id, user.getSsn(), date, deliveryMethod, paymentMethod, totalSum, totalVAT);
+                    specification = order.getSpecification();
+                    for (OrderLine element : specification) {
+                        articleNo = element.getMedicine().getArticleNo();
+                        name = element.getName();
+                        user = element.getUser();
+                        price = element.getPrice();
+                        quantity = element.getQuantity();
+                        String queryString = "INSERT INTO `edrugs_test`.`Order_has_Medicine` (`id`, `user_ssn`,`article`, `price`, `quantity`) VALUES (?, ?, ?);";
+                        linesAffected = linesAffected + common.insertOrderHasMedicine(queryString, id, user.getSsn(),articleNo, price, quantity);
                     }
                 } else {
-                    throw new NullPointerException("The specification object is null");
+                    throw new NullPointerException("The order object is null");
                 }
             }
         } catch (SQLException ex) {

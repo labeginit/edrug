@@ -6,6 +6,7 @@ import model.dBConnection.DAOPrescription;
 import model.dBConnection.DAOUser;
 
 import java.util.List;
+import java.util.Objects;
 
 public class CommonMethods {
     public DAOUser daoUser = new DAOUser();
@@ -192,11 +193,13 @@ public class CommonMethods {
     public int removePharmacy(Pharmacy pharmacy) { return daoPickupPharmacies.removePharmacy(pharmacy); }
 
     //gives the last used id number for Prescriptions and Orders
-    public int getLastId(Class myClass){
+    public int getLastId(Object myClass){
+        Prescription prescription = null;
+        Order order = null;
         int maxId = 0;
-        if (myClass.getName().equalsIgnoreCase("model.Prescription")){
+        if (Objects.equals(myClass, prescription)){
             maxId = daoPrescription.retrieveLastPrescriptionId();
-        } else if (myClass.getName().equalsIgnoreCase("model.Order")) {
+        } else if (myClass.equals(order)) {
             maxId = daoOrder.retrieveLastOrderId();
         }
         return maxId;
@@ -204,6 +207,7 @@ public class CommonMethods {
 
 
     //**********************
+
 
     public int addOrder(Order order) { return daoOrder.addOrder(order); }
 

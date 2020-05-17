@@ -313,12 +313,12 @@ public class DAOCommon {
         }
         return linesAffected;
     }
-    protected int insertOrderHasMedicine(String queryString, int orderId,String userSSN, int articleNo, double price, int quantity) {
+    protected int insertOrderHasMedicine(String queryString, int id, String ssn, int articleNo, double price, int quantity) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
-                prepStmt.setInt(1, orderId);
-                prepStmt.setString(2, userSSN);
+                prepStmt.setInt(1, id);
+                prepStmt.setString(2, ssn);
                 prepStmt.setInt(3, articleNo);
                 prepStmt.setDouble(4,price);
                 prepStmt.setInt(5,quantity);
