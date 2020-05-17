@@ -256,8 +256,7 @@ public class CheckoutController implements Initializable {
     @FXML private void confirmOrderButtonPressed(ActionEvent actionEvent) {
         Random rand = new Random();
         int OCR = rand.nextInt(100000000);
-        Order order = null;
-        int id = 1 + commonMethods.getLastId(order.getClass());
+        int id = 1 + commonMethods.getLastId(Order.class);
         java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
         String paymentMessage;
         String orderMessage;
@@ -277,6 +276,8 @@ public class CheckoutController implements Initializable {
                 Arrays.asList("TIME: " + date.getTime(), "MOB: " + user.getPhoneNumber()),
                 Arrays.asList("ORDER NO: " + id, "ADDRES: " + user.getAddress() + city4Label.getText() + user.getZipCode()));
         String table = "|Article Number | Name\t\t\t | Quantity | Price|\n";
+        String t2Desc = "SELLING DETAILS";
+        List<String> t2Headers = Arrays.asList("ARTICLE NO", "NAME", "QUANTITY", "PRICE");
         fileArrayList.add(table);
         for (int i = 0; i < medList.size(); i++) {
             String string = "|" + medList.get(i).getArticleNo() +"\t\t|"+ medList.get(i).getName() + "\t\t|\t" + medList.get(i).getQuantity() + "\t|\t" + medList.get(i).getPrice() +"|\n";
@@ -313,12 +314,13 @@ public class CheckoutController implements Initializable {
             fileArrayList.add("\tOCR Number: " + OCR + "\t Bank Giro: 00000-00000");
         }
 
-        order = new Order(id,user,date, orderMethod, paymentMethod, medList, Double.valueOf(total4Label.getText()),Double.valueOf(totalVAT4Label.getText()));
+        Order order = new Order(id,user,date, orderMethod, paymentMethod, medList, Double.valueOf(total4Label.getText()),Double.valueOf(totalVAT4Label.getText()));
         RWFile.saveToFile(RWFile.invoice, fileArrayList);
         sendEmail(orderMessage,paymentMessage);
         commonMethods.addOrder(order);
         CartSingleton.getOurInstance().setCart(null);
         try {
+            Validation.alertPopup("Your Order #: " + id + "you will recieve an email shortly", "Order Processed", "Your order has been processed");
             RWFile.delete();
             userCommon.switchScene(actionEvent, "/view/patientView.fxml");
         } catch (Exception ex) {
