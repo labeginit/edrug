@@ -1,6 +1,5 @@
 package controller;
 
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -8,20 +7,18 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import controller.DoctorController;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.IntegerStringConverter;
 import model.*;
 import model.dBConnection.CommonMethods;
-import model.dBConnection.DAOPrescription;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+
 
 public class AddPrescription implements Initializable {
 
@@ -29,9 +26,10 @@ public class AddPrescription implements Initializable {
     CommonMethods commonMethods = new CommonMethods();
     UserCommon userCommon = new UserCommon();
     java.util.Date date = new java.util.Date();
-    ObservableList<PrescriptionLine> prescrLines = FXCollections.observableArrayList();
-    ObservableList<Prescription> prescrList = FXCollections.observableArrayList();
-    User currentPatient;
+    int i = 1;;
+    Patient currentPatient;
+    List<PrescriptionLine> prescrLines = FXCollections.observableArrayList();
+    List<Prescription> prescrList = commonMethods.getPrescriptionList(currentPatient);
 
     @FXML
     private Label ssnLabel, nameLabel, ssnLabel1, nameLabel1, currentDateLabel;
@@ -110,7 +108,8 @@ public class AddPrescription implements Initializable {
     }
 
     public void receiveData(String ssn) {
-        currentPatient = commonMethods.getUser(ssn);
+        User temp = commonMethods.getUser(ssn);
+        currentPatient = new Patient(temp.getSsn(), temp.getFirstName(), temp.getLastName(), temp.getBDate(), temp.getZipCode(), temp.getAddress(), temp.getEmail(), temp.getPhoneNumber(), temp.getPassword());
         ssnLabel.setText(currentPatient.getSsn());
         ssnLabel1.setText(currentPatient.getSsn());
         nameLabel.setText(currentPatient.getLastName() + ", " + currentPatient.getFirstName());
@@ -196,14 +195,13 @@ public class AddPrescription implements Initializable {
 
     }
 
-    public List<Integer> allPrescribedID() {
-        List<Integer> allID = new ArrayList<>();
-        List<Prescription> list = commonMethods.getPrescriptionList(currentPatient);
+    public int nextPrscID() {
+        int i = 1;
         for (Prescription p :
-                list) {
-            allID.add(p.getId());
+                prescrList) {
+            i++;
         }
-        return allID;
+        return i;
     }
 
     public void makeaAmountEditable() {
@@ -220,7 +218,18 @@ public class AddPrescription implements Initializable {
                             ((Medicine) t.getTableView().getItems().get(
                                     t.getTablePosition().getRow())
                             ).setQuantity(t.getNewValue());
+                            System.out.println(t.getNewValue());
+                            try {
+                                if ((t.getNewValue()) > 0) {
+                                    int id = nextPrscID();
+                                    PrescriptionLine pl = new PrescriptionLine(id, currentPatient, t.getRowValue(), t.getNewValue(), 0, "");
+                                    //Prescription p = new Prescription()
+                                    prescrLines.add(pl);
 
+                                }
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
                         }
                     }
                 });
