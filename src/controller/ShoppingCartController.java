@@ -211,6 +211,7 @@ public class ShoppingCartController implements Initializable {
         for (int i = 0; i < cart.size(); i++) {
             cost = cost + cart.get(i).getPrice() * cart.get(i).getQuantity();
         }
+        cost = userCommon.round(cost, 2);
         vat = userCommon.round(cost * 0.2, 2);
         totalCost_text.setText(Double.toString(cost));
         totalVAT_text.setText(Double.toString(vat));

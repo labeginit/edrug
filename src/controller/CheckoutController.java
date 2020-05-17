@@ -126,7 +126,7 @@ public class CheckoutController implements Initializable {
         for (int i = 0; i < cart.size(); i++) {
             cost = cost + cart.get(i).getPrice() * cart.get(i).getQuantity();
         }
-
+        cost = userCommon.round(cost, 2);
         double totalVAT = userCommon.round(cost * 0.2, 2);
         String vat = String.valueOf(totalVAT);
         if(vat.contains(",")){
@@ -316,7 +316,7 @@ public class CheckoutController implements Initializable {
             fileArrayList.add("\tOCR Number: " + OCR + "\t Bank Giro: 00000-00000");
         }
 
-        Order order = new Order(id,user,date, orderMethod, paymentMethod, medList, Double.valueOf(total4Label.getText()),Double.valueOf(totalVAT4Label.getText()));
+        Order order = new Order(id,user,date, orderMethod, paymentMethod, medList, Double.parseDouble(total4Label.getText()),Double.parseDouble(totalVAT4Label.getText()));
         RWFile.saveToFile(RWFile.invoice, fileArrayList);
         sendEmail(orderMessage,paymentMessage);
         commonMethods.addOrder(order);
