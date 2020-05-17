@@ -323,7 +323,7 @@ public class CheckoutController implements Initializable {
         sendEmail(orderMessage,paymentMessage);
         commonMethods.addOrder(order);
         try {
-            Validation.alertPopup("Your Order #: " + id + " you will recieve an email shortly", "Order Processed", "Your order has been processed");
+            Validation.alertPopup(Alert.AlertType.INFORMATION, "Your Order #: " + id + " you will recieve an email shortly", "Order Processed", "Your order has been processed");
             RWFile.delete();
             userCommon.switchScene(actionEvent, "/view/patientView.fxml");
             CartSingleton.getOurInstance().cart.clear();

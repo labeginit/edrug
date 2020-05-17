@@ -14,12 +14,17 @@ import java.util.regex.Pattern;
 
 public class Validation {
     public static void alertPopup(String infoMessage, String titleBar, String headerMessage) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, infoMessage, ButtonType.OK);
+        alertPopup(Alert.AlertType.WARNING, infoMessage, titleBar, headerMessage);
+
+    }
+
+    public static void alertPopup(Alert.AlertType alertType, String infoMessage, String titleBar, String headerMessage) {
+        Alert alert = new Alert(alertType, infoMessage, ButtonType.OK);
         alert.setResizable(true);
         alert.setTitle(titleBar);
         alert.setHeaderText(headerMessage);
         alert.getDialogPane().setPrefSize(500, 200);
-        alert.showAndWait();
+        alert.show();
     }
 
     @FXML
