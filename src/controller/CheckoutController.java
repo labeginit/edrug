@@ -127,7 +127,7 @@ public class CheckoutController implements Initializable {
             cost = cost + cart.get(i).getPrice() * cart.get(i).getQuantity();
         }
 
-        double totalVAT = (cost * 0.2);
+        double totalVAT = userCommon.round(cost * 0.2, 2);
         String vat = String.valueOf(totalVAT);
         if(vat.contains(",")){
             vat = vat.replaceAll(",",".").trim();

@@ -207,11 +207,13 @@ public class ShoppingCartController implements Initializable {
 
     private void calcTotals(){
         double cost = 0;
+        double vat = 0;
         for (int i = 0; i < cart.size(); i++) {
             cost = cost + cart.get(i).getPrice() * cart.get(i).getQuantity();
         }
+        vat = userCommon.round(cost * 0.2, 2);
         totalCost_text.setText(Double.toString(cost));
-        totalVAT_text.setText(Double.toString(cost * 0.2));
+        totalVAT_text.setText(Double.toString(vat));
     }
 
     @FXML public void onConfirmButtonPressed (ActionEvent actionEvent) {
