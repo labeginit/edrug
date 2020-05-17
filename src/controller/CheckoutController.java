@@ -256,7 +256,8 @@ public class CheckoutController implements Initializable {
     @FXML private void confirmOrderButtonPressed(ActionEvent actionEvent) {
         Random rand = new Random();
         int OCR = rand.nextInt(100000000);
-        int id = rand.nextInt(1000);
+        Order order = null;
+        int id = 1 + commonMethods.getLastId(order);
         java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
         String paymentMessage;
         String orderMessage;
@@ -266,7 +267,7 @@ public class CheckoutController implements Initializable {
         String table = "|Article Number | Name\t\t\t | Quantity | Price|\n";
         fileArrayList.add(table);
         for (int i = 0; i < medList.size(); i++) {
-            String string = "|" + medList.get(i).getArticleNo() +"\t\t|"+ medList.get(i).getName() + "\t| " + medList.get(i).getQuantity() + "\t| " + medList.get(i).getPrice() +"|\n";
+            String string = "|" + medList.get(i).getArticleNo() +"\t\t|"+ medList.get(i).getName() + "\t\t|\t" + medList.get(i).getQuantity() + "\t|\t" + medList.get(i).getPrice() +"|\n";
             fileArrayList.add(string);
         }
         fileArrayList.add("Total VAT: " + totalVAT4Label.getText() + "SEK\n Total Cost: " + total4Label.getText() + "SEK\n");
@@ -278,11 +279,11 @@ public class CheckoutController implements Initializable {
                     " by phone " + phoneNumber3Label.getText() + " or " + emailLabel.getText() + "\n";
         } else if (CartSingleton.getOurInstance().getDeliveryMethod().equalsIgnoreCase("POSTEN")) {
             orderMethod = Order.DeliveryMethod.POSTEN;
-            orderMessage = "\tYour order has been sent " + date + "to " + firstName1TextField.getText() + " " + lastName1TextField.getText() + " \n" +
+            orderMessage = "\tYour order has been sent " + date + " to " + firstName1TextField.getText() + " " + lastName1TextField.getText() + " \n" +
                     "allow 3-5 business days for shipping to " + address4Label.getText() + " in " + city4Label.getText() + " " + zipcode4Label.getText() + "\n";
         } else {
             orderMethod = Order.DeliveryMethod.SCHENKER;
-            orderMessage = "\tYour order has been sent " + date +"to " + firstName1TextField.getText() + " " + lastName1TextField.getText() + " \n" +
+            orderMessage = "\tYour order has been sent " + date +" to " + firstName1TextField.getText() + " " + lastName1TextField.getText() + " \n" +
                     "allow 2-3 business days for shipping to " + address4Label.getText() + " in " + city4Label.getText() + " " + zipcode4Label.getText() + "\n";
         }
         if (CartSingleton.getOurInstance().getPaymentMethod().equalsIgnoreCase("CREDIT_CARD")){
@@ -297,15 +298,17 @@ public class CheckoutController implements Initializable {
         } else {
             paymentMethod = Order.PaymentMethod.BANK_TRANSFER;
             paymentMessage = "Your invoice is included in a text file OCR Number: " + OCR + " Bank Giro: 00000-00000";
-            fileArrayList.add("OCR Number: " + OCR + "\t Bank Giro: 00000-00000");
+            fileArrayList.add("\tOCR Number: " + OCR + "\t Bank Giro: 00000-00000");
         }
 
-        Order order = new Order(id,user,date, orderMethod, paymentMethod, medList, Double.valueOf(total4Label.getText()),Double.valueOf(totalVAT4Label.getText()));
+        order = new Order(id,user,date, orderMethod, paymentMethod, medList, Double.valueOf(total4Label.getText()),Double.valueOf(totalVAT4Label.getText()));
         RWFile.saveToFile(RWFile.invoice, fileArrayList);
         sendEmail(orderMessage,paymentMessage);
+        commonMethods.addOrder(order);
+        CartSingleton.getOurInstance().setCart(null);
         try {
+            RWFile.delete();
             userCommon.switchScene(actionEvent, "/view/patientView.fxml");
-            //RWFile.delete();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }

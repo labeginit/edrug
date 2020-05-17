@@ -6,6 +6,7 @@ import model.dBConnection.DAOPrescription;
 import model.dBConnection.DAOUser;
 
 import java.util.List;
+import java.util.Objects;
 
 public class CommonMethods {
     public DAOUser daoUser = new DAOUser();
@@ -192,11 +193,13 @@ public class CommonMethods {
     public int removePharmacy(Pharmacy pharmacy) { return daoPickupPharmacies.removePharmacy(pharmacy); }
 
     //gives the last used id number for Prescriptions and Orders
-    public int getLastId(Class myClass){
+    public int getLastId(Object myClass){
+        Prescription prescription = null;
+        Order order = null;
         int maxId = 0;
-        if (myClass.getName().equalsIgnoreCase("model.Prescription")){
+        if (Objects.equals(myClass, prescription)){
             maxId = daoPrescription.retrieveLastPrescriptionId();
-        } else if (myClass.getName().equalsIgnoreCase("model.Order")) {
+        } else if (myClass.equals(order)) {
             maxId = daoOrder.retrieveLastOrderId();
         }
         return maxId;
@@ -204,4 +207,33 @@ public class CommonMethods {
 
 
     //**********************
+
+
+    public int addOrder(Order order) { return daoOrder.addOrder(order); }
+
+    public List<Order> retrieveOrderList() {
+         List <Order> orders = daoOrder.retrieveOrderList();
+        for (int i = 0; i < orders.size(); i++) {
+            orders.get(i).setUser(getUser(orders.get(i).getUser().getSsn()));
+            for (int j = 0; j < orders.get(i).getSpecification().size(); j++) {
+                orders.get(i).getSpecification().get(j).setMedicine(getMedicine(orders.get(i).getSpecification().get(j).getArticleNo()));
+                orders.get(i).getSpecification().get(j).setUser(getUser(orders.get(i).getUser().getSsn()));
+                orders.get(i).getSpecification().get(j).setName(orders.get(i).getSpecification().get(j).getMedicine().getName());
+            }
+        }
+         return orders;
     }
+
+    public Order getOrder(int id) {
+        Order order = daoOrder.getOrder(id);
+        order.setUser(getUser(order.getUser().getSsn()));
+        for (int j = 0; j < order.getSpecification().size(); j++) {
+            order.getSpecification().get(j).setMedicine(getMedicine(order.getSpecification().get(j).getArticleNo()));
+            order.getSpecification().get(j).setUser(getUser(order.getUser().getSsn()));
+            order.getSpecification().get(j).setName(order.getSpecification().get(j).getMedicine().getName());
+        }
+        return order;
+    }
+
+}
+

@@ -90,17 +90,17 @@
                         <ComboBox fx:id="pickUpComboBox" layoutX="259.0" layoutY="63.0" prefWidth="150.0" />
                         <Label layoutX="121.0" layoutY="68.0" text="Pick-up Location:" />
                         <Label layoutX="121.0" layoutY="141.0" text="Pharmacy Name:" />
-                        <Label fx:id="pharmacyNameLabel" layoutX="250.0" layoutY="141.0" prefHeight="16.0" prefWidth="183.0" text="Label" />
+                        <Label fx:id="pharmacyNameLabel" layoutX="250.0" layoutY="141.0" prefHeight="16.0" prefWidth="183.0" />
                         <Label layoutX="121.0" layoutY="192.0" text="Address: " />
                         <Label layoutX="430.0" layoutY="192.0" text="Zipcode: " />
                         <Label layoutX="121.0" layoutY="252.0" text="City:" />
-                        <Label fx:id="pharmacyAddressLabel" layoutX="206.0" layoutY="192.0" prefHeight="16.0" prefWidth="196.0" text="Label" />
-                        <Label fx:id="zipcode3Label" layoutX="512.0" layoutY="192.0" prefHeight="16.0" prefWidth="140.0" text="Label" />
-                        <Label fx:id="city2Label" layoutX="177.0" layoutY="252.0" prefHeight="16.0" prefWidth="188.0" text="Label" />
+                        <Label fx:id="pharmacyAddressLabel" layoutX="206.0" layoutY="192.0" prefHeight="16.0" prefWidth="196.0" />
+                        <Label fx:id="zipcode3Label" layoutX="512.0" layoutY="192.0" prefHeight="16.0" prefWidth="140.0" />
+                        <Label fx:id="city2Label" layoutX="177.0" layoutY="252.0" prefHeight="16.0" prefWidth="188.0" />
                         <Label layoutX="433.0" layoutY="252.0" text="Phone Number:" />
-                        <Label fx:id="phoneNumber3Label" layoutX="553.0" layoutY="252.0" prefHeight="16.0" prefWidth="172.0" text="Label" />
+                        <Label fx:id="phoneNumber3Label" layoutX="553.0" layoutY="252.0" prefHeight="16.0" prefWidth="172.0" />
                         <Label layoutX="121.0" layoutY="314.0" text="Email: " />
-                        <Label fx:id="emailLabel" layoutX="177.0" layoutY="314.0" prefHeight="16.0" prefWidth="233.0" text="Label" />
+                        <Label fx:id="emailLabel" layoutX="177.0" layoutY="314.0" prefHeight="16.0" prefWidth="233.0" />
                      </children></AnchorPane>
               </content>
             </Tab>
