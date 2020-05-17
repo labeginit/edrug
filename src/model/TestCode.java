@@ -2,6 +2,10 @@ package model;
 
 import model.dBConnection.CommonMethods;
 
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+
 public class TestCode {
     public void code(){
         //examples of use of methods getUser() and getUserList()
@@ -141,6 +145,12 @@ public class TestCode {
 
         System.out.println(commonMethods.getLastId(Prescription.class));
         System.out.println(commonMethods.getLastId(Order.class));
+        List <OrderLine> lines = new ArrayList<>();
+        OrderLine line1 = new OrderLine(commonMethods.getLastId(Order.class) + 1, commonMethods.getUser("222222-1111"), commonMethods.getMedicine(10004), 40, 2);
+        lines.add(line1);
+        Order order = new Order(commonMethods.getLastId(Order.class) + 1, commonMethods.getUser("222222-1111"), Date.valueOf("2020-05-20"), Order.DeliveryMethod.POSTEN, Order.PaymentMethod.BANK_TRANSFER,
+                lines, 40, 8);
+        commonMethods.addOrder(order);
 
     }
 }
