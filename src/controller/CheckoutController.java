@@ -126,16 +126,20 @@ public class CheckoutController implements Initializable {
         for (int i = 0; i < cart.size(); i++) {
             cost = cost + cart.get(i).getPrice() * cart.get(i).getQuantity();
         }
-        DecimalFormat df = new DecimalFormat("####0.00");
+
         double totalVAT = (cost * 0.2);
+        String vat = String.valueOf(totalVAT);
+        if(vat.contains(",")){
+            vat = vat.replaceAll(",",".").trim();
+        }
         total1Label.setText(Double.toString(cost));
-        totalVAT1Label.setText(Double.toString(Double.parseDouble(df.format(totalVAT))));
+        totalVAT1Label.setText(vat);
         total4Label.setText(Double.toString(cost));
-        totalVAT4Label.setText(Double.toString(Double.parseDouble(df.format(totalVAT))));
+        totalVAT4Label.setText(vat);
     }
     @FXML private void back1ButtonPressed(ActionEvent event) {
         try {
-            userCommon.switchScene(event,"/view/shoppingCartView.fxml");
+            userCommon.switchScene(event,"../view/shoppingCartView.fxml");
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

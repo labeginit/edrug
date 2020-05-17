@@ -236,7 +236,7 @@ public class ShoppingCartController implements Initializable {
                 try {
                     userCommon.switchScene(actionEvent, "/view/checkout.fxml");
                 } catch (Exception ex) {
-                    System.out.println(ex.getMessage());
+                    ex.printStackTrace();
                 }
             } else {
                 Validation.alertPopup("Please choose delivery method and payment method", "Fill out fields", "Complete the form");
