@@ -157,7 +157,7 @@ public class DAOOrder {
                         user = element.getUser();
                         price = element.getPrice();
                         quantity = element.getQuantity();
-                        String queryString = "INSERT INTO `edrugs_test`.`Order_has_Medicine` (`id`, `user_ssn`,`article`, `price`, `quantity`) VALUES (?, ?, ?);";
+                        String queryString = "INSERT INTO `edrugs_test`.`Order_has_Medicine` (`order_id`, `user_ssn`,`article`, `price`, `quantity`) VALUES (?, ?, ?, ?, ?);";
                         linesAffected = linesAffected + common.insertOrderHasMedicine(queryString, id, user.getSsn(),articleNo, price, quantity);
                     }
                 } else {
