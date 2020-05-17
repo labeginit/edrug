@@ -133,9 +133,9 @@ public class CheckoutController implements Initializable {
             vat = vat.replaceAll(",",".").trim();
         }
         total1Label.setText(Double.toString(cost));
-        totalVAT1Label.setText(vat);
+        totalVAT1Label.setText(vat.substring(0,4));
         total4Label.setText(Double.toString(cost));
-        totalVAT4Label.setText(vat);
+        totalVAT4Label.setText(vat.substring(0,4));
     }
     @FXML private void back1ButtonPressed(ActionEvent event) {
         try {
