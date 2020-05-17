@@ -21,7 +21,6 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.io.IOException;
 import java.net.URL;
-import java.text.DecimalFormat;
 import java.util.*;
 
 public class CheckoutController implements Initializable {
@@ -266,27 +265,32 @@ public class CheckoutController implements Initializable {
         String orderMessage;
         Order.DeliveryMethod orderMethod;
         Order.PaymentMethod paymentMethod;
-        ArrayList<String> fileArrayList = new ArrayList<>();
-        String company = ""
-                + "e-Drugs AB\n"
-                + "ElmetorpsVagen 15, 291 39, Kristianstad\n"
-                + "Land: +460712254630 Mob: +460712205220 Fax: 812254639\n"
-                + " \n"
-                + "CUSTOMER INVOICE\n"
-                + " \n";
-        List<String> t1Headers = Arrays.asList("INFO", "CUSTOMER");
+        ArrayList<String> fileArrayList= new ArrayList<>();
+        String companyName = "\t\te-Drugs AB\n";
+        String companyAddress = "ElmetorpsVagen 15, 291 39, Kristianstad\n";
+        String companyPhoneNumber = "Land: +460712254630 Mob: +460712205220 Fax: 812254639\n\n";
+        String mainHeader = "CUSTOMER INVOICE\n\n";
+        String empty = "";
+        String headerInfo = "INFO";
+        String headerCustomer = "Customer";
+        fileArrayList.add(String.format("%-20s %-20s %-20s %-20s %-20s ", empty,empty,companyName,empty,empty));
+        fileArrayList.add(String.format("%-20s %-20s %-20s %-20s %-20s ", empty,empty, companyAddress,empty,empty));
+        fileArrayList.add(String.format("%-20s %-20s %-20s %-20s %-20s ", empty,empty, companyPhoneNumber,empty, empty));
+        fileArrayList.add(String.format("%-20s %-20s %-20s %-20s %-20s ", empty,mainHeader,empty));
+        fileArrayList.add(String.format("%-20s %-20s %-20s %-20s %-20s %-20s ", empty,empty,headerInfo,headerCustomer,empty,empty));
+
         List<List<String>> t1Rows = Arrays.asList(
                 Arrays.asList("DATE: " + date, user.getFirstName() + " " + user.getLastName()),
                 Arrays.asList("TIME: " + date.getTime(), "MOB: " + user.getPhoneNumber()),
                 Arrays.asList("ORDER NO: " + id, "ADDRES: " + user.getAddress() + city4Label.getText() + user.getZipCode()));
-        String table = "|Article Number | Name\t\t\t | Quantity | Price|\n";
+
         String t2Desc = "ORDER DETAILS";
         List<String> t2Headers = Arrays.asList("ARTICLE NO", "NAME", "QUANTITY", "PRICE");
-        fileArrayList.add(table);
         for (int i = 0; i < medList.size(); i++) {
             String string = "|" + medList.get(i).getArticleNo() +"\t\t|"+ medList.get(i).getName() + "\t\t|\t" + medList.get(i).getQuantity() + "\t|\t" + medList.get(i).getPrice() +"|\n";
             fileArrayList.add(string);
         }
+
         fileArrayList.add("Total VAT: " + totalVAT4Label.getText() + "SEK\n Total Cost: " + total4Label.getText() + "SEK\n");
         RWFile.saveToFile(RWFile.invoice, fileArrayList);
         if (CartSingleton.getOurInstance().getDeliveryMethod().equalsIgnoreCase("SELFPICKUP")) {
@@ -323,6 +327,8 @@ public class CheckoutController implements Initializable {
         sendEmail(orderMessage,paymentMessage);
         commonMethods.addOrder(order);
         CartSingleton.getOurInstance().setCart(null);
+        cart.removeAll(cart);
+        medList.removeAll(medList);
         try {
             Validation.alertPopup("Your Order #: " + id + " you will recieve an email shortly", "Order Processed", "Your order has been processed");
             RWFile.delete();
