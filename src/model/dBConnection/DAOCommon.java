@@ -1,5 +1,7 @@
 package model.dBConnection;
 
+import model.Order;
+
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -299,6 +301,51 @@ public class DAOCommon {
             if (!DBConnection.dbConnection.isClosed()) {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
                 prepStmt.setInt(1, storeId);
+
+                linesAffected = prepStmt.executeUpdate();
+                prepStmt.close();
+            }
+        } catch (SQLException | NullPointerException ex) {
+            System.out.println("Error when executing statement!");
+            System.out.println(ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return linesAffected;
+    }
+    protected int insertOrderHasMedicine(String queryString, int orderId,String userSSN, int articleNo, double price, int quantity) {
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
+                prepStmt.setInt(1, orderId);
+                prepStmt.setString(2, userSSN);
+                prepStmt.setInt(3, articleNo);
+                prepStmt.setDouble(4,price);
+                prepStmt.setInt(5,quantity);
+
+                linesAffected = prepStmt.executeUpdate();
+                prepStmt.close();
+            }
+        } catch (SQLException | NullPointerException ex) {
+            System.out.println("Error when executing statement!");
+            System.out.println(ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return linesAffected;
+    }
+
+    protected int insertOrder(String queryString, int id, String userSSN, Date date, Order.DeliveryMethod deliveryMethod, Order.PaymentMethod paymentMethod, double totalSum, double totalVAT) {
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
+                prepStmt.setInt(1, id);
+                prepStmt.setString(2, userSSN);
+                prepStmt.setDate(3, date);
+                prepStmt.setString(4,deliveryMethod.toString());
+                prepStmt.setString(5,paymentMethod.toString());
+                prepStmt.setDouble(6, totalSum);
+                prepStmt.setDouble(7,totalVAT);
 
                 linesAffected = prepStmt.executeUpdate();
                 prepStmt.close();

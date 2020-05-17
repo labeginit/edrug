@@ -21,7 +21,6 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
 import java.text.DecimalFormat;
 import java.util.*;
 
@@ -267,7 +266,7 @@ public class CheckoutController implements Initializable {
         String table = "|Article Number | Name\t\t\t | Quantity | Price|\n";
         fileArrayList.add(table);
         for (int i = 0; i < medList.size(); i++) {
-            String string = "|" + medList.get(i).getArticleNo() +"\t\t|"+ medList.get(i).getName() + "\t|" + medList.get(i).getQuantity() + "\t|" + medList.get(i).getPrice() +"|\n";
+            String string = "|" + medList.get(i).getArticleNo() +"\t\t|"+ medList.get(i).getName() + "\t| " + medList.get(i).getQuantity() + "\t| " + medList.get(i).getPrice() +"|\n";
             fileArrayList.add(string);
         }
         fileArrayList.add("Total VAT: " + totalVAT4Label.getText() + "SEK\n Total Cost: " + total4Label.getText() + "SEK\n");
@@ -361,6 +360,7 @@ public class CheckoutController implements Initializable {
             Transport.send(message);
 
         } catch (MessagingException ignored) {
+            System.out.println(ignored.getMessage());
         }
     }
     @FXML private boolean checkFields1() {
