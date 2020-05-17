@@ -7,6 +7,8 @@
             -fx-background-insets: 0,1,2;
             -fx-text-fill: black;
             -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+    -fx-font-family: 'Helvetica', Arial, sans-serif;
+    -fx-font-size: 14px;
         }
 
         .button:hover {
@@ -18,44 +20,49 @@
                           -fx-background-insets: 0,1,1;
                           -fx-text-fill: black;
                           -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 3, 0.0 , 0 , 1 );
+            -fx-font-family: 'Helvetica', Arial, sans-serif;
+            -fx-font-size: 14px;
                       }
 
-
-        * {
-        -fx-font-family: 'Helvetica', Arial, sans-serif;
-         -fx-font-size: 14px;
-        }
 
       .tab-pane .tab:selected
       {
           -fx-background-color: #4475C0;
           -fx-focus-color: transparent;
+          -fx-font-family: 'Helvetica', Arial, sans-serif;
+          -fx-font-size: 14px;
 
 
       }
+
       .tab-pane .tab-header-area .tab-header-background {
           -fx-opacity: 60%;
           -fx-focus-color: transparent;
       }
       .tab .tab-label {
           -fx-alignment: CENTER;
-          -fx-font-size: 16px;
           -fx-font-weight: bold;
+          -fx-font-family: 'Helvetica', Arial, sans-serif;
+          -fx-font-size: 14px;
 
       }
 
 
 
       .table-view .column-header {
-      -fx-background-color: #76A0DF
+      -fx-background-color: #76A0DF;
+          -fx-font-family: 'Helvetica', Arial, sans-serif;
+          -fx-font-size: 15px;
 
       }
       .table-view {
       -fx-focus-color: transparent;
+          -fx-font-family: 'Helvetica', Arial, sans-serif;
+          -fx-font-size: 14px;
       }
 
-      #welcome {
-      -fx-font-size: 23px;
+      #welcome .label {
+      -fx-font-size: 22px;
        -fx-font-weight: bold;
       }
 
@@ -66,11 +73,26 @@
       }
       .table-row-cell:selected .text {
              -fx-fill: black ;
+          -fx-font-family: 'Helvetica', Arial, sans-serif;
+          -fx-font-size: 14px;
 
       }
 
-      #helpMenu {
+      .text-area {
       -fx-focus-color: transparent;
       -fx-border-color: #1B4B70 ;
       -fx-border-width: 2px;
+          -fx-font-family: 'Advent Pro';
+          -fx-font-size: 14px;
+
+      }
+      #helpEditMedicine, #helpEditUser, #helpMyPrescriptions, #helpNewUser, #helpForgotten {
+          -fx-font-family: fantasy;
+          -fx-font-weight: bolder;
+          -fx-font-size: 23px;
+
+      }
+      .text-field {
+    -fx-font-family: 'Helvetica', Arial, sans-serif;
+    -fx-font-size: 14px;
       }

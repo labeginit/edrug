@@ -12,6 +12,7 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -109,6 +110,8 @@
                               </AnchorPane>
                           </items>
                         </SplitPane>
+                        <Label fx:id="helpMyPrescriptions" layoutX="687.0" layoutY="25.0" prefHeight="19.0" prefWidth="17.0" text="?" />
+                        <TextArea fx:id="helpMenuMyPrescriptions" layoutX="450.0" layoutY="35.0" prefHeight="109.0" prefWidth="235.0" />
                      </children></AnchorPane>
             </content>
           </Tab>

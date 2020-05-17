@@ -54,7 +54,7 @@
       </ImageView>
       <TextField fx:id="ssnTextField" layoutX="189.0" layoutY="135.0" prefHeight="26.0" prefWidth="220.0" promptText="SSN" />
       <PasswordField fx:id="passwordField" layoutX="189.0" layoutY="173.0" prefHeight="26.0" prefWidth="220.0" promptText="Password" />
-      <Label id="welcome " alignment="CENTER" layoutX="191.0" layoutY="85.0" prefHeight="26.0" prefWidth="220.0" text="Welcome to e-Drugs">
+      <Label id="welcome" alignment="CENTER" layoutX="191.0" layoutY="85.0" prefHeight="26.0" prefWidth="220.0" text="Welcome to e-Drugs">
          <font>
             <Font size="23.0" />
          </font></Label>

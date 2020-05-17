@@ -4,15 +4,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.PasswordField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import model.dBConnection.CommonMethods;
 import model.User;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 
 import javafx.event.ActionEvent;
 
@@ -30,6 +28,8 @@ import javax.mail.internet.MimeMessage;
 
 public class ForgottenPasswordController implements Initializable {
 
+    public Label helpForgotten;
+    public TextArea helpMenuForgotten;
     @FXML
     private TextField emailText, ssnTextField, confirmationTextField;
 
@@ -46,6 +46,8 @@ public class ForgottenPasswordController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        userCommon.handleHelpMenus(helpMenuForgotten, helpForgotten, "Have you forgotten your password?\n\nDon't worry!\nFollow the steps and an email will be sent\nfor you to set up a new password");
         confirmationTextField.setVisible(false);
         enterButton.setVisible(false);
         passwordField1.setVisible(false);
