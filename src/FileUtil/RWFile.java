@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class RWFile {
 
-    public static Path invoice = Paths.get("src/invoice.txt");
+    public static Path invoice = Paths.get("invoice.txt");
 
 
     public static void saveToFile(Path path, ArrayList<String> strings) {

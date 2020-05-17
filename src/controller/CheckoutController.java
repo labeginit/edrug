@@ -348,7 +348,7 @@ public class CheckoutController implements Initializable {
             message.setSubject("Order has been processed");
             BodyPart messageBodyPart = new MimeBodyPart();
             messageBodyPart.setText("Thank you for your order you will find details below\n\n" + orderMessage + paymentMessage);
-            String fileName = "/src/Invoice.txt";
+            String fileName = "invoice.txt";
             Multipart multipart = new MimeMultipart();
             multipart.addBodyPart(messageBodyPart);
             messageBodyPart = new MimeBodyPart();
@@ -359,8 +359,9 @@ public class CheckoutController implements Initializable {
             message.setContent(multipart);
             Transport.send(message);
 
-        } catch (MessagingException ignored) {
-            System.out.println(ignored.getMessage());
+        } catch (Exception ex) {
+            System.out.println("message failed to send");
+            ex.printStackTrace();
         }
     }
     @FXML private boolean checkFields1() {

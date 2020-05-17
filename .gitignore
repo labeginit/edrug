@@ -82,3 +82,7 @@ login.txt
 ##############################
 ## Shopping Cart
 ShoppingCart.ser
+
+##############################
+## Checkout Invoice
+invoice.txt
