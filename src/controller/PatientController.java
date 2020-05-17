@@ -172,8 +172,6 @@ public class PatientController implements Initializable {
     private List<ProdGroup> groups = commonMethods.getProductGroupList();
     private List<String> groupPaths = new ArrayList<>();
     private ObservableList<Medicine> medList = FXCollections.observableArrayList(commonMethods.getMedicineList(false)); // here will probably need to add those from Prescriptions
-    //   private FilteredList<Medicine> filteredData = new FilteredList<>(medList, p -> true);
-
 
     private List<String> fillList(List<ProdGroup> groups) {
         groupPaths.add("");
@@ -195,7 +193,7 @@ public class PatientController implements Initializable {
 
 
         userCommon.handleHelpMenus(helpMenuMyPrescriptions, helpMyPrescriptions, "This is the quantity you\nhave, respectively the quantity you\nhave consumed");
-
+/*
         //DELETEME
         System.out.println("______");
         for (PrescriptionLine lin : temp) {
@@ -203,7 +201,7 @@ public class PatientController implements Initializable {
         } // for now some records are duplicated (because in prescriptions we have both - prescription free and on prescription types)
         System.out.println("______");
         //DELETEME END
-
+*/
         for (int i = 0; i < temp.size(); i++) {
             if ((temp.get(i).getQuantityPrescribed()-temp.get(i).getQuantityConsumed()) > 0){
                 if (temp.get(i).getMedicine().getActive()) {
@@ -276,11 +274,12 @@ public class PatientController implements Initializable {
         c7.setCellValueFactory(new PropertyValueFactory<Medicine, String>("producer"));
         c8.setCellValueFactory(new PropertyValueFactory<Medicine, CheckBox>("checkBox"));
 
-        // currently the combination of different filters is not working after value in the comboBox has been changed
         userCommon.medFilter(filteredData, search_textField, tableView);
 
         groupFilter_combo.setOnAction((event) -> {
             String val = groupFilter_combo.getValue();
+            search_textField.setText("");
+            maxPrice_text.setText("");
             if (val.isEmpty()) {
                 userCommon.medFilter(filteredData, search_textField, tableView);
                 return;
@@ -387,7 +386,6 @@ public class PatientController implements Initializable {
                     element.setQuantity(available);
                     commonMethods.updateQuantity(element);
 
-                    //RWFile.writeObject(RWFile.cartPath, cart);
                     tableView.refresh();
                 }
                 element.getCheckBox().setSelected(false);
