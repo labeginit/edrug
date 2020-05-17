@@ -56,7 +56,7 @@ public class ShoppingCartController implements Initializable {
     private TableColumn<OrderLine, CheckBox> c8;
 
     @FXML
-    private TextField firstName_text;
+    private Label firstNameLabel;
 
     @FXML
     private ComboBox<Enum> delivery_combo;
@@ -68,16 +68,19 @@ public class ShoppingCartController implements Initializable {
     private ComboBox<Enum> payment_combo;
 
     @FXML
-    private TextField address_text;
+    private Label addressLabel;
 
     @FXML
-    private TextField zipCode_text;
+    private Label zipcodeLabel;
 
     @FXML
     private TextField totalVAT_text;
 
     @FXML
-    private TextField lastName_text;
+    private Label lastNameLabel;
+
+    @FXML
+    private Label phoneNumberLabel;
 
     private ObservableList<OrderLine> medList = FXCollections.observableArrayList(cart);
     private ObservableList<Enum> deliveryMethodsCombo = FXCollections.observableArrayList(Order.DeliveryMethod.SELFPICKUP, Order.DeliveryMethod.SCHENKER, Order.DeliveryMethod.POSTEN);
@@ -132,10 +135,11 @@ public class ShoppingCartController implements Initializable {
     }
 
     private void setInitialValues(User currentUser) {
-        firstName_text.setText(currentUser.getFirstName());
-        lastName_text.setText(currentUser.getLastName());
-        zipCode_text.setText(currentUser.getZipCode());
-        address_text.setText(currentUser.getAddress());
+        firstNameLabel.setText(currentUser.getFirstName());
+        lastNameLabel.setText(currentUser.getLastName());
+        zipcodeLabel.setText(currentUser.getZipCode());
+        addressLabel.setText(currentUser.getAddress());
+        phoneNumberLabel.setText(currentUser.getPhoneNumber());
     }
 
     @FXML

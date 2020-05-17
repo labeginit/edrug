@@ -1,5 +1,6 @@
 package controller;
 
+import FileUtil.RWFile;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -10,13 +11,19 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import model.*;
 import model.dBConnection.CommonMethods;
 
+import javax.activation.DataHandler;
+import javax.activation.DataSource;
+import javax.activation.FileDataSource;
+import javax.mail.*;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Date;
 import java.text.DecimalFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class CheckoutController implements Initializable {
     private User user = UserSingleton.getOurInstance().getUser();
@@ -78,6 +85,7 @@ public class CheckoutController implements Initializable {
         pickUpComboBox.setOnAction(event -> pickupComboBox(event));
         next3Button.setOnAction(event -> next3ButtonPressed());
         back4Button.setOnAction(event -> back4ButtonPressed());
+        confirmOrderButton.setOnAction(event -> confirmOrderButtonPressed(event));
     }
     @FXML public void initialValues() {
         if (CartSingleton.getOurInstance().getDeliveryMethod().equalsIgnoreCase("SELFPICKUP")) {
@@ -248,27 +256,112 @@ public class CheckoutController implements Initializable {
 
     @FXML private void confirmOrderButtonPressed(ActionEvent actionEvent) {
         Random rand = new Random();
+        int OCR = rand.nextInt(100000000);
         int id = rand.nextInt(1000);
-        Date date = new Date();
+        java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+        String paymentMessage;
+        String orderMessage;
         Order.DeliveryMethod orderMethod;
         Order.PaymentMethod paymentMethod;
+        ArrayList<String> fileArrayList = new ArrayList<>();
+        String table = "|Article Number | Name\t\t\t | Quantity | Price|\n";
+        fileArrayList.add(table);
+        for (int i = 0; i < medList.size(); i++) {
+            String string = "|" + medList.get(i).getArticleNo() +"\t\t|"+ medList.get(i).getName() + "\t|" + medList.get(i).getQuantity() + "\t|" + medList.get(i).getPrice() +"|\n";
+            fileArrayList.add(string);
+        }
+        fileArrayList.add("Total VAT: " + totalVAT4Label.getText() + "SEK\n Total Cost: " + total4Label.getText() + "SEK\n");
+        RWFile.saveToFile(RWFile.invoice, fileArrayList);
         if (CartSingleton.getOurInstance().getDeliveryMethod().equalsIgnoreCase("SELFPICKUP")) {
             orderMethod = Order.DeliveryMethod.SELFPICKUP;
+            orderMessage = "\tYour can pick-up your order "+ date +"at the " + pharmacyNameLabel.getText() + " located at \n" +
+                    address4Label.getText() + " in " + city4Label.getText() + zipcode4Label.getText() + " you can contact them \n" +
+                    " by phone " + phoneNumber3Label.getText() + " or " + emailLabel.getText() + "\n";
         } else if (CartSingleton.getOurInstance().getDeliveryMethod().equalsIgnoreCase("POSTEN")) {
             orderMethod = Order.DeliveryMethod.POSTEN;
+            orderMessage = "\tYour order has been sent " + date + "to " + firstName1TextField.getText() + " " + lastName1TextField.getText() + " \n" +
+                    "allow 3-5 business days for shipping to " + address4Label.getText() + " in " + city4Label.getText() + " " + zipcode4Label.getText() + "\n";
         } else {
             orderMethod = Order.DeliveryMethod.SCHENKER;
+            orderMessage = "\tYour order has been sent " + date +"to " + firstName1TextField.getText() + " " + lastName1TextField.getText() + " \n" +
+                    "allow 2-3 business days for shipping to " + address4Label.getText() + " in " + city4Label.getText() + " " + zipcode4Label.getText() + "\n";
         }
         if (CartSingleton.getOurInstance().getPaymentMethod().equalsIgnoreCase("CREDIT_CARD")){
             paymentMethod = Order.PaymentMethod.CREDIT_CARD;
+            paymentMessage = " You have completed payment of your order with a " + paymentMethod4Label.getText() + " card \n " +
+                    "with a total cost of " + total4Label.getText() + "SEK and total VAT of " + totalVAT4Label.getText() + "\n";
+            fileArrayList.add("PAID");
         } else if (CartSingleton.getOurInstance().getPaymentMethod().equalsIgnoreCase("INVOICE")) {
             paymentMethod = Order.PaymentMethod.INVOICE;
+            paymentMessage = "Your invoice has been included in a text file ";
+            fileArrayList.add("DUE");
         } else {
             paymentMethod = Order.PaymentMethod.BANK_TRANSFER;
+            paymentMessage = "Your invoice is included in a text file OCR Number: " + OCR + " Bank Giro: 00000-00000";
+            fileArrayList.add("OCR Number: " + OCR + "\t Bank Giro: 00000-00000");
         }
 
-        Order order = new Order(id,user,(java.sql.Date) date, orderMethod, paymentMethod, medList);
+        Order order = new Order(id,user,date, orderMethod, paymentMethod, medList, Double.valueOf(total4Label.getText()),Double.valueOf(totalVAT4Label.getText()));
+        RWFile.saveToFile(RWFile.invoice, fileArrayList);
+        sendEmail(orderMessage,paymentMessage);
+        try {
+            userCommon.switchScene(actionEvent, "/view/patientView.fxml");
+            //RWFile.delete();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
 
+    @FXML
+    public void sendEmail(String orderMessage, String paymentMessage) {
+
+        // sender info
+        String from = "edrugspwhelp@gmail.com";
+        final String username = "edrugspwhelp@gmail.com";//your Gmail username
+        final String password = "EDrugspwProtection";//your Gmail password
+
+        String to = user.getEmail();
+
+        String host = "smtp.gmail.com";
+
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", host);
+        props.put("mail.smtp.port", "587");
+
+        // Get the Session object
+        Session session = Session.getInstance(props,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(username, password);
+                    }
+                });
+
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(from));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(to));
+
+
+            //Create subject, message & file
+            message.setSubject("Order has been processed");
+            BodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setText("Thank you for your order you will find details below\n\n" + orderMessage + paymentMessage);
+            String fileName = "/src/Invoice.txt";
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(messageBodyPart);
+            messageBodyPart = new MimeBodyPart();
+            DataSource source = new FileDataSource(fileName);
+            messageBodyPart.setDataHandler(new DataHandler(source));
+            messageBodyPart.setFileName(fileName);
+            multipart.addBodyPart(messageBodyPart);
+            message.setContent(multipart);
+            Transport.send(message);
+
+        } catch (MessagingException ignored) {
+        }
     }
     @FXML private boolean checkFields1() {
         if (firstName1TextField.getText().isEmpty() || lastName1TextField.getText().isEmpty() || address1TextField.getText().isEmpty() ||

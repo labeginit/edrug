@@ -1,0 +1,10 @@
+|Article Number | Name			 | Quantity | Price|
+
+|10002				|Resulax, rektallösning 8,5 g	|1	|37.0|
+
+|10021				|Perihydroban	|1	|395.0|
+
+Total VAT: 86.4
+ Total Cost: Label[id=total4Label, styleClass=label]'432.0'
+
+OCR Number: 98668653	 Bank Giro: 00000-00000

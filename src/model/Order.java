@@ -15,13 +15,16 @@ public class Order {
     private double totalVAT;
     private List<OrderLine> specification;
 
-    public Order(int id, User user, Date date,  DeliveryMethod deliveryMethod, PaymentMethod paymentMethod, List<OrderLine> specification){
+    public Order(int id, User user, Date date,  DeliveryMethod deliveryMethod, PaymentMethod paymentMethod,
+                 List<OrderLine> specification, double totalSum, double totalVAT){
         setId(id);
         setUser(user);
         setDate(date);
         setDeliveryMethod(deliveryMethod);
         setPaymentMethod(paymentMethod);
         setSpecification(specification);
+        setTotalSum(totalSum);
+        setTotalVAT(totalVAT);
     }
 
     public void setId(int id) {

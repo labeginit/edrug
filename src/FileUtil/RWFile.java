@@ -1,42 +1,30 @@
 package FileUtil;
 
-import model.OrderLine;
-
 import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
+import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
+
 
 public class RWFile {
 
-    public static Path cartPath = Paths.get("src/ShoppingCart.ser");
+    public static Path invoice = Paths.get("src/invoice.txt");
 
 
-    public static void writeObject(Path path, List<OrderLine> cart) {
-        File file = path.toFile();
-        try (ObjectOutputStream objectOut = new ObjectOutputStream(new FileOutputStream(file))) {
-            objectOut.writeObject(cart);
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
+    public static void saveToFile(Path path, ArrayList<String> strings) {
+
+        try {
+            StandardOpenOption[] options = { StandardOpenOption.CREATE };
+            Files.write(path, strings, options);
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 
-    public static List <OrderLine>  readObject(Path path) {
-        try (ObjectInputStream oIn = new ObjectInputStream(new FileInputStream(path.toFile()))) {
-            return (List <OrderLine> ) oIn.readObject();
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getMessage());
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        } catch (ClassNotFoundException e) {
-            System.out.println(e.getMessage());
-        }
-        return null;
-    }
     public static boolean delete() {
-        File file = cartPath.toFile();
+        File file = invoice.toFile();
         if (file.delete()) {
             System.out.println("File Deleted");
             return true;

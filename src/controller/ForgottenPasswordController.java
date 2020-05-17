@@ -97,6 +97,7 @@ public class ForgottenPasswordController implements Initializable {
             Transport.send(message);
 
         } catch (MessagingException ignored) {
+            System.out.println(ignored.getMessage());
         }
         confirmationTextField.setVisible(true);
         enterButton.setVisible(true);

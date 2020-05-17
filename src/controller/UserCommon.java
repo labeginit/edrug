@@ -114,8 +114,6 @@ public class UserCommon {
                     commonMethods.updateQuantity(medicine);
                 }
                 cart.removeAll(cart);
-                RWFile.writeObject(RWFile.cartPath, cart);
-                RWFile.delete();
             }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
