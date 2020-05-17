@@ -265,7 +265,7 @@ public class Validation {
     }
     //MM/YY
     public static boolean isValidEXPDate(String expDate, Label starLabel) {
-        String regex = "^(0[1-9]|1[0-2])\\/?([0-9]{2})$";
+        String regex = "^(0[1-9]|1[0-2])\\/([0-9]{2})$";
         boolean aEXPDate = Pattern.compile(regex).matcher(expDate).find();
         if (aEXPDate) {
             String yy = "20";

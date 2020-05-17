@@ -280,7 +280,7 @@ public class CheckoutController implements Initializable {
                 Arrays.asList("TIME: " + date.getTime(), "MOB: " + user.getPhoneNumber()),
                 Arrays.asList("ORDER NO: " + id, "ADDRES: " + user.getAddress() + city4Label.getText() + user.getZipCode()));
         String table = "|Article Number | Name\t\t\t | Quantity | Price|\n";
-        String t2Desc = "SELLING DETAILS";
+        String t2Desc = "ORDER DETAILS";
         List<String> t2Headers = Arrays.asList("ARTICLE NO", "NAME", "QUANTITY", "PRICE");
         fileArrayList.add(table);
         for (int i = 0; i < medList.size(); i++) {
@@ -324,7 +324,7 @@ public class CheckoutController implements Initializable {
         commonMethods.addOrder(order);
         CartSingleton.getOurInstance().setCart(null);
         try {
-            Validation.alertPopup("Your Order #: " + id + "you will recieve an email shortly", "Order Processed", "Your order has been processed");
+            Validation.alertPopup("Your Order #: " + id + " you will recieve an email shortly", "Order Processed", "Your order has been processed");
             RWFile.delete();
             userCommon.switchScene(actionEvent, "/view/patientView.fxml");
         } catch (Exception ex) {
