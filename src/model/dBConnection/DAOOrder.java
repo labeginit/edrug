@@ -1,9 +1,7 @@
 package model.dBConnection;
 
-import model.Medicine;
-import model.Order;
-import model.OrderLine;
-import model.User;
+import model.*;
+
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -28,7 +26,7 @@ public class DAOOrder {
     private int orderId;
     private Medicine medicine = null;
     private int articleNo;
-    private String name;
+    private String name = "";
     private double price;
     private int quantity;
 
@@ -191,6 +189,55 @@ public class DAOOrder {
             ex.printStackTrace();
         } finally {
             return linesAffected;
+        }
+    }
+
+    protected Order getOrder(int id) {
+        Order temp = null;
+        String query = "SELECT * FROM Order WHERE id = " + id + ";";
+        try {
+            temp = retrieveOrder(query, id);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return temp;
+    }
+
+    private Order retrieveOrder(String query, int id) {
+        Order order = null;
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                resultSet = common.retrieveSet(query);
+                if (resultSet != null) {
+                    if (resultSet.first()) {
+                        this.id = resultSet.getInt("id");
+                        user.setSsn((resultSet.getString("user_ssn")));
+                        date = resultSet.getDate("date");
+                        deliveryMethod = Order.DeliveryMethod.valueOf(resultSet.getString("delivery_method"));
+                        paymentMethod = Order.PaymentMethod.valueOf(resultSet.getString("payment_method"));
+                        totalSum = resultSet.getDouble("total");
+                        totalVAT = resultSet.getDouble("total_VAT");
+                        specification = retrieveOrderSpecification(id);
+
+                       order = new Order(id, user, date, deliveryMethod, paymentMethod, specification, totalSum, totalVAT);
+                    }
+                } else {
+                    System.out.println("Empty resultSet");
+                    return order;
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error while working with ResultSet!");
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                resultSet.close();
+            }catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            return order;
         }
     }
 }
