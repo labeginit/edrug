@@ -220,7 +220,7 @@ public class AddPrescription implements Initializable {
                             ((Medicine) t.getTableView().getItems().get(
                                     t.getTablePosition().getRow())
                             ).setQuantity(t.getNewValue());
-                            
+
                         }
                     }
                 });
