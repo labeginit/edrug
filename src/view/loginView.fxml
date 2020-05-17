@@ -12,16 +12,8 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.LoginController">
    <children>
-      <AnchorPane layoutX="-32.0" layoutY="-88.0">
-         <children>
-            <ImageView fitHeight="257.0" fitWidth="310.0" layoutX="-7.0" layoutY="27.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@image/output-onlinepngtools.png" />
-               </image>
-            </ImageView>
-         </children>
-      </AnchorPane>
-      <Button fx:id="loginButton" layoutX="263.0" layoutY="274.0" minWidth="75.0" mnemonicParsing="false" prefHeight="25.6" text="Login" textFill="#030303" AnchorPane.bottomAnchor="70.0">
+      <AnchorPane layoutX="-32.0" layoutY="-88.0" />
+      <Button fx:id="loginButton" layoutX="339.0" layoutY="302.0" minWidth="75.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="75.0" text="Login" textFill="#030303" AnchorPane.bottomAnchor="68.39999999999998">
          <font>
             <Font size="13.0" />
          </font></Button>
@@ -29,20 +21,20 @@
          <font>
             <Font size="13.0" />
          </font></Button>
-      <Label fx:id="forgotPasswordLabel" layoutX="166.0" layoutY="231.0" text="Forgot Password?" textFill="#3e82f8">
+      <Label fx:id="forgotPasswordLabel" layoutX="201.0" layoutY="307.0" text="Forgot Password?" textFill="#3e82f8">
          <font>
             <Font size="13.0" />
          </font></Label>
-      <CheckBox fx:id="rememberMeCheckBox" layoutX="312.0" layoutY="230.0" mnemonicParsing="false" text="Remember Me">
+      <CheckBox fx:id="rememberMeCheckBox" layoutX="429.0" layoutY="245.0" mnemonicParsing="false" text="Remember Me">
          <font>
             <Font size="13.0" />
          </font></CheckBox>
-      <ImageView fitHeight="26.0" fitWidth="22.0" layoutX="141.0" layoutY="137.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="26.0" fitWidth="22.0" layoutX="166.0" layoutY="224.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@image/iconfinder_41-User_2123927.png" />
          </image>
       </ImageView>
-      <ImageView fitHeight="28.0" fitWidth="37.0" layoutX="138.0" layoutY="172.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="28.0" fitWidth="37.0" layoutX="163.0" layoutY="259.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@image/iconfinder_Lock_4473012.png" />
          </image>
@@ -52,11 +44,12 @@
             <Image url="@image/30.gif" />
          </image>
       </ImageView>
-      <TextField fx:id="ssnTextField" layoutX="189.0" layoutY="135.0" prefHeight="26.0" prefWidth="220.0" promptText="SSN" />
-      <PasswordField fx:id="passwordField" layoutX="189.0" layoutY="173.0" prefHeight="26.0" prefWidth="220.0" promptText="Password" />
-      <Label id="welcome" alignment="CENTER" layoutX="191.0" layoutY="85.0" prefHeight="26.0" prefWidth="220.0" text="Welcome to e-Drugs">
-         <font>
-            <Font size="23.0" />
-         </font></Label>
+      <TextField fx:id="ssnTextField" layoutX="200.0" layoutY="222.0" prefHeight="26.0" prefWidth="220.0" promptText="SSN" />
+      <PasswordField fx:id="passwordField" layoutX="200.0" layoutY="260.0" prefHeight="26.0" prefWidth="220.0" promptText="Password" />
+      <ImageView fitHeight="200.0" fitWidth="155.0" layoutX="222.0" layoutY="14.0">
+         <image>
+            <Image url="@image/eDrugLogo.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
