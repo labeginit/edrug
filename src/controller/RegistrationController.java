@@ -23,8 +23,9 @@ import java.sql.Date;
 
 public class RegistrationController implements Initializable {
 
-    CommonMethods common = new CommonMethods();
-    public LocalDate localDate;
+    private CommonMethods commonMethods = new CommonMethods();
+    private UserCommon userCommon = new UserCommon();
+    private LocalDate localDate;
 
     @FXML
     private Button registerButton;
@@ -52,6 +53,9 @@ public class RegistrationController implements Initializable {
 
     @FXML
     private TextField zipcode;
+
+    @FXML
+    private TextField city;
 
     @FXML
     private TextField phoneNumber;
@@ -87,6 +91,9 @@ public class RegistrationController implements Initializable {
     private Label zipcodeStar;
 
     @FXML
+    private Label cityStar;
+
+    @FXML
     private Label phoneNumberStar;
 
     @FXML
@@ -102,7 +109,7 @@ public class RegistrationController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        UserCommon userCommon = new UserCommon();
+
 
         userCommon.handleHelpMenus(helpMenuNewUser, helpNewUser, "New to e-Drugs?\n\nVery welcome!\nPlease enter all your information\nas correctly as possible and\nlook forward to using e-Drugs");
 
@@ -122,14 +129,14 @@ public class RegistrationController implements Initializable {
         if (checkFields()) {
             if(Validation.isName(firstName.getText(), firstNameStar) && Validation.isName(lastName.getText(), lastNameStar) &&
             Validation.isSSN(ssn.getText(), ssnStar) &&
-            Validation.isZipcode(zipcode.getText(), zipcodeStar) && Validation.isPhoneNumber(phoneNumber.getText(), phoneNumberStar)
+            Validation.isZipcode(zipcode.getText(), zipcodeStar) && Validation.isCity(city.getText(), cityStar) && Validation.isPhoneNumber(phoneNumber.getText(), phoneNumberStar)
             && Validation.isEmail(email.getText(), emailStar) && Validation.isPassword(password.getText(), passwordStar)) {
                 try {
                     Date dob = Date.valueOf(dPicker.getValue().plusDays(1));
                     Patient patient = new Patient(ssn.getText(), firstName.getText(), lastName.getText(), dob,
-                            zipcode.getText(), address.getText(), email.getText(),
+                            zipcode.getText(), city.getText(), address.getText(), email.getText(),
                             phoneNumber.getText(), password.getText());
-                    common.addUser(patient);
+                    commonMethods.addUser(patient);
                 } catch (IllegalArgumentException illegalArgumentException) {
                    illegalArgumentException.getSuppressed();
                 }
@@ -138,7 +145,7 @@ public class RegistrationController implements Initializable {
                 pt.setOnFinished(event -> {
                     System.out.println("Login successful");
                     try {
-                        Node node = (Node) ae.getSource();
+                       /* Node node = (Node) ae.getSource();
                         Scene scene = node.getScene();
                         Stage stage = (Stage) scene.getWindow();
 
@@ -146,11 +153,11 @@ public class RegistrationController implements Initializable {
                         Scene newScene = new Scene(root);
 
                         stage.setTitle("e-Drugs Login");
-                        stage.setScene(newScene);
-
+                        stage.setScene(newScene);*/
+                        userCommon.switchScene(ae, "/view/loginView.fxml");
 
                     } catch (Exception ex) {
-                        System.out.println(ex.getMessage());
+                        ex.printStackTrace();
                     }
                 });
                 pt.play();
@@ -162,7 +169,7 @@ public class RegistrationController implements Initializable {
         PauseTransition pt = new PauseTransition();
         pt.setOnFinished(event -> {
             try {
-                Node node = (Node) ae.getSource();
+              /*  Node node = (Node) ae.getSource();
                 Scene scene = node.getScene();
                 Stage stage = (Stage) scene.getWindow();
 
@@ -170,8 +177,8 @@ public class RegistrationController implements Initializable {
                 Scene newScene = new Scene(root);
 
                 stage.setTitle("e-Drugs Login");
-                stage.setScene(newScene);
-
+                stage.setScene(newScene);*/
+                userCommon.switchScene(ae, "/view/loginView.fxml");
 
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
@@ -181,7 +188,7 @@ public class RegistrationController implements Initializable {
     }
     @FXML public boolean checkFields() {
         if (firstName.getText().isEmpty() || lastName.getText().isEmpty() || ssn.getText().isEmpty() || dPicker.getValue() == null
-        || zipcode.getText().isEmpty() || address.getText().isEmpty() || email.getText().isEmpty() || password.getText().isEmpty()
+        || zipcode.getText().isEmpty() || city.getText().isEmpty() || address.getText().isEmpty() || email.getText().isEmpty() || password.getText().isEmpty()
         || confirmPassword.getText().isEmpty() || phoneNumber.getText().isEmpty()) {
             if(firstName.getText().isEmpty()){
                 firstNameStar.setVisible(true);
@@ -193,6 +200,8 @@ public class RegistrationController implements Initializable {
                 birthDateStar.setVisible(true);
             } if (zipcode.getText().isEmpty()) {
                 zipcodeStar.setVisible(true);
+            } if (city.getText().isEmpty()) {
+                cityStar.setVisible(true);
             } if (address.getText().isEmpty()) {
                 addressStar.setVisible(true);
             } if (email.getText().isEmpty()) {
@@ -221,6 +230,7 @@ public class RegistrationController implements Initializable {
         ssnStar.setVisible(false);
         birthDateStar.setVisible(false);
         addressStar.setVisible(false);
+        cityStar.setVisible(false);
         zipcodeStar.setVisible(false);
         phoneNumberStar.setVisible(false);
         emailStar.setVisible(false);

@@ -10,8 +10,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.*;
 import model.dBConnection.CommonMethods;
-import model.dBConnection.DAOOrder;
-
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
@@ -22,7 +20,6 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.*;
 
 public class CheckoutController implements Initializable {
@@ -111,6 +108,7 @@ public class CheckoutController implements Initializable {
             lastName1TextField.setText(user.getLastName());
             address1TextField.setText(user.getAddress());
             phoneNumber1TextField.setText(user.getPhoneNumber());
+            city1TextField.setText(user.getCity());
             zipcode1TextField.setText(user.getZipCode());
         }
     }
