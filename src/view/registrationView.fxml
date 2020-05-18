@@ -21,31 +21,31 @@
          <font>
             <Font size="13.0" />
          </font></Button>
-      <Label layoutX="152.0" layoutY="122.0" text="First Name:">
+      <Label layoutX="148.0" layoutY="122.0" text="First Name:">
          <font>
             <Font size="13.0" />
          </font></Label>
-      <Label layoutX="153.0" layoutY="157.0" text="Last Name:">
+      <Label layoutX="148.0" layoutY="157.0" text="Last Name:">
          <font>
             <Font size="13.0" />
          </font></Label>
-      <Label layoutX="158.0" layoutY="191.0" text="SSN:">
+      <Label layoutX="148.0" layoutY="191.0" text="SSN:">
          <font>
             <Font size="13.0" />
          </font></Label>
-      <Label layoutX="153.0" layoutY="261.0" text="Address:">
+      <Label layoutX="148.0" layoutY="261.0" text="Address:">
          <font>
             <Font size="13.0" />
          </font></Label>
-      <Label layoutX="153.0" layoutY="297.0" text="Zipcode:">
+      <Label layoutX="148.0" layoutY="297.0" text="Zipcode:">
          <font>
             <Font size="13.0" />
          </font></Label>
-      <Label layoutX="153.0" layoutY="333.0" text="Phone Number:">
+      <Label layoutX="148.0" layoutY="333.0" text="Phone Number:">
          <font>
             <Font size="13.0" />
          </font></Label>
-      <Label layoutX="153.0" layoutY="368.0" text="Email:">
+      <Label layoutX="148.0" layoutY="368.0" text="Email:">
          <font>
             <Font size="13.0" />
          </font></Label>
@@ -67,9 +67,9 @@
       <TextField fx:id="lastName" layoutX="291.0" layoutY="148.0" prefHeight="26.0" prefWidth="230.0" promptText="Last Name" />
       <TextField fx:id="ssn" layoutX="291.0" layoutY="186.0" prefHeight="26.0" prefWidth="230.0" promptText="YYMMDD-XXXX" />
       <TextField fx:id="address" layoutX="291.0" layoutY="256.0" prefHeight="26.0" prefWidth="230.0" promptText="Address" />
-      <TextField fx:id="zipcode" layoutX="291.0" layoutY="292.0" prefHeight="26.0" prefWidth="38.0" promptText="Zipcode" />
+      <TextField fx:id="zipcode" layoutX="291.0" layoutY="292.0" prefHeight="26.0" prefWidth="50.0" promptText="Zipcode" />
       <TextField fx:id="phoneNumber" layoutX="291.0" layoutY="328.0" prefHeight="26.0" prefWidth="230.0" promptText="Phone Number" />
-      <Label layoutX="149.0" layoutY="403.0" text="Password:">
+      <Label layoutX="148.0" layoutY="403.0" text="Password:">
          <font>
             <Font size="13.0" />
          </font></Label>
@@ -79,7 +79,7 @@
          </font></Label>
       <PasswordField fx:id="confirmPassword" layoutX="291.0" layoutY="436.0" prefHeight="26.0" prefWidth="230.0" promptText="Confirm Password" />
       <PasswordField fx:id="password" layoutX="291.0" layoutY="398.0" prefHeight="26.0" prefWidth="230.0" promptText="Password" />
-      <Label layoutX="154.0" layoutY="226.0" text="Birth Date:">
+      <Label layoutX="148.0" layoutY="226.0" text="Birth Date:">
          <font>
             <Font size="13.0" />
          </font></Label>
@@ -99,6 +99,6 @@
       <Label fx:id="helpNewUser" layoutX="259.0" layoutY="57.0" text="?" />
       <TextArea fx:id="helpMenuNewUser" layoutX="48.0" layoutY="78.0" prefHeight="195.0" prefWidth="213.0" />
       <TextField fx:id="city" layoutX="360.0" layoutY="292.0" prefHeight="26.0" prefWidth="161.0" promptText="City" />
-      <Label fx:id="cityStar" layoutX="343.0" layoutY="301.0" text="*" textFill="#f20101" />
+      <Label fx:id="cityStar" layoutX="349.0" layoutY="301.0" text="*" textFill="#f20101" />
    </children>
 </AnchorPane>
