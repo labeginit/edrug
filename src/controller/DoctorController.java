@@ -49,11 +49,11 @@ public class DoctorController implements Initializable {
     private TableColumn<User, String> d2SSN, d2Name, d2Surname, d2Phone, d2Email;
 
     @FXML
-    private TextField search_textField, sSN_textField, firstName_text, lastName_text, zip_text, address_text,
+    private TextField search_textField, sSN_textField, firstName_text, lastName_text, zip_text, city_text, address_text,
             phone_text, email_text;
 
     @FXML
-    private Label patientSearchStar, ssn_Label, birthDateStar, firstNameStar, lastNameStar, zipCodeStar, addressStar, phoneStar, emailStar,
+    private Label patientSearchStar, ssn_Label, birthDateStar, firstNameStar, lastNameStar, zipCodeStar, cityStar, addressStar, phoneStar, emailStar,
             passwordCheckLabel;
 
     @FXML
@@ -127,6 +127,7 @@ public class DoctorController implements Initializable {
         firstName_text.setText(currentUser.getFirstName());
         lastName_text.setText(currentUser.getLastName());
         zip_text.setText(currentUser.getZipCode());
+        city_text.setText(currentUser.getCity());
         address_text.setText(currentUser.getAddress());
         phone_text.setText(currentUser.getPhoneNumber());
         email_text.setText(currentUser.getEmail());
@@ -138,7 +139,8 @@ public class DoctorController implements Initializable {
     private void handleSaveButton() {
         if (checkFields()) {
             if (Validation.isName(firstName_text.getText(), firstNameStar) && Validation.isName(lastName_text.getText(), lastNameStar) &&
-                    Validation.isZipcode(zip_text.getText(), zipCodeStar) && Validation.isPhoneNumber(phone_text.getText(), phoneStar)
+                    Validation.isZipcode(zip_text.getText(), zipCodeStar) && Validation.isCity(city_text.getText(), cityStar) &&
+                    Validation.isPhoneNumber(phone_text.getText(), phoneStar)
                     && Validation.isEmail(email_text.getText(), emailStar)) {
                 try {
                     currentUser.setFirstName(firstName_text.getText());
@@ -146,6 +148,7 @@ public class DoctorController implements Initializable {
                     currentUser.setBDate(Date.valueOf(datePicker.getValue().plusDays(1)));
                     currentUser.setZipCode(zip_text.getText());
                     currentUser.setAddress(address_text.getText());
+                    currentUser.setCity(city_text.getText());
                     currentUser.setPhoneNumber(phone_text.getText());
                     currentUser.setEmail(email_text.getText());
                     commonMethods.updateUser(currentUser);
@@ -179,6 +182,7 @@ public class DoctorController implements Initializable {
         if (datePicker == null || Validation.isName(firstName_text.getText(), firstNameStar)
                 || Validation.isName(lastName_text.getText(), lastNameStar)
                 || Validation.isZipcode(zip_text.getText(), zipCodeStar)
+                || Validation.isCity(city_text.getText(), cityStar)
                 || address_text.getText().isEmpty() || Validation.isPhoneNumber(phone_text.getText(), phoneStar)
                 || Validation.isEmail(email_text.getText(), emailStar) || Validation.isPassword(password_Text.getText(), passwordCheckLabel)
                 || Validation.isPassword(password_Text2.getText(), passwordCheckLabel)) {
@@ -193,6 +197,9 @@ public class DoctorController implements Initializable {
             }
             if (zip_text.getText().isEmpty()) {
                 zipCodeStar.setVisible(true);
+            }
+            if (city_text.getText().isEmpty()) {
+                cityStar.setVisible(true);
             }
             if (address_text.getText().isEmpty()) {
                 addressStar.setVisible(true);
@@ -250,6 +257,7 @@ public class DoctorController implements Initializable {
         firstNameStar.setVisible(state);
         lastNameStar.setVisible(state);
         zipCodeStar.setVisible(state);
+        cityStar.setVisible(state);
         addressStar.setVisible(state);
         phoneStar.setVisible(state);
         emailStar.setVisible(state);
