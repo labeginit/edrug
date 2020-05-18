@@ -109,7 +109,7 @@ public class AddPrescription implements Initializable {
 
     public void receiveData(String ssn) {
         User temp = commonMethods.getUser(ssn);
-        currentPatient = new Patient(temp.getSsn(), temp.getFirstName(), temp.getLastName(), temp.getBDate(), temp.getZipCode(), temp.getAddress(), temp.getEmail(), temp.getPhoneNumber(), temp.getPassword());
+        currentPatient = new Patient(temp.getSsn(), temp.getFirstName(), temp.getLastName(), temp.getBDate(), temp.getZipCode(), temp.getCity(), temp.getAddress(), temp.getEmail(), temp.getPhoneNumber(), temp.getPassword());
         ssnLabel.setText(currentPatient.getSsn());
         ssnLabel1.setText(currentPatient.getSsn());
         nameLabel.setText(currentPatient.getLastName() + ", " + currentPatient.getFirstName());
