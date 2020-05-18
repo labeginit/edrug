@@ -67,6 +67,7 @@
                               <TableColumn fx:id="aDiagnosis1" prefWidth="232.79998779296875" text="Diagnosis" />
                            </columns>
                         </TableView>
+                        <Button fx:id="deletePrescriptionsButton" layoutX="649.0" layoutY="529.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="136.0" text="Delete Prescription" />
                      </children></AnchorPane>
             </content>
           </Tab>

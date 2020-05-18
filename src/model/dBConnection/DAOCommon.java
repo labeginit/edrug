@@ -211,14 +211,14 @@ public class DAOCommon {
         return linesAffected;
     }
 
-    protected int insertPrescriptionLine(String queryString, int prescId, String patientSSN, int article, int quantity, String instructions) {
+    protected int insertPrescriptionLine(String queryString, int prescId, String patientSSN, int article, int quantityPrescribed, String instructions) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
                 prepStmt.setInt(1, prescId);
                 prepStmt.setString(2, patientSSN);
                 prepStmt.setInt(3, article);
-                prepStmt.setInt(4, quantity);
+                prepStmt.setInt(4, quantityPrescribed);
                 prepStmt.setString(5, instructions);
 
                 linesAffected = prepStmt.executeUpdate();
@@ -232,6 +232,42 @@ public class DAOCommon {
         }
         return linesAffected;
     }
+    protected void deletePrescriptionHasMedicine(String queryString, int id, String patientSsn, int article) {
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
+                prepStmt.setInt(1, id);
+                prepStmt.setString(2, patientSsn);
+                prepStmt.setInt(3, article);
+
+                resultSet = prepStmt.executeQuery();
+            }
+        } catch (SQLException | NullPointerException ex) {
+            System.out.println("Error when executing statement!");
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    protected void deletePrescription(String queryString, int id, String patientSsn, String currentUserSsn) {
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
+                prepStmt.setInt(1, id);
+                prepStmt.setString(2, patientSsn);
+                prepStmt.setString(3, currentUserSsn);
+
+                prepStmt.executeQuery();
+            }
+        } catch (SQLException | NullPointerException ex) {
+            System.out.println("Error when executing statement!");
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     protected int updateMedicineQuantity(String queryString, int quantityAvailable, int article) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
