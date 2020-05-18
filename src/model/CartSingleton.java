@@ -15,17 +15,17 @@ public class CartSingleton {
 
     public List<OrderLine> cart = new ArrayList<>();
 
-    public String deliveryMethod;
+    public Order.DeliveryMethod deliveryMethod;
 
-    public String paymentMethod;
+    public Order.PaymentMethod paymentMethod;
 
     public List<OrderLine> getCart() {
         return cart;
     }
 
-    public String getDeliveryMethod() { return deliveryMethod;}
+    public Order.DeliveryMethod getDeliveryMethod() { return deliveryMethod;}
 
-    public void setDeliveryMethod(String deliveryMethod) {
+    public void setDeliveryMethod(Order.DeliveryMethod deliveryMethod) {
         this.deliveryMethod = deliveryMethod;
     }
 
@@ -33,11 +33,11 @@ public class CartSingleton {
         this.cart = cart;
     }
 
-    public String getPaymentMethod() {
+    public Order.PaymentMethod getPaymentMethod() {
         return paymentMethod;
     }
 
-    public void setPaymentMethod(String paymentMethod) {
+    public void setPaymentMethod(Order.PaymentMethod paymentMethod) {
         this.paymentMethod = paymentMethod;
     }
 }

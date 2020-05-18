@@ -24,7 +24,7 @@ public class Validation {
         alert.setTitle(titleBar);
         alert.setHeaderText(headerMessage);
         alert.getDialogPane().setPrefSize(500, 200);
-        alert.show();
+        alert.showAndWait();
     }
 
     @FXML
