@@ -185,7 +185,7 @@ public class ShoppingCartController implements Initializable {
     }
 
     @FXML public void onConfirmButtonPressed (ActionEvent actionEvent) {
-        if (medList == null) {
+        if (medList.size() == 0) {
             Validation.alertPopup("Your shopping cart is empty","Empty Cart", "Cart must contain items");
         } else {
             if(delivery_combo.getValue() != null && payment_combo.getValue() != null) {
