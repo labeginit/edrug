@@ -44,7 +44,7 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Current Prescriptions">
+          <Tab fx:id="currentPrescriptionTab" text="Current Prescriptions">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="516.0" prefWidth="800.0">
                      <children>

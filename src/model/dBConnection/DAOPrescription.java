@@ -218,7 +218,7 @@ public class DAOPrescription {
                     patientSSN = pl.getPatient().getSsn();
                     article = pl.getArticle();
 
-                    String query = "DELETE FROM `edrugs_test`.`Prescription_has_Medicine` WHERE (`prescription_id` = '?') and (`prescription_patient_ssn` = '?') and (`article` = '?');\n";
+                    String query = "DELETE FROM edrugs_test.Prescription_has_Medicine WHERE (prescription_id = ?) and (prescription_patient_ssn = ?) and (article = ?);";
                     common.deletePrescriptionHasMedicine(query, id, patientSSN, article);
                 } else {
                     throw new NullPointerException("The user object is null");
@@ -240,7 +240,7 @@ public class DAOPrescription {
                     id = pl.getPrescId();
                     patientSSN = pl.getPatient().getSsn();
 
-                    String query = "DELETE FROM `edrugs_test`.`Prescription` WHERE (`id` = '?') and (`patient_ssn` = '?') and (`user_ssn` = '?');\n";
+                    String query = "DELETE FROM edrugs_test.Prescription WHERE (id = ?) and (patient_ssn = ?) and (user_ssn = ?);";
                     common.deletePrescription(query, id, patientSSN, currentUser.getSsn());
                 } else {
                     throw new NullPointerException("The user object is null");

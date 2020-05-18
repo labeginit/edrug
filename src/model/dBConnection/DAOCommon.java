@@ -240,7 +240,7 @@ public class DAOCommon {
                 prepStmt.setString(2, patientSsn);
                 prepStmt.setInt(3, article);
 
-                resultSet = prepStmt.executeQuery();
+                prepStmt.executeUpdate();
             }
         } catch (SQLException | NullPointerException ex) {
             System.out.println("Error when executing statement!");
@@ -258,7 +258,7 @@ public class DAOCommon {
                 prepStmt.setString(2, patientSsn);
                 prepStmt.setString(3, currentUserSsn);
 
-                prepStmt.executeQuery();
+                prepStmt.executeUpdate();
             }
         } catch (SQLException | NullPointerException ex) {
             System.out.println("Error when executing statement!");

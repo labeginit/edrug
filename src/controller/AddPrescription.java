@@ -27,9 +27,13 @@ public class AddPrescription implements Initializable {
     java.util.Date date = new java.util.Date();
     Doctor currentDoctor;
     Patient currentPatient;
+    User temp;
     List<PrescriptionLine> prescrLines = new ArrayList<>();
     List<Prescription> prescrList;
     String header = "Add Prescription Error";
+
+    @FXML
+    private Tab currentPrescriptionTab;
 
     @FXML
     private Label ssnLabel, nameLabel, ssnLabel1, nameLabel1, currentDateLabel;
@@ -73,9 +77,9 @@ public class AddPrescription implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         currentUser = UserSingleton.getOurInstance().getUser();
-        
+
         prescriptionInitialize();
-        currentPrescriptionLineInitialize();
+        currentPrescriptionTab.setOnSelectionChanged(event -> currentPrescriptionLineInitialize());
 
         addPrescriptionsButton.setOnAction(event -> {
             try {
@@ -87,8 +91,7 @@ public class AddPrescription implements Initializable {
         deletePrescriptionsButton.setOnAction(event -> {
             try {
                 handleDeletePrescriptionButton();
-            } catch (Exception ex) {
-                ex.printStackTrace();
+            } catch (Exception ignored) {
             }
         });
 
@@ -110,7 +113,11 @@ public class AddPrescription implements Initializable {
     }
 
     public void receiveData(String ssn) {
-        User temp = commonMethods.getUser(ssn);
+        temp = commonMethods.getUser(ssn);
+        loadData();
+    }
+
+    public void loadData() {
         currentPatient = new Patient(temp.getSsn(), temp.getFirstName(), temp.getLastName(), temp.getBDate(), temp.getZipCode(), temp.getAddress(), temp.getEmail(), temp.getPhoneNumber(), temp.getPassword());
         temp = currentUser;
         currentDoctor = new Doctor(temp.getSsn(), temp.getFirstName(), temp.getLastName(), temp.getBDate(), temp.getZipCode(), temp.getAddress(), temp.getEmail(), temp.getPhoneNumber(), temp.getPassword());
@@ -136,8 +143,7 @@ public class AddPrescription implements Initializable {
                 if (endDate.after(startDate)) {
                     if (!diagnosisTextArea.getText().isEmpty()) {
                         try {
-                            Prescription prescription = null;
-                            int id = commonMethods.getLastId(prescription) + 1;
+                            int id = commonMethods.getLastId(Prescription.class) + 1;
                             for (PrescriptionLine pl :
                                     prescrLines) {
                                 pl.setPrescId(id);
@@ -166,20 +172,22 @@ public class AddPrescription implements Initializable {
     }
 
     @FXML
-    public void handleDeletePrescriptionButton() {
+    private void handleDeletePrescriptionButton() {
         PrescriptionLine pl = currentPrescriptionLineTable.getSelectionModel().getSelectedItem();
         if (commonMethods.getPrescriptionLineList(pl.getPrescId(), currentPatient).size() > 1) {
             commonMethods.deletePrescriptionLine(pl);
             currentPrescriptionLineInitialize();
+            currentPrescriptionsTable.getItems().clear();
         } else {
             commonMethods.deletePrescriptionLine(pl);
             commonMethods.deletePrescription(pl, currentUser);
             currentPrescriptionLineInitialize();
+            currentPrescriptionsTable.getItems().clear();
         }
 
     }
 
-    public void prescriptionInitialize() {
+    private void prescriptionInitialize() {
         aArticle.setCellValueFactory(new PropertyValueFactory<>("articleNo"));
         aDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
         aName.setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -198,7 +206,7 @@ public class AddPrescription implements Initializable {
     }
 
 
-    public void currentPrescriptionInitialize() {
+    private void currentPrescriptionInitialize() {
         aStartDate1.setCellValueFactory(new PropertyValueFactory<>("startDate"));
         aEndDate1.setCellValueFactory(new PropertyValueFactory<>("endDate"));
         aDiagnosis1.setCellValueFactory(new PropertyValueFactory<>("diagnosis"));
@@ -214,25 +222,19 @@ public class AddPrescription implements Initializable {
         }
     }
 
-    public void currentPrescriptionLineInitialize() {
+    @FXML
+    private void currentPrescriptionLineInitialize() {
         aprescrID1.setCellValueFactory(new PropertyValueFactory<>("prescId"));
         aName1.setCellValueFactory(new PropertyValueFactory<>("name"));
         aAmount1.setCellValueFactory(new PropertyValueFactory<>("quantityPrescribed"));
-
         ObservableList<PrescriptionLine> prescriptionLineList = FXCollections.observableArrayList(commonMethods.getPrescriptionLineList(0, currentPatient));
-        System.out.println(prescriptionLineList.get(0));
 
-        for (PrescriptionLine pl:
-             prescriptionLineList) {
-            if (pl.getPatient().getSsn().equals(currentPatient.getSsn())) {
-                prescriptionLineList.remove(pl);
-            }
-        }
+        prescriptionLineList.removeIf(pl -> !pl.getPatient().getSsn().equals(currentPatient.getSsn()));
 
         currentPrescriptionLineTable.setItems(prescriptionLineList);
     }
 
-    public boolean checkNewPrescription(List<PrescriptionLine> currentPrescriptions, PrescriptionLine newPrescription) {
+    private boolean checkNewPrescription(List<PrescriptionLine> currentPrescriptions, PrescriptionLine newPrescription) {
         for (PrescriptionLine cP :
                 currentPrescriptions) {
             if (cP.getQuantityPrescribed() != newPrescription.getQuantityPrescribed()) {
@@ -243,7 +245,7 @@ public class AddPrescription implements Initializable {
 
     }
 
-    public int nextPrscID() {
+    private int nextPrscID() {
         int i = 1;
         for (Prescription p :
                 prescrList) {
@@ -254,13 +256,13 @@ public class AddPrescription implements Initializable {
         return i;
     }
 
-    public void setEmpty() {
+    private void setEmpty() {
         prescriptionInitialize();
         diagnosisTextArea.setText("");
         endDatePicker.setValue(null);
     }
 
-    public void makeaAmountEditable() {
+    private void makeaAmountEditable() {
 
         addPrescriptionTable.setEditable(true);
         aAmount.setCellFactory(TextFieldTableCell.<Medicine, Integer>forTableColumn(new IntegerStringConverter()));
@@ -274,7 +276,6 @@ public class AddPrescription implements Initializable {
                             ((Medicine) t.getTableView().getItems().get(
                                     t.getTablePosition().getRow())
                             ).setQuantity(t.getNewValue());
-                            System.out.println(t.getNewValue());
                             try {
                                 if ((t.getNewValue()) > 0) {
 
