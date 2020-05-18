@@ -14,6 +14,7 @@ public abstract class User {
     private java.sql.Date bDate;
     private String zipCode;
     private String address;
+    private String city;
     private String email;
     private String phoneNumber;
     private String password;
@@ -22,13 +23,14 @@ public abstract class User {
 
     public User(){}
 
-    public User(String sSN, int userType, String firstName, String lastName, java.sql.Date birthDate, String zipCode, String address, String email, String phoneNumber, String password, boolean isActive) {
+    public User(String sSN, int userType, String firstName, String lastName, java.sql.Date birthDate, String zipCode, String city, String address, String email, String phoneNumber, String password, boolean isActive) {
         setSsn(sSN);
         setUserType(userType);
         setFirstName(firstName);
         setLastName(lastName);
         setBDate(birthDate);
         setZipCode(zipCode);
+        setCity(city);
         setAddress(address);
         setEmail(email);
         setPhoneNumber(phoneNumber);
@@ -37,8 +39,8 @@ public abstract class User {
         setCheckBox(new CheckBox());
     }
 
-    public User(String sSN, int userType, String firstName, String lastName, java.sql.Date birthDate, String zipCode, String address, String email, String phoneNumber, String password) {
-        this(sSN, userType, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, true);
+    public User(String sSN, int userType, String firstName, String lastName, java.sql.Date birthDate, String zipCode, String city, String address, String email, String phoneNumber, String password) {
+        this(sSN, userType, firstName, lastName, birthDate, zipCode, city, address, email, phoneNumber, password, true);
     }
 
     public String getSsn() {
@@ -137,20 +139,29 @@ public abstract class User {
         return checkBox;
     }
 
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
     @Override
     public String toString() {
         return "User{" +
-                "sSN='" + sSN + '\'' +
-                ", userType=" + userType +
-                ", firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", bDate=" + bDate +
-                ", zipCode='" + zipCode + '\'' +
-                ", address='" + address + '\'' +
-                ", email='" + email + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                ", password='" + password + '\'' +
-                ", isActive=" + isActive +
+                "sSN='" + getSsn() + '\'' +
+                ", userType=" + getUserType() +
+                ", firstName='" + getFirstName() + '\'' +
+                ", lastName='" + getLastName() + '\'' +
+                ", bDate=" + getBDate() +
+                ", zipCode='" + getZipCode() + '\'' +
+                ", city='" + getCity() + '\'' +
+                ", address='" + getAddress() + '\'' +
+                ", email='" + getEmail() + '\'' +
+                ", phoneNumber='" + getPhoneNumber() + '\'' +
+                ", password='" + getPassword() + '\'' +
+                ", isActive=" + getActive() +
                 '}';
     }
 }

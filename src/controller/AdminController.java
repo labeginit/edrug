@@ -36,7 +36,7 @@ public class AdminController implements Initializable {
     @FXML
     public TextField patientSearchTextField, doctorSearchTextField, editSearchTextField;
     public Button confirmAddButton, cancelButton, saveButton, logOutMyButton;
-    public TextField SSNtext, firstNameText, lastNameText, zipText, addressText, phoneText, emailText;
+    public TextField SSNtext, firstNameText, lastNameText, zipText, cityText, addressText, phoneText, emailText;
     public PasswordField pass1_text;
     public PasswordField pass2_text;
     public TableView<User> patientTableView;
@@ -49,15 +49,15 @@ public class AdminController implements Initializable {
     public TableColumn<User, CheckBox> changeActive;
     public TableView<User> changeTable;
     public TableColumn<User, Integer> changeRoleTable;
-    public Label BDateStar, firstNameStar, lastNameStar, zipStar, addressStar, phoneStar, emailStar, pass2star, pass1star;
+    public Label BDateStar, firstNameStar, lastNameStar, zipStar, cityStar, addressStar, phoneStar, emailStar, pass2star, pass1star;
     public Label passwordCheckLabel, passwordCheckAddLabel;
     public Button saveButtonAdd, cancelButtonAdd, logOutPatButton, logOutDocButton, logOutAddButton, logOutEditButton, logOutMedButton;
 
-    public TextField SSNtextAdd, firstNameTextAdd, lastNameTextAdd, zipTextAdd, addressTextAdd, phoneTextAdd, emailTextAdd;
+    public TextField SSNtextAdd, firstNameTextAdd, lastNameTextAdd, zipTextAdd, cityTextAdd, addressTextAdd, phoneTextAdd, emailTextAdd;
     public DatePicker datePicker;
     public PasswordField pass1_textAdd;
     public PasswordField pass2_textAdd;
-    public Label SSNstarAdd, BDateStarAdd, firstNameStarAdd, lastNameStarAdd, zipStarAdd, addressStarAdd, phoneStarAdd, emailStarAdd;
+    public Label SSNstarAdd, BDateStarAdd, firstNameStarAdd, lastNameStarAdd, zipStarAdd, cityStarAdd, addressStarAdd, phoneStarAdd, emailStarAdd;
     public Label pass2starAdd, pass1starAdd, roleStarAdd;
     public TextField roleTextAdd;
     public DatePicker datePickerAdd;
@@ -195,13 +195,15 @@ public class AdminController implements Initializable {
         saveButton.setOnAction(actionEvent -> {
             if (isItOk()) {
                 if (Validation.isName(firstNameText.getText(), firstNameStar) && Validation.isName(lastNameText.getText(), lastNameStar) &&
-                        Validation.isZipcode(zipText.getText(), zipStar) && Validation.isPhoneNumber(phoneText.getText(), phoneStar)
+                        Validation.isZipcode(zipText.getText(), zipStar) &&
+                        Validation.isCity(cityText.getText(), cityStar) && Validation.isPhoneNumber(phoneText.getText(), phoneStar)
                         && Validation.isEmail(emailText.getText(), emailStar)) {
                     try {
                         currentUser.setSsn(SSNtext.getText());
                         currentUser.setLastName(lastNameText.getText());
                         currentUser.setBDate(Date.valueOf(datePicker.getValue().plusDays(1)));
                         currentUser.setZipCode(zipText.getText());
+                        currentUser.setCity(cityText.getText());
                         currentUser.setAddress(addressText.getText());
                         currentUser.setPhoneNumber(phoneText.getText());
                         currentUser.setEmail(emailText.getText());
@@ -223,18 +225,18 @@ public class AdminController implements Initializable {
         saveButtonAdd.setOnAction(actionEvent -> {
             if (isItOkAdd()) {
                 if (Validation.isSSN(SSNtextAdd.getText(), SSNstarAdd) && Validation.isName(firstNameTextAdd.getText(), firstNameStarAdd) && Validation.isName(lastNameTextAdd.getText(), lastNameStarAdd) &&
-                        Validation.isZipcode(zipTextAdd.getText(), zipStarAdd) && Validation.isPhoneNumber(phoneTextAdd.getText(), phoneStarAdd)
+                        Validation.isZipcode(zipTextAdd.getText(), zipStarAdd) && Validation.isCity(cityTextAdd.getText(), cityStarAdd) && Validation.isPhoneNumber(phoneTextAdd.getText(), phoneStarAdd)
                         && Validation.isEmail(emailTextAdd.getText(), emailStarAdd) && Validation.isRole(roleTextAdd.getText())) {
                     try {
                         if (methods.getUser(SSNtextAdd.getText()) == null) {
                             if (Integer.parseInt(roleTextAdd.getText()) == 1) {
                                 Patient patient = new Patient(SSNtextAdd.getText(), firstNameTextAdd.getText(), lastNameTextAdd.getText(),
-                                        Date.valueOf(datePickerAdd.getValue().plusDays(1)), zipTextAdd.getText(), addressTextAdd.getText(),
+                                        Date.valueOf(datePickerAdd.getValue().plusDays(1)), zipTextAdd.getText(), cityTextAdd.getText(), addressTextAdd.getText(),
                                         emailTextAdd.getText(), phoneTextAdd.getText(), pass1_textAdd.getText(), true);
                                 methods.addPatient(patient);
                             } else if (Integer.parseInt(roleTextAdd.getText()) == 2) {
                                 Doctor doctor = new Doctor(SSNtextAdd.getText(), firstNameTextAdd.getText(), lastNameTextAdd.getText(),
-                                        Date.valueOf(datePickerAdd.getValue().plusDays(1)), zipTextAdd.getText(), addressTextAdd.getText(),
+                                        Date.valueOf(datePickerAdd.getValue().plusDays(1)), zipTextAdd.getText(), cityTextAdd.getText(), addressTextAdd.getText(),
                                         emailTextAdd.getText(), phoneTextAdd.getText(), pass1_textAdd.getText(), true);
                                 methods.addDoctor(doctor);
 
@@ -292,6 +294,7 @@ public class AdminController implements Initializable {
         firstNameStar.setVisible(on);
         lastNameStar.setVisible(on);
         zipStar.setVisible(on);
+        cityStar.setVisible(on);
         addressStar.setVisible(on);
         phoneStar.setVisible(on);
         emailStar.setVisible(on);
@@ -306,6 +309,7 @@ public class AdminController implements Initializable {
         firstNameStarAdd.setVisible(on);
         lastNameStarAdd.setVisible(on);
         zipStarAdd.setVisible(on);
+        cityStarAdd.setVisible(on);
         addressStarAdd.setVisible(on);
         phoneStarAdd.setVisible(on);
         emailStarAdd.setVisible(on);
@@ -334,6 +338,7 @@ public class AdminController implements Initializable {
         lastNameTextAdd.clear();
         phoneTextAdd.clear();
         zipTextAdd.clear();
+        cityTextAdd.clear();
         addressTextAdd.clear();
         emailTextAdd.clear();
         pass1_textAdd.clear();
@@ -448,6 +453,7 @@ public class AdminController implements Initializable {
                     firstNameText.setText(currentUser.getFirstName());
                     lastNameText.setText(currentUser.getLastName());
                     zipText.setText(currentUser.getZipCode());
+                    cityText.setText(currentUser.getCity());
                     addressText.setText(currentUser.getAddress());
                     phoneText.setText(currentUser.getPhoneNumber());
                     emailText.setText(currentUser.getEmail());
@@ -468,6 +474,9 @@ public class AdminController implements Initializable {
                         }
                         if (zipText.getText().isEmpty()) {
                             zipStar.setVisible(true);
+                        }
+                        if (cityText.getText().isEmpty()) {
+                            cityStar.setVisible(true);
                         }
                         if (addressText.getText().isEmpty()) {
                             addressStar.setVisible(true);
@@ -512,6 +521,9 @@ public class AdminController implements Initializable {
                         }
                         if (zipTextAdd.getText().isEmpty()) {
                             zipStarAdd.setVisible(true);
+                        }
+                        if (cityTextAdd.getText().isEmpty()) {
+                            cityStarAdd.setVisible(true);
                         }
                         if (addressTextAdd.getText().isEmpty()) {
                             addressStarAdd.setVisible(true);
