@@ -43,8 +43,8 @@ public class DAOPrescription {
                     endDate = prescription.getEndDate();
                     diagnosis = prescription.getDiagnosis();
 
-                    String queryHeader = "INSERT INTO `edrugs_test`.`Prescription` (`id`, `patient_ssn`, `user_ssn`, `date`, `end_date`, `diagnosis`) VALUES (?, ?, ?, ?, ?, ?);";
-                    linesAffected = common.insertPrescriptionHeader(queryHeader, id, patientSSN, doctorSSN, startdate, diagnosis);
+                    String queryHeader = "INSERT INTO `edrugs_test`.`Prescription` (`id`, `patient_ssn`, `user_ssn`, `date`, `diagnosis`, `end_date`) VALUES (?, ?, ?, ?, ?, ?);";
+                    linesAffected = common.insertPrescriptionHeader(queryHeader, id, patientSSN, doctorSSN, startdate, diagnosis, endDate);
 
                     specification = prescription.getSpecification();
                     for (PrescriptionLine element : specification) {
@@ -206,6 +206,51 @@ public class DAOPrescription {
             ex.printStackTrace();
         } finally {
             return id;
+        }
+    }
+
+    protected void deletePrescriptionLine(PrescriptionLine pl) {
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                if (pl != null) {
+
+                    id = pl.getPrescId();
+                    patientSSN = pl.getPatient().getSsn();
+                    article = pl.getArticle();
+
+                    String query = "DELETE FROM `edrugs_test`.`Prescription_has_Medicine` WHERE (`prescription_id` = '?') and (`prescription_patient_ssn` = '?') and (`article` = '?');\n";
+                    common.deletePrescriptionHasMedicine(query, id, patientSSN, article);
+                } else {
+                    throw new NullPointerException("The user object is null");
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error while working with statement!");
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    protected void deletePrescription(PrescriptionLine pl, User currentUser) {
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                if (pl != null) {
+
+                    id = pl.getPrescId();
+                    patientSSN = pl.getPatient().getSsn();
+
+                    String query = "DELETE FROM `edrugs_test`.`Prescription` WHERE (`id` = '?') and (`patient_ssn` = '?') and (`user_ssn` = '?');\n";
+                    common.deletePrescription(query, id, patientSSN, currentUser.getSsn());
+                } else {
+                    throw new NullPointerException("The user object is null");
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error while working with statement!");
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 }

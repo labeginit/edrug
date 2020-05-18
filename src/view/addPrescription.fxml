@@ -32,7 +32,7 @@
                           </columns>
                         </TableView>
                         <Label fx:id="nameLabel" layoutX="74.0" layoutY="35.0" prefHeight="18.0" prefWidth="148.0" />
-                        <TextArea fx:id="DiagnosisTextArea" layoutX="363.0" layoutY="16.0" prefHeight="96.0" prefWidth="422.0" />
+                        <TextArea fx:id="diagnosisTextArea" layoutX="363.0" layoutY="16.0" prefHeight="96.0" prefWidth="422.0" />
                         <Label layoutX="297.0" layoutY="18.0" text="Diagnosis:" />
                         <Label fx:id="ssnLabel" layoutX="74.0" layoutY="18.0" prefHeight="18.0" prefWidth="148.0" />
                         <DatePicker fx:id="endDatePicker" layoutX="168.0" layoutY="86.0" prefHeight="26.0" prefWidth="194.0" promptText="Prescription End Date" />
@@ -67,6 +67,7 @@
                               <TableColumn fx:id="aDiagnosis1" prefWidth="232.79998779296875" text="Diagnosis" />
                            </columns>
                         </TableView>
+                        <Button fx:id="deletePrescriptionsButton" layoutX="649.0" layoutY="529.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="136.0" text="Delete Prescription" />
                      </children></AnchorPane>
             </content>
           </Tab>
