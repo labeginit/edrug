@@ -111,7 +111,7 @@
                           </items>
                         </SplitPane>
                         <Label fx:id="helpMyPrescriptions" layoutX="687.0" layoutY="25.0" prefHeight="19.0" prefWidth="17.0" text="?" />
-                        <TextArea fx:id="helpMenuMyPrescriptions" layoutX="450.0" layoutY="35.0" prefHeight="109.0" prefWidth="235.0" />
+                        <TextArea fx:id="helpMenuMyPrescriptions" layoutX="428.0" layoutY="35.0" prefHeight="109.0" prefWidth="257.0" />
                      </children></AnchorPane>
             </content>
           </Tab>

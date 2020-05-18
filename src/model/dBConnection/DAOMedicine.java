@@ -349,7 +349,7 @@ public class DAOMedicine {
                     quantity = medicine.getQuantity();
 
                     String query = "UPDATE `edrugs_test`.`Medicine` SET `quantity_available` = ? WHERE (`article` = ?);";
-                    linesAffected = common.updateMedicineQuantity(query,quantity, articleNo);
+                    linesAffected = common.updateMedicineQuantity(query, quantity, articleNo);
                 } else {
                     throw new NullPointerException("The user object is null");
                 }
