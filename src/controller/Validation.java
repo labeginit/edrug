@@ -14,7 +14,12 @@ import java.util.regex.Pattern;
 
 public class Validation {
     public static void alertPopup(String infoMessage, String titleBar, String headerMessage) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION, infoMessage, ButtonType.OK);
+        alertPopup(Alert.AlertType.WARNING, infoMessage, titleBar, headerMessage);
+
+    }
+
+    public static void alertPopup(Alert.AlertType alertType, String infoMessage, String titleBar, String headerMessage) {
+        Alert alert = new Alert(alertType, infoMessage, ButtonType.OK);
         alert.setResizable(true);
         alert.setTitle(titleBar);
         alert.setHeaderText(headerMessage);
@@ -265,7 +270,7 @@ public class Validation {
     }
     //MM/YY
     public static boolean isValidEXPDate(String expDate, Label starLabel) {
-        String regex = "^(0[1-9]|1[0-2])\\/?([0-9]{2})$";
+        String regex = "^(0[1-9]|1[0-2])\\/([0-9]{2})$";
         boolean aEXPDate = Pattern.compile(regex).matcher(expDate).find();
         if (aEXPDate) {
             String yy = "20";

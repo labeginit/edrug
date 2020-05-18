@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.*;
 import model.dBConnection.CommonMethods;
+import model.dBConnection.DAOOrder;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -21,7 +22,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.io.IOException;
 import java.net.URL;
-import java.text.DecimalFormat;
+import java.sql.SQLException;
 import java.util.*;
 
 public class CheckoutController implements Initializable {
@@ -30,6 +31,8 @@ public class CheckoutController implements Initializable {
     private UserCommon userCommon = new UserCommon();
     private List<OrderLine> medList = CartSingleton.getOurInstance().cart;
     private List<OrderLine> cart = CartSingleton.getOurInstance().cart;
+    private Order.DeliveryMethod delivery = CartSingleton.getOurInstance().getDeliveryMethod();
+    private Order.PaymentMethod payment = CartSingleton.getOurInstance().getPaymentMethod();
     private List<Pharmacy> pharmacyList = commonMethods.retrievePharmacyList();
     private ObservableList<Pharmacy> pharmacies = FXCollections.observableArrayList(pharmacyList);
     @FXML
@@ -87,9 +90,9 @@ public class CheckoutController implements Initializable {
         confirmOrderButton.setOnAction(event -> confirmOrderButtonPressed(event));
     }
     @FXML public void initialValues() {
-        if (CartSingleton.getOurInstance().getDeliveryMethod().equalsIgnoreCase("SELFPICKUP")) {
+        if (CartSingleton.getOurInstance().getDeliveryMethod() == Order.DeliveryMethod.SELFPICKUP) {
             tabPane.getTabs().remove(deliveryTab);
-            if (CartSingleton.getOurInstance().getPaymentMethod().equalsIgnoreCase("CREDIT_CARD")) {
+            if (CartSingleton.getOurInstance().getPaymentMethod() == Order.PaymentMethod.CREDIT_CARD) {
                 paymentTab.setText("Step 1");
                 tabPane.getTabs().remove(pickUpTab);
                 tabPane.getTabs().remove(confirmationTab);
@@ -103,7 +106,7 @@ public class CheckoutController implements Initializable {
             tabPane.getTabs().remove(pickUpTab);
             tabPane.getTabs().remove(paymentTab);
             tabPane.getTabs().remove(confirmationTab);
-            deliveryMethod1Label.setText(CartSingleton.getOurInstance().getDeliveryMethod());
+            deliveryMethod1Label.setText(CartSingleton.getOurInstance().getDeliveryMethod().toString());
             firstName1TextField.setText(user.getFirstName());
             lastName1TextField.setText(user.getLastName());
             address1TextField.setText(user.getAddress());
@@ -126,16 +129,20 @@ public class CheckoutController implements Initializable {
         for (int i = 0; i < cart.size(); i++) {
             cost = cost + cart.get(i).getPrice() * cart.get(i).getQuantity();
         }
-        DecimalFormat df = new DecimalFormat("####0.00");
-        double totalVAT = (cost * 0.2);
+        cost = userCommon.round(cost, 2);
+        double totalVAT = userCommon.round(cost * 0.2, 2);
+        String vat = String.valueOf(totalVAT);
+        if(vat.contains(",")){
+            vat = vat.replaceAll(",",".").trim();
+        }
         total1Label.setText(Double.toString(cost));
-        totalVAT1Label.setText(Double.toString(Double.parseDouble(df.format(totalVAT))));
+        totalVAT1Label.setText(vat);
         total4Label.setText(Double.toString(cost));
-        totalVAT4Label.setText(Double.toString(Double.parseDouble(df.format(totalVAT))));
+        totalVAT4Label.setText(vat);
     }
     @FXML private void back1ButtonPressed(ActionEvent event) {
         try {
-            userCommon.switchScene(event,"/view/shoppingCartView.fxml");
+            userCommon.switchScene(event,"../view/shoppingCartView.fxml");
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
@@ -145,7 +152,7 @@ public class CheckoutController implements Initializable {
             if (Validation.isName(firstName1TextField.getText(), fName1StarLabel) && Validation.isName(lastName1TextField.getText(), lName1StarLabel) &&
             Validation.isZipcode(zipcode1TextField.getText(), zipcode1StarLabel) && Validation.isPhoneNumber(phoneNumber1TextField.getText(), phoneNumber1StarLabel)
             && Validation.isName(city1TextField.getText(), city1StarLabel)) {
-                if (CartSingleton.getOurInstance().getPaymentMethod().equalsIgnoreCase("CREDIT_CARD")) {
+                if (CartSingleton.getOurInstance().getPaymentMethod() == Order.PaymentMethod.CREDIT_CARD) {
                     tabPane.getTabs().add(paymentTab);
                     paymentTab.setText("Step 2");
                     tabPane.getTabs().remove(deliveryTab);
@@ -158,7 +165,7 @@ public class CheckoutController implements Initializable {
                     address4Label.setText(address1TextField.getText());
                     zipcode4Label.setText(zipcode1TextField.getText());
                     city4Label.setText(city1TextField.getText());
-                    if (CartSingleton.getOurInstance().getPaymentMethod().equalsIgnoreCase("INVOICE")) {
+                    if (CartSingleton.getOurInstance().getPaymentMethod() == Order.PaymentMethod.INVOICE) {
                         paymentMethod4Label.setText("Invoice");
                     } else {
                         paymentMethod4Label.setText("Bank Transfer");
@@ -174,7 +181,7 @@ public class CheckoutController implements Initializable {
                     Validation.isValid(Long.parseLong(creditCardNumber1TextField.getText()), cardStarLabel, creditCardPaymentLabel)
             && Validation.isZipcode(zipcode2TextField.getText(), zipcode2StarLabel) && Validation.isName(city2TextField.getText(), city2StarLabel) &&
             Validation.isCCV(ccvTextField.getText(), ccvStarLabel, creditCardPaymentLabel) && Validation.isValidEXPDate(expDateTextField.getText(), dPickerStarLabel)) {
-                if (CartSingleton.getOurInstance().getDeliveryMethod().equalsIgnoreCase("SELFPICKUP")) {
+                if (CartSingleton.getOurInstance().getDeliveryMethod() == Order.DeliveryMethod.SELFPICKUP) {
                     tabPane.getTabs().add(pickUpTab);
                     pickUpTab.setText("Step 2");
                     tabPane.getTabs().remove(paymentTab);
@@ -186,7 +193,7 @@ public class CheckoutController implements Initializable {
                     lastName4Label.setText(user.getLastName());
                     paymentMethod4Label.setText(creditCardPaymentLabel.getText());
                     address4Label.setText(address1TextField.getText());
-                    zipcode4Label.setText(zipcode4Label.getText());
+                    zipcode4Label.setText(zipcode1TextField.getText()); // LA bugfix
                     city4Label.setText(city1TextField.getText());
                 }
             }
@@ -225,9 +232,9 @@ public class CheckoutController implements Initializable {
             tabPane.getTabs().remove(pickUpTab);
             tabPane.getTabs().add(confirmationTab);
             confirmationTab.setText("Final Step");
-            if (CartSingleton.getOurInstance().getPaymentMethod().equalsIgnoreCase("CREDIT_CARD")) {
+            if (CartSingleton.getOurInstance().getPaymentMethod() == Order.PaymentMethod.CREDIT_CARD) {
                 paymentMethod4Label.setText(creditCardPaymentLabel.getText());
-            } else if (CartSingleton.getOurInstance().getPaymentMethod().equalsIgnoreCase("INVOICE")) {
+            } else if (CartSingleton.getOurInstance().getPaymentMethod() == Order.PaymentMethod.INVOICE) {
                 paymentMethod4Label.setText("Invoice");
             } else {
                 paymentMethod4Label.setText("Bank Transfer");
@@ -238,15 +245,15 @@ public class CheckoutController implements Initializable {
             zipcode4Label.setText(zipcode3Label.getText());
             city4Label.setText(city2Label.getText());
         } else {
-            Validation.alertPopup("Please choose a Pharmacy to pick up prescription", "No Pick up Loactaion", "Select Pickup location");
+            Validation.alertPopup("Please choose a Pharmacy to pick up prescription", "No Pick up Location", "Select Pickup location");
         }
     }
 
     @FXML private void back4ButtonPressed() {
         tabPane.getTabs().remove(confirmationTab);
-        if (CartSingleton.getOurInstance().getDeliveryMethod().equalsIgnoreCase("SELFPICKUP")){
+        if (CartSingleton.getOurInstance().getDeliveryMethod() == Order.DeliveryMethod.SELFPICKUP){
             tabPane.getTabs().add(pickUpTab);
-        } else if (CartSingleton.getOurInstance().getPaymentMethod().equalsIgnoreCase("CREDIT_CARD")) {
+        } else if (CartSingleton.getOurInstance().getPaymentMethod() == Order.PaymentMethod.CREDIT_CARD) {
             tabPane.getTabs().add(paymentTab);
         } else {
             tabPane.getTabs().add(deliveryTab);
@@ -256,15 +263,42 @@ public class CheckoutController implements Initializable {
     @FXML private void confirmOrderButtonPressed(ActionEvent actionEvent) {
         Random rand = new Random();
         int OCR = rand.nextInt(100000000);
-        Order order = null;
-        int id = 1 + commonMethods.getLastId(order);
+        int id = 1 + commonMethods.getLastId(Order.class);
         java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
         String paymentMessage;
         String orderMessage;
-        Order.DeliveryMethod orderMethod;
-        Order.PaymentMethod paymentMethod;
+ //       Order.DeliveryMethod orderMethod;
+ //       Order.PaymentMethod paymentMethod;
         ArrayList<String> fileArrayList = new ArrayList<>();
+
+        try {
+            Order order = new Order(id, user, date, delivery, payment, medList, Double.parseDouble(total4Label.getText()), Double.parseDouble(totalVAT4Label.getText()));
+            commonMethods.addOrder(order);
+        } finally {
+            Validation.alertPopup(Alert.AlertType.INFORMATION, "Your Order #: " + id + " you will recieve an email shortly", "Order Processed", "Your order has been processed");
+            try {
+                userCommon.switchScene(actionEvent, "/view/patientView.fxml");
+            } catch (IOException ex){
+                ex.printStackTrace();
+            }
+        }
+
+
+        String company = ""
+                + "e-Drugs AB\n"
+                + "ElmetorpsVagen 15, 291 39, Kristianstad\n"
+                + "Land: +460712254630 Mob: +460712205220 Fax: 812254639\n"
+                + " \n"
+                + "CUSTOMER INVOICE\n"
+                + " \n";
+        List<String> t1Headers = Arrays.asList("INFO", "CUSTOMER");
+        List<List<String>> t1Rows = Arrays.asList(
+                Arrays.asList("DATE: " + date, user.getFirstName() + " " + user.getLastName()),
+                Arrays.asList("TIME: " + date.getTime(), "MOB: " + user.getPhoneNumber()),
+                Arrays.asList("ORDER NO: " + id, "ADDRES: " + user.getAddress() + city4Label.getText() + user.getZipCode()));
         String table = "|Article Number | Name\t\t\t | Quantity | Price|\n";
+        String t2Desc = "ORDER DETAILS";
+        List<String> t2Headers = Arrays.asList("ARTICLE NO", "NAME", "QUANTITY", "PRICE");
         fileArrayList.add(table);
         for (int i = 0; i < medList.size(); i++) {
             String string = "|" + medList.get(i).getArticleNo() +"\t\t|"+ medList.get(i).getName() + "\t\t|\t" + medList.get(i).getQuantity() + "\t|\t" + medList.get(i).getPrice() +"|\n";
@@ -272,43 +306,45 @@ public class CheckoutController implements Initializable {
         }
         fileArrayList.add("Total VAT: " + totalVAT4Label.getText() + "SEK\n Total Cost: " + total4Label.getText() + "SEK\n");
         RWFile.saveToFile(RWFile.invoice, fileArrayList);
-        if (CartSingleton.getOurInstance().getDeliveryMethod().equalsIgnoreCase("SELFPICKUP")) {
-            orderMethod = Order.DeliveryMethod.SELFPICKUP;
+        if (CartSingleton.getOurInstance().getDeliveryMethod() == Order.DeliveryMethod.SELFPICKUP) {
+ //           orderMethod = Order.DeliveryMethod.SELFPICKUP;
             orderMessage = "\tYour can pick-up your order "+ date +"at the " + pharmacyNameLabel.getText() + " located at \n" +
                     address4Label.getText() + " in " + city4Label.getText() + zipcode4Label.getText() + " you can contact them \n" +
                     " by phone " + phoneNumber3Label.getText() + " or " + emailLabel.getText() + "\n";
-        } else if (CartSingleton.getOurInstance().getDeliveryMethod().equalsIgnoreCase("POSTEN")) {
-            orderMethod = Order.DeliveryMethod.POSTEN;
+        } else if (CartSingleton.getOurInstance().getDeliveryMethod() == Order.DeliveryMethod.POSTEN) {
+  //          orderMethod = Order.DeliveryMethod.POSTEN;
             orderMessage = "\tYour order has been sent " + date + " to " + firstName1TextField.getText() + " " + lastName1TextField.getText() + " \n" +
                     "allow 3-5 business days for shipping to " + address4Label.getText() + " in " + city4Label.getText() + " " + zipcode4Label.getText() + "\n";
         } else {
-            orderMethod = Order.DeliveryMethod.SCHENKER;
+ //           orderMethod = Order.DeliveryMethod.SCHENKER;
             orderMessage = "\tYour order has been sent " + date +" to " + firstName1TextField.getText() + " " + lastName1TextField.getText() + " \n" +
                     "allow 2-3 business days for shipping to " + address4Label.getText() + " in " + city4Label.getText() + " " + zipcode4Label.getText() + "\n";
         }
-        if (CartSingleton.getOurInstance().getPaymentMethod().equalsIgnoreCase("CREDIT_CARD")){
-            paymentMethod = Order.PaymentMethod.CREDIT_CARD;
+        if (CartSingleton.getOurInstance().getPaymentMethod() == Order.PaymentMethod.CREDIT_CARD){
+//            paymentMethod = Order.PaymentMethod.CREDIT_CARD;
             paymentMessage = " You have completed payment of your order with a " + paymentMethod4Label.getText() + " card \n " +
                     "with a total cost of " + total4Label.getText() + "SEK and total VAT of " + totalVAT4Label.getText() + "\n";
             fileArrayList.add("PAID");
-        } else if (CartSingleton.getOurInstance().getPaymentMethod().equalsIgnoreCase("INVOICE")) {
-            paymentMethod = Order.PaymentMethod.INVOICE;
+        } else if (CartSingleton.getOurInstance().getPaymentMethod() == Order.PaymentMethod.INVOICE) {
+ //           paymentMethod = Order.PaymentMethod.INVOICE;
             paymentMessage = "Your invoice has been included in a text file ";
             fileArrayList.add("DUE");
         } else {
-            paymentMethod = Order.PaymentMethod.BANK_TRANSFER;
+ //           paymentMethod = Order.PaymentMethod.BANK_TRANSFER;
             paymentMessage = "Your invoice is included in a text file OCR Number: " + OCR + " Bank Giro: 00000-00000";
             fileArrayList.add("\tOCR Number: " + OCR + "\t Bank Giro: 00000-00000");
         }
 
-        order = new Order(id,user,date, orderMethod, paymentMethod, medList, Double.valueOf(total4Label.getText()),Double.valueOf(totalVAT4Label.getText()));
+   //     Order order = new Order(id,user,date, orderMethod, paymentMethod, medList, Double.parseDouble(total4Label.getText()),Double.parseDouble(totalVAT4Label.getText()));
         RWFile.saveToFile(RWFile.invoice, fileArrayList);
         sendEmail(orderMessage,paymentMessage);
-        commonMethods.addOrder(order);
-        CartSingleton.getOurInstance().setCart(null);
+   //     commonMethods.addOrder(order);
         try {
+    //        Validation.alertPopup(Alert.AlertType.INFORMATION, "Your Order #: " + id + " you will recieve an email shortly", "Order Processed", "Your order has been processed");
             RWFile.delete();
-            userCommon.switchScene(actionEvent, "/view/patientView.fxml");
+   //         userCommon.switchScene(actionEvent, "/view/patientView.fxml");
+            CartSingleton.getOurInstance().cart.clear();
+            medList.clear();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
