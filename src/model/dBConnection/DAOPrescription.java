@@ -43,8 +43,8 @@ public class DAOPrescription {
                     endDate = prescription.getEndDate();
                     diagnosis = prescription.getDiagnosis();
 
-                    String queryHeader = "INSERT INTO `edrugs_test`.`Prescription` (`id`, `patient_ssn`, `user_ssn`, `date`, `end_date`, `diagnosis`) VALUES (?, ?, ?, ?, ?, ?);";
-                    linesAffected = common.insertPrescriptionHeader(queryHeader, id, patientSSN, doctorSSN, startdate, diagnosis);
+                    String queryHeader = "INSERT INTO `edrugs_test`.`Prescription` (`id`, `patient_ssn`, `user_ssn`, `date`, `diagnosis`, `end_date`) VALUES (?, ?, ?, ?, ?, ?);";
+                    linesAffected = common.insertPrescriptionHeader(queryHeader, id, patientSSN, doctorSSN, startdate, diagnosis, endDate);
 
                     specification = prescription.getSpecification();
                     for (PrescriptionLine element : specification) {

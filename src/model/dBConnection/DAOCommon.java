@@ -188,15 +188,16 @@ public class DAOCommon {
         return linesAffected;
     }
 
-    protected int insertPrescriptionHeader(String queryString, int id, String patientSSN, String doctorSSN, Date date, String diagnosis) {
+    protected int insertPrescriptionHeader(String queryString, int id, String patientSSN, String doctorSSN, Date startDate, String diagnosis, Date endDate) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
                 prepStmt.setInt(1, id);
                 prepStmt.setString(2, patientSSN);
                 prepStmt.setString(3, doctorSSN);
-                prepStmt.setDate(4, date);
+                prepStmt.setDate(4, startDate);
                 prepStmt.setString(5, diagnosis);
+                prepStmt.setDate(6, endDate);
 
                 linesAffected = prepStmt.executeUpdate();
                 prepStmt.close();
