@@ -88,10 +88,7 @@ public class ShoppingCartController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        //if (RWFile.readObject(RWFile.cartPath) != null) {  LA: there is no need for file anymore
-        //    cart = RWFile.readObject(RWFile.cartPath);
         medList = FXCollections.observableList(cart);
-        //}
         currentUser = UserSingleton.getOurInstance().getUser();
         delivery_combo.setItems(deliveryMethodsCombo);
         payment_combo.setItems(paymentMethodsCombo);
@@ -144,7 +141,6 @@ public class ShoppingCartController implements Initializable {
 
     @FXML
     private void backButtonHandle(ActionEvent event) throws IOException {
-       // RWFile.writeObject(RWFile.cartPath, cart);      LA: there is no need for this anymore
         userCommon.switchScene(event,"/view/patientView.fxml");
     }
 
@@ -173,8 +169,6 @@ public class ShoppingCartController implements Initializable {
                             t.getRowValue().setQuantity(t.getNewValue());
                             cart.get(medList.indexOf(t.getRowValue())).setQuantity(t.getNewValue());
                             medList.get(cart.indexOf(t.getRowValue())).setQuantity(t.getNewValue());
-                        //    RWFile.writeObject(RWFile.cartPath, cart);
-
                         } else { // When the user tries to buy more than there is in stock
                             t.getRowValue().setQuantity(q);
                             medicine.setQuantityReserved(t.getRowValue().getQuantity());
@@ -189,7 +183,6 @@ public class ShoppingCartController implements Initializable {
     }
     @FXML public void onDeleteButtonPressed(ActionEvent ae) {
         try {
-          //  RWFile.delete();
             Medicine medicine;
             int quantity;
             int articleNo;
@@ -202,13 +195,9 @@ public class ShoppingCartController implements Initializable {
                     medicine.setQuantity(quantity + medicine.getQuantity());
                     commonMethods.updateQuantity(medicine);
                     remove.add(element);
-                    System.out.println(medList.toString() + "removed");
-                } else {
-                    System.out.println(medList.toString() + "kept");
                 }
             } medList.removeAll(remove);
             cart.removeAll(remove);
-         //   RWFile.writeObject(RWFile.cartPath, cart);
             calcTotals();
             tableView.setItems(medList);
         } catch (Exception ex) {
@@ -218,11 +207,14 @@ public class ShoppingCartController implements Initializable {
 
     private void calcTotals(){
         double cost = 0;
+        double vat = 0;
         for (int i = 0; i < cart.size(); i++) {
             cost = cost + cart.get(i).getPrice() * cart.get(i).getQuantity();
         }
+        cost = userCommon.round(cost, 2);
+        vat = userCommon.round(cost * 0.2, 2);
         totalCost_text.setText(Double.toString(cost));
-        totalVAT_text.setText(Double.toString(cost * 0.2));
+        totalVAT_text.setText(Double.toString(vat));
     }
 
     @FXML public void onConfirmButtonPressed (ActionEvent actionEvent) {

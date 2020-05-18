@@ -5,12 +5,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.*;
-import model.dBConnection.CommonMethods;
 import model.dBConnection.DBConnection;
 import java.util.List;
 
 public class Main extends Application {
-    private CommonMethods commonMethods = new CommonMethods();
     private UserCommon userCommon = new UserCommon();
     private static List<OrderLine> cart = CartSingleton.getOurInstance().getCart();
 
@@ -35,7 +33,6 @@ public class Main extends Application {
         if(DBConnection.getInstance() != null)
             DBConnection.getInstance().disconnect();
         try {
-          //  RWFile.delete();
         } catch (Exception exception){
             exception.getSuppressed();
         }
