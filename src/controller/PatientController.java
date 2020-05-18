@@ -54,6 +54,9 @@ public class PatientController implements Initializable {
     private TextField address_text;
 
     @FXML
+    private TextField city_text;
+
+    @FXML
     private TextField email_text;
 
     @FXML
@@ -154,6 +157,9 @@ public class PatientController implements Initializable {
 
     @FXML
     private Label zipCodeStar;
+
+    @FXML
+    private Label cityStar;
 
     @FXML
     private Label phoneStar;
@@ -409,7 +415,8 @@ public class PatientController implements Initializable {
     private void onSaveButtonPressed(ActionEvent ae) {
         if (checkFields()) {
             if (Validation.isName(firstName_text.getText(), firstNameStar) && Validation.isName(lastName_text.getText(), lastNameStar) &&
-                    Validation.isZipcode(zipCode_text.getText(), zipCodeStar) && Validation.isPhoneNumber(phoneNumber_text.getText(), phoneStar)
+                    Validation.isZipcode(zipCode_text.getText(), zipCodeStar) && Validation.isCity(city_text.getText(), cityStar) &&
+                    Validation.isPhoneNumber(phoneNumber_text.getText(), phoneStar)
                     && Validation.isEmail(email_text.getText(), emailStar)) {
                 try {
                     Date dob = Date.valueOf(dPicker.getValue().plusDays(1));
@@ -417,6 +424,7 @@ public class PatientController implements Initializable {
                     currentUser.setLastName(lastName_text.getText());
                     currentUser.setBDate(dob);
                     currentUser.setZipCode(zipCode_text.getText());
+                    currentUser.setCity(city_text.getText());
                     currentUser.setAddress(address_text.getText());
                     currentUser.setPhoneNumber(phoneNumber_text.getText());
                     currentUser.setEmail(email_text.getText());
@@ -462,6 +470,9 @@ public class PatientController implements Initializable {
             if (zipCode_text.getText().isEmpty()) {
                 zipCodeStar.setVisible(true);
             }
+            if (city_text.getText().isEmpty()) {
+                cityStar.setVisible(true);
+            }
             if (address_text.getText().isEmpty()) {
                 addressStar.setVisible(true);
             }
@@ -488,6 +499,7 @@ public class PatientController implements Initializable {
         birthDateStar.setVisible(on);
         addressStar.setVisible(on);
         zipCodeStar.setVisible(on);
+        cityStar.setVisible(on);
         phoneStar.setVisible(on);
         emailStar.setVisible(on);
         passwordCheckLabel.setVisible(on);
@@ -499,6 +511,7 @@ public class PatientController implements Initializable {
         ssn_text.setText(currentUser.getSsn());
         dPicker.setValue(currentUser.getBDate().toLocalDate());
         zipCode_text.setText(currentUser.getZipCode());
+        city_text.setText(currentUser.getCity());
         address_text.setText(currentUser.getAddress());
         phoneNumber_text.setText(currentUser.getPhoneNumber());
         email_text.setText(currentUser.getEmail());

@@ -21,6 +21,7 @@ public class DAOUser {
     private String lastName;
     private java.sql.Date birthDate;
     private String zipCode;
+    private String city;
     private String address;
     private String email;
     private String phoneNumber;
@@ -126,6 +127,7 @@ public class DAOUser {
         lastName = resultSet.getString("last_name");
         birthDate = resultSet.getDate("birth_date");
         zipCode = resultSet.getString("zip_code");
+        city = resultSet.getString("city");
         address = resultSet.getString("address");
         email = resultSet.getString("email");
         phoneNumber = resultSet.getString("phone_number");
@@ -133,11 +135,11 @@ public class DAOUser {
         isActive = resultSet.getBoolean("active");
 
         if (userType == 1) {
-            user = new Patient(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, isActive);
+            user = new Patient(sSN, firstName, lastName, birthDate, zipCode, city, address, email, phoneNumber, password, isActive);
         } else if (userType == 2) {
-            user = new Doctor(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, isActive);
+            user = new Doctor(sSN, firstName, lastName, birthDate, zipCode, city, address, email, phoneNumber, password, isActive);
         } else {
-            user = new Admin(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, isActive);
+            user = new Admin(sSN, firstName, lastName, birthDate, zipCode, city, address, email, phoneNumber, password, isActive);
         }
         return user;
     }
@@ -162,25 +164,7 @@ public class DAOUser {
                 resultSet = common.retrieveSet(query, sSN);
                 if (resultSet != null) {
                     if (resultSet.first()) {
-                        this.sSN = resultSet.getString("ssn");
-                        userType = resultSet.getInt("type");
-                        firstName = resultSet.getString("first_name");
-                        lastName = resultSet.getString("last_name");
-                        birthDate = resultSet.getDate("birth_date");
-                        zipCode = resultSet.getString("zip_code");
-                        address = resultSet.getString("address");
-                        email = resultSet.getString("email");
-                        phoneNumber = resultSet.getString("phone_number");
-                        password = resultSet.getString("password");
-                        isActive = resultSet.getBoolean("active");
-
-                        if (userType == 1) {
-                            return user = new Patient(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, isActive);
-                        } else if (userType == 2) {
-                            return user = new Doctor(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, isActive);
-                        } else {
-                            return user = new Admin(sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, isActive);
-                        }
+                        return user = createObjects(resultSet);
                     }
                 } else {
                     System.out.println("Empty resultSet");
@@ -223,6 +207,7 @@ public class DAOUser {
                     lastName = user.getLastName();
                     birthDate = user.getBDate();
                     zipCode = user.getZipCode();
+                    city = user.getCity();
                     address = user.getAddress();
                     email = user.getEmail();
                     phoneNumber = user.getPhoneNumber();
@@ -233,8 +218,8 @@ public class DAOUser {
                     } else {
                         value1 = 0;
                     }
-                    String query = "INSERT INTO `edrugs_test`.`User` (`ssn`, `type`, `first_name`, `last_name`, `birth_date`, `zip_code`, `address`, `email`, `phone_number`, `password`, `active`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
-                    linesAffected = common.insertUser(query, sSN, userType, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, password, value1);
+                    String query = "INSERT INTO `edrugs_test`.`User` (`ssn`, `type`, `first_name`, `last_name`, `birth_date`, `zip_code`, `city`, `address`, `email`, `phone_number`, `password`, `active`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                    linesAffected = common.insertUser(query, sSN, userType, firstName, lastName, birthDate, zipCode, city, address, email, phoneNumber, password, value1);
                 } else {
                     throw new NullPointerException("The user object is null");
                 }
@@ -257,6 +242,7 @@ public class DAOUser {
                     lastName = user.getLastName();
                     birthDate = user.getBDate();
                     zipCode = user.getZipCode();
+                    city = user.getCity();
                     address = user.getAddress();
                     email = user.getEmail();
                     phoneNumber = user.getPhoneNumber();
@@ -267,8 +253,8 @@ public class DAOUser {
                     } else {
                         value1 = 0;
                     }
-                    String query = "UPDATE `edrugs_test`.`User` SET `first_name` = ?, `last_name` = ?, `birth_date` = ?, `zip_code` = ?, `address` = ?, `email` = ?, `phone_number` = ?, `active` = ? WHERE (`ssn` = ?);";
-                    linesAffected = common.updateUser(query, sSN, firstName, lastName, birthDate, zipCode, address, email, phoneNumber, value1);
+                    String query = "UPDATE `edrugs_test`.`User` SET `first_name` = ?, `last_name` = ?, `birth_date` = ?, `zip_code` = ?, `city` = ?,`address` = ?, `email` = ?, `phone_number` = ?, `active` = ? WHERE (`ssn` = ?);";
+                    linesAffected = common.updateUser(query, sSN, firstName, lastName, birthDate, zipCode, city, address, email, phoneNumber, value1);
                 } else {
                     throw new NullPointerException("The user object is null");
                 }

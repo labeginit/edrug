@@ -44,7 +44,7 @@ public class DAOCommon {
         return resultSet;
     }
 
-    protected int insertUser(String queryString, String ssn, int type, String firstName, String lastName, Date birthDate, String zipCode, String address, String email, String phoneNumber, String password, int isActive) {
+    protected int insertUser(String queryString, String ssn, int type, String firstName, String lastName, Date birthDate, String zipCode, String city, String address, String email, String phoneNumber, String password, int isActive) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
@@ -54,11 +54,12 @@ public class DAOCommon {
                 prepStmt.setString(4, lastName);
                 prepStmt.setDate(5, birthDate);
                 prepStmt.setString(6, zipCode);
-                prepStmt.setString(7, address);
-                prepStmt.setString(8, email);
-                prepStmt.setString(9, phoneNumber);
-                prepStmt.setString(10, password);
-                prepStmt.setInt(11, isActive);
+                prepStmt.setString(7, city);
+                prepStmt.setString(8, address);
+                prepStmt.setString(9, email);
+                prepStmt.setString(10, phoneNumber);
+                prepStmt.setString(11, password);
+                prepStmt.setInt(12, isActive);
 
                 linesAffected = prepStmt.executeUpdate();
                 prepStmt.close();
@@ -72,7 +73,7 @@ public class DAOCommon {
         return linesAffected;
     }
 
-    protected int updateUser(String queryString, String ssn, String firstName, String lastName, Date birthDate, String zipCode, String address, String email, String phoneNumber, int isActive) {
+    protected int updateUser(String queryString, String ssn, String firstName, String lastName, Date birthDate, String zipCode, String city, String address, String email, String phoneNumber, int isActive) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
@@ -80,11 +81,12 @@ public class DAOCommon {
                 prepStmt.setString(2, lastName);
                 prepStmt.setDate(3, birthDate);
                 prepStmt.setString(4, zipCode);
-                prepStmt.setString(5, address);
-                prepStmt.setString(6, email);
-                prepStmt.setString(7, phoneNumber);
-                prepStmt.setInt(8, isActive);
-                prepStmt.setString(9, ssn);
+                prepStmt.setString(5, city);
+                prepStmt.setString(6, address);
+                prepStmt.setString(7, email);
+                prepStmt.setString(8, phoneNumber);
+                prepStmt.setInt(9, isActive);
+                prepStmt.setString(10, ssn);
                 linesAffected = prepStmt.executeUpdate();
                 prepStmt.close();
             }

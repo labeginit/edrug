@@ -111,7 +111,7 @@
                           </items>
                         </SplitPane>
                         <Label fx:id="helpMyPrescriptions" layoutX="687.0" layoutY="25.0" prefHeight="19.0" prefWidth="17.0" text="?" />
-                        <TextArea fx:id="helpMenuMyPrescriptions" layoutX="450.0" layoutY="35.0" prefHeight="109.0" prefWidth="235.0" />
+                        <TextArea fx:id="helpMenuMyPrescriptions" layoutX="428.0" layoutY="35.0" prefHeight="109.0" prefWidth="257.0" />
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -132,8 +132,8 @@
                         <TextField fx:id="firstName_text" layoutX="235.0" layoutY="72.0" prefHeight="26.0" prefWidth="220.0" />
                         <TextField fx:id="lastName_text" layoutX="235.0" layoutY="116.0" prefHeight="26.0" prefWidth="220.0" />
                         <DatePicker fx:id="dPicker" layoutX="235.0" layoutY="203.0" maxHeight="26.0" prefHeight="26.0" prefWidth="220.0" />
-                        <TextField fx:id="zipCode_text" layoutX="235.0" layoutY="250.0" prefHeight="26.0" prefWidth="67.0" />
-                        <TextField fx:id="address_text" layoutX="394.0" layoutY="250.0" prefHeight="26.0" prefWidth="220.0" />
+                        <TextField fx:id="zipCode_text" layoutX="235.0" layoutY="250.0" prefHeight="26.0" prefWidth="38.0" />
+                        <TextField fx:id="address_text" layoutX="546.0" layoutY="250.0" prefHeight="26.0" prefWidth="220.0" />
                         <TextField fx:id="phoneNumber_text" layoutX="235.0" layoutY="291.0" prefHeight="26.0" prefWidth="220.0" />
                         <TextField fx:id="email_text" layoutX="235.0" layoutY="338.0" prefHeight="26.0" prefWidth="220.0" />
                         <PasswordField fx:id="password" layoutX="235.0" layoutY="385.0" prefHeight="26.0" prefWidth="220.0" promptText="**********" />
@@ -183,7 +183,7 @@
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <Label layoutX="313.0" layoutY="253.0" prefHeight="19.0" prefWidth="53.0" text="Address">
+                        <Label layoutX="465.0" layoutY="253.0" prefHeight="19.0" prefWidth="53.0" text="Address">
                            <font>
                               <Font size="13.0" />
                            </font>
@@ -194,14 +194,24 @@
                         <Label fx:id="zipCodeStar" layoutX="214.0" layoutY="254.0" text="*" textFill="#f20101" />
                         <Label fx:id="phoneStar" layoutX="214.0" layoutY="296.0" text="*" textFill="#f20101" />
                         <Label fx:id="emailStar" layoutX="214.0" layoutY="343.0" text="*" textFill="#f20101" />
-                        <Label fx:id="addressStar" layoutX="375.0" layoutY="254.0" text="*" textFill="#f20101" />
+                        <Label fx:id="addressStar" layoutX="527.0" layoutY="254.0" text="*" textFill="#f20101" />
                         <Label fx:id="passwordCheckLabel" layoutX="488.0" layoutY="431.0" prefHeight="26.0" prefWidth="200.0" text="* The Password must match" textFill="#f20202" />
                         <Label layoutX="10.0" layoutY="26.0" prefHeight="17.0" prefWidth="577.0" text="Here you can modify your personal information and change password">
                            <font>
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <Label fx:id="ssn_text" layoutX="235.0" layoutY="159.0" prefHeight="26.0" prefWidth="220.0" />
+                        <Label fx:id="ssn_text" layoutX="235.0" layoutY="159.0" prefHeight="26.0" prefWidth="220.0">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <TextField fx:id="city_text" layoutX="338.0" layoutY="251.0" prefHeight="26.0" prefWidth="116.0" />
+                        <Label layoutX="286.0" layoutY="254.0" prefHeight="19.0" prefWidth="29.0" text="City">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="cityStar" layoutX="322.0" layoutY="255.0" text="*" textFill="RED" />
                      </children></AnchorPane>
             </content>
           </Tab>

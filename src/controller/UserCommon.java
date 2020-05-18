@@ -126,7 +126,6 @@ public class UserCommon {
             helpMenu.setVisible(true);
             helpMenu.setText(text);
 
-
         });
         helpCircle.setOnMouseExited(mouseEvent -> helpMenu.setVisible(false));
     }

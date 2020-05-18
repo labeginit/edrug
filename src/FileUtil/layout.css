@@ -27,7 +27,7 @@
 
       .tab-pane .tab:selected
       {
-          -fx-background-color: #4475C0;
+          -fx-background-color: #3175b4;
           -fx-focus-color: transparent;
           -fx-font-family: 'Helvetica', Arial, sans-serif;
           -fx-font-size: 14px;
@@ -41,7 +41,7 @@
       }
       .tab .tab-label {
           -fx-alignment: CENTER;
-          -fx-font-weight: bold;
+          -fx-font-weight: bolder;
           -fx-font-family: 'Helvetica', Arial, sans-serif;
           -fx-font-size: 14px;
 
@@ -50,7 +50,7 @@
 
 
       .table-view .column-header {
-      -fx-background-color: #76A0DF;
+      -fx-background-color: #4b8ece;
           -fx-font-family: 'Helvetica', Arial, sans-serif;
           -fx-font-size: 15px;
 
@@ -68,7 +68,7 @@
 
       .table-row-cell:selected {
 
-         -fx-background-color: #C0DAFF;
+         -fx-background-color: #afcde9;
 
       }
       .table-row-cell:selected .text {
@@ -80,10 +80,14 @@
 
       .text-area {
       -fx-focus-color: transparent;
-      -fx-border-color: #1B4B70 ;
-      -fx-border-width: 2px;
-          -fx-font-family: 'Advent Pro';
+          -fx-background-color: #d7e6f4;
+      -fx-border-color: #003366;
+      -fx-border-width: 4px;
+          -fx-font-family: 'Helvetica', Arial, sans-serif;
           -fx-font-size: 14px;
+          -fx-alignment: center;
+          -fx-border-radius: 10 10 10 10;
+          -fx-background-radius: 10 10 10 10;
 
       }
       #helpEditMedicine, #helpEditUser, #helpMyPrescriptions, #helpNewUser, #helpForgotten {
