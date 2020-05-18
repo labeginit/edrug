@@ -152,7 +152,7 @@
                               <Font size="21.0" />
                            </font>
                         </Label>
-                        <TextArea fx:id="helpMenuEditMedicine" layoutX="410.0" layoutY="38.0" prefHeight="108.0" prefWidth="269.0" />
+                        <TextArea fx:id="helpMenuEditMedicine" editable="false" layoutX="410.0" layoutY="38.0" prefHeight="108.0" prefWidth="269.0" />
                             </children>
                         </AnchorPane>
                     </content>
@@ -281,7 +281,7 @@
                                 </ButtonBar>
                                 <TextField fx:id="editSearchTextField" layoutX="502.0" layoutY="22.0" prefHeight="26.0" prefWidth="274.0" promptText="enter  name or SSN here" />
                         <Label fx:id="helpEditUser" layoutX="155.0" layoutY="14.0" prefHeight="24.0" prefWidth="21.0" text="?" />
-                        <TextArea fx:id="helpMenuEditUser" layoutX="165.0" layoutY="33.0" prefHeight="102.0" prefWidth="250.0" />
+                        <TextArea fx:id="helpMenuEditUser" layoutX="165.0" layoutY="33.0" prefHeight="102.0" prefWidth="263.0" />
                             </children>
                         </AnchorPane>
                     </content>
