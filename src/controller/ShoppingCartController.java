@@ -1,6 +1,5 @@
 package controller;
 
-import FileUtil.RWFile;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -13,35 +12,24 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.IntegerStringConverter;
 import model.*;
 import model.dBConnection.CommonMethods;
-
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
 public class ShoppingCartController implements Initializable {
     private User currentUser;
-    private CommonMethods commonMethods = new CommonMethods();
-    private UserCommon userCommon = new UserCommon();
+    private final CommonMethods commonMethods = new CommonMethods();
+    private final UserCommon userCommon = new UserCommon();
     private static List<OrderLine> cart = CartSingleton.getOurInstance().getCart();
 
     @FXML
-    private Button logOut_button;
-
-    @FXML
-    private Button delete_button;
-
-    @FXML
-    private Button checkOut_button;
-
-    @FXML
-    private Button back_button;
+    private Button logOut_button, delete_button, checkOut_button, back_button;
 
     @FXML
     private TableView<OrderLine> tableView;
 
     @FXML
-    private TableColumn<OrderLine, Integer> c1;
+    private TableColumn<OrderLine, Integer> c1, c5;
 
     @FXML
     private TableColumn<OrderLine, String> c2;
@@ -50,41 +38,20 @@ public class ShoppingCartController implements Initializable {
     private TableColumn<OrderLine, Double> c4;
 
     @FXML
-    private TableColumn<OrderLine, Integer> c5;
-
-    @FXML
     private TableColumn<OrderLine, CheckBox> c8;
 
     @FXML
-    private Label firstNameLabel;
+    private Label firstNameLabel, addressLabel, zipcodeLabel, lastNameLabel, phoneNumberLabel;
 
     @FXML
-    private ComboBox<Enum> delivery_combo;
+    private ComboBox<Enum> delivery_combo, payment_combo;
 
     @FXML
-    private TextField totalCost_text;
-
-    @FXML
-    private ComboBox<Enum> payment_combo;
-
-    @FXML
-    private Label addressLabel;
-
-    @FXML
-    private Label zipcodeLabel;
-
-    @FXML
-    private TextField totalVAT_text;
-
-    @FXML
-    private Label lastNameLabel;
-
-    @FXML
-    private Label phoneNumberLabel;
+    private TextField totalCost_text, totalVAT_text;
 
     private ObservableList<OrderLine> medList = FXCollections.observableArrayList(cart);
-    private ObservableList<Enum> deliveryMethodsCombo = FXCollections.observableArrayList(Order.DeliveryMethod.SELFPICKUP, Order.DeliveryMethod.SCHENKER, Order.DeliveryMethod.POSTEN);
-    private ObservableList<Enum> paymentMethodsCombo = FXCollections.observableArrayList(Order.PaymentMethod.CREDIT_CARD, Order.PaymentMethod.INVOICE, Order.PaymentMethod.BANK_TRANSFER);
+    private final ObservableList<Enum> deliveryMethodsCombo = FXCollections.observableArrayList(Order.DeliveryMethod.SELFPICKUP, Order.DeliveryMethod.SCHENKER, Order.DeliveryMethod.POSTEN);
+    private final ObservableList<Enum> paymentMethodsCombo = FXCollections.observableArrayList(Order.PaymentMethod.CREDIT_CARD, Order.PaymentMethod.INVOICE, Order.PaymentMethod.BANK_TRANSFER);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -127,8 +94,8 @@ public class ShoppingCartController implements Initializable {
         c8.setCellValueFactory(new PropertyValueFactory<OrderLine, CheckBox>("checkBox"));
         tableView.setItems(medList);
 
-        delete_button.setOnAction(event -> onDeleteButtonPressed(event));
-        checkOut_button.setOnAction(actionEvent -> onConfirmButtonPressed(actionEvent));
+        delete_button.setOnAction(this::onDeleteButtonPressed);
+        checkOut_button.setOnAction(this::onConfirmButtonPressed);
     }
 
     private void setInitialValues(User currentUser) {
@@ -223,9 +190,7 @@ public class ShoppingCartController implements Initializable {
         } else {
             if(delivery_combo.getValue() != null && payment_combo.getValue() != null) {
                 CartSingleton.getOurInstance().setCart(medList);
-             //   CartSingleton.getOurInstance().setDeliveryMethod(delivery_combo.getValue().toString());
                 CartSingleton.getOurInstance().setDeliveryMethod((Order.DeliveryMethod) delivery_combo.getValue());
-             //   CartSingleton.getOurInstance().setPaymentMethod(payment_combo.getValue().toString());
                 CartSingleton.getOurInstance().setPaymentMethod((Order.PaymentMethod) payment_combo.getValue());
                 try {
                     userCommon.switchScene(actionEvent, "/view/checkout.fxml");

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -10,6 +12,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.CheckoutController">
    <children>
@@ -19,29 +22,92 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="73.0" layoutY="113.0" text="Delivery To:" />
-                        <Label layoutX="114.0" layoutY="170.0" text="First Name:" />
-                        <Label layoutX="73.0" layoutY="46.0" text="Delivery Method:" />
-                        <Label fx:id="deliveryMethod1Label" layoutX="213.0" layoutY="46.0" prefHeight="16.0" prefWidth="187.0" text="Label" />
-                        <Label layoutX="424.0" layoutY="170.0" text="Last Name:" />
-                        <TextField fx:id="firstName1TextField" layoutX="213.0" layoutY="165.0" prefHeight="26.0" prefWidth="206.0" />
-                        <TextField fx:id="lastName1TextField" layoutX="525.0" layoutY="165.0" prefHeight="26.0" prefWidth="218.0" />
-                        <Label layoutX="114.0" layoutY="236.0" text="Address:" />
-                        <Label layoutX="439.0" layoutY="236.0" text="Zipcode:" />
-                        <Label layoutX="92.0" layoutY="304.0" text="Phone Number:" />
-                        <TextField fx:id="address1TextField" layoutX="197.0" layoutY="231.0" prefHeight="26.0" prefWidth="224.0" />
-                        <TextField fx:id="zipcode1TextField" layoutX="525.0" layoutY="231.0" prefHeight="26.0" prefWidth="216.0" />
-                        <TextField fx:id="phoneNumber1TextField" layoutX="213.0" layoutY="299.0" prefHeight="26.0" prefWidth="227.0" />
-                        <Button fx:id="next1Button" layoutX="598.0" layoutY="431.0" mnemonicParsing="false" text="Next&gt;&gt;" />
-                        <Button fx:id="back1Button" layoutX="468.0" layoutY="431.0" mnemonicParsing="false" text="&lt;&lt;Back" />
-                        <Label fx:id="fName1StarLabel" layoutX="197.0" layoutY="170.0" text="*" textFill="#f50303" />
+                        <ListView layoutX="6.0" layoutY="55.0" prefHeight="447.0" prefWidth="771.0" />
+                        <Label layoutX="54.0" layoutY="76.0" text="Delivery To:">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label layoutX="54.0" layoutY="170.0" text="First Name:">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label layoutX="10.0" layoutY="26.0" text="Delivery Method:">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label fx:id="deliveryMethod1Label" layoutX="118.0" layoutY="26.0" prefHeight="19.0" prefWidth="209.0" text="Label">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label layoutX="400.0" layoutY="170.0" prefHeight="19.0" prefWidth="71.0" text="Last Name:">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <TextField fx:id="firstName1TextField" layoutX="180.0" layoutY="165.0" prefHeight="26.0" prefWidth="190.0">
+                           <font>
+                              <Font size="13.0" />
+                           </font></TextField>
+                        <TextField fx:id="lastName1TextField" layoutX="525.0" layoutY="165.0" prefHeight="26.0" prefWidth="190.0">
+                           <font>
+                              <Font size="13.0" />
+                           </font></TextField>
+                        <Label layoutX="54.0" layoutY="236.0" text="Address:">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label layoutX="400.0" layoutY="236.0" text="Zipcode:">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label layoutX="54.0" layoutY="304.0" text="Phone Number:">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <TextField fx:id="address1TextField" layoutX="180.0" layoutY="231.0" prefHeight="26.0" prefWidth="190.0">
+                           <font>
+                              <Font size="13.0" />
+                           </font></TextField>
+                        <TextField fx:id="zipcode1TextField" layoutX="525.0" layoutY="231.0" prefHeight="26.0" prefWidth="190.0">
+                           <font>
+                              <Font size="13.0" />
+                           </font></TextField>
+                        <TextField fx:id="phoneNumber1TextField" layoutX="180.0" layoutY="299.0" prefHeight="26.0" prefWidth="190.0">
+                           <font>
+                              <Font size="13.0" />
+                           </font></TextField>
+                        <Label fx:id="fName1StarLabel" layoutX="170.0" layoutY="170.0" text="*" textFill="#f50303" />
                         <Label fx:id="zipcode1StarLabel" layoutX="507.0" layoutY="236.0" text="*" textFill="#f50303" />
                         <Label fx:id="lName1StarLabel" layoutX="507.0" layoutY="170.0" text="*" textFill="#f50303" />
-                        <Label fx:id="phoneNumber1StarLabel" layoutX="201.0" layoutY="304.0" prefHeight="16.0" prefWidth="6.0" text="*" textFill="#f50303" />
-                        <Label fx:id="address1StarLabel" layoutX="182.0" layoutY="236.0" text="*" textFill="#f50303" />
-                        <Label layoutX="461.0" layoutY="304.0" text="City:" />
+                        <Label fx:id="phoneNumber1StarLabel" layoutX="170.0" layoutY="304.0" prefHeight="16.0" prefWidth="6.0" text="*" textFill="#f50303" />
+                        <Label fx:id="address1StarLabel" layoutX="170.0" layoutY="236.0" text="*" textFill="#f50303" />
+                        <Label layoutX="400.0" layoutY="304.0" text="City:">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
                         <Label fx:id="city1StarLabel" layoutX="507.0" layoutY="304.0" text="*" textFill="#f50303" />
-                        <TextField fx:id="city1TextField" layoutX="525.0" layoutY="299.0" prefHeight="26.0" prefWidth="215.0" />
+                        <TextField fx:id="city1TextField" layoutX="525.0" layoutY="299.0" prefHeight="26.0" prefWidth="190.0">
+                           <font>
+                              <Font size="13.0" />
+                           </font></TextField>
+                        <ButtonBar layoutX="6.0" layoutY="501.0" prefHeight="54.0" prefWidth="770.0">
+                          <buttons>
+                              <Label prefHeight="17.0" prefWidth="261.0" />
+                              <Label prefHeight="17.0" prefWidth="261.0" />
+                              <Label prefHeight="17.0" prefWidth="261.0" />
+                              <Button fx:id="back1Button" mnemonicParsing="false" text="&lt;&lt;Back">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="next1Button" mnemonicParsing="false" text="Next&gt;&gt;">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Button>
+                          </buttons>
+                        </ButtonBar>
+                        <Label layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="261.0" />
+                        <Label layoutX="10.0" layoutY="10.0" prefHeight="17.0" prefWidth="261.0" />
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -49,35 +115,108 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Button fx:id="back2Button" layoutX="459.0" layoutY="428.0" mnemonicParsing="false" text="&lt;&lt;Back" />
-                        <Button fx:id="next2Button" layoutX="604.0" layoutY="428.0" mnemonicParsing="false" text="Next&gt;&gt;" />
-                        <Label layoutX="67.0" layoutY="56.0" text="Credit Card Payment: " />
-                        <Label layoutX="94.0" layoutY="102.0" text="Credit Card Holder:" />
-                        <Label layoutX="90.0" layoutY="157.0" text="Credit Card Number:" />
-                        <Label layoutX="94.0" layoutY="214.0" text="Address: " />
-                        <Label layoutX="500.0" layoutY="157.0" text="CCV:" />
-                        <Label layoutX="474.0" layoutY="268.0" text="Zipcode: " />
-                        <Label layoutX="118.0" layoutY="268.0" text="City:" />
-                        <TextField fx:id="creditCardNumber1TextField" layoutX="249.0" layoutY="152.0" prefHeight="26.0" prefWidth="225.0" />
-                        <TextField fx:id="ccvTextField" layoutX="554.0" layoutY="152.0" prefHeight="26.0" prefWidth="135.0" />
-                        <TextField fx:id="zipcode2TextField" layoutX="550.0" layoutY="263.0" prefHeight="26.0" prefWidth="140.0" />
-                        <TextField fx:id="address2TextField" layoutX="178.0" layoutY="209.0" prefHeight="26.0" prefWidth="271.0" />
-                        <TextField fx:id="city2TextField" layoutX="178.0" layoutY="263.0" />
-                        <Label layoutX="498.0" layoutY="321.0" text="Total VAT:" />
-                        <Label layoutX="498.0" layoutY="359.0" text="Total:" />
-                        <Label fx:id="totalVAT1Label" layoutX="578.0" layoutY="321.0" text="Label" />
-                        <Label fx:id="total1Label" layoutX="578.0" layoutY="359.0" text="Label" />
+                        <ListView layoutX="6.0" layoutY="55.0" prefHeight="447.0" prefWidth="771.0" />
+                        <Label layoutX="10.0" layoutY="26.0" text="Credit Card Payment: ">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label layoutX="54.0" layoutY="76.0" text="Credit Card Holder:">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label layoutX="54.0" layoutY="266.0" text="Credit Card Number:">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label layoutX="54.0" layoutY="131.0" text="Address: ">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label layoutX="425.0" layoutY="321.0" prefHeight="19.0" prefWidth="42.0" text="CCV:">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label layoutX="425.0" layoutY="186.0" text="Zipcode: ">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label layoutX="54.0" layoutY="186.0" text="City:">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <TextField fx:id="creditCardNumber1TextField" layoutX="199.0" layoutY="262.0" prefHeight="26.0" prefWidth="400.0">
+                           <font>
+                              <Font size="13.0" />
+                           </font></TextField>
+                        <TextField fx:id="ccvTextField" layoutX="507.0" layoutY="317.0" prefHeight="26.0" prefWidth="91.0">
+                           <font>
+                              <Font size="13.0" />
+                           </font></TextField>
+                        <TextField fx:id="zipcode2TextField" layoutX="507.0" layoutY="182.0" prefHeight="29.0" prefWidth="91.0">
+                           <font>
+                              <Font size="13.0" />
+                           </font></TextField>
+                        <TextField fx:id="address2TextField" layoutX="199.0" layoutY="127.0" prefHeight="26.0" prefWidth="400.0">
+                           <font>
+                              <Font size="13.0" />
+                           </font></TextField>
+                        <TextField fx:id="city2TextField" layoutX="199.0" layoutY="182.0" prefHeight="29.0" prefWidth="200.0">
+                           <font>
+                              <Font size="13.0" />
+                           </font></TextField>
+                        <Label layoutX="553.0" layoutY="376.0" text="Total VAT:">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label layoutX="553.0" layoutY="431.0" text="Total:">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label fx:id="totalVAT1Label" layoutX="632.0" layoutY="376.0" prefHeight="19.0" prefWidth="140.0" text="Label">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label fx:id="total1Label" layoutX="632.0" layoutY="431.0" prefWidth="140.0" text="Label">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
                         <Label fx:id="creditCardPaymentLabel" layoutX="231.0" layoutY="56.0" />
-                        <TextField fx:id="creditCardHolderTextField" layoutX="245.0" layoutY="97.0" prefHeight="26.0" prefWidth="444.0" />
-                        <Label fx:id="cardHolderStarLabel" layoutX="228.0" layoutY="102.0" text="*" textFill="#f20101" />
-                        <Label fx:id="cardStarLabel" layoutX="232.0" layoutY="157.0" text="*" textFill="#f20101" />
-                        <Label fx:id="address2StarLabel" layoutX="162.0" layoutY="214.0" text="*" textFill="#f20101" />
-                        <Label fx:id="city2StarLabel" layoutX="162.0" layoutY="268.0" text="*" textFill="#f20101" />
-                        <Label fx:id="zipcode2StarLabel" layoutX="539.0" layoutY="268.0" text="*" textFill="#f20101" />
-                        <Label fx:id="ccvStarLabel" layoutX="539.0" layoutY="157.0" text="*" textFill="#f20101" />
-                        <Label layoutX="466.0" layoutY="214.0" text="Exp. Date:" />
-                        <Label fx:id="dPickerStarLabel" layoutX="539.0" layoutY="214.0" text="*" textFill="#f20101" />
-                        <TextField fx:id="expDateTextField" layoutX="554.0" layoutY="209.0" prefHeight="26.0" prefWidth="135.0" promptText="MM/YY" />
+                        <TextField fx:id="creditCardHolderTextField" layoutX="199.0" layoutY="73.0" prefHeight="29.0" prefWidth="400.0">
+                           <font>
+                              <Font size="13.0" />
+                           </font></TextField>
+                        <Label fx:id="cardHolderStarLabel" layoutX="183.0" layoutY="79.0" text="*" textFill="#f20101" />
+                        <Label fx:id="cardStarLabel" layoutX="183.0" layoutY="270.0" text="*" textFill="#f20101" />
+                        <Label fx:id="address2StarLabel" layoutX="183.0" layoutY="134.0" text="*" textFill="#f20101" />
+                        <Label fx:id="city2StarLabel" layoutX="183.0" layoutY="189.0" text="*" textFill="#f20101" />
+                        <Label fx:id="zipcode2StarLabel" layoutX="492.0" layoutY="189.0" text="*" textFill="#f20101" />
+                        <Label fx:id="ccvStarLabel" layoutX="492.0" layoutY="325.0" text="*" textFill="#f20101" />
+                        <Label layoutX="54.0" layoutY="321.0" text="Exp. Date:">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label fx:id="dPickerStarLabel" layoutX="183.0" layoutY="325.0" text="*" textFill="#f20101" />
+                        <TextField fx:id="expDateTextField" layoutX="199.0" layoutY="317.0" prefHeight="26.0" prefWidth="200.0" promptText="MM/YY">
+                           <font>
+                              <Font size="13.0" />
+                           </font></TextField>
+                        <ButtonBar layoutX="6.0" layoutY="501.0" prefHeight="54.0" prefWidth="770.0">
+                          <buttons>
+                              <Label prefHeight="17.0" prefWidth="261.0" />
+                              <Label prefHeight="17.0" prefWidth="261.0" />
+                              <Label prefHeight="17.0" prefWidth="261.0" />
+                              <Button fx:id="back2Button" mnemonicParsing="false" text="&lt;&lt;Back">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="next2Button" mnemonicParsing="false" text="Next&gt;&gt;">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Button>
+                          </buttons>
+                        </ButtonBar>
                      </children></AnchorPane>
             </content>
           </Tab>
@@ -85,22 +224,82 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Button fx:id="back3Button" layoutX="448.0" layoutY="414.0" mnemonicParsing="false" text="&lt;&lt;Back" />
-                        <Button fx:id="next3Button" layoutX="600.0" layoutY="414.0" mnemonicParsing="false" text="Next&gt;&gt;" />
-                        <ComboBox fx:id="pickUpComboBox" layoutX="259.0" layoutY="63.0" prefWidth="150.0" />
-                        <Label layoutX="121.0" layoutY="68.0" text="Pick-up Location:" />
-                        <Label layoutX="121.0" layoutY="141.0" text="Pharmacy Name:" />
-                        <Label fx:id="pharmacyNameLabel" layoutX="250.0" layoutY="141.0" prefHeight="16.0" prefWidth="183.0" />
-                        <Label layoutX="121.0" layoutY="192.0" text="Address: " />
-                        <Label layoutX="430.0" layoutY="192.0" text="Zipcode: " />
-                        <Label layoutX="121.0" layoutY="252.0" text="City:" />
-                        <Label fx:id="pharmacyAddressLabel" layoutX="206.0" layoutY="192.0" prefHeight="16.0" prefWidth="196.0" />
-                        <Label fx:id="zipcode3Label" layoutX="512.0" layoutY="192.0" prefHeight="16.0" prefWidth="140.0" />
-                        <Label fx:id="city2Label" layoutX="177.0" layoutY="252.0" prefHeight="16.0" prefWidth="188.0" />
-                        <Label layoutX="433.0" layoutY="252.0" text="Phone Number:" />
-                        <Label fx:id="phoneNumber3Label" layoutX="553.0" layoutY="252.0" prefHeight="16.0" prefWidth="172.0" />
-                        <Label layoutX="121.0" layoutY="314.0" text="Email: " />
-                        <Label fx:id="emailLabel" layoutX="177.0" layoutY="314.0" prefHeight="16.0" prefWidth="233.0" />
+                        <ListView layoutX="6.0" layoutY="55.0" prefHeight="447.0" prefWidth="771.0" />
+                        <ComboBox fx:id="pickUpComboBox" layoutX="199.0" layoutY="73.0" prefWidth="200.0" />
+                        <Label layoutX="54.0" layoutY="76.0" text="Pick-up Location:">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label layoutX="54.0" layoutY="131.0" text="Pharmacy Name:">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label fx:id="pharmacyNameLabel" layoutX="199.0" layoutY="133.0" prefHeight="16.0" prefWidth="180.0">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label layoutX="54.0" layoutY="186.0" text="Address: ">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label layoutX="400.0" layoutY="186.0" text="Zipcode: ">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label layoutX="400.0" layoutY="241.0" text="City:">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label fx:id="pharmacyAddressLabel" layoutX="199.0" layoutY="188.0" prefHeight="16.0" prefWidth="180.0">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label fx:id="zipcode3Label" layoutX="525.0" layoutY="188.0" prefHeight="16.0" prefWidth="200.0">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label fx:id="city2Label" layoutX="525.0" layoutY="243.0" prefHeight="16.0" prefWidth="200.0">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label layoutX="54.0" layoutY="241.0" text="Phone Number:">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label fx:id="phoneNumber3Label" layoutX="199.0" layoutY="243.0" prefHeight="16.0" prefWidth="180.0">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label layoutX="54.0" layoutY="296.0" text="Email: ">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label fx:id="emailLabel" layoutX="199.0" layoutY="298.0" prefHeight="16.0" prefWidth="180.0">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label layoutX="10.0" layoutY="26.0" prefHeight="19.0" prefWidth="71.0" text="Self Pickup">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
+                        <ButtonBar layoutX="6.0" layoutY="501.0" prefHeight="54.0" prefWidth="770.0">
+                          <buttons>
+                              <Label prefHeight="17.0" prefWidth="261.0" />
+                              <Label prefHeight="17.0" prefWidth="261.0" />
+                              <Label prefHeight="17.0" prefWidth="261.0" />
+                              <Button fx:id="back3Button" mnemonicParsing="false" text="&lt;&lt;Back">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="next3Button" mnemonicParsing="false" text="Next&gt;&gt;">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Button>
+                          </buttons>
+                        </ButtonBar>
                      </children></AnchorPane>
               </content>
             </Tab>
@@ -108,7 +307,8 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="orderTableView" layoutX="20.0" layoutY="26.0" prefHeight="200.0" prefWidth="744.0">
+                        <ListView layoutX="6.0" layoutY="261.0" prefHeight="241.0" prefWidth="771.0" />
+                        <TableView fx:id="orderTableView" layoutX="6.0" layoutY="55.0" prefHeight="200.0" prefWidth="771.0">
                           <columns>
                             <TableColumn fx:id="c1" prefWidth="101.0" text="Article " />
                             <TableColumn fx:id="c2" prefWidth="446.0" text="Name" />
@@ -116,26 +316,97 @@
                               <TableColumn fx:id="c5" prefWidth="93.0" text="Quantity" />
                           </columns>
                         </TableView>
-                        <Label layoutX="65.0" layoutY="260.0" text="First Name:" />
-                        <Label layoutX="69.0" layoutY="369.0" text="Address:" />
-                        <Label layoutX="72.0" layoutY="407.0" text="City:" />
-                        <Label layoutX="392.0" layoutY="260.0" text="Last Name:" />
-                        <Label layoutX="393.0" layoutY="369.0" text="Zipcode:" />
-                        <Label layoutX="393.0" layoutY="298.0" text="Payment Method:" />
-                        <Label fx:id="firstName4Label" layoutX="152.0" layoutY="260.0" text="Label" />
-                        <Label fx:id="address4Label" layoutX="152.0" layoutY="369.0" prefHeight="16.0" prefWidth="213.0" text="Label" />
-                        <Label fx:id="city4Label" layoutX="152.0" layoutY="407.0" text="Label" />
-                        <Label fx:id="lastName4Label" layoutX="500.0" layoutY="260.0" text="Label" />
-                        <Label fx:id="paymentMethod4Label" layoutX="521.0" layoutY="298.0" prefHeight="16.0" prefWidth="239.0" text="Label" />
-                        <Label fx:id="zipcode4Label" layoutX="482.0" layoutY="369.0" prefHeight="16.0" prefWidth="89.0" text="Label" />
-                        <Button fx:id="back4Button" layoutX="421.0" layoutY="452.0" mnemonicParsing="false" text="&lt;&lt;Back" />
-                        <Button fx:id="confirmOrderButton" layoutX="596.0" layoutY="452.0" mnemonicParsing="false" text="Confirm Order" />
-                        <Separator layoutX="65.0" layoutY="324.0" prefHeight="0.0" prefWidth="648.0" />
-                        <Label fx:id="pickupOrDeliveryLabel" layoutX="69.0" layoutY="334.0" text="Pick-up/ Delivery Location:" />
-                        <Label layoutX="392.0" layoutY="407.0" text="Total VAT: " />
-                        <Label fx:id="totalVAT4Label" layoutX="482.0" layoutY="407.0" text="Label" />
-                        <Label layoutX="560.0" layoutY="407.0" text="Total: " />
-                        <Label fx:id="total4Label" layoutX="623.0" layoutY="407.0" text="Label" />
+                        <Label layoutX="54.0" layoutY="290.0" text="First Name:">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label layoutX="54.0" layoutY="429.0" text="Address:">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label layoutX="54.0" layoutY="467.0" text="City:">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label layoutX="54.0" layoutY="321.0" text="Last Name:">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label layoutX="400.0" layoutY="429.0" text="Zipcode:">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label layoutX="400.0" layoutY="321.0" text="Payment Method:">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label fx:id="firstName4Label" layoutX="164.0" layoutY="290.0" prefHeight="17.0" prefWidth="180.0" text="Label">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label fx:id="address4Label" layoutX="129.0" layoutY="429.0" prefHeight="16.0" prefWidth="180.0" text="Label">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label fx:id="city4Label" layoutX="129.0" layoutY="467.0" prefWidth="180.0" text="Label">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label fx:id="lastName4Label" layoutX="164.0" layoutY="321.0" text="Label">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label fx:id="paymentMethod4Label" layoutX="507.0" layoutY="321.0" prefHeight="16.0" prefWidth="239.0" text="Label">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label fx:id="zipcode4Label" layoutX="507.0" layoutY="429.0" prefHeight="16.0" prefWidth="89.0" text="Label">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Separator layoutX="65.0" layoutY="365.0" prefHeight="0.0" prefWidth="648.0" />
+                        <Label fx:id="pickupOrDeliveryLabel" layoutX="54.0" layoutY="390.0" text="Pick-up/ Delivery Location:">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label layoutX="400.0" layoutY="290.0" text="VAT: ">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label fx:id="totalVAT4Label" layoutX="507.0" layoutY="290.0" text="Label">
+                           <font>
+                              <Font size="13.0" />
+                           </font></Label>
+                        <Label layoutX="609.0" layoutY="290.0" prefHeight="17.0" prefWidth="74.0" text="Total Price:">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font></Label>
+                        <Label fx:id="total4Label" layoutX="682.0" layoutY="290.0" prefHeight="19.0" prefWidth="91.0" text="Label">
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font></Label>
+                        <ButtonBar layoutX="6.0" layoutY="501.0" prefHeight="54.0" prefWidth="770.0">
+                          <buttons>
+                              <Label prefHeight="17.0" prefWidth="261.0" />
+                              <Label prefHeight="17.0" prefWidth="261.0" />
+                              <Label prefHeight="17.0" prefWidth="261.0" />
+                              <Button fx:id="back4Button" mnemonicParsing="false" text="&lt;&lt;Back">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Button>
+                              <Button fx:id="confirmOrderButton" mnemonicParsing="false" text="Confirm Order">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Button>
+                          </buttons>
+                        </ButtonBar>
+                        <Label layoutX="10.0" layoutY="26.0" text="Order Summary">
+                           <font>
+                              <Font size="13.0" />
+                           </font>
+                        </Label>
                      </children>
                   </AnchorPane>
               </content>

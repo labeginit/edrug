@@ -193,7 +193,7 @@ public class CheckoutController implements Initializable {
                     lastName4Label.setText(user.getLastName());
                     paymentMethod4Label.setText(creditCardPaymentLabel.getText());
                     address4Label.setText(address1TextField.getText());
-                    zipcode4Label.setText(zipcode1TextField.getText()); // LA bugfix
+                    zipcode4Label.setText(zipcode1TextField.getText());
                     city4Label.setText(city1TextField.getText());
                 }
             }
@@ -267,15 +267,13 @@ public class CheckoutController implements Initializable {
         java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
         String paymentMessage;
         String orderMessage;
- //       Order.DeliveryMethod orderMethod;
- //       Order.PaymentMethod paymentMethod;
         ArrayList<String> fileArrayList = new ArrayList<>();
 
         try {
             Order order = new Order(id, user, date, delivery, payment, medList, Double.parseDouble(total4Label.getText()), Double.parseDouble(totalVAT4Label.getText()));
             commonMethods.addOrder(order);
         } finally {
-            Validation.alertPopup(Alert.AlertType.INFORMATION, "Your Order #: " + id + " you will recieve an email shortly", "Order Processed", "Your order has been processed");
+            Validation.alertPopup(Alert.AlertType.INFORMATION, "Your Order #: " + id + " is registered. You will receive an email shortly.", "Thank you for choosing us", "Your order is being processed");
             try {
                 userCommon.switchScene(actionEvent, "/view/patientView.fxml");
             } catch (IOException ex){
@@ -286,7 +284,7 @@ public class CheckoutController implements Initializable {
 
         String company = ""
                 + "e-Drugs AB\n"
-                + "ElmetorpsVagen 15, 291 39, Kristianstad\n"
+                + "ElmetorpsVagen 15, 291 39, Kristianstad \n"
                 + "Land: +460712254630 Mob: +460712205220 Fax: 812254639\n"
                 + " \n"
                 + "CUSTOMER INVOICE\n"
@@ -307,42 +305,32 @@ public class CheckoutController implements Initializable {
         fileArrayList.add("Total VAT: " + totalVAT4Label.getText() + "SEK\n Total Cost: " + total4Label.getText() + "SEK\n");
         RWFile.saveToFile(RWFile.invoice, fileArrayList);
         if (CartSingleton.getOurInstance().getDeliveryMethod() == Order.DeliveryMethod.SELFPICKUP) {
- //           orderMethod = Order.DeliveryMethod.SELFPICKUP;
-            orderMessage = "\tYour can pick-up your order "+ date +"at the " + pharmacyNameLabel.getText() + " located at \n" +
-                    address4Label.getText() + " in " + city4Label.getText() + zipcode4Label.getText() + " you can contact them \n" +
-                    " by phone " + phoneNumber3Label.getText() + " or " + emailLabel.getText() + "\n";
+            orderMessage = "\tYou can pick-up your order "+ date +" at the " + pharmacyNameLabel.getText() + " located at \n" +
+                    address4Label.getText() + " in " + city4Label.getText() + " " + zipcode4Label.getText() + ".\nYou can contact them" +
+                    " by phone " + phoneNumber3Label.getText() + " or email: " + emailLabel.getText() + "\n";
         } else if (CartSingleton.getOurInstance().getDeliveryMethod() == Order.DeliveryMethod.POSTEN) {
-  //          orderMethod = Order.DeliveryMethod.POSTEN;
             orderMessage = "\tYour order has been sent " + date + " to " + firstName1TextField.getText() + " " + lastName1TextField.getText() + " \n" +
-                    "allow 3-5 business days for shipping to " + address4Label.getText() + " in " + city4Label.getText() + " " + zipcode4Label.getText() + "\n";
+                    "Allow 3-5 business days for shipping to " + address4Label.getText() + " in " + city4Label.getText() + " " + zipcode4Label.getText() + "\n";
         } else {
- //           orderMethod = Order.DeliveryMethod.SCHENKER;
             orderMessage = "\tYour order has been sent " + date +" to " + firstName1TextField.getText() + " " + lastName1TextField.getText() + " \n" +
-                    "allow 2-3 business days for shipping to " + address4Label.getText() + " in " + city4Label.getText() + " " + zipcode4Label.getText() + "\n";
+                    "Allow 2-3 business days for shipping to " + address4Label.getText() + " in " + city4Label.getText() + " " + zipcode4Label.getText() + "\n";
         }
         if (CartSingleton.getOurInstance().getPaymentMethod() == Order.PaymentMethod.CREDIT_CARD){
-//            paymentMethod = Order.PaymentMethod.CREDIT_CARD;
             paymentMessage = " You have completed payment of your order with a " + paymentMethod4Label.getText() + " card \n " +
                     "with a total cost of " + total4Label.getText() + "SEK and total VAT of " + totalVAT4Label.getText() + "\n";
             fileArrayList.add("PAID");
         } else if (CartSingleton.getOurInstance().getPaymentMethod() == Order.PaymentMethod.INVOICE) {
- //           paymentMethod = Order.PaymentMethod.INVOICE;
             paymentMessage = "Your invoice has been included in a text file ";
             fileArrayList.add("DUE");
         } else {
- //           paymentMethod = Order.PaymentMethod.BANK_TRANSFER;
             paymentMessage = "Your invoice is included in a text file OCR Number: " + OCR + " Bank Giro: 00000-00000";
             fileArrayList.add("\tOCR Number: " + OCR + "\t Bank Giro: 00000-00000");
         }
 
-   //     Order order = new Order(id,user,date, orderMethod, paymentMethod, medList, Double.parseDouble(total4Label.getText()),Double.parseDouble(totalVAT4Label.getText()));
         RWFile.saveToFile(RWFile.invoice, fileArrayList);
         sendEmail(orderMessage,paymentMessage);
-   //     commonMethods.addOrder(order);
         try {
-    //        Validation.alertPopup(Alert.AlertType.INFORMATION, "Your Order #: " + id + " you will recieve an email shortly", "Order Processed", "Your order has been processed");
             RWFile.delete();
-   //         userCommon.switchScene(actionEvent, "/view/patientView.fxml");
             CartSingleton.getOurInstance().cart.clear();
             medList.clear();
         } catch (Exception ex) {
@@ -384,9 +372,9 @@ public class CheckoutController implements Initializable {
 
 
             //Create subject, message & file
-            message.setSubject("Order has been processed");
+            message.setSubject("Order is being processed");
             BodyPart messageBodyPart = new MimeBodyPart();
-            messageBodyPart.setText("Thank you for your order you will find details below\n\n" + orderMessage + paymentMessage);
+            messageBodyPart.setText("Thank you for your order. You will find details below\n\n" + orderMessage + paymentMessage);
             String fileName = "invoice.txt";
             Multipart multipart = new MimeMultipart();
             multipart.addBodyPart(messageBodyPart);
@@ -399,7 +387,7 @@ public class CheckoutController implements Initializable {
             Transport.send(message);
 
         } catch (Exception ex) {
-            System.out.println("message failed to send");
+            System.out.println("message failed to be sent");
             ex.printStackTrace();
         }
     }
