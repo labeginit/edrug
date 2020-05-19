@@ -75,6 +75,12 @@ public class UserSingleton {
         }
 
         @Override
+        public void setCity(String city){ super.setCity(city); }
+
+        @Override
+        public String getCity() { return super.getCity(); }
+
+        @Override
         public String getAddress() {
             return super.getAddress();
         }

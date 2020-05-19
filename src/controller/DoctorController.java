@@ -2,6 +2,8 @@ package controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,11 +17,13 @@ import javafx.stage.Stage;
 import model.Medicine;
 import model.User;
 import model.UserSingleton;
+import model.*;
 import model.dBConnection.CommonMethods;
-
 import java.io.IOException;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -27,6 +31,9 @@ public class DoctorController implements Initializable {
     private User currentUser;
     private UserCommon userCommon = new UserCommon();
     private CommonMethods commonMethods = new CommonMethods();
+    private List<ProdGroup> groups = commonMethods.getProductGroupList();
+    private List<String> groupPaths = new ArrayList<>();
+    private ObservableList<String> filters1 = FXCollections.observableArrayList(fillList(groups));
 
     @FXML
     private TableView<Medicine> storeTable;
@@ -47,11 +54,11 @@ public class DoctorController implements Initializable {
     private TableColumn<User, String> d2SSN, d2Name, d2Surname, d2Phone, d2Email;
 
     @FXML
-    private TextField search_textField, sSN_textField, firstName_text, lastName_text, zip_text, address_text,
+    private TextField maxCostTextField, sSN_textField, firstName_text, lastName_text, zip_text, city_text, address_text,
             phone_text, email_text;
 
     @FXML
-    private Label patientSearchStar, ssn_Label, birthDateStar, firstNameStar, lastNameStar, zipCodeStar, addressStar, phoneStar, emailStar,
+    private Label patientSearchStar, ssn_Label, birthDateStar, firstNameStar, lastNameStar, zipCodeStar, cityStar, addressStar, phoneStar, emailStar,
             passwordCheckLabel;
 
     @FXML
@@ -64,7 +71,7 @@ public class DoctorController implements Initializable {
     private Button logOut_button1, logOut_button2, logOut_button3, cancel_Button, save_Button, go_Button, SSN_Go_Button;
 
     @FXML
-    private ComboBox<String> sort_Combo, filter_Combo;
+    private ComboBox<String> sortBox;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -125,6 +132,7 @@ public class DoctorController implements Initializable {
         firstName_text.setText(currentUser.getFirstName());
         lastName_text.setText(currentUser.getLastName());
         zip_text.setText(currentUser.getZipCode());
+        city_text.setText(currentUser.getCity());
         address_text.setText(currentUser.getAddress());
         phone_text.setText(currentUser.getPhoneNumber());
         email_text.setText(currentUser.getEmail());
@@ -136,7 +144,8 @@ public class DoctorController implements Initializable {
     private void handleSaveButton() {
         if (checkFields()) {
             if (Validation.isName(firstName_text.getText(), firstNameStar) && Validation.isName(lastName_text.getText(), lastNameStar) &&
-                    Validation.isZipcode(zip_text.getText(), zipCodeStar) && Validation.isPhoneNumber(phone_text.getText(), phoneStar)
+                    Validation.isZipcode(zip_text.getText(), zipCodeStar) && Validation.isCity(city_text.getText(), cityStar) &&
+                    Validation.isPhoneNumber(phone_text.getText(), phoneStar)
                     && Validation.isEmail(email_text.getText(), emailStar)) {
                 try {
                     currentUser.setFirstName(firstName_text.getText());
@@ -144,13 +153,14 @@ public class DoctorController implements Initializable {
                     currentUser.setBDate(Date.valueOf(datePicker.getValue().plusDays(1)));
                     currentUser.setZipCode(zip_text.getText());
                     currentUser.setAddress(address_text.getText());
+                    currentUser.setCity(city_text.getText());
                     currentUser.setPhoneNumber(phone_text.getText());
                     currentUser.setEmail(email_text.getText());
                     commonMethods.updateUser(currentUser);
                     String pass = password_Text.getText();
                     if (!pass.equalsIgnoreCase("")) {
                         if (pass.equalsIgnoreCase(password_Text2.getText())) {
-                            currentUser.setPassword(pass);
+                            currentUser.setPassword(userCommon.hashPassword(pass));
                             commonMethods.updatePassword(currentUser);
                         }
                     }
@@ -159,8 +169,8 @@ public class DoctorController implements Initializable {
                     password_Text.clear();
                     password_Text2.clear();
 
-                } catch (IllegalArgumentException illegalArgumentException) {
-                    illegalArgumentException.getSuppressed();
+                } catch (IllegalArgumentException | NoSuchAlgorithmException ex) {
+                    ex.getSuppressed();
                 }
             }
         }
@@ -177,6 +187,7 @@ public class DoctorController implements Initializable {
         if (datePicker == null || Validation.isName(firstName_text.getText(), firstNameStar)
                 || Validation.isName(lastName_text.getText(), lastNameStar)
                 || Validation.isZipcode(zip_text.getText(), zipCodeStar)
+                || Validation.isCity(city_text.getText(), cityStar)
                 || address_text.getText().isEmpty() || Validation.isPhoneNumber(phone_text.getText(), phoneStar)
                 || Validation.isEmail(email_text.getText(), emailStar) || Validation.isPassword(password_Text.getText(), passwordCheckLabel)
                 || Validation.isPassword(password_Text2.getText(), passwordCheckLabel)) {
@@ -191,6 +202,9 @@ public class DoctorController implements Initializable {
             }
             if (zip_text.getText().isEmpty()) {
                 zipCodeStar.setVisible(true);
+            }
+            if (city_text.getText().isEmpty()) {
+                cityStar.setVisible(true);
             }
             if (address_text.getText().isEmpty()) {
                 addressStar.setVisible(true);
@@ -221,9 +235,11 @@ public class DoctorController implements Initializable {
 
                 AddPrescription addPrescription = loader.getController();
                 addPrescription.receiveData(sSN_textField.getText());
+
                 Stage stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
                 stage.setScene(new Scene(root));
                 stage.setTitle("Prescription for: " + sSN_textField.getText());
+                root.getStylesheets().add(getClass().getResource("../FileUtil/layout.css").toExternalForm());
                 stage.show();
             } else {
                 throw new Exception();
@@ -248,6 +264,7 @@ public class DoctorController implements Initializable {
         firstNameStar.setVisible(state);
         lastNameStar.setVisible(state);
         zipCodeStar.setVisible(state);
+        cityStar.setVisible(state);
         addressStar.setVisible(state);
         phoneStar.setVisible(state);
         emailStar.setVisible(state);
@@ -278,5 +295,38 @@ public class DoctorController implements Initializable {
 
         ObservableList<User> patientList = FXCollections.observableArrayList(commonMethods.getPatientList());
         patientTable.setItems(patientList);
+    }
+
+    public SortedList<Medicine> medFilter(FilteredList<Medicine> filteredData, TextField field, TableView<Medicine> tableView){
+        field.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(medicine -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (medicine.getName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (medicine.getSearchTerms().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (String.valueOf(medicine.getArticleNo()).contains(lowerCaseFilter)) {
+                    return true;
+                }
+                return false;
+            });
+        });
+        SortedList<Medicine> sortedData = new SortedList<>(filteredData);
+
+        sortedData.comparatorProperty().bind(tableView.comparatorProperty());
+        tableView.setItems(sortedData);
+        return sortedData;
+    }
+    private List<String> fillList(List<ProdGroup> groups) {
+        groupPaths.add("");
+        for (int i = 1; i < groups.size(); i++) {
+            groupPaths.add(groups.get(i).getPath());
+        }
+        return groupPaths;
     }
 }

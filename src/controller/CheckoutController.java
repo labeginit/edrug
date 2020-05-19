@@ -10,7 +10,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.*;
 import model.dBConnection.CommonMethods;
-
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
@@ -117,6 +116,7 @@ public class CheckoutController implements Initializable {
             lastName1TextField.setText(user.getLastName());
             address1TextField.setText(user.getAddress());
             phoneNumber1TextField.setText(user.getPhoneNumber());
+            city1TextField.setText(user.getCity());
             zipcode1TextField.setText(user.getZipCode());
         }
     }
@@ -199,7 +199,7 @@ public class CheckoutController implements Initializable {
                     lastName4Label.setText(user.getLastName());
                     paymentMethod4Label.setText(creditCardPaymentLabel.getText());
                     address4Label.setText(address1TextField.getText());
-                    zipcode4Label.setText(zipcode1TextField.getText()); // LA bugfix
+                    zipcode4Label.setText(zipcode1TextField.getText());
                     city4Label.setText(city1TextField.getText());
                 }
             }
@@ -276,12 +276,11 @@ public class CheckoutController implements Initializable {
         String orderMessage;
         ArrayList<String> fileArrayList= new ArrayList<>();
 
-
         try {
             Order order = new Order(id, user, date, delivery, payment, medList, Double.parseDouble(total4Label.getText()), Double.parseDouble(totalVAT4Label.getText()));
             commonMethods.addOrder(order);
         } finally {
-            Validation.alertPopup(Alert.AlertType.INFORMATION, "Your Order #: " + id + " you will recieve an email shortly", "Order Processed", "Your order has been processed");
+            Validation.alertPopup(Alert.AlertType.INFORMATION, "Your Order #: " + id + " is registered. You will receive an email shortly.", "Thank you for choosing us", "Your order is being processed");
             try {
                 userCommon.switchScene(actionEvent, "/view/patientView.fxml");
             } catch (IOException ex){
@@ -303,6 +302,7 @@ public class CheckoutController implements Initializable {
          fileArrayList.add("ORDER NO: " + id + ",\t\tADDRES: " + user.getAddress() + " " + city4Label.getText() + " " + user.getZipCode());
          fileArrayList.add("\t\tORDER DETAILS");
          fileArrayList.add("| ARTICLE NO |" + "\t\tNAME\t\t|" + "QUANTITY |" + " PRICE |");
+
         for (int i = 0; i < medList.size(); i++) {
             String string = "| " + medList.get(i).getArticleNo() +" | "+ medList.get(i).getName() + " | " + medList.get(i).getQuantity() + " | " + medList.get(i).getPrice() +" |\n";
             fileArrayList.add(string);
@@ -311,15 +311,15 @@ public class CheckoutController implements Initializable {
         fileArrayList.add("\tTotal VAT: " + totalVAT4Label.getText() + "SEK\n\tTotal Cost: " + total4Label.getText() + "SEK\n");
         RWFile.saveToFile(RWFile.invoice, fileArrayList);
         if (CartSingleton.getOurInstance().getDeliveryMethod() == Order.DeliveryMethod.SELFPICKUP) {
-            orderMessage = "\tYour can pick-up your order "+ date +"at the " + pharmacyNameLabel.getText() + " located at \n" +
-                    address4Label.getText() + " in " + city4Label.getText() + zipcode4Label.getText() + " you can contact them \n" +
-                    " by phone " + phoneNumber3Label.getText() + " or " + emailLabel.getText() + "\n";
+            orderMessage = "\tYou can pick-up your order "+ date +" at the " + pharmacyNameLabel.getText() + " located at \n" +
+                    address4Label.getText() + " in " + city4Label.getText() + " " + zipcode4Label.getText() + ".\nYou can contact them" +
+                    " by phone " + phoneNumber3Label.getText() + " or email: " + emailLabel.getText() + "\n";
         } else if (CartSingleton.getOurInstance().getDeliveryMethod() == Order.DeliveryMethod.POSTEN) {
             orderMessage = "\tYour order has been sent " + date + " to " + firstName1TextField.getText() + " " + lastName1TextField.getText() + " \n" +
-                    "allow 3-5 business days for shipping to " + address4Label.getText() + " in " + city4Label.getText() + " " + zipcode4Label.getText() + "\n";
+                    "Allow 3-5 business days for shipping to " + address4Label.getText() + " in " + city4Label.getText() + " " + zipcode4Label.getText() + "\n";
         } else {
             orderMessage = "\tYour order has been sent " + date +" to " + firstName1TextField.getText() + " " + lastName1TextField.getText() + " \n" +
-                    "allow 2-3 business days for shipping to " + address4Label.getText() + " in " + city4Label.getText() + " " + zipcode4Label.getText() + "\n";
+                    "Allow 2-3 business days for shipping to " + address4Label.getText() + " in " + city4Label.getText() + " " + zipcode4Label.getText() + "\n";
         }
         if (CartSingleton.getOurInstance().getPaymentMethod() == Order.PaymentMethod.CREDIT_CARD){
             paymentMessage = " You have completed payment of your order with a " + paymentMethod4Label.getText() + " card \n " +
@@ -379,9 +379,9 @@ public class CheckoutController implements Initializable {
 
 
             //Create subject, message & file
-            message.setSubject("Order has been processed");
+            message.setSubject("Order is being processed");
             BodyPart messageBodyPart = new MimeBodyPart();
-            messageBodyPart.setText("Thank you for your order you will find details below\n\n" + orderMessage + paymentMessage);
+            messageBodyPart.setText("Thank you for your order. You will find details below\n\n" + orderMessage + paymentMessage);
             String fileName = "invoice.txt";
             Multipart multipart = new MimeMultipart();
             multipart.addBodyPart(messageBodyPart);
@@ -394,7 +394,7 @@ public class CheckoutController implements Initializable {
             Transport.send(message);
 
         } catch (Exception ex) {
-            System.out.println("message failed to send");
+            System.out.println("message failed to be sent");
             ex.printStackTrace();
         }
     }

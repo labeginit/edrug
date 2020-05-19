@@ -44,7 +44,7 @@ public class DAOCommon {
         return resultSet;
     }
 
-    protected int insertUser(String queryString, String ssn, int type, String firstName, String lastName, Date birthDate, String zipCode, String address, String email, String phoneNumber, String password, int isActive) {
+    protected int insertUser(String queryString, String ssn, int type, String firstName, String lastName, Date birthDate, String zipCode, String city, String address, String email, String phoneNumber, String password, int isActive) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
@@ -54,11 +54,12 @@ public class DAOCommon {
                 prepStmt.setString(4, lastName);
                 prepStmt.setDate(5, birthDate);
                 prepStmt.setString(6, zipCode);
-                prepStmt.setString(7, address);
-                prepStmt.setString(8, email);
-                prepStmt.setString(9, phoneNumber);
-                prepStmt.setString(10, password);
-                prepStmt.setInt(11, isActive);
+                prepStmt.setString(7, city);
+                prepStmt.setString(8, address);
+                prepStmt.setString(9, email);
+                prepStmt.setString(10, phoneNumber);
+                prepStmt.setString(11, password);
+                prepStmt.setInt(12, isActive);
 
                 linesAffected = prepStmt.executeUpdate();
                 prepStmt.close();
@@ -72,7 +73,7 @@ public class DAOCommon {
         return linesAffected;
     }
 
-    protected int updateUser(String queryString, String ssn, String firstName, String lastName, Date birthDate, String zipCode, String address, String email, String phoneNumber, int isActive) {
+    protected int updateUser(String queryString, String ssn, String firstName, String lastName, Date birthDate, String zipCode, String city, String address, String email, String phoneNumber, int isActive) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
@@ -80,11 +81,12 @@ public class DAOCommon {
                 prepStmt.setString(2, lastName);
                 prepStmt.setDate(3, birthDate);
                 prepStmt.setString(4, zipCode);
-                prepStmt.setString(5, address);
-                prepStmt.setString(6, email);
-                prepStmt.setString(7, phoneNumber);
-                prepStmt.setInt(8, isActive);
-                prepStmt.setString(9, ssn);
+                prepStmt.setString(5, city);
+                prepStmt.setString(6, address);
+                prepStmt.setString(7, email);
+                prepStmt.setString(8, phoneNumber);
+                prepStmt.setInt(9, isActive);
+                prepStmt.setString(10, ssn);
                 linesAffected = prepStmt.executeUpdate();
                 prepStmt.close();
             }
@@ -188,15 +190,16 @@ public class DAOCommon {
         return linesAffected;
     }
 
-    protected int insertPrescriptionHeader(String queryString, int id, String patientSSN, String doctorSSN, Date date, String diagnosis) {
+    protected int insertPrescriptionHeader(String queryString, int id, String patientSSN, String doctorSSN, Date startDate, String diagnosis, Date endDate) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
                 prepStmt.setInt(1, id);
                 prepStmt.setString(2, patientSSN);
                 prepStmt.setString(3, doctorSSN);
-                prepStmt.setDate(4, date);
+                prepStmt.setDate(4, startDate);
                 prepStmt.setString(5, diagnosis);
+                prepStmt.setDate(6, endDate);
 
                 linesAffected = prepStmt.executeUpdate();
                 prepStmt.close();
@@ -210,14 +213,14 @@ public class DAOCommon {
         return linesAffected;
     }
 
-    protected int insertPrescriptionLine(String queryString, int prescId, String patientSSN, int article, int quantity, String instructions) {
+    protected int insertPrescriptionLine(String queryString, int prescId, String patientSSN, int article, int quantityPrescribed, String instructions) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
                 prepStmt.setInt(1, prescId);
                 prepStmt.setString(2, patientSSN);
                 prepStmt.setInt(3, article);
-                prepStmt.setInt(4, quantity);
+                prepStmt.setInt(4, quantityPrescribed);
                 prepStmt.setString(5, instructions);
 
                 linesAffected = prepStmt.executeUpdate();
@@ -231,6 +234,42 @@ public class DAOCommon {
         }
         return linesAffected;
     }
+    protected void deletePrescriptionHasMedicine(String queryString, int id, String patientSsn, int article) {
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
+                prepStmt.setInt(1, id);
+                prepStmt.setString(2, patientSsn);
+                prepStmt.setInt(3, article);
+
+                prepStmt.executeUpdate();
+            }
+        } catch (SQLException | NullPointerException ex) {
+            System.out.println("Error when executing statement!");
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    protected void deletePrescription(String queryString, int id, String patientSsn, String currentUserSsn) {
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
+                prepStmt.setInt(1, id);
+                prepStmt.setString(2, patientSsn);
+                prepStmt.setString(3, currentUserSsn);
+
+                prepStmt.executeUpdate();
+            }
+        } catch (SQLException | NullPointerException ex) {
+            System.out.println("Error when executing statement!");
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
     protected int updateMedicineQuantity(String queryString, int quantityAvailable, int article) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {

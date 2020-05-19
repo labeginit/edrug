@@ -67,6 +67,19 @@ public class Validation {
     }
 
     @FXML
+    public static boolean isCity(String name, Label starLabel) {
+        String regex = "^[\\p{L}\\s.’\\-,]+$";
+        boolean aName = Pattern.compile(regex).matcher(name).find();
+        if (aName) {
+            starLabel.setVisible(false);
+            return true;
+        } else
+            alertPopup("City must contain only alphabetical characters", "Invalid city name", "Please enter proper city name");
+        starLabel.setVisible(true);
+        return false;
+    }
+
+    @FXML
     public static boolean isPhoneNumber(String phoneNumber, Label starLabel) {
         String regex = "^(?!\\b(0)\\1+\\b)(\\+?\\d{1,3}[. -]?)?\\(?\\d{3}\\)?([. -]?)\\d{3}\\3\\d{4}$";
         boolean aPhoneNumber = Pattern.compile(regex).matcher(phoneNumber).matches();

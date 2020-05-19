@@ -143,8 +143,8 @@ public class TestCode {
         System.out.println(added);
 */
 
-        System.out.println(commonMethods.getLastId(Prescription.class));
-        System.out.println(commonMethods.getLastId(Order.class));
+   //     System.out.println(commonMethods.getLastId(Prescription.class));
+   //     System.out.println(commonMethods.getLastId(Order.class));
    /*     List <OrderLine> lines = new ArrayList<>();
         OrderLine line1 = new OrderLine(commonMethods.getLastId(Order.class) + 1, commonMethods.getUser("222222-1111"), commonMethods.getMedicine(10004), 40, 2);
         lines.add(line1);

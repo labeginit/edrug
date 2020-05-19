@@ -19,7 +19,11 @@ import model.dBConnection.CommonMethods;
 
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.math.RoundingMode;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 public class UserCommon {
@@ -39,13 +43,13 @@ public class UserCommon {
     }
 
     public void switchScene(ActionEvent event, String path) throws IOException {
-        Parent tableViewParent = FXMLLoader.load(getClass().getResource(path));
-        Scene tableViewScene = new Scene(tableViewParent);
+        Parent root = FXMLLoader.load(getClass().getResource(path));
+        Scene newScene = new Scene(root);
 
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-        window.setScene(tableViewScene);
-        tableViewScene.getStylesheets().add(getClass().getResource("../FileUtil/layout.css").toExternalForm());
+        window.setScene(newScene);
+        newScene.getStylesheets().add(getClass().getResource("../FileUtil/layout.css").toExternalForm());
         window.show();
     }
 
@@ -125,7 +129,6 @@ public class UserCommon {
             helpMenu.setVisible(true);
             helpMenu.setText(text);
 
-
         });
         helpCircle.setOnMouseExited(mouseEvent -> helpMenu.setVisible(false));
     }
@@ -136,5 +139,12 @@ public class UserCommon {
         BigDecimal bd = BigDecimal.valueOf(value);
         bd = bd.setScale(places, RoundingMode.HALF_UP);
         return bd.doubleValue();
+    }
+
+    public String hashPassword(String passwordString) throws NoSuchAlgorithmException {
+        MessageDigest md = MessageDigest.getInstance("SHA-256");
+        md.update(passwordString.getBytes(StandardCharsets.UTF_8));
+        byte[] digest = md.digest();
+        return String.format("%064x", new BigInteger(1, digest));
     }
 }
