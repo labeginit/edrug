@@ -11,7 +11,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.*;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
@@ -19,7 +18,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import javafx.event.ActionEvent;
 import model.dBConnection.CommonMethods;
 
@@ -36,58 +34,34 @@ public class PatientController implements Initializable {
     private ComboBox<String> groupFilter_combo;
 
     @FXML
-    private TextField search_textField;
+    private Button cartButton, save_button, cancel_button, logOut1_button, logOut2_button, logOut3_button;
 
     @FXML
-    private Button cartButton;
+    private TextField search_textField, lastName_text, address_text, city_text, email_text, firstName_text, maxPrice_text, zipCode_text, phoneNumber_text;
 
     @FXML
-    private Button save_button;
+    public TextArea helpMenuMyPrescriptions;
 
     @FXML
-    private Label ssn_text;
+    private Label ssn_text, firstNameStar, lastNameStar, birthDateStar, zipCodeStar, cityStar, phoneStar, emailStar, addressStar, passwordCheckLabel, helpMyPrescriptions;
 
     @FXML
-    private TextField lastName_text;
+    private DatePicker dPicker;
 
     @FXML
-    private TextField address_text;
-
-    @FXML
-    private TextField city_text;
-
-    @FXML
-    private TextField email_text;
-
-    @FXML
-    private TextField firstName_text;
-
-    @FXML
-    private TextField maxPrice_text;
+    private PasswordField password, confirmPassword;
 
     @FXML
     private TableView<Medicine> tableView;
 
     @FXML
-    private TableColumn<Medicine, Integer> c1;
+    private TableColumn<Medicine, Integer> c1, c5;
 
     @FXML
-    private TableColumn<Medicine, String> c2;
-
-    @FXML
-    private TableColumn<Medicine, String> c3;
+    private TableColumn<Medicine, String> c2, c3, c6, c7;
 
     @FXML
     private TableColumn<Medicine, Double> c4;
-
-    @FXML
-    private TableColumn<Medicine, Integer> c5;
-
-    @FXML
-    private TableColumn<Medicine, String> c6;
-
-    @FXML
-    private TableColumn<Medicine, String> c7;
 
     @FXML
     private TableColumn<Medicine, CheckBox> c8;
@@ -96,13 +70,10 @@ public class PatientController implements Initializable {
     private TableView<Prescription> prescriptionTableView;
 
     @FXML
-    private TableColumn<Prescription, Date> c9;
+    private TableColumn<Prescription, Date> c9, c101;
 
     @FXML
     private TableColumn<Prescription, String> c10;
-
-    @FXML
-    private TableColumn<Prescription, Date> c101;
 
     @FXML
     private TableView<PrescriptionLine> prescriptionLineTableView;
@@ -114,66 +85,8 @@ public class PatientController implements Initializable {
     private TableColumn<PrescriptionLine, String> c12;
 
     @FXML
-    private TableColumn<PrescriptionLine, Integer> c13;
+    private TableColumn<PrescriptionLine, Integer> c13, c14;
 
-    @FXML
-    private TableColumn<PrescriptionLine, Integer> c14;
-
-    @FXML
-    private Button cancel_button;
-
-    @FXML
-    private DatePicker dPicker;
-
-    @FXML
-    private Button logOut1_button;
-
-    @FXML
-    private Button logOut2_button;
-
-    @FXML
-    private Button logOut3_button;
-
-    @FXML
-    private TextField zipCode_text;
-
-    @FXML
-    private TextField phoneNumber_text;
-
-    @FXML
-    private PasswordField password;
-
-    @FXML
-    private PasswordField confirmPassword;
-
-    @FXML
-    private Label birthDateStar;
-
-    @FXML
-    private Label firstNameStar;
-
-    @FXML
-    private Label lastNameStar;
-
-    @FXML
-    private Label zipCodeStar;
-
-    @FXML
-    private Label cityStar;
-
-    @FXML
-    private Label phoneStar;
-
-    @FXML
-    private Label emailStar;
-
-    @FXML
-    private Label addressStar;
-
-    @FXML
-    private Label passwordCheckLabel;
-    public Label helpMyPrescriptions;
-    public TextArea helpMenuMyPrescriptions;
 
     private List<ProdGroup> groups = commonMethods.getProductGroupList();
     private List<String> groupPaths = new ArrayList<>();
