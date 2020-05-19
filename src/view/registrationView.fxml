@@ -15,7 +15,7 @@
 
 <AnchorPane minHeight="572.0" minWidth="800.0" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RegistrationController">
    <children>
-      <ListView focusTraversable="false" layoutX="6.0" layoutY="64.0" prefHeight="475.0" prefWidth="787.0" />
+      <ListView focusTraversable="false" layoutX="15.0" layoutY="55.0" prefHeight="487.0" prefWidth="772.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="55.0" />
       <Label layoutX="148.0" layoutY="122.0" text="First Name:">
          <font>
             <Font size="13.0" />
@@ -104,7 +104,7 @@
             </Button>
         </buttons>
       </ButtonBar>
-      <ImageView fitHeight="228.0" fitWidth="210.0" layoutX="563.0" layoutY="77.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fitHeight="215.0" fitWidth="179.0" layoutX="581.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@image/eDrugLogo.png" />
          </image>
