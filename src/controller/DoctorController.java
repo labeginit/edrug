@@ -3,6 +3,8 @@ package controller;
 import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -13,15 +15,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import model.Medicine;
-import model.Patient;
-import model.User;
-import model.UserSingleton;
+import model.*;
 import model.dBConnection.CommonMethods;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -29,6 +29,9 @@ public class DoctorController implements Initializable {
     private User currentUser;
     private UserCommon userCommon = new UserCommon();
     CommonMethods commonMethods = new CommonMethods();
+    private List<ProdGroup> groups = commonMethods.getProductGroupList();
+    private List<String> groupPaths = new ArrayList<>();
+    private ObservableList<String> filters1 = FXCollections.observableArrayList(fillList(groups));
 
     @FXML
     private TableView<Medicine> storeTable;
@@ -49,7 +52,7 @@ public class DoctorController implements Initializable {
     private TableColumn<User, String> d2SSN, d2Name, d2Surname, d2Phone, d2Email;
 
     @FXML
-    private TextField search_textField, sSN_textField, firstName_text, lastName_text, zip_text, city_text, address_text,
+    private TextField maxCostTextField, sSN_textField, firstName_text, lastName_text, zip_text, city_text, address_text,
             phone_text, email_text;
 
     @FXML
@@ -66,7 +69,7 @@ public class DoctorController implements Initializable {
     private Button logOut_button1, logOut_button2, logOut_button3, cancel_Button, save_Button, go_Button, SSN_Go_Button;
 
     @FXML
-    private ComboBox<String> sort_Combo, filter_Combo;
+    private ComboBox<String> sortBox;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -289,5 +292,38 @@ public class DoctorController implements Initializable {
 
         ObservableList<User> patientList = FXCollections.observableArrayList(commonMethods.getPatientList());
         patientTable.setItems(patientList);
+    }
+
+    public SortedList<Medicine> medFilter(FilteredList<Medicine> filteredData, TextField field, TableView<Medicine> tableView){
+        field.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(medicine -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (medicine.getName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (medicine.getSearchTerms().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (String.valueOf(medicine.getArticleNo()).contains(lowerCaseFilter)) {
+                    return true;
+                }
+                return false;
+            });
+        });
+        SortedList<Medicine> sortedData = new SortedList<>(filteredData);
+
+        sortedData.comparatorProperty().bind(tableView.comparatorProperty());
+        tableView.setItems(sortedData);
+        return sortedData;
+    }
+    private List<String> fillList(List<ProdGroup> groups) {
+        groupPaths.add("");
+        for (int i = 1; i < groups.size(); i++) {
+            groupPaths.add(groups.get(i).getPath());
+        }
+        return groupPaths;
     }
 }
