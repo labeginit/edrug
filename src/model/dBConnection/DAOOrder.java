@@ -13,8 +13,6 @@ public class DAOOrder {
     private int id;
     private User user = null;
     private Date date;
-    public enum DeliveryMethod {SELFPICKUP, SCHENKER, POSTEN}
-    public enum PaymentMethod {CREDIT_CARD, INVOICE, BANK_TRANSFER}
     private Order.DeliveryMethod deliveryMethod;
     private Order.PaymentMethod paymentMethod;
     private double totalSum;

@@ -1,6 +1,5 @@
 package controller;
 
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,7 +13,6 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Medicine;
-import model.Patient;
 import model.User;
 import model.UserSingleton;
 import model.dBConnection.CommonMethods;
@@ -28,7 +26,7 @@ import java.util.ResourceBundle;
 public class DoctorController implements Initializable {
     private User currentUser;
     private UserCommon userCommon = new UserCommon();
-    CommonMethods commonMethods = new CommonMethods();
+    private CommonMethods commonMethods = new CommonMethods();
 
     @FXML
     private TableView<Medicine> storeTable;

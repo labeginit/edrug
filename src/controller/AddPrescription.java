@@ -23,13 +23,13 @@ import java.util.ResourceBundle;
 public class AddPrescription implements Initializable {
 
     private User currentUser;
-    CommonMethods commonMethods = new CommonMethods();
-    UserCommon userCommon = new UserCommon();
-    java.util.Date date = new java.util.Date();
-    int i = 1;;
-    Patient currentPatient;
-    List<PrescriptionLine> prescrLines = FXCollections.observableArrayList();
-    List<Prescription> prescrList = commonMethods.getPrescriptionList(currentPatient);
+    private CommonMethods commonMethods = new CommonMethods();
+    private UserCommon userCommon = new UserCommon();
+    private java.util.Date date = new java.util.Date();
+    private int i = 1;
+    private Patient currentPatient;
+    private List<PrescriptionLine> prescrLines = FXCollections.observableArrayList();
+    private List<Prescription> prescrList = commonMethods.getPrescriptionList(currentPatient);
 
     @FXML
     private Label ssnLabel, nameLabel, ssnLabel1, nameLabel1, currentDateLabel;

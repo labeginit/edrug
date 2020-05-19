@@ -223,8 +223,10 @@ public class ShoppingCartController implements Initializable {
         } else {
             if(delivery_combo.getValue() != null && payment_combo.getValue() != null) {
                 CartSingleton.getOurInstance().setCart(medList);
-                CartSingleton.getOurInstance().setDeliveryMethod(delivery_combo.getValue().toString());
-                CartSingleton.getOurInstance().setPaymentMethod(payment_combo.getValue().toString());
+             //   CartSingleton.getOurInstance().setDeliveryMethod(delivery_combo.getValue().toString());
+                CartSingleton.getOurInstance().setDeliveryMethod((Order.DeliveryMethod) delivery_combo.getValue());
+             //   CartSingleton.getOurInstance().setPaymentMethod(payment_combo.getValue().toString());
+                CartSingleton.getOurInstance().setPaymentMethod((Order.PaymentMethod) payment_combo.getValue());
                 try {
                     userCommon.switchScene(actionEvent, "/view/checkout.fxml");
                 } catch (Exception ex) {
