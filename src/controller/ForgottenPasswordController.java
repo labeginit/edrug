@@ -95,7 +95,7 @@ public class ForgottenPasswordController implements Initializable {
             confirmationCode = confirmationStringGenerator();
             //Create subject & message
             message.setSubject("Password Reset");
-            message.setText("Hi there,your confirmation code is: " + confirmationCode);
+            message.setText("Hi there, your confirmation code is: " + confirmationCode);
             Transport.send(message);
 
         } catch (MessagingException ignored) {
@@ -110,10 +110,11 @@ public class ForgottenPasswordController implements Initializable {
         String recipient = "";
         try {
             temp = common.getUser(ssnTextField.getText());
-
-            if (temp.getEmail().equals(emailText.getText())) {
-                recipient = emailText.getText();
-            }
+            if (temp != null) {
+                if (temp.getEmail().equals(emailText.getText())) {
+                    recipient = emailText.getText();
+                }
+            } else Validation.alertPopup("There is no user with such social security number", "Wrong SSN", "User doesn't exist");  //LA: if you do not want to tell the person ssn is wrong - delete this
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -161,7 +162,7 @@ public class ForgottenPasswordController implements Initializable {
     public void confirmButtonHandler(ActionEvent ae) {
         try {
             if (passwordField1.getText().equals(passwordField2.getText()) && passwordField1.getText().length() > 5) {
-                temp.setPassword(passwordField1.getText());
+                temp.setPassword(userCommon.hashPassword(passwordField1.getText()));
                 common.updatePassword(temp);
                 handleCancelButton(ae);
             } else {

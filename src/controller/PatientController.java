@@ -13,6 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import model.*;
 import java.io.IOException;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -345,7 +346,7 @@ public class PatientController implements Initializable {
                     String pass = password.getText();
                     if (!pass.equalsIgnoreCase("")) {
                         if (pass.equalsIgnoreCase(confirmPassword.getText())) {
-                            currentUser.setPassword(pass);
+                            currentUser.setPassword(userCommon.hashPassword(pass));
                             commonMethods.updatePassword(currentUser);
                         }
                     }
@@ -353,9 +354,8 @@ public class PatientController implements Initializable {
                     setVisible(false);
                     password.clear();
                     confirmPassword.clear();
-
-                } catch (IllegalArgumentException illegalArgumentException) {
-                    illegalArgumentException.getSuppressed();
+                } catch (IllegalArgumentException | NoSuchAlgorithmException ex) {
+                    ex.getSuppressed();
                 }
             }
         }

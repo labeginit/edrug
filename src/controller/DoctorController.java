@@ -20,6 +20,7 @@ import model.dBConnection.CommonMethods;
 
 import java.io.IOException;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -158,7 +159,7 @@ public class DoctorController implements Initializable {
                     String pass = password_Text.getText();
                     if (!pass.equalsIgnoreCase("")) {
                         if (pass.equalsIgnoreCase(password_Text2.getText())) {
-                            currentUser.setPassword(pass);
+                            currentUser.setPassword(userCommon.hashPassword(pass));
                             commonMethods.updatePassword(currentUser);
                         }
                     }
@@ -167,8 +168,8 @@ public class DoctorController implements Initializable {
                     password_Text.clear();
                     password_Text2.clear();
 
-                } catch (IllegalArgumentException illegalArgumentException) {
-                    illegalArgumentException.getSuppressed();
+                } catch (IllegalArgumentException | NoSuchAlgorithmException ex) {
+                    ex.getSuppressed();
                 }
             }
         }

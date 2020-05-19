@@ -7,25 +7,20 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.shape.Circle;
 import javafx.util.StringConverter;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;
 import model.*;
 import model.dBConnection.CommonMethods;
-
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -69,7 +64,7 @@ public class AdminController implements Initializable {
 
     public TableColumn<Medicine, CheckBox> isActiveMed;
     public TextField storeSearchTextField;
-    public ComboBox storeFilterCombo;
+    public ComboBox storeFilterCombo;  // LA: this seems to be unused
     public TableView<User> adminTable;
     public TableColumn<User, String> adminSSNtable, adminLastNameTable, adminFirstNameTable, adminPhoneTable, adminEmailTable;
     public TableColumn<User, CheckBox> adminActiveTable;
@@ -207,7 +202,7 @@ public class AdminController implements Initializable {
                         currentUser.setAddress(addressText.getText());
                         currentUser.setPhoneNumber(phoneText.getText());
                         currentUser.setEmail(emailText.getText());
-                        currentUser.setPassword(pass1_text.getText());
+                        currentUser.setPassword(userCommon.hashPassword(pass1_text.getText()));
                         methods.updateAdmin((Admin) currentUser);
                         if (!pass1_text.getText().isEmpty() && !pass2_text.getText().isEmpty()) {
                             methods.updatePassword(currentUser);
@@ -232,12 +227,12 @@ public class AdminController implements Initializable {
                             if (Integer.parseInt(roleTextAdd.getText()) == 1) {
                                 Patient patient = new Patient(SSNtextAdd.getText(), firstNameTextAdd.getText(), lastNameTextAdd.getText(),
                                         Date.valueOf(datePickerAdd.getValue().plusDays(1)), zipTextAdd.getText(), cityTextAdd.getText(), addressTextAdd.getText(),
-                                        emailTextAdd.getText(), phoneTextAdd.getText(), pass1_textAdd.getText(), true);
+                                        emailTextAdd.getText(), phoneTextAdd.getText(), userCommon.hashPassword(pass1_textAdd.getText()), true);
                                 methods.addPatient(patient);
                             } else if (Integer.parseInt(roleTextAdd.getText()) == 2) {
                                 Doctor doctor = new Doctor(SSNtextAdd.getText(), firstNameTextAdd.getText(), lastNameTextAdd.getText(),
                                         Date.valueOf(datePickerAdd.getValue().plusDays(1)), zipTextAdd.getText(), cityTextAdd.getText(), addressTextAdd.getText(),
-                                        emailTextAdd.getText(), phoneTextAdd.getText(), pass1_textAdd.getText(), true);
+                                        emailTextAdd.getText(), phoneTextAdd.getText(), userCommon.hashPassword(pass1_textAdd.getText()), true);
                                 methods.addDoctor(doctor);
 
                             }
@@ -349,7 +344,6 @@ public class AdminController implements Initializable {
 
     private void clearFieldsAddM(){
         articleMedicine.clear();
-        //prodGroupM;
         nameMedicine.clear();
         packageMedicine.clear();
         producerMedicine.clear();
@@ -357,7 +351,6 @@ public class AdminController implements Initializable {
         priceMedicine.clear();
         quantityMedicine.clear();
         searchTermsMedicine.clear();
-        //onPrescrM;
     }
 
     public void fillPatientTable() {
