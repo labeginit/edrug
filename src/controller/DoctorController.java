@@ -237,6 +237,7 @@ public class DoctorController implements Initializable {
                 Stage stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
                 stage.setScene(new Scene(root));
                 stage.setTitle("Prescription for: " + sSN_textField.getText());
+                root.getStylesheets().add(getClass().getResource("../FileUtil/layout.css").toExternalForm());
                 stage.show();
             } else {
                 throw new Exception();
