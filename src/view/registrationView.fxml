@@ -97,7 +97,7 @@
       <Label fx:id="confirmPasswordStar" layoutX="274.0" layoutY="445.0" text="*" textFill="#f20101" />
       <DatePicker fx:id="dPicker" layoutX="291.0" layoutY="221.0" prefHeight="26.0" prefWidth="230.0" />
       <Label fx:id="helpNewUser" layoutX="259.0" layoutY="57.0" text="?" />
-      <TextArea fx:id="helpMenuNewUser" layoutX="48.0" layoutY="78.0" prefHeight="195.0" prefWidth="213.0" />
+      <TextArea fx:id="helpMenuNewUser" layoutX="48.0" layoutY="78.0" prefHeight="195.0" prefWidth="245.0" />
       <TextField fx:id="city" layoutX="360.0" layoutY="292.0" prefHeight="26.0" prefWidth="161.0" promptText="City" />
       <Label fx:id="cityStar" layoutX="349.0" layoutY="301.0" text="*" textFill="#f20101" />
    </children>
