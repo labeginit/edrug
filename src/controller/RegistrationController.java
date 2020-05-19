@@ -5,18 +5,13 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 import model.dBConnection.CommonMethods;
 import model.Patient;
-
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 import java.sql.Date;
@@ -135,27 +130,17 @@ public class RegistrationController implements Initializable {
                     Date dob = Date.valueOf(dPicker.getValue().plusDays(1));
                     Patient patient = new Patient(ssn.getText(), firstName.getText(), lastName.getText(), dob,
                             zipcode.getText(), city.getText(), address.getText(), email.getText(),
-                            phoneNumber.getText(), password.getText());
+                            phoneNumber.getText(), userCommon.hashPassword(password.getText()));
                     commonMethods.addUser(patient);
-                } catch (IllegalArgumentException illegalArgumentException) {
-                   illegalArgumentException.getSuppressed();
+                } catch (IllegalArgumentException | NoSuchAlgorithmException ex) {
+                   ex.getSuppressed();
                 }
                 progress.setVisible(true);
                 PauseTransition pt = new PauseTransition();
                 pt.setOnFinished(event -> {
                     System.out.println("Login successful");
                     try {
-                       /* Node node = (Node) ae.getSource();
-                        Scene scene = node.getScene();
-                        Stage stage = (Stage) scene.getWindow();
-
-                        Parent root = FXMLLoader.load(getClass().getResource("/view/loginView.fxml"));
-                        Scene newScene = new Scene(root);
-
-                        stage.setTitle("e-Drugs Login");
-                        stage.setScene(newScene);*/
                         userCommon.switchScene(ae, "/view/loginView.fxml");
-
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
@@ -169,17 +154,7 @@ public class RegistrationController implements Initializable {
         PauseTransition pt = new PauseTransition();
         pt.setOnFinished(event -> {
             try {
-              /*  Node node = (Node) ae.getSource();
-                Scene scene = node.getScene();
-                Stage stage = (Stage) scene.getWindow();
-
-                Parent root = FXMLLoader.load(getClass().getResource("/view/loginView.fxml"));
-                Scene newScene = new Scene(root);
-
-                stage.setTitle("e-Drugs Login");
-                stage.setScene(newScene);*/
                 userCommon.switchScene(ae, "/view/loginView.fxml");
-
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
             }
@@ -218,7 +193,7 @@ public class RegistrationController implements Initializable {
         } else if (!password.getText().equals(confirmPassword.getText())){
             passwordStar.setVisible(true);
             confirmPasswordStar.setVisible(true);
-            Validation.alertPopup("Password does not match", "Password Mismatch", "Password doesnt Match");
+            Validation.alertPopup("Password does not match", "Password Mismatch", "Password doesn't Match");
             return false;
         } else
             return true;
