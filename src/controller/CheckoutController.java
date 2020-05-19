@@ -298,7 +298,7 @@ public class CheckoutController implements Initializable {
                 + " \n");
          fileArrayList.add("\tINFO" + "\t\t\tCUSTOMER");
          fileArrayList.add("DATE: " + date + ",\t\t" +user.getFirstName() + " " + user.getLastName());
-         fileArrayList.add("TIME: " + time + ",\tMOB: " + user.getPhoneNumber());
+         fileArrayList.add("TIME: " + time + ",\t\tMOB: " + user.getPhoneNumber());
          fileArrayList.add("ORDER NO: " + id + ",\t\tADDRES: " + user.getAddress() + " " + city4Label.getText() + " " + user.getZipCode());
          fileArrayList.add("\t\tORDER DETAILS");
          fileArrayList.add("| ARTICLE NO |" + "\t\tNAME\t\t|" + "QUANTITY |" + " PRICE |");
