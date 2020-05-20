@@ -143,7 +143,8 @@ public class UserCommon {
 
     public String hashPassword(String passwordString) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
-        md.update(passwordString.getBytes(StandardCharsets.UTF_8));
+        String temp = passwordString.concat("z1");
+        md.update(temp.getBytes(StandardCharsets.UTF_8));
         byte[] digest = md.digest();
         return String.format("%064x", new BigInteger(1, digest));
     }
