@@ -43,11 +43,11 @@
                            <font>
                               <Font size="13.0" />
                            </font></Label>
-                        <TextField fx:id="firstName1TextField" layoutX="180.0" layoutY="165.0" prefHeight="26.0" prefWidth="190.0">
+                        <TextField fx:id="firstName1TextField" editable="false" focusTraversable="false" layoutX="180.0" layoutY="165.0" prefHeight="26.0" prefWidth="190.0">
                            <font>
                               <Font size="13.0" />
                            </font></TextField>
-                        <TextField fx:id="lastName1TextField" layoutX="525.0" layoutY="165.0" prefHeight="26.0" prefWidth="190.0">
+                        <TextField fx:id="lastName1TextField" editable="false" focusTraversable="false" layoutX="525.0" layoutY="165.0" prefHeight="26.0" prefWidth="190.0">
                            <font>
                               <Font size="13.0" />
                            </font></TextField>
