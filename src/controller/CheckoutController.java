@@ -20,6 +20,7 @@ import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Time;
 import java.util.*;
 
 public class CheckoutController implements Initializable {
@@ -36,17 +37,24 @@ public class CheckoutController implements Initializable {
     private Tab deliveryTab, paymentTab, pickUpTab, confirmationTab;
 
     @FXML
-    private Label deliveryMethod1Label, totalVAT1Label, total1Label, creditCardPaymentLabel, pharmacyNameLabel, pharmacyAddressLabel, zipcode3Label
-            , city2Label, firstName4Label, address4Label, city4Label, lastName4Label, paymentMethod4Label, zipcode4Label, totalVAT4Label, total4Label
-            , fName1StarLabel, zipcode1StarLabel, lName1StarLabel, phoneNumber1StarLabel, address1StarLabel, city1StarLabel, cardHolderStarLabel,
-            cardStarLabel, address2StarLabel, city2StarLabel, zipcode2StarLabel, ccvStarLabel, emailLabel, phoneNumber3Label, dPickerStarLabel;
+    private Label deliveryMethod1Label, totalVAT1Label, total1Label,
+            creditCardPaymentLabel, pharmacyNameLabel, pharmacyAddressLabel, zipcode3Label
+            , city2Label, firstName4Label, address4Label, city4Label, lastName4Label,
+            paymentMethod4Label, zipcode4Label, totalVAT4Label, total4Label
+            , fName1StarLabel, zipcode1StarLabel, lName1StarLabel, phoneNumber1StarLabel,
+            address1StarLabel, city1StarLabel, cardHolderStarLabel,
+            cardStarLabel, address2StarLabel, city2StarLabel, zipcode2StarLabel,
+            ccvStarLabel, emailLabel, phoneNumber3Label, dPickerStarLabel;
 
     @FXML
-    private TextField firstName1TextField, lastName1TextField, address1TextField, zipcode1TextField, phoneNumber1TextField, creditCardNumber1TextField,
-            ccvTextField, zipcode2TextField, address2TextField, city2TextField, creditCardHolderTextField, city1TextField, expDateTextField;
+    private TextField firstName1TextField, lastName1TextField, address1TextField,
+            zipcode1TextField, phoneNumber1TextField, creditCardNumber1TextField,
+            ccvTextField, zipcode2TextField, address2TextField, city2TextField,
+            creditCardHolderTextField, city1TextField, expDateTextField;
 
     @FXML
-    private Button next1Button, back1Button, back2Button, next2Button, back3Button, next3Button, back4Button, confirmOrderButton;
+    private Button next1Button, back1Button, back2Button, next2Button,
+            back3Button, next3Button, back4Button, confirmOrderButton;
 
     @FXML
     private ComboBox<Pharmacy> pickUpComboBox;
@@ -263,9 +271,10 @@ public class CheckoutController implements Initializable {
         int OCR = rand.nextInt(100000000);
         int id = 1 + commonMethods.getLastId(Order.class);
         java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+        Time time = new Time(Calendar.HOUR,Calendar.MINUTE,Calendar.SECOND);
         String paymentMessage;
         String orderMessage;
-        ArrayList<String> fileArrayList = new ArrayList<>();
+        ArrayList<String> fileArrayList= new ArrayList<>();
 
         try {
             Order order = new Order(id, user, date, delivery, payment, medList, Double.parseDouble(total4Label.getText()), Double.parseDouble(totalVAT4Label.getText()));
@@ -280,27 +289,26 @@ public class CheckoutController implements Initializable {
         }
 
 
-        String company = ""
-                + "e-Drugs AB\n"
-                + "ElmetorpsVagen 15, 291 39, Kristianstad \n"
-                + "Land: +460712254630 Mob: +460712205220 Fax: 812254639\n"
-                + " \n"
-                + "CUSTOMER INVOICE\n"
-                + " \n";
-        List<String> t1Headers = Arrays.asList("INFO", "CUSTOMER");
-        List<List<String>> t1Rows = Arrays.asList(
-                Arrays.asList("DATE: " + date, user.getFirstName() + " " + user.getLastName()),
-                Arrays.asList("TIME: " + date.getTime(), "MOB: " + user.getPhoneNumber()),
-                Arrays.asList("ORDER NO: " + id, "ADDRES: " + user.getAddress() + city4Label.getText() + user.getZipCode()));
-        String table = "|Article Number | Name\t\t\t | Quantity | Price|\n";
-        String t2Desc = "ORDER DETAILS";
-        List<String> t2Headers = Arrays.asList("ARTICLE NO", "NAME", "QUANTITY", "PRICE");
-        fileArrayList.add(table);
+        fileArrayList.add( "\n"
+                + "\te-Drugs AB\n"
+                + "\tElmetorpsVagen 15, 291 39, Kristianstad\n"
+                + "\tLand: +460712254630 Mob: +460712205220 \n " +
+                "\tFax: 812254639\n\n"
+                + "\tCUSTOMER INVOICE\n"
+                + " \n");
+         fileArrayList.add("\tINFO" + "\t\t\tCUSTOMER");
+         fileArrayList.add("DATE: " + date + ",\t\t" +user.getFirstName() + " " + user.getLastName());
+         fileArrayList.add("TIME: " + time + ",\t\tMOB: " + user.getPhoneNumber());
+         fileArrayList.add("ORDER NO: " + id + ",\t\tADDRES: " + user.getAddress() + " " + city4Label.getText() + " " + user.getZipCode());
+         fileArrayList.add("\t\tORDER DETAILS");
+         fileArrayList.add("| ARTICLE NO |" + "\t\tNAME\t\t|" + "QUANTITY |" + " PRICE |");
+
         for (int i = 0; i < medList.size(); i++) {
-            String string = "|" + medList.get(i).getArticleNo() +"\t\t|"+ medList.get(i).getName() + "\t\t|\t" + medList.get(i).getQuantity() + "\t|\t" + medList.get(i).getPrice() +"|\n";
+            String string = "| " + medList.get(i).getArticleNo() +" | "+ medList.get(i).getName() + " | " + medList.get(i).getQuantity() + " | " + medList.get(i).getPrice() +" |\n";
             fileArrayList.add(string);
         }
-        fileArrayList.add("Total VAT: " + totalVAT4Label.getText() + "SEK\n Total Cost: " + total4Label.getText() + "SEK\n");
+
+        fileArrayList.add("\tTotal VAT: " + totalVAT4Label.getText() + "SEK\n\tTotal Cost: " + total4Label.getText() + "SEK\n");
         RWFile.saveToFile(RWFile.invoice, fileArrayList);
         if (CartSingleton.getOurInstance().getDeliveryMethod() == Order.DeliveryMethod.SELFPICKUP) {
             orderMessage = "\tYou can pick-up your order "+ date +" at the " + pharmacyNameLabel.getText() + " located at \n" +
@@ -316,21 +324,22 @@ public class CheckoutController implements Initializable {
         if (CartSingleton.getOurInstance().getPaymentMethod() == Order.PaymentMethod.CREDIT_CARD){
             paymentMessage = " You have completed payment of your order with a " + paymentMethod4Label.getText() + " card \n " +
                     "with a total cost of " + total4Label.getText() + "SEK and total VAT of " + totalVAT4Label.getText() + "\n";
-            fileArrayList.add("PAID");
+            fileArrayList.add("\tPAID");
         } else if (CartSingleton.getOurInstance().getPaymentMethod() == Order.PaymentMethod.INVOICE) {
             paymentMessage = "Your invoice has been included in a text file ";
-            fileArrayList.add("DUE");
+            fileArrayList.add("\tDUE");
         } else {
             paymentMessage = "Your invoice is included in a text file OCR Number: " + OCR + " Bank Giro: 00000-00000";
             fileArrayList.add("\tOCR Number: " + OCR + "\t Bank Giro: 00000-00000");
         }
 
-        RWFile.saveToFile(RWFile.invoice, fileArrayList);
-        sendEmail(orderMessage,paymentMessage);
         try {
+            RWFile.saveToFile(RWFile.invoice, fileArrayList);
+            sendEmail(orderMessage,paymentMessage);
             RWFile.delete();
             CartSingleton.getOurInstance().cart.clear();
             medList.clear();
+            cart.clear();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }

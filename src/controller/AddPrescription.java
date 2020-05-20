@@ -12,7 +12,6 @@ import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.converter.IntegerStringConverter;
 import model.*;
 import model.dBConnection.CommonMethods;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
@@ -20,15 +19,16 @@ import java.util.*;
 public class AddPrescription implements Initializable {
 
     private User currentUser;
-    CommonMethods commonMethods = new CommonMethods();
-    UserCommon userCommon = new UserCommon();
-    java.util.Date date = new java.util.Date();
-    Doctor currentDoctor;
-    Patient currentPatient;
-    User temp;
-    List<PrescriptionLine> prescrLines = new ArrayList<>();
-    List<Prescription> prescrList;
-    String header = "Add Prescription Error";
+    private CommonMethods commonMethods = new CommonMethods();
+    private UserCommon userCommon = new UserCommon();
+    private java.util.Date date = new java.util.Date();
+    private int i = 1;
+    private Patient currentPatient;
+    private List<PrescriptionLine> prescrLines = FXCollections.observableArrayList();
+    private List<Prescription> prescrList = commonMethods.getPrescriptionList(currentPatient);
+    private Doctor currentDoctor;
+    private User temp;
+    private String header = "Add Prescription Error";
 
     @FXML
     private Tab currentPrescriptionTab;

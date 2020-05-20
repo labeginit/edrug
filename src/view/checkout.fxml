@@ -35,7 +35,7 @@
                            <font>
                               <Font size="13.0" />
                            </font></Label>
-                        <Label fx:id="deliveryMethod1Label" layoutX="118.0" layoutY="26.0" prefHeight="19.0" prefWidth="209.0" text="Label">
+                        <Label fx:id="deliveryMethod1Label" layoutX="133.0" layoutY="25.0" prefHeight="19.0" prefWidth="209.0" text="Label">
                            <font>
                               <Font size="13.0" />
                            </font></Label>
@@ -278,7 +278,7 @@
                            <font>
                               <Font size="13.0" />
                            </font></Label>
-                        <Label layoutX="10.0" layoutY="26.0" prefHeight="19.0" prefWidth="71.0" text="Self Pickup">
+                        <Label layoutX="10.0" layoutY="26.0" prefHeight="19.0" prefWidth="89.0" text="Self Pickup">
                            <font>
                               <Font size="13.0" />
                            </font>
@@ -356,7 +356,7 @@
                            <font>
                               <Font size="13.0" />
                            </font></Label>
-                        <Label fx:id="paymentMethod4Label" layoutX="507.0" layoutY="321.0" prefHeight="16.0" prefWidth="239.0" text="Label">
+                        <Label fx:id="paymentMethod4Label" layoutX="525.0" layoutY="321.0" prefHeight="16.0" prefWidth="239.0" text="Label">
                            <font>
                               <Font size="13.0" />
                            </font></Label>
@@ -373,11 +373,11 @@
                            <font>
                               <Font size="13.0" />
                            </font></Label>
-                        <Label fx:id="totalVAT4Label" layoutX="507.0" layoutY="290.0" text="Label">
+                        <Label fx:id="totalVAT4Label" layoutX="458.0" layoutY="292.0" text="Label">
                            <font>
                               <Font size="13.0" />
                            </font></Label>
-                        <Label layoutX="609.0" layoutY="290.0" prefHeight="17.0" prefWidth="74.0" text="Total Price:">
+                        <Label layoutX="578.0" layoutY="290.0" prefHeight="17.0" prefWidth="93.0" text="Total Price:">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font></Label>

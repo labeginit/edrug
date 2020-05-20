@@ -15,15 +15,16 @@ import javafx.stage.Stage;
 import model.dBConnection.CommonMethods;
 import model.UserSingleton;
 import model.User;
-
 import java.net.URL;
 import java.nio.file.*;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
     CommonMethods common = new CommonMethods();
+    UserCommon userCommon = new UserCommon();
     private User user;
 
     @FXML
@@ -62,51 +63,47 @@ public class LoginController implements Initializable {
             user = common.getUser(ssnTextField.getText());
             if (user != null) {
                 if (ssnTextField.getText().equals(user.getSsn())) {
-                    String password = user.getPassword();
-                    if (passwordField.getText().equals(password)) {
-                        if (!user.getActive()){
-                            user.setActive(true);
-                            common.updateUser(user);
-                        }
-                        UserSingleton.getOurInstance().setUser(user);
-                        progress.setVisible(true);
-                        int type = user.getUserType();
-                        PauseTransition pt = new PauseTransition();
-                        pt.setOnFinished(event -> {
-                            System.out.println("Login successful");
-                            if (rememberMeCheckBox.isSelected()) {
-                                onRememberMeCheckBox();
+                    try {
+                        String password = user.getPassword();
+                        System.out.println(userCommon.hashPassword(passwordField.getText()));  // LA: new line to show your hashed password
+                        if (userCommon.hashPassword(passwordField.getText()).equals(password)) {  // LA: new line + try-catch
+                            if (!user.getActive()) {
+                                user.setActive(true);
+                                common.updateUser(user);
                             }
-                            try {
-                                String view;
-                                if (type == 1) {
-                                    view = "/view/patientView.fxml";
-                                } else if (type == 2) {
-                                    view = "/view/doctorView.fxml";
-                                } else {
-                                    view = "/view/adminView.fxml";
+                            UserSingleton.getOurInstance().setUser(user);
+                            progress.setVisible(true);
+                            int type = user.getUserType();
+                            PauseTransition pt = new PauseTransition();
+                            pt.setOnFinished(event -> {
+                                System.out.println("Login successful");
+                                if (rememberMeCheckBox.isSelected()) {
+                                    onRememberMeCheckBox();
                                 }
-                                Node node = (Node) ae.getSource();
-                                Scene scene = node.getScene();
-                                Stage stage = (Stage) scene.getWindow();
-
-                                Parent root = FXMLLoader.load(getClass().getResource(view));
-                                Scene newScene = new Scene(root);
-                                root.getStylesheets().add(getClass().getResource("../FileUtil/layout.css").toExternalForm());
-
-                                stage.setTitle("e-Drugs");
-                                stage.setScene(newScene);
-                            } catch (Exception ex) {
-                                System.out.println(ex.getMessage());
-                                ex.printStackTrace();
-                            }
-                        });
-                        pt.play();
-                    } else {
-                        user = null;
-                        Validation.alertPopup("Incorrect SSN or Password ", "Invalid Credentials", "Invalid Credentials");
-                        ssnTextField.setText("");
-                        passwordField.setText("");
+                                try {
+                                    String view;
+                                    if (type == 1) {
+                                        view = "/view/patientView.fxml";
+                                    } else if (type == 2) {
+                                        view = "/view/doctorView.fxml";
+                                    } else {
+                                        view = "/view/adminView.fxml";
+                                    }
+                                    userCommon.switchScene(ae, view);
+                                } catch (Exception ex) {
+                                    System.out.println(ex.getMessage());
+                                    ex.printStackTrace();
+                                }
+                            });
+                            pt.play();
+                        } else {
+                            user = null;
+                            Validation.alertPopup("Incorrect SSN or Password ", "Invalid Credentials", "Invalid Credentials");
+                            ssnTextField.setText("");
+                            passwordField.setText("");
+                        }
+                    } catch (NoSuchAlgorithmException ex) {
+                        ex.printStackTrace();
                     }
                 } else {
                     user = null;
@@ -128,17 +125,7 @@ public class LoginController implements Initializable {
         PauseTransition pt = new PauseTransition();
         pt.setOnFinished(event -> {
             try {
-                Node node = (Node) ae.getSource();
-                Scene scene = node.getScene();
-                Stage stage = (Stage) scene.getWindow();
-
-                Parent root = FXMLLoader.load(getClass().getResource("/view/registrationView.fxml"));
-                Scene newScene = new Scene(root);
-                root.getStylesheets().add(getClass().getResource("../FileUtil/layout.css").toExternalForm());
-
-                stage.setTitle("e-Drugs Registration");
-                stage.setScene(newScene);
-
+                userCommon.switchScene(ae, "/view/registrationView.fxml");
             } catch (Exception ex) {
                 ex.getMessage();
             }

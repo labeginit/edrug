@@ -1,6 +1,5 @@
 package controller;
 
-import javafx.beans.Observable;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -15,11 +14,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
+import model.Medicine;
+import model.User;
+import model.UserSingleton;
 import model.*;
 import model.dBConnection.CommonMethods;
-
 import java.io.IOException;
 import java.net.URL;
+import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +30,7 @@ import java.util.ResourceBundle;
 public class DoctorController implements Initializable {
     private User currentUser;
     private UserCommon userCommon = new UserCommon();
-    CommonMethods commonMethods = new CommonMethods();
+    private CommonMethods commonMethods = new CommonMethods();
     private List<ProdGroup> groups = commonMethods.getProductGroupList();
     private List<String> groupPaths = new ArrayList<>();
     private ObservableList<String> filters1 = FXCollections.observableArrayList(fillList(groups));
@@ -158,7 +160,7 @@ public class DoctorController implements Initializable {
                     String pass = password_Text.getText();
                     if (!pass.equalsIgnoreCase("")) {
                         if (pass.equalsIgnoreCase(password_Text2.getText())) {
-                            currentUser.setPassword(pass);
+                            currentUser.setPassword(userCommon.hashPassword(pass));
                             commonMethods.updatePassword(currentUser);
                         }
                     }
@@ -167,8 +169,8 @@ public class DoctorController implements Initializable {
                     password_Text.clear();
                     password_Text2.clear();
 
-                } catch (IllegalArgumentException illegalArgumentException) {
-                    illegalArgumentException.getSuppressed();
+                } catch (IllegalArgumentException | NoSuchAlgorithmException ex) {
+                    ex.getSuppressed();
                 }
             }
         }
@@ -237,6 +239,7 @@ public class DoctorController implements Initializable {
                 Stage stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
                 stage.setScene(new Scene(root));
                 stage.setTitle("Prescription for: " + sSN_textField.getText());
+                root.getStylesheets().add(getClass().getResource("../FileUtil/layout.css").toExternalForm());
                 stage.show();
             } else {
                 throw new Exception();
