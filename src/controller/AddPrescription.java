@@ -16,7 +16,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.*;
 
-
 public class AddPrescription implements Initializable {
 
     private User currentUser;
