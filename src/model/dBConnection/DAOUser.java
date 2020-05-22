@@ -4,7 +4,6 @@ import model.Admin;
 import model.Doctor;
 import model.Patient;
 import model.User;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,13 +29,12 @@ public class DAOUser {
     private int value1;
     private String value2;
 
-    // to be used to retrieve a specific user list (types 1-3) (internal use)
     private List<User> retrieveUserList(String usType) {
         resultSet = null;
         userList.clear();
         try {
             if (!DBConnection.dbConnection.isClosed()) {
-                resultSet = common.retrieveSet("SELECT * FROM User where type = ?;", usType); //2020-05-06 removed isActive=1
+                resultSet = common.retrieveSet("SELECT * FROM User where type = ?;", usType);
                 if (resultSet != null) {
                     while (resultSet.next()) {
                         userList.add(createObjects(resultSet));
@@ -58,13 +56,12 @@ public class DAOUser {
         }
     }
 
-    // to be used to retrieve the whole user list (internal use)
     private List<User> retrieveUserList() {
         resultSet = null;
         userList.clear();
         try {
             if (!DBConnection.dbConnection.isClosed()) {
-                resultSet = common.retrieveSet("SELECT * FROM User;");  //2020-05-06 removed isActive=1
+                resultSet = common.retrieveSet("SELECT * FROM User;");
                 if (resultSet != null) {
                     while (resultSet.next()) {
                         userList.add(createObjects(resultSet));
@@ -218,7 +215,7 @@ public class DAOUser {
                     } else {
                         value1 = 0;
                     }
-                    String query = "INSERT INTO `edrugs_test`.`User` (`ssn`, `type`, `first_name`, `last_name`, `birth_date`, `zip_code`, `city`, `address`, `email`, `phone_number`, `password`, `active`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                    String query = "INSERT INTO `User` (`ssn`, `type`, `first_name`, `last_name`, `birth_date`, `zip_code`, `city`, `address`, `email`, `phone_number`, `password`, `active`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
                     linesAffected = common.insertUser(query, sSN, userType, firstName, lastName, birthDate, zipCode, city, address, email, phoneNumber, password, value1);
                 } else {
                     throw new NullPointerException("The user object is null");
@@ -253,7 +250,7 @@ public class DAOUser {
                     } else {
                         value1 = 0;
                     }
-                    String query = "UPDATE `edrugs_test`.`User` SET `first_name` = ?, `last_name` = ?, `birth_date` = ?, `zip_code` = ?, `city` = ?,`address` = ?, `email` = ?, `phone_number` = ?, `active` = ? WHERE (`ssn` = ?);";
+                    String query = "UPDATE `User` SET `first_name` = ?, `last_name` = ?, `birth_date` = ?, `zip_code` = ?, `city` = ?,`address` = ?, `email` = ?, `phone_number` = ?, `active` = ? WHERE (`ssn` = ?);";
                     linesAffected = common.updateUser(query, sSN, firstName, lastName, birthDate, zipCode, city, address, email, phoneNumber, value1);
                 } else {
                     throw new NullPointerException("The user object is null");
@@ -275,7 +272,7 @@ public class DAOUser {
                 if (user != null) {
                     password = user.getPassword();
                     sSN = user.getSsn();
-                    String query = "UPDATE `edrugs_test`.`User` SET `password` = ? WHERE (`ssn` = ?);";
+                    String query = "UPDATE `User` SET `password` = ? WHERE (`ssn` = ?);";
                     linesAffected = common.updateRecordStr(query, password, sSN);
                 } else {
                     throw new NullPointerException("The user object is null");
@@ -296,7 +293,7 @@ public class DAOUser {
             if (!DBConnection.dbConnection.isClosed()) {
                 if (user != null) {
                     sSN = user.getSsn();
-                    String query = "UPDATE `edrugs_test`.`User` SET `active` = '0' WHERE (`ssn` = ?)";
+                    String query = "UPDATE `User` SET `active` = '0' WHERE (`ssn` = ?)";
                     linesAffected = common.updateRecordStr(query, sSN);
                 } else {
                     throw new NullPointerException("The user object is null");
