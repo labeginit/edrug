@@ -397,4 +397,28 @@ public class DAOCommon {
         }
         return linesAffected;
     }
+    protected int insertDelivery(String queryString, int id, String firstName, String lastName, Date shipDate, int zipcode, String city, String address, String phoneNumber) {
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
+                prepStmt.setInt(1, id);
+                prepStmt.setString(2, firstName);
+                prepStmt.setString(3, lastName);
+                prepStmt.setString(4, address);
+                prepStmt.setString(5, city);
+                prepStmt.setInt(6,zipcode);
+                prepStmt.setString(7, phoneNumber);
+                prepStmt.setDate(7,shipDate);
+
+                linesAffected = prepStmt.executeUpdate();
+                prepStmt.close();
+            }
+        } catch (SQLException | NullPointerException ex) {
+            System.out.println("Error when executing statement!");
+            System.out.println(ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return linesAffected;
+    }
 }
