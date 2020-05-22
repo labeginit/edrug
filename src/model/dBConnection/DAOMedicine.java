@@ -191,7 +191,7 @@ public class DAOMedicine {
                     } else {
                         value3 = 0;
                     }
-                    String query = "INSERT INTO `edrugs_test`.`Medicine` (`article`, `Product_group_id`, `onPrescription`, `name`, `producer`, `description`, `package_size`, `quantity_available`, `price`, `search_terms`, `active`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                    String query = "INSERT INTO `Medicine` (`article`, `Product_group_id`, `onPrescription`, `name`, `producer`, `description`, `package_size`, `quantity_available`, `price`, `search_terms`, `active`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
                     linesAffected = common.insertMedicine(query, articleNo, groupId, value1, name, producer, description, packageSize, quantity, price, searchTerms, value3);
                 } else {
                     throw new NullPointerException("The user object is null");
@@ -233,7 +233,7 @@ public class DAOMedicine {
                     } else {
                         value3 = 0;
                     }
-                    String query = "UPDATE `edrugs_test`.`Medicine` SET `Product_group_id` = ?, `onPrescription` = ?, `name` = ?, `producer` = ?, `description` = ?, `package_size` = ?, `quantity_available` = ?, `price` = ?, `search_terms` = ?, `active` = ? WHERE (`article` = ?);";
+                    String query = "UPDATE `Medicine` SET `Product_group_id` = ?, `onPrescription` = ?, `name` = ?, `producer` = ?, `description` = ?, `package_size` = ?, `quantity_available` = ?, `price` = ?, `search_terms` = ?, `active` = ? WHERE (`article` = ?);";
                     linesAffected = common.updateMedicine(query, articleNo, groupId, value1, name, producer, description, packageSize, quantity, price, searchTerms, value3);
                 } else {
                     throw new NullPointerException("The user object is null");
@@ -348,7 +348,7 @@ public class DAOMedicine {
                     articleNo = medicine.getArticleNo();
                     quantity = medicine.getQuantity();
 
-                    String query = "UPDATE `edrugs_test`.`Medicine` SET `quantity_available` = ? WHERE (`article` = ?);";
+                    String query = "UPDATE `Medicine` SET `quantity_available` = ? WHERE (`article` = ?);";
                     linesAffected = common.updateMedicineQuantity(query, quantity, articleNo);
                 } else {
                     throw new NullPointerException("The user object is null");

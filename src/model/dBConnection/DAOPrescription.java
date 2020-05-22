@@ -43,7 +43,7 @@ public class DAOPrescription {
                     endDate = prescription.getEndDate();
                     diagnosis = prescription.getDiagnosis();
 
-                    String queryHeader = "INSERT INTO `edrugs_test`.`Prescription` (`id`, `patient_ssn`, `user_ssn`, `date`, `diagnosis`, `end_date`) VALUES (?, ?, ?, ?, ?, ?);";
+                    String queryHeader = "INSERT INTO `Prescription` (`id`, `patient_ssn`, `user_ssn`, `date`, `diagnosis`, `end_date`) VALUES (?, ?, ?, ?, ?, ?);";
                     linesAffected = common.insertPrescriptionHeader(queryHeader, id, patientSSN, doctorSSN, startdate, diagnosis, endDate);
 
                     specification = prescription.getSpecification();
@@ -51,7 +51,7 @@ public class DAOPrescription {
                         article = element.getMedicine().getArticleNo();
                         quantityPrescribed = element.getQuantityPrescribed();
                         instructions = element.getInstructions();
-                        String queryLine = "INSERT INTO `edrugs_test`.`Prescription_has_Medicine` (`prescription_id`, `prescription_patient_ssn`, `article`, `quantity_prescribed`, `quantity_consumed`, `instructions`) VALUES (?, ?, ?, ?, 0, ?);";
+                        String queryLine = "INSERT INTO `Prescription_has_Medicine` (`prescription_id`, `prescription_patient_ssn`, `article`, `quantity_prescribed`, `quantity_consumed`, `instructions`) VALUES (?, ?, ?, ?, 0, ?);";
                         linesAffected = linesAffected + common.insertPrescriptionLine(queryLine, id, patientSSN, article, quantityPrescribed, instructions);
                     }
                 } else {
@@ -218,7 +218,7 @@ public class DAOPrescription {
                     patientSSN = pl.getPatient().getSsn();
                     article = pl.getArticle();
 
-                    String query = "DELETE FROM edrugs_test.Prescription_has_Medicine WHERE (prescription_id = ?) and (prescription_patient_ssn = ?) and (article = ?);";
+                    String query = "DELETE FROM Prescription_has_Medicine WHERE (prescription_id = ?) and (prescription_patient_ssn = ?) and (article = ?);";
                     common.deletePrescriptionHasMedicine(query, id, patientSSN, article);
                 } else {
                     throw new NullPointerException("The user object is null");
@@ -240,7 +240,7 @@ public class DAOPrescription {
                     id = pl.getPrescId();
                     patientSSN = pl.getPatient().getSsn();
 
-                    String query = "DELETE FROM edrugs_test.Prescription WHERE (id = ?) and (patient_ssn = ?) and (user_ssn = ?);";
+                    String query = "DELETE FROM Prescription WHERE (id = ?) and (patient_ssn = ?) and (user_ssn = ?);";
                     common.deletePrescription(query, id, patientSSN, currentUser.getSsn());
                 } else {
                     throw new NullPointerException("The user object is null");

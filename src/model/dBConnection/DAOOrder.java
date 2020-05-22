@@ -33,7 +33,7 @@ public class DAOOrder {
         id = 0;
         try {
             if (!DBConnection.dbConnection.isClosed()) {
-                resultSet = common.retrieveSet("SELECT MAX(id) AS maxId FROM `edrugs_test`.`Order`;");
+                resultSet = common.retrieveSet("SELECT MAX(id) AS maxId FROM `Order`;");
             }
             if (resultSet != null) {
                 while (resultSet.next()) {
@@ -56,7 +56,7 @@ public class DAOOrder {
         orders.clear();
         try {
             if (!DBConnection.dbConnection.isClosed()) {
-                resultSet = common.retrieveSet("SELECT * FROM Order;");
+                resultSet = common.retrieveSet("SELECT * FROM `Order`;");
                 if (resultSet != null) {
                     while (resultSet.next()) {
                         orders.add(createObjects(resultSet));
@@ -146,7 +146,7 @@ public class DAOOrder {
                     totalSum = order.getTotalSum();
                     totalVAT = order.getTotalVAT();
                     specification = order.getSpecification();
-                    String query = "INSERT INTO `edrugs_test`.`Order` (`id`, `user_ssn`, `date`, `delivery_method`, `payment_method`, `total`, `total_VAT`) VALUES (?, ?, ?, ?, ?, ?, ?);";
+                    String query = "INSERT INTO `Order` (`id`, `user_ssn`, `date`, `delivery_method`, `payment_method`, `total`, `total_VAT`) VALUES (?, ?, ?, ?, ?, ?, ?);";
                     linesAffected = common.insertOrder(query, id, user.getSsn(), date, deliveryMethod, paymentMethod, totalSum, totalVAT);
                     specification = order.getSpecification();
                     for (OrderLine element : specification) {
@@ -155,7 +155,7 @@ public class DAOOrder {
                         user = element.getUser();
                         price = element.getPrice();
                         quantity = element.getQuantity();
-                        String queryString = "INSERT INTO `edrugs_test`.`Order_has_Medicine` (`order_id`, `user_ssn`,`article`, `price`, `quantity`) VALUES (?, ?, ?, ?, ?);";
+                        String queryString = "INSERT INTO `Order_has_Medicine` (`order_id`, `user_ssn`,`article`, `price`, `quantity`) VALUES (?, ?, ?, ?, ?);";
                         linesAffected = linesAffected + common.insertOrderHasMedicine(queryString, id, user.getSsn(),articleNo, price, quantity);
                     }
                 } else {
@@ -174,7 +174,7 @@ public class DAOOrder {
 
     protected Order getOrder(int id) {
         Order temp = null;
-        String query = "SELECT * FROM Order WHERE id = " + id + ";";
+        String query = "SELECT * FROM `Order` WHERE id = " + id + ";";
         try {
             temp = retrieveOrder(query, id);
         } catch (Exception ex) {
