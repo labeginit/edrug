@@ -374,7 +374,7 @@ public class DAOCommon {
         return linesAffected;
     }
 
-    protected int insertOrder(String queryString, int id, String userSSN, Date date, Order.DeliveryMethod deliveryMethod, Order.PaymentMethod paymentMethod, double totalSum, double totalVAT) {
+    protected int insertOrder(String queryString, int id, String userSSN, Date date, Order.DeliveryMethod deliveryMethod, Order.PaymentMethod paymentMethod, double totalSum, double totalVAT, int deliveryId, int pharmacyId) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
@@ -385,6 +385,8 @@ public class DAOCommon {
                 prepStmt.setString(5,paymentMethod.toString());
                 prepStmt.setDouble(6, totalSum);
                 prepStmt.setDouble(7,totalVAT);
+                prepStmt.setInt(8,deliveryId);
+                prepStmt.setInt(9, pharmacyId);
 
                 linesAffected = prepStmt.executeUpdate();
                 prepStmt.close();

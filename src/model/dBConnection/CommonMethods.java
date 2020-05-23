@@ -12,6 +12,7 @@ public class CommonMethods {
     public DAOMedicine daoMedicine = new DAOMedicine();
     public DAOPrescription daoPrescription = new DAOPrescription();
     public DAOPickupPharmacies daoPickupPharmacies = new DAOPickupPharmacies();
+    public DAODelivery daoDelivery = new DAODelivery();
     public DAOOrder daoOrder = new DAOOrder();
     public int linesAffected;
 
@@ -206,6 +207,10 @@ public class CommonMethods {
             maxId = daoPrescription.retrieveLastPrescriptionId();
         } else if (myClass.getName().equalsIgnoreCase("model.Order")) {
             maxId = daoOrder.retrieveLastOrderId();
+        } else if (myClass.getName().equalsIgnoreCase("model.Delivery")) {
+            maxId = daoDelivery.retrieveLastDeliveryId();
+        } else if (myClass.getName().equalsIgnoreCase("model.Pharmacy")) {
+            maxId = daoPickupPharmacies.retrieveLastPharmacyId();
         }
         return maxId;
     }
@@ -239,6 +244,14 @@ public class CommonMethods {
         }
         return order;
     }
+
+    //*****************************
+
+    public int addDelivery(Delivery delivery) { return daoDelivery.addDelivery(delivery); }
+
+    public List<Delivery> retrieveDeliveryList() { return  daoDelivery.retrieveDeliveryList(); }
+
+    public Delivery updateDelivery(int id) { return daoDelivery.getDelivery(id); }
 
 }
 

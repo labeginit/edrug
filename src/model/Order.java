@@ -14,9 +14,11 @@ public class Order {
     private double totalSum;
     private double totalVAT;
     private List<OrderLine> specification;
+    private int deliveryId;
+    private int pharmacyId;
 
     public Order(int id, User user, Date date,  DeliveryMethod deliveryMethod, PaymentMethod paymentMethod,
-                 List<OrderLine> specification, double totalSum, double totalVAT){
+                 List<OrderLine> specification, double totalSum, double totalVAT, int deliveryId, int pharmacyId){
         setId(id);
         setUser(user);
         setDate(date);
@@ -25,6 +27,8 @@ public class Order {
         setSpecification(specification);
         setTotalSum(totalSum);
         setTotalVAT(totalVAT);
+        setDeliveryId(deliveryId);
+        setPharmacyId(pharmacyId);
     }
 
     public void setId(int id) {
@@ -89,6 +93,22 @@ public class Order {
 
     public List<OrderLine> getSpecification() {
         return specification;
+    }
+
+    public int getDeliveryId() {
+        return deliveryId;
+    }
+
+    public void setDeliveryId(int deliveryId) {
+        this.deliveryId = deliveryId;
+    }
+
+    public int getPharmacyId() {
+        return pharmacyId;
+    }
+
+    public void setPharmacyId(int pharmacyId) {
+        this.pharmacyId = pharmacyId;
     }
 
     @Override

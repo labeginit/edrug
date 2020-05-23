@@ -27,6 +27,8 @@ public class DAOOrder {
     private String name = "";
     private double price;
     private int quantity;
+    private int deliveryId;
+    private int pharmacyId;
 
 
     protected int retrieveLastOrderId() {
@@ -88,8 +90,10 @@ public class DAOOrder {
         totalSum = resultSet.getDouble("total");
         totalVAT = resultSet.getDouble("total_VAT");
         specification = retrieveOrderSpecification(id);
+        deliveryId = resultSet.getInt("delivery_id");
+        pharmacyId = resultSet.getInt("pharmacy_id");
 
-        Order order = new Order(id,user,date,deliveryMethod,paymentMethod, specification, totalSum,totalVAT);
+        Order order = new Order(id,user,date,deliveryMethod,paymentMethod, specification, totalSum,totalVAT,deliveryId,pharmacyId);
 
         return order;
     }
@@ -146,8 +150,10 @@ public class DAOOrder {
                     totalSum = order.getTotalSum();
                     totalVAT = order.getTotalVAT();
                     specification = order.getSpecification();
-                    String query = "INSERT INTO `Order` (`id`, `user_ssn`, `date`, `delivery_method`, `payment_method`, `total`, `total_VAT`) VALUES (?, ?, ?, ?, ?, ?, ?);";
-                    linesAffected = common.insertOrder(query, id, user.getSsn(), date, deliveryMethod, paymentMethod, totalSum, totalVAT);
+                    deliveryId = order.getDeliveryId();
+                    pharmacyId = order.getPharmacyId();
+                    String query = "INSERT INTO `Order` (`id`, `user_ssn`, `date`, `delivery_method`, `payment_method`, `total`, `total_VAT`,`delivery_id`, `pharmacy_id`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+                    linesAffected = common.insertOrder(query, id, user.getSsn(), date, deliveryMethod, paymentMethod, totalSum, totalVAT, deliveryId, pharmacyId);
                     specification = order.getSpecification();
                     for (OrderLine element : specification) {
                         articleNo = element.getMedicine().getArticleNo();
@@ -198,8 +204,10 @@ public class DAOOrder {
                         totalSum = resultSet.getDouble("total");
                         totalVAT = resultSet.getDouble("total_VAT");
                         specification = retrieveOrderSpecification(id);
+                        deliveryId = resultSet.getInt("delivery_id");
+                        pharmacyId = resultSet.getInt("pharmacy_id");
 
-                       order = new Order(id, user, date, deliveryMethod, paymentMethod, specification, totalSum, totalVAT);
+                       order = new Order(id, user, date, deliveryMethod, paymentMethod, specification, totalSum, totalVAT, deliveryId, pharmacyId);
                     }
                 } else {
                     System.out.println("Empty resultSet");

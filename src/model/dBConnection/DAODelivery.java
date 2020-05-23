@@ -1,8 +1,6 @@
 package model.dBConnection;
 
 import model.Delivery;
-import model.Order;
-import model.User;
 
 import java.sql.Date;
 import java.sql.ResultSet;

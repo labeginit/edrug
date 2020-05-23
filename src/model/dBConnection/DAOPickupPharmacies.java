@@ -21,6 +21,27 @@ public class DAOPickupPharmacies {
     private String phoneNumber;
     private String email;
 
+    protected int retrieveLastPharmacyId() {
+        storeId = 0;
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                resultSet = common.retrieveSet("SELECT MAX(id) AS maxId FROM `edrugs_test`.`Pharmacy`;");
+            }
+            if (resultSet != null) {
+                while (resultSet.next()) {
+                    return storeId = resultSet.getInt("maxId");
+                }
+            } else return storeId;
+
+        } catch (SQLException ex) {
+            System.out.println("Error while working with ResultSet!");
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            return storeId;
+        }
+    }
     protected List<Pharmacy> retrievePharmacyList() {
         resultSet = null;
         pharmacies.clear();

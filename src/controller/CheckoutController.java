@@ -270,6 +270,8 @@ public class CheckoutController implements Initializable {
         Random rand = new Random();
         int OCR = rand.nextInt(100000000);
         int id = 1 + commonMethods.getLastId(Order.class);
+        int deliveryId = 1 + commonMethods.getLastId(Delivery.class);
+        Pharmacy pharmacy = pickUpComboBox.getValue();
         java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
         Time time = new Time(Calendar.HOUR,Calendar.MINUTE,Calendar.SECOND);
         String paymentMessage;
@@ -277,8 +279,17 @@ public class CheckoutController implements Initializable {
         ArrayList<String> fileArrayList= new ArrayList<>();
 
         try {
-            Order order = new Order(id, user, date, delivery, payment, medList, Double.parseDouble(total4Label.getText()), Double.parseDouble(totalVAT4Label.getText()));
-            commonMethods.addOrder(order);
+            if (CartSingleton.getOurInstance().getDeliveryMethod() == Order.DeliveryMethod.SELFPICKUP) {
+                Order order = new Order(id, user, date, delivery, payment, medList, Double.parseDouble(total4Label.getText()), Double.parseDouble(totalVAT4Label.getText()),0,pharmacy.getStoreId());
+                commonMethods.addOrder(order);
+                userCommon.clearCart(cart);
+            } else {
+                Order order = new Order(id, user, date, delivery, payment, medList, Double.parseDouble(total4Label.getText()), Double.parseDouble(totalVAT4Label.getText()),deliveryId,0);
+                Delivery delivery = new Delivery(deliveryId,firstName4Label.getText(),lastName4Label.getText(),address4Label.getText(),city4Label.getText(),Integer.parseInt(zipcode4Label.getText()),phoneNumber1TextField.getText(), date);
+                commonMethods.addOrder(order);
+                commonMethods.addDelivery(delivery);
+            }
+
         } finally {
             Validation.alertPopup(Alert.AlertType.INFORMATION, "Your Order #: " + id + " is registered. You will receive an email shortly.", "Thank you for choosing us", "Your order is being processed");
             try {
