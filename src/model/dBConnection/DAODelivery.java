@@ -77,8 +77,8 @@ public class DAODelivery {
                     address = delivery.getAddress();
                     phoneNumber = delivery.getPhoneNumber();
 
-                    String query = "INSERT INTO `edrugs_test`.`Delivery` (`order_id`, `first_name`, `last_name`, `ship_date`, `zipcode`, `city`, `address`, `phone_number`) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
-                    linesAffected = common.insertDelivery(query, orderId, firstName, lastName,address , city, zipcode, phoneNumber, shipDate);
+                    String query = "INSERT INTO `edrugs_test`.`Delivery` (`order_id`, `first_name`, `last_name`, `address`, `city`, `zipcode`, `phone_number`, `ship_date`) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+                    linesAffected = common.insertDelivery(query, orderId, firstName, lastName, address , city, zipcode, phoneNumber, shipDate);
                 } else {
                     throw new NullPointerException("The delivery object is null");
                 }
