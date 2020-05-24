@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DAODelivery {
-    private int id;
+    private int orderId;
     private String firstName;
     private String lastName;
     private String address;
@@ -22,27 +22,6 @@ public class DAODelivery {
     private int linesAffected = 0;
     private DAOCommon common = new DAOCommon();
 
-    protected int retrieveLastDeliveryId() {
-        id = 0;
-        try {
-            if (!DBConnection.dbConnection.isClosed()) {
-                resultSet = common.retrieveSet("SELECT MAX(id) AS maxId FROM `edrugs_test`.`Delivery`;");
-            }
-            if (resultSet != null) {
-                while (resultSet.next()) {
-                    return id = resultSet.getInt("maxId");
-                }
-            } else return id;
-
-        } catch (SQLException ex) {
-            System.out.println("Error while working with ResultSet!");
-            ex.printStackTrace();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        } finally {
-            return id;
-        }
-    }
 
     protected List<Delivery> retrieveDeliveryList() {
         resultSet = null;
@@ -73,7 +52,7 @@ public class DAODelivery {
     }
 
     protected Delivery createObjects(ResultSet resultSet) throws Exception{
-        id = resultSet.getInt("delivery_id");
+        orderId = resultSet.getInt("order_id");
         firstName = resultSet.getString("first_name");
         lastName = resultSet.getString("last_name");
         shipDate = resultSet.getDate("ship_date");
@@ -81,7 +60,7 @@ public class DAODelivery {
         city = resultSet.getString("city");
         address = resultSet.getString("address");
         phoneNumber = resultSet.getString("phone_number");
-        Delivery delivery = new Delivery(id,firstName,lastName,address,city,zipcode,phoneNumber,shipDate);
+        Delivery delivery = new Delivery(orderId,firstName,lastName,address,city,zipcode,phoneNumber,shipDate);
         return delivery;
     }
 
@@ -89,7 +68,7 @@ public class DAODelivery {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 if (delivery != null) {
-                    id = delivery.getId();
+                    orderId = delivery.getOrderId();
                     firstName = delivery.getFirstName();
                     lastName = delivery.getLastName();
                     shipDate = delivery.getDate();
@@ -98,8 +77,8 @@ public class DAODelivery {
                     address = delivery.getAddress();
                     phoneNumber = delivery.getPhoneNumber();
 
-                    String query = "INSERT INTO `edrugs_test`.`Delivery` (`delivery_id`, `first_name`, `last_name`, `ship_date`, `zip_code`, `city`, `address`, `phone_number`) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
-                    linesAffected = common.insertDelivery(query, id, firstName, lastName, shipDate, zipcode, city, address, phoneNumber);
+                    String query = "INSERT INTO `edrugs_test`.`Delivery` (`order_id`, `first_name`, `last_name`, `ship_date`, `zipcode`, `city`, `address`, `phone_number`) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+                    linesAffected = common.insertDelivery(query, orderId, firstName, lastName,address , city, zipcode, phoneNumber, shipDate);
                 } else {
                     throw new NullPointerException("The delivery object is null");
                 }
@@ -111,54 +90,6 @@ public class DAODelivery {
             ex.printStackTrace();
         } finally {
             return linesAffected;
-        }
-    }
-
-    protected Delivery getDelivery(int id) {
-        Delivery temp = null;
-        String query = "SELECT * FROM Order WHERE id = " + id + ";";
-        try {
-            temp = retrieveDelivery(query, id);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return temp;
-    }
-    private Delivery retrieveDelivery(String query, int id) {
-        Delivery delivery = null;
-        try {
-            if (!DBConnection.dbConnection.isClosed()) {
-                resultSet = common.retrieveSet(query);
-                if (resultSet != null) {
-                    if (resultSet.first()) {
-                        this.id = resultSet.getInt("delivery_id");
-                        firstName = resultSet.getString("first_name");
-                        lastName = resultSet.getString("last_name");
-                        address = resultSet.getString("address");
-                        city = resultSet.getString("city");
-                        zipcode = resultSet.getInt("zipcode");
-                        phoneNumber = resultSet.getString("phone_number");
-                        shipDate = resultSet.getDate("ship_date");
-
-                        delivery = new Delivery(id, firstName, lastName, address, city, zipcode, phoneNumber, shipDate);
-                    }
-                } else {
-                    System.out.println("Empty resultSet");
-                    return delivery;
-                }
-            }
-        } catch (SQLException ex) {
-            System.out.println("Error while working with ResultSet!");
-            ex.printStackTrace();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        } finally {
-            try {
-                resultSet.close();
-            }catch (Exception ex) {
-                ex.printStackTrace();
-            }
-            return delivery;
         }
     }
 }

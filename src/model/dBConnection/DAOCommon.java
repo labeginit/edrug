@@ -307,8 +307,10 @@ public class DAOCommon {
         } catch (SQLException | NullPointerException ex) {
             System.out.println("Error when executing statement!");
             System.out.println(ex.getMessage());
+            ex.printStackTrace();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
         return linesAffected;
     }
@@ -330,8 +332,10 @@ public class DAOCommon {
         } catch (SQLException | NullPointerException ex) {
             System.out.println("Error when executing statement!");
             System.out.println(ex.getMessage());
+            ex.printStackTrace();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
         return linesAffected;
     }
@@ -368,13 +372,15 @@ public class DAOCommon {
         } catch (SQLException | NullPointerException ex) {
             System.out.println("Error when executing statement!");
             System.out.println(ex.getMessage());
+            ex.printStackTrace();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
         return linesAffected;
     }
 
-    protected int insertOrder(String queryString, int id, String userSSN, Date date, Order.DeliveryMethod deliveryMethod, Order.PaymentMethod paymentMethod, double totalSum, double totalVAT, int deliveryId, int pharmacyId) {
+    protected int insertOrderDelivery(String queryString, int id, String userSSN, Date date, Order.DeliveryMethod deliveryMethod, Order.PaymentMethod paymentMethod, double totalSum, double totalVAT, Integer deliveryId) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
@@ -386,7 +392,6 @@ public class DAOCommon {
                 prepStmt.setDouble(6, totalSum);
                 prepStmt.setDouble(7,totalVAT);
                 prepStmt.setInt(8,deliveryId);
-                prepStmt.setInt(9, pharmacyId);
 
                 linesAffected = prepStmt.executeUpdate();
                 prepStmt.close();
@@ -394,12 +399,42 @@ public class DAOCommon {
         } catch (SQLException | NullPointerException ex) {
             System.out.println("Error when executing statement!");
             System.out.println(ex.getMessage());
+            ex.printStackTrace();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
         return linesAffected;
     }
-    protected int insertDelivery(String queryString, int id, String firstName, String lastName, Date shipDate, int zipcode, String city, String address, String phoneNumber) {
+
+    protected int insertOrderPharmacy(String queryString, int id, String userSSN, Date date, Order.DeliveryMethod deliveryMethod, Order.PaymentMethod paymentMethod, double totalSum, double totalVAT, Integer pharmacyId ) {
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
+                prepStmt.setInt(1, id);
+                prepStmt.setString(2, userSSN);
+                prepStmt.setDate(3, date);
+                prepStmt.setString(4,deliveryMethod.toString());
+                prepStmt.setString(5,paymentMethod.toString());
+                prepStmt.setDouble(6, totalSum);
+                prepStmt.setDouble(7,totalVAT);
+                prepStmt.setInt(8, pharmacyId);
+
+
+                linesAffected = prepStmt.executeUpdate();
+                prepStmt.close();
+            }
+        } catch (SQLException | NullPointerException ex) {
+            System.out.println("Error when executing statement!");
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            ex.printStackTrace();
+        }
+        return linesAffected;
+    }
+    protected int insertDelivery(String queryString, int id, String firstName, String lastName, String address, String city, int zipcode, String phoneNumber, Date shipDate) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
@@ -410,7 +445,7 @@ public class DAOCommon {
                 prepStmt.setString(5, city);
                 prepStmt.setInt(6,zipcode);
                 prepStmt.setString(7, phoneNumber);
-                prepStmt.setDate(7,shipDate);
+                prepStmt.setDate(8,shipDate);
 
                 linesAffected = prepStmt.executeUpdate();
                 prepStmt.close();
@@ -418,8 +453,10 @@ public class DAOCommon {
         } catch (SQLException | NullPointerException ex) {
             System.out.println("Error when executing statement!");
             System.out.println(ex.getMessage());
+            ex.printStackTrace();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
+            ex.printStackTrace();
         }
         return linesAffected;
     }

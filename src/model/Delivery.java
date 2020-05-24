@@ -3,7 +3,7 @@ package model;
 import java.sql.Date;
 
 public class Delivery {
-    private int id;
+    private int orderId;
     private String firstName;
     private String lastName;
     private String address;
@@ -12,8 +12,8 @@ public class Delivery {
     private String phoneNumber;
     private Date date;
 
-    public Delivery(int id, String firstName, String lastName, String address, String city, int zipcode, String phoneNumber, Date date) {
-        this.id = id;
+    public Delivery(int orderId, String firstName, String lastName, String address, String city, int zipcode, String phoneNumber, Date date) {
+        this.orderId = orderId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -23,8 +23,8 @@ public class Delivery {
         this.date = date;
     }
 
-    public int getId() {
-        return id;
+    public int getOrderId() {
+        return orderId;
     }
 
     public String getFirstName() {

@@ -207,8 +207,6 @@ public class CommonMethods {
             maxId = daoPrescription.retrieveLastPrescriptionId();
         } else if (myClass.getName().equalsIgnoreCase("model.Order")) {
             maxId = daoOrder.retrieveLastOrderId();
-        } else if (myClass.getName().equalsIgnoreCase("model.Delivery")) {
-            maxId = daoDelivery.retrieveLastDeliveryId();
         } else if (myClass.getName().equalsIgnoreCase("model.Pharmacy")) {
             maxId = daoPickupPharmacies.retrieveLastPharmacyId();
         }
@@ -251,7 +249,6 @@ public class CommonMethods {
 
     public List<Delivery> retrieveDeliveryList() { return  daoDelivery.retrieveDeliveryList(); }
 
-    public Delivery updateDelivery(int id) { return daoDelivery.getDelivery(id); }
 
 }
 

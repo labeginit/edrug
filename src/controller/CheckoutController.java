@@ -29,7 +29,7 @@ public class CheckoutController implements Initializable {
     private UserCommon userCommon = new UserCommon();
     private List<OrderLine> medList = CartSingleton.getOurInstance().cart;
     private List<OrderLine> cart = CartSingleton.getOurInstance().cart;
-    private Order.DeliveryMethod delivery = CartSingleton.getOurInstance().getDeliveryMethod();
+    private Order.DeliveryMethod deliveryMethod = CartSingleton.getOurInstance().getDeliveryMethod();
     private Order.PaymentMethod payment = CartSingleton.getOurInstance().getPaymentMethod();
     private List<Pharmacy> pharmacyList = commonMethods.retrievePharmacyList();
     private ObservableList<Pharmacy> pharmacies = FXCollections.observableArrayList(pharmacyList);
@@ -270,9 +270,9 @@ public class CheckoutController implements Initializable {
         Random rand = new Random();
         int OCR = rand.nextInt(100000000);
         int id = 1 + commonMethods.getLastId(Order.class);
-        int deliveryId = 1 + commonMethods.getLastId(Delivery.class);
-        Pharmacy pharmacy = pickUpComboBox.getValue();
         java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+        Delivery delivery = new Delivery(id,firstName4Label.getText(),lastName4Label.getText(),address4Label.getText(),city4Label.getText(),Integer.parseInt(zipcode4Label.getText()),phoneNumber1TextField.getText(), date);
+        Pharmacy pharmacy = pickUpComboBox.getValue();
         Time time = new Time(Calendar.HOUR,Calendar.MINUTE,Calendar.SECOND);
         String paymentMessage;
         String orderMessage;
@@ -280,14 +280,12 @@ public class CheckoutController implements Initializable {
 
         try {
             if (CartSingleton.getOurInstance().getDeliveryMethod() == Order.DeliveryMethod.SELFPICKUP) {
-                Order order = new Order(id, user, date, delivery, payment, medList, Double.parseDouble(total4Label.getText()), Double.parseDouble(totalVAT4Label.getText()),0,pharmacy.getStoreId());
+                Order order = new Order(id,user,date,deliveryMethod,payment,medList,Double.parseDouble(total4Label.getText()),Double.parseDouble(totalVAT4Label.getText()),delivery,pharmacy.getStoreId());
                 commonMethods.addOrder(order);
-                userCommon.clearCart(cart);
             } else {
-                Order order = new Order(id, user, date, delivery, payment, medList, Double.parseDouble(total4Label.getText()), Double.parseDouble(totalVAT4Label.getText()),deliveryId,0);
-                Delivery delivery = new Delivery(deliveryId,firstName4Label.getText(),lastName4Label.getText(),address4Label.getText(),city4Label.getText(),Integer.parseInt(zipcode4Label.getText()),phoneNumber1TextField.getText(), date);
-                commonMethods.addOrder(order);
                 commonMethods.addDelivery(delivery);
+                Order order = new Order(id, user, date, deliveryMethod, payment, medList, Double.parseDouble(total4Label.getText()), Double.parseDouble(totalVAT4Label.getText()), delivery, 0);
+                commonMethods.addOrder(order);
             }
 
         } finally {
@@ -325,6 +323,7 @@ public class CheckoutController implements Initializable {
             orderMessage = "\tYou can pick-up your order "+ date +" at the " + pharmacyNameLabel.getText() + " located at \n" +
                     address4Label.getText() + " in " + city4Label.getText() + " " + zipcode4Label.getText() + ".\nYou can contact them" +
                     " by phone " + phoneNumber3Label.getText() + " or email: " + emailLabel.getText() + "\n";
+            userCommon.clearCart(cart);
         } else if (CartSingleton.getOurInstance().getDeliveryMethod() == Order.DeliveryMethod.POSTEN) {
             orderMessage = "\tYour order has been sent " + date + " to " + firstName1TextField.getText() + " " + lastName1TextField.getText() + " \n" +
                     "Allow 3-5 business days for shipping to " + address4Label.getText() + " in " + city4Label.getText() + " " + zipcode4Label.getText() + "\n";
