@@ -65,8 +65,7 @@ public class LoginController implements Initializable {
                 if (ssnTextField.getText().equals(user.getSsn())) {
                     try {
                         String password = user.getPassword();
-                        System.out.println(userCommon.hashPassword(passwordField.getText()));  // LA: new line to show your hashed password
-                        if (userCommon.hashPassword(passwordField.getText()).equals(password)) {  // LA: new line + try-catch
+                        if (userCommon.hashPassword(passwordField.getText()).equals(password)) {
                             if (!user.getActive()) {
                                 user.setActive(true);
                                 common.updateUser(user);
@@ -76,7 +75,6 @@ public class LoginController implements Initializable {
                             int type = user.getUserType();
                             PauseTransition pt = new PauseTransition();
                             pt.setOnFinished(event -> {
-                                System.out.println("Login successful");
                                 if (rememberMeCheckBox.isSelected()) {
                                     onRememberMeCheckBox();
                                 }
