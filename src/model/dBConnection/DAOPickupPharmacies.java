@@ -1,7 +1,6 @@
 package model.dBConnection;
 
 import model.*;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -25,7 +24,7 @@ public class DAOPickupPharmacies {
         storeId = 0;
         try {
             if (!DBConnection.dbConnection.isClosed()) {
-                resultSet = common.retrieveSet("SELECT MAX(id) AS maxId FROM `edrugs_test`.`Pharmacy`;");
+                resultSet = common.retrieveSet("SELECT MAX(id) AS maxId FROM `Pharmacy`;");
             }
             if (resultSet != null) {
                 while (resultSet.next()) {
