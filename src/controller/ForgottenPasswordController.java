@@ -1,19 +1,11 @@
 package controller;
 
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
 import model.dBConnection.CommonMethods;
 import model.User;
-
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-
 import javafx.event.ActionEvent;
-
 import java.net.URL;
 import java.util.Random;
 import java.util.ResourceBundle;
@@ -97,12 +89,13 @@ public class ForgottenPasswordController implements Initializable {
             message.setSubject("Password Reset");
             message.setText("Hi there, your confirmation code is: " + confirmationCode);
             Transport.send(message);
-
+            confirmationTextField.setVisible(true);
+            enterButton.setVisible(true);
         } catch (MessagingException ignored) {
             System.out.println(ignored.getMessage());
+            ssnTextField.clear();
+            emailText.clear();
         }
-        confirmationTextField.setVisible(true);
-        enterButton.setVisible(true);
     }
 
     public String addRecipient() {
@@ -114,7 +107,7 @@ public class ForgottenPasswordController implements Initializable {
                 if (temp.getEmail().equals(emailText.getText())) {
                     recipient = emailText.getText();
                 }
-            } else Validation.alertPopup("There is no user with such social security number", "Wrong SSN", "User doesn't exist");  //LA: if you do not want to tell the person ssn is wrong - delete this
+            } else Validation.alertPopup("There is no user with such social security number", "Wrong SSN", "User doesn't exist");
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -134,16 +127,7 @@ public class ForgottenPasswordController implements Initializable {
     @FXML
     public void handleCancelButton(ActionEvent ae) {
         try {
-            Node node = (Node) ae.getSource();
-            Scene scene = node.getScene();
-            Stage stage = (Stage) scene.getWindow();
-
-            Parent root = FXMLLoader.load(getClass().getResource("/view/loginView.fxml"));
-            Scene newScene = new Scene(root);
-            root.getStylesheets().add(getClass().getResource("../FileUtil/layout.css").toExternalForm());
-
-            stage.setTitle("e-DRUGS");
-            stage.setScene(newScene);
+            userCommon.switchScene(ae, "/view/loginView.fxml");
         } catch (Exception ex) {
             ex.getMessage();
         }
