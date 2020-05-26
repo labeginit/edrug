@@ -115,14 +115,14 @@ public class Order {
     @Override
     public String toString() {
         return "Order{" +
-                "id=" + id +
-                ", user=" + user +
-                ", date=" + date +
-                ", deliveryMethod=" + deliveryMethod +
-                ", paymentMethod=" + paymentMethod +
-                ", totalSum=" + totalSum +
-                ", totalVAT=" + totalVAT +
-                ", specification=" + specification +
+                "id=" + getId() +
+                ", user=" + getUser() +
+                ", date=" + getDate() +
+                ", deliveryMethod=" + getDeliveryMethod() +
+                ", paymentMethod=" + getPaymentMethod() +
+                ", totalSum=" + getTotalSum() +
+                ", totalVAT=" + getTotalVAT() +
+                ", specification=" + getSpecification() +
                 '}';
     }
 }

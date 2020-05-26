@@ -52,7 +52,9 @@ public class Delivery {
     }
 
     public void setAddress(String address) {
-        this.address = address;
+        if (address.length() > 45) {
+            this.address = address.substring(0, 44);
+        } else this.address = address;
     }
 
     public String getCity() {
@@ -60,7 +62,9 @@ public class Delivery {
     }
 
     public void setCity(String city) {
-        this.city = city;
+        if (city.length() > 45) {
+            this.city = city.substring(0, 44);
+        } else this.city = city;
     }
 
     public String getZipCode() {
@@ -78,7 +82,9 @@ public class Delivery {
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+        if (phoneNumber.length() > 13) {
+            this.phoneNumber = phoneNumber.substring(0, 12);
+        } else this.phoneNumber = phoneNumber;
     }
 
     public Date getDate() {

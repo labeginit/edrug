@@ -8,9 +8,6 @@ public class PrescriptionFree extends Medicine implements Serializable {
         super(articleNo, groupId, false, name, producer, packageSize, description, quantity , price , searchTerms, isActive);
     }
 
-    public PrescriptionFree() {
-    }
-
     public boolean isOnPrescription() {
         return super.isOnPrescription();
     }

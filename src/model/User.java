@@ -1,10 +1,7 @@
 package model;
 
 import javafx.scene.control.CheckBox;
-import model.dBConnection.DAOUser;
-
 import java.sql.Date;
-import java.util.List;
 
 public abstract class User {
     private String sSN;

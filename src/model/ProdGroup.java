@@ -2,8 +2,6 @@ package model;
 
 import model.dBConnection.DAOMedicine;
 
-import java.util.List;
-
 public class ProdGroup {
     private int id;
     private String name;
@@ -27,7 +25,6 @@ public class ProdGroup {
     public String getPath(){
         return path;
     }
-
 
     @Override
     public String toString() {

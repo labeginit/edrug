@@ -8,9 +8,6 @@ public class OnPrescription extends Medicine implements Serializable {
         super(articleNo, groupId, true, name, producer, packageSize, description, quantity, price, searchTerms, isActive);
     }
 
-    public OnPrescription() {
-    }
-
     public boolean isOnPrescription() {
         return super.isOnPrescription();
     }

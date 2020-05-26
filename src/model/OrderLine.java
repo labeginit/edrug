@@ -1,7 +1,6 @@
 package model;
 
 import javafx.scene.control.CheckBox;
-
 import java.io.Serializable;
 
 public class OrderLine implements Serializable {
@@ -90,11 +89,11 @@ public class OrderLine implements Serializable {
     @Override
     public String toString() {
         return "OrderLine{" +
-                "orderId=" + orderId +
-                ", medicine=" + medicine +
-                ", user=" + user +
-                ", price=" + price +
-                ", quantity=" + quantity +
+                "orderId=" + getOrderId() +
+                ", medicine=" + getMedicine() +
+                ", user=" + getUser() +
+                ", price=" + getPrice() +
+                ", quantity=" + getQuantity() +
                 '}';
     }
 }
