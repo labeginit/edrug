@@ -43,7 +43,9 @@ public class Prescription{
     }
 
     public void setDiagnosis(String diagnosis) {
-        this.diagnosis = diagnosis;
+        if (diagnosis.length() > 255) {
+            this.diagnosis = diagnosis.substring(0, 255);
+        } else this.diagnosis = diagnosis;
     }
 
     public void setSpecification(List<PrescriptionLine> specification) {

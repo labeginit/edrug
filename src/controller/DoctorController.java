@@ -134,8 +134,6 @@ public class DoctorController implements Initializable {
         address_text.setText(currentUser.getAddress());
         phone_text.setText(currentUser.getPhoneNumber());
         email_text.setText(currentUser.getEmail());
-        password_Text.setText(currentUser.getPassword());
-        password_Text2.setText(currentUser.getPassword());
     }
 
     @FXML
@@ -182,7 +180,7 @@ public class DoctorController implements Initializable {
 
     @FXML
     public boolean checkFields() {
-        if (datePicker == null || Validation.isName(firstName_text.getText(), firstNameStar)
+        if (datePicker == null || Validation.isName(firstName_text.getText(), firstNameStar)  // LA something is wrong with these validations
                 || Validation.isName(lastName_text.getText(), lastNameStar)
                 || Validation.isZipcode(zip_text.getText(), zipCodeStar)
                 || Validation.isCity(city_text.getText(), cityStar)
@@ -292,37 +290,4 @@ public class DoctorController implements Initializable {
         ObservableList<User> patientList = FXCollections.observableArrayList(commonMethods.getPatientList());
         patientTable.setItems(patientList);
     }
-/*
-    public SortedList<Medicine> medFilter(FilteredList<Medicine> filteredData, TextField field, TableView<Medicine> tableView){
-        field.textProperty().addListener((observable, oldValue, newValue) -> {
-            filteredData.setPredicate(medicine -> {
-                if (newValue == null || newValue.isEmpty()) {
-                    return true;
-                }
-
-                String lowerCaseFilter = newValue.toLowerCase();
-
-                if (medicine.getName().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (medicine.getSearchTerms().toLowerCase().contains(lowerCaseFilter)) {
-                    return true;
-                } else if (String.valueOf(medicine.getArticleNo()).contains(lowerCaseFilter)) {
-                    return true;
-                }
-                return false;
-            });
-        });
-        SortedList<Medicine> sortedData = new SortedList<>(filteredData);
-
-        sortedData.comparatorProperty().bind(tableView.comparatorProperty());
-        tableView.setItems(sortedData);
-        return sortedData;
-    }*/
-  /*  private List<String> fillList(List<ProdGroup> groups) {
-        groupPaths.add("");
-        for (int i = 1; i < groups.size(); i++) {
-            groupPaths.add(groups.get(i).getPath());
-        }
-        return groupPaths;
-    }*/
 }

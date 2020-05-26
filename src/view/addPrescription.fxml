@@ -32,13 +32,13 @@
                           </columns>
                         </TableView>
                         <Label fx:id="nameLabel" layoutX="74.0" layoutY="35.0" prefHeight="18.0" prefWidth="148.0" />
-                        <TextArea fx:id="diagnosisTextArea" layoutX="363.0" layoutY="16.0" prefHeight="96.0" prefWidth="422.0" />
+                        <TextArea fx:id="diagnosisTextArea" layoutX="363.0" layoutY="16.0" prefHeight="96.0" prefWidth="422.0" wrapText="true" />
                         <Label layoutX="297.0" layoutY="18.0" text="Diagnosis:" />
                         <Label fx:id="ssnLabel" layoutX="74.0" layoutY="18.0" prefHeight="18.0" prefWidth="148.0" />
-                        <DatePicker fx:id="endDatePicker" layoutX="168.0" layoutY="86.0" prefHeight="26.0" prefWidth="194.0" promptText="Prescription End Date" />
-                        <Label layoutX="82.0" layoutY="65.0" prefHeight="18.0" prefWidth="74.0" text="Current Date:" />
-                        <Label layoutX="86.0" layoutY="89.0" prefHeight="18.0" prefWidth="80.0" text="End Date:" />
-                        <Label fx:id="currentDateLabel" layoutX="162.0" layoutY="65.0" prefHeight="18.0" prefWidth="195.0" />
+                        <DatePicker fx:id="endDatePicker" layoutX="162.0" layoutY="86.0" prefHeight="26.0" prefWidth="194.0" promptText="Prescription End Date" />
+                        <Label layoutX="82.0" layoutY="58.0" prefHeight="18.0" prefWidth="74.0" text="Current Date:" />
+                        <Label layoutX="86.0" layoutY="91.0" prefHeight="18.0" prefWidth="80.0" text="End Date:" />
+                        <Label fx:id="currentDateLabel" layoutX="162.0" layoutY="61.0" prefHeight="18.0" prefWidth="195.0" />
                         <Button fx:id="cancelButton" layoutX="14.0" layoutY="529.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="136.0" text="Cancel" />
                      </children>
                   </AnchorPane>
