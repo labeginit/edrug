@@ -83,7 +83,7 @@ public class PatientController implements Initializable {
     private TableColumn<PrescriptionLine, Medicine> c11;
 
     @FXML
-    private TableColumn<PrescriptionLine, String> c12;
+    private TableColumn<PrescriptionLine, String> c12, c15;
 
     @FXML
     private TableColumn<PrescriptionLine, Integer> c13, c14;
@@ -264,6 +264,7 @@ public class PatientController implements Initializable {
         c12.setCellValueFactory(new PropertyValueFactory<PrescriptionLine, String>("name"));
         c13.setCellValueFactory(new PropertyValueFactory<PrescriptionLine, Integer>("quantityPrescribed"));
         c14.setCellValueFactory(new PropertyValueFactory<PrescriptionLine, Integer>("quantityConsumed"));
+        c15.setCellValueFactory(new PropertyValueFactory<PrescriptionLine, String>("instructions"));
 
         prescriptionTableView.setItems(prescriptions);
         prescriptionTableView.setOnMouseClicked(e ->{
