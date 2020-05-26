@@ -242,7 +242,7 @@ public class AddPrescription implements Initializable {
         return false;
 
     }
-
+/*
     private int nextPrscID() {
         int i = 1;
         for (Prescription p :
@@ -253,7 +253,7 @@ public class AddPrescription implements Initializable {
         i++;
         return i;
     }
-
+*/
     private void setEmpty() {
         prescriptionInitialize();
         diagnosisTextArea.setText("");

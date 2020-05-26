@@ -69,7 +69,7 @@ public class DoctorController implements Initializable {
     private PasswordField password_Text, password_Text2;
 
     @FXML
-    private Button logOut_button1, logOut_button2, logOut_button3, cancel_Button, save_Button, go_Button, SSN_Go_Button;
+    private Button logOut_button1, logOut_button2, logOut_button3, cancel_Button, save_Button, SSN_Go_Button;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -101,6 +101,8 @@ public class DoctorController implements Initializable {
         storeInitialize();
         patientInitialize();
 
+        patientTable.setOnMouseClicked(event -> currentSelectedPatientInitialize());
+
         logOut_button1.setOnAction(event -> {
             try {
                 userCommon.onLogOutButtonPressed(event);
@@ -122,6 +124,14 @@ public class DoctorController implements Initializable {
                 e.printStackTrace();
             }
         });
+    }
+
+    private void currentSelectedPatientInitialize() {
+        try {
+            String patientSsn = patientTable.getSelectionModel().getSelectedItem().getSsn();
+            sSN_textField.setText(patientSsn);
+        } catch (Exception ignored) {
+        }
     }
 
     private void setProfileData() {
