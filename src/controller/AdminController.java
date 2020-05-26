@@ -210,6 +210,7 @@ public class AdminController implements Initializable {
                             pass2_text.clear();
                         }
                         setVisible(false);
+                        Validation.alertPopup(Alert.AlertType.INFORMATION, "Updated information has been saved successfully.", "OK", "Update is Saved");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

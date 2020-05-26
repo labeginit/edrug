@@ -174,7 +174,7 @@ public class DoctorController implements Initializable {
                     hideAllWarningLabels(false);
                     password_Text.clear();
                     password_Text2.clear();
-
+                    Validation.alertPopup(Alert.AlertType.INFORMATION, "Updated information has been saved successfully.", "OK", "Update is Saved");
                 } catch (IllegalArgumentException | NoSuchAlgorithmException ex) {
                     ex.getSuppressed();
                 }
@@ -190,13 +190,8 @@ public class DoctorController implements Initializable {
 
     @FXML
     public boolean checkFields() {
-        if (datePicker == null || Validation.isName(firstName_text.getText(), firstNameStar)  // LA something is wrong with these validations
-                || Validation.isName(lastName_text.getText(), lastNameStar)
-                || Validation.isZipcode(zip_text.getText(), zipCodeStar)
-                || Validation.isCity(city_text.getText(), cityStar)
-                || address_text.getText().isEmpty() || Validation.isPhoneNumber(phone_text.getText(), phoneStar)
-                || Validation.isEmail(email_text.getText(), emailStar) || Validation.isPassword(password_Text.getText(), passwordCheckLabel)
-                || Validation.isPassword(password_Text2.getText(), passwordCheckLabel)) {
+        if (firstName_text.getText().isEmpty() || lastName_text.getText().isEmpty() || datePicker.getValue() == null
+                || zip_text.getText().isEmpty() || city_text.getText().isEmpty() || address_text.getText().isEmpty() || email_text.getText().isEmpty() || phone_text.getText().isEmpty()) {
             if (datePicker == null) {
                 birthDateStar.setVisible(true);
             }
@@ -223,7 +218,7 @@ public class DoctorController implements Initializable {
             }
             Validation.alertPopup("Please enter your information into all fields", "Empty Fields", "Contains empty fields");
             return false;
-        } else if (!(password_Text.getText().equals(password_Text2.getText()))) {
+        } else if (!password_Text.getText().equals(password_Text2.getText())) {
             passwordCheckLabel.setVisible(true);
             Validation.alertPopup("Password does not match", "Password Mismatch", "Password doesn't match");
             return false;
@@ -273,6 +268,7 @@ public class DoctorController implements Initializable {
         phoneStar.setVisible(state);
         emailStar.setVisible(state);
         passwordCheckLabel.setVisible(state);
+        patientSearchStar.setVisible(state);
     }
 
     public void storeInitialize() {

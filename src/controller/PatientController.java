@@ -354,6 +354,7 @@ public class PatientController implements Initializable {
                     setVisible(false);
                     password.clear();
                     confirmPassword.clear();
+                    Validation.alertPopup(Alert.AlertType.INFORMATION, "Updated information has been saved successfully.", "OK", "Update is Saved");
                 } catch (IllegalArgumentException | NoSuchAlgorithmException ex) {
                     ex.getSuppressed();
                 }
@@ -370,7 +371,7 @@ public class PatientController implements Initializable {
     @FXML
     private boolean checkFields() {
         if (firstName_text.getText().isEmpty() || lastName_text.getText().isEmpty() || dPicker.getValue() == null
-                || zipCode_text.getText().isEmpty() || address_text.getText().isEmpty() || email_text.getText().isEmpty() || phoneNumber_text.getText().isEmpty()) {
+                || zipCode_text.getText().isEmpty() || city_text.getText().isEmpty() || address_text.getText().isEmpty() || email_text.getText().isEmpty() || phoneNumber_text.getText().isEmpty()) {
             if (firstName_text.getText().isEmpty()) {
                 firstNameStar.setVisible(true);
             }

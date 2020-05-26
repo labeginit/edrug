@@ -206,7 +206,7 @@
                               <Font size="13.0" />
                            </font></Label>
                         <TextField fx:id="city_text" layoutX="338.0" layoutY="251.0" prefHeight="26.0" prefWidth="116.0" />
-                        <Label layoutX="286.0" layoutY="254.0" prefHeight="19.0" prefWidth="29.0" text="City">
+                        <Label layoutX="286.0" layoutY="253.0" prefHeight="19.0" prefWidth="29.0" text="City">
                            <font>
                               <Font size="13.0" />
                            </font>
