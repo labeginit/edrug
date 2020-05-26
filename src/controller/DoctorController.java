@@ -2,8 +2,6 @@ package controller;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.transformation.FilteredList;
-import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,24 +15,17 @@ import javafx.stage.Stage;
 import model.Medicine;
 import model.User;
 import model.UserSingleton;
-import model.*;
 import model.dBConnection.CommonMethods;
-
 import java.io.IOException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 public class DoctorController implements Initializable {
     private User currentUser;
     private UserCommon userCommon = new UserCommon();
     private CommonMethods commonMethods = new CommonMethods();
-
-    //   private List<String> groupPaths = new ArrayList<>();
-
 
     @FXML
     private TableView<Medicine> storeTable;
