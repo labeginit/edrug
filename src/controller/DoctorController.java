@@ -19,6 +19,7 @@ import model.User;
 import model.UserSingleton;
 import model.*;
 import model.dBConnection.CommonMethods;
+
 import java.io.IOException;
 import java.net.URL;
 import java.security.NoSuchAlgorithmException;
@@ -31,9 +32,9 @@ public class DoctorController implements Initializable {
     private User currentUser;
     private UserCommon userCommon = new UserCommon();
     private CommonMethods commonMethods = new CommonMethods();
-    private List<ProdGroup> groups = commonMethods.getProductGroupList();
-    private List<String> groupPaths = new ArrayList<>();
-    private ObservableList<String> filters1 = FXCollections.observableArrayList(fillList(groups));
+
+    //   private List<String> groupPaths = new ArrayList<>();
+
 
     @FXML
     private TableView<Medicine> storeTable;
@@ -54,7 +55,7 @@ public class DoctorController implements Initializable {
     private TableColumn<User, String> d2SSN, d2Name, d2Surname, d2Phone, d2Email;
 
     @FXML
-    private TextField maxCostTextField, sSN_textField, firstName_text, lastName_text, zip_text, city_text, address_text,
+    private TextField sSN_textField, firstName_text, lastName_text, zip_text, city_text, address_text,
             phone_text, email_text;
 
     @FXML
@@ -70,9 +71,6 @@ public class DoctorController implements Initializable {
     @FXML
     private Button logOut_button1, logOut_button2, logOut_button3, cancel_Button, save_Button, go_Button, SSN_Go_Button;
 
-    @FXML
-    private ComboBox<String> sortBox;
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         hideAllWarningLabels(false);
@@ -87,18 +85,18 @@ public class DoctorController implements Initializable {
         });
 
         save_Button.setOnAction(event -> {
-                    try {
-                        handleSaveButton();
-                    } catch (Exception ignored) {
-                    }
-                });
+            try {
+                handleSaveButton();
+            } catch (Exception ignored) {
+            }
+        });
 
         SSN_Go_Button.setOnAction(event -> {
-                    try {
-                        handleSSNGoButton(event);
-                    } catch (Exception ignored) {
-                    }
-                });
+            try {
+                handleSSNGoButton(event);
+            } catch (Exception ignored) {
+            }
+        });
 
         storeInitialize();
         patientInitialize();
@@ -235,14 +233,11 @@ public class DoctorController implements Initializable {
 
                 AddPrescription addPrescription = loader.getController();
                 addPrescription.receiveData(sSN_textField.getText());
-
                 Stage stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
                 stage.setScene(new Scene(root));
                 stage.setTitle("Prescription for: " + sSN_textField.getText());
                 root.getStylesheets().add(getClass().getResource("../FileUtil/layout.css").toExternalForm());
                 stage.show();
-            } else {
-                throw new Exception();
             }
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -250,13 +245,14 @@ public class DoctorController implements Initializable {
     }
 
     public boolean checkForPatient(String ssn) {
-        List<User> patientList = commonMethods.getPatientList();
-        for (User patient : patientList) {
-            if (ssn.equals(patient.getSsn())) {
-                return true;
-            }
+        User patient = commonMethods.getUser(ssn);
+        if (patient != null) {
+            return true;
+        } else {
+            Validation.alertPopup("There is no such patient", "Patient doesn't exist", "Wrong SSN");
+            sSN_textField.clear();
+            return false;
         }
-        return false;
     }
 
     public void hideAllWarningLabels(boolean state) {
@@ -296,7 +292,7 @@ public class DoctorController implements Initializable {
         ObservableList<User> patientList = FXCollections.observableArrayList(commonMethods.getPatientList());
         patientTable.setItems(patientList);
     }
-
+/*
     public SortedList<Medicine> medFilter(FilteredList<Medicine> filteredData, TextField field, TableView<Medicine> tableView){
         field.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(medicine -> {
@@ -321,12 +317,12 @@ public class DoctorController implements Initializable {
         sortedData.comparatorProperty().bind(tableView.comparatorProperty());
         tableView.setItems(sortedData);
         return sortedData;
-    }
-    private List<String> fillList(List<ProdGroup> groups) {
+    }*/
+  /*  private List<String> fillList(List<ProdGroup> groups) {
         groupPaths.add("");
         for (int i = 1; i < groups.size(); i++) {
             groupPaths.add(groups.get(i).getPath());
         }
         return groupPaths;
-    }
+    }*/
 }
