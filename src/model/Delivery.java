@@ -8,19 +8,19 @@ public class Delivery {
     private String lastName;
     private String address;
     private String city;
-    private int zipcode;
+    private String zipCode;
     private String phoneNumber;
     private Date date;
 
-    public Delivery(int orderId, String firstName, String lastName, String address, String city, int zipcode, String phoneNumber, Date date) {
+    public Delivery(int orderId, String firstName, String lastName, String address, String city, String zipCode, String phoneNumber, Date date) {
         this.orderId = orderId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.address = address;
-        this.city = city;
-        this.zipcode = zipcode;
-        this.phoneNumber = phoneNumber;
-        this.date = date;
+        setFirstName(firstName);
+        setLastName(lastName);
+        setAddress(address);
+        setCity(city);
+        setZipCode(zipCode);
+        setPhoneNumber(phoneNumber);
+        setDate(date);
     }
 
     public int getOrderId() {
@@ -32,7 +32,9 @@ public class Delivery {
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        if (firstName.length() > 45) {
+            this.firstName = firstName.substring(0, 44);
+        } else this.firstName = firstName;
     }
 
     public String getLastName() {
@@ -40,7 +42,9 @@ public class Delivery {
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        if (lastName.length() > 45) {
+            this.lastName = lastName.substring(0, 44);
+        } else this.lastName = lastName;
     }
 
     public String getAddress() {
@@ -59,12 +63,14 @@ public class Delivery {
         this.city = city;
     }
 
-    public int getZipcode() {
-        return zipcode;
+    public String getZipCode() {
+        return zipCode;
     }
 
-    public void setZipcode(int zipcode) {
-        this.zipcode = zipcode;
+    public void setZipCode(String zipCode) {
+        if (zipCode.length() > 6) {
+            this.zipCode = zipCode.substring(0, 5);
+        } else this.zipCode = zipCode;
     }
 
     public String getPhoneNumber() {

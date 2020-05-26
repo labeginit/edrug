@@ -44,19 +44,27 @@ public abstract class Medicine {
     }
 
     public void setName(String name) {
-        this.name = name;
+        if (name.length() > 45) {
+            this.name = name.substring(0, 44);
+        } else this.name = name;
     }
 
     public void setProducer(String producer) {
-        this.producer = producer;
+        if (producer.length() > 45) {
+            this.producer = producer.substring(0, 44);
+        } else this.producer = producer;
     }
 
     public void setPackageSize(String packageSize) {
-        this.packageSize = packageSize;
+        if (packageSize.length() > 45) {
+            this.packageSize = packageSize.substring(0, 44);
+        } else this.packageSize = packageSize;
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        if (description.length() > 250) {
+            this.description = description.substring(0, 249);
+        } else this.description = description;
     }
 
     public void setQuantity(int quantity) {
@@ -68,7 +76,9 @@ public abstract class Medicine {
     }
 
     public void setSearchTerms(String searchTerms) {
-       this.searchTerms = searchTerms;
+        if (searchTerms.length() > 256) {
+            this.searchTerms = searchTerms.substring(0, 255);
+        } else this.searchTerms = searchTerms;
     }
 
     public void setGroup(int groupId) {

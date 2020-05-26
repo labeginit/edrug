@@ -4,18 +4,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.regex.Pattern;
 
 public class Validation {
     public static void alertPopup(String infoMessage, String titleBar, String headerMessage) {
         alertPopup(Alert.AlertType.WARNING, infoMessage, titleBar, headerMessage);
-
     }
 
     public static void alertPopup(Alert.AlertType alertType, String infoMessage, String titleBar, String headerMessage) {
@@ -61,7 +54,7 @@ public class Validation {
             starLabel.setVisible(false);
             return true;
         } else
-            alertPopup("Invalid zipcode please enter 5 numerical characters", "Invalid Zipcode", "Zipcode enter valid zipcode");
+            alertPopup("Invalid zipcode. Please enter 5 numerical characters", "Invalid Zipcode", "Enter valid zipcode");
         starLabel.setVisible(true);
         return false;
     }

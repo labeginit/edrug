@@ -252,11 +252,11 @@ public class DAOOrder {
                         String lastName = resultSet.getString("last_name");
                         String address = resultSet.getString("address");
                         String city = resultSet.getString("city");
-                        int zipcode = resultSet.getInt("zipcode");
+                        String zipCode = resultSet.getString("zipcode");
                         String phoneNumber = resultSet.getString("phone_number");
                         Date shipDate = resultSet.getDate("ship_date");
 
-                        delivery = new Delivery(orderId, firstName, lastName, address, city, zipcode, phoneNumber, shipDate);
+                        delivery = new Delivery(orderId, firstName, lastName, address, city, zipCode, phoneNumber, shipDate);
                     }
                 } else {
                     System.out.println("Empty resultSet");

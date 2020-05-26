@@ -14,7 +14,7 @@ public class DAODelivery {
     private String lastName;
     private String address;
     private String city;
-    private int zipcode;
+    private String zipCode;
     private String phoneNumber;
     private Date shipDate;
     private List<Delivery> deliveries = new ArrayList<>();
@@ -56,11 +56,11 @@ public class DAODelivery {
         firstName = resultSet.getString("first_name");
         lastName = resultSet.getString("last_name");
         shipDate = resultSet.getDate("ship_date");
-        zipcode = resultSet.getInt("zipcode");
+        zipCode = resultSet.getString("zipcode");
         city = resultSet.getString("city");
         address = resultSet.getString("address");
         phoneNumber = resultSet.getString("phone_number");
-        Delivery delivery = new Delivery(orderId,firstName,lastName,address,city,zipcode,phoneNumber,shipDate);
+        Delivery delivery = new Delivery(orderId,firstName,lastName,address,city,zipCode,phoneNumber,shipDate);
         return delivery;
     }
 
@@ -72,13 +72,13 @@ public class DAODelivery {
                     firstName = delivery.getFirstName();
                     lastName = delivery.getLastName();
                     shipDate = delivery.getDate();
-                    zipcode = delivery.getZipcode();
+                    zipCode = delivery.getZipCode();
                     city = delivery.getCity();
                     address = delivery.getAddress();
                     phoneNumber = delivery.getPhoneNumber();
 
                     String query = "INSERT INTO `edrugs_test`.`Delivery` (`order_id`, `first_name`, `last_name`, `address`, `city`, `zipcode`, `phone_number`, `ship_date`) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
-                    linesAffected = common.insertDelivery(query, orderId, firstName, lastName, address , city, zipcode, phoneNumber, shipDate);
+                    linesAffected = common.insertDelivery(query, orderId, firstName, lastName, address , city, zipCode, phoneNumber, shipDate);
                 } else {
                     throw new NullPointerException("The delivery object is null");
                 }

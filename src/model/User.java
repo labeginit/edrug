@@ -48,7 +48,9 @@ public abstract class User {
     }
 
     public void setSsn(String sSN) {
-        this.sSN = sSN;
+        if (sSN.length() > 13) {
+            this.sSN = sSN.substring(0, 12);
+        } else this.sSN = sSN;
     }
 
     public int getUserType() {
@@ -56,7 +58,9 @@ public abstract class User {
     }
 
     public void setUserType(int userType) {
-        this.userType = userType;
+        if ((userType > 3) || (userType < 1)) {
+            this.userType = 1;
+        } else this.userType = userType;
     }
 
     public String getFirstName() {
@@ -64,7 +68,9 @@ public abstract class User {
     }
 
     public void setFirstName(String firstName) {
-        this.firstName = firstName;
+        if (firstName.length() > 45) {
+            this.firstName = firstName.substring(0, 44);
+        } else this.firstName = firstName;
     }
 
     public String getLastName() {
@@ -72,7 +78,9 @@ public abstract class User {
     }
 
     public void setLastName(String lastName) {
-        this.lastName = lastName;
+        if (lastName.length() > 45) {
+            this.lastName = lastName.substring(0, 44);
+        } else this.lastName = lastName;
     }
 
     public Date getBDate() {
@@ -88,7 +96,9 @@ public abstract class User {
     }
 
     public void setZipCode(String zipCode) {
-        this.zipCode = zipCode;
+        if (zipCode.length() > 6) {
+            this.zipCode = zipCode.substring(0, 5);
+        } else this.zipCode = zipCode;
     }
 
     public String getAddress() {
@@ -96,7 +106,9 @@ public abstract class User {
     }
 
     public void setAddress(String address) {
-        this.address = address;
+        if (address.length() > 45) {
+            this.address = address.substring(0, 44);
+        } else this.address = address;
     }
 
     public String getEmail() {
@@ -104,7 +116,9 @@ public abstract class User {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        if (email.length() > 45) {
+            this.email = email.substring(0, 44);
+        } else this.email = email;
     }
 
     public String getPhoneNumber() {
@@ -112,7 +126,9 @@ public abstract class User {
     }
 
     public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+        if (phoneNumber.length() > 13) {
+            this.phoneNumber = phoneNumber.substring(0, 12);
+        } else this.phoneNumber = phoneNumber;
     }
 
     public String getPassword() {
@@ -120,7 +136,9 @@ public abstract class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        if (password.length() > 256) {
+            this.password = password.substring(0, 255);
+        } else this.password = password;
     }
 
     public void setActive(boolean active) {
@@ -140,7 +158,9 @@ public abstract class User {
     }
 
     public void setCity(String city) {
-        this.city = city;
+        if (city.length() > 45) {
+            this.city = city.substring(0, 44);
+        } else this.city = city;
     }
 
     public String getCity() {

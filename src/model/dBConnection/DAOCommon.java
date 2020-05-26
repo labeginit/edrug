@@ -289,14 +289,14 @@ public class DAOCommon {
         }
         return linesAffected;
     }
-    protected int insertPharmacy(String queryString, int storeId, String store_name, String address, int zipcode, String city, String phoneNumber, String email) {
+    protected int insertPharmacy(String queryString, int storeId, String store_name, String address, String zipCode, String city, String phoneNumber, String email) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
                 prepStmt.setInt(1, storeId);
                 prepStmt.setString(2, store_name);
                 prepStmt.setString(3, address);
-                prepStmt.setInt(4, zipcode);
+                prepStmt.setString(4, zipCode);
                 prepStmt.setString(5, city);
                 prepStmt.setString(6, phoneNumber);
                 prepStmt.setString(7, email);
@@ -314,14 +314,14 @@ public class DAOCommon {
         }
         return linesAffected;
     }
-    protected int updatePharmacy(String queryString, int storeId, String store_name, String address, int zipcode, String city, String phoneNumber, String email) {
+    protected int updatePharmacy(String queryString, int storeId, String store_name, String address, String zipCode, String city, String phoneNumber, String email) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
                 prepStmt.setInt(1, storeId);
                 prepStmt.setString(2, store_name);
                 prepStmt.setString(3, address);
-                prepStmt.setInt(4, zipcode);
+                prepStmt.setString(4, zipCode);
                 prepStmt.setString(5, city);
                 prepStmt.setString(6, phoneNumber);
                 prepStmt.setString(7, email);
@@ -363,8 +363,8 @@ public class DAOCommon {
                 prepStmt.setInt(1, id);
                 prepStmt.setString(2, ssn);
                 prepStmt.setInt(3, articleNo);
-                prepStmt.setDouble(4,price);
-                prepStmt.setInt(5,quantity);
+                prepStmt.setDouble(4, price);
+                prepStmt.setInt(5, quantity);
 
                 linesAffected = prepStmt.executeUpdate();
                 prepStmt.close();
@@ -434,7 +434,7 @@ public class DAOCommon {
         }
         return linesAffected;
     }
-    protected int insertDelivery(String queryString, int id, String firstName, String lastName, String address, String city, int zipcode, String phoneNumber, Date shipDate) {
+    protected int insertDelivery(String queryString, int id, String firstName, String lastName, String address, String city, String zipCode, String phoneNumber, Date shipDate) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
@@ -443,7 +443,7 @@ public class DAOCommon {
                 prepStmt.setString(3, lastName);
                 prepStmt.setString(4, address);
                 prepStmt.setString(5, city);
-                prepStmt.setInt(6,zipcode);
+                prepStmt.setString(6,zipCode);
                 prepStmt.setString(7, phoneNumber);
                 prepStmt.setDate(8,shipDate);
 

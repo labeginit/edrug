@@ -42,7 +42,9 @@ public class PrescriptionLine{
     }
 
     public void setInstructions(String instructions) {
-        this.instructions = instructions;
+        if (instructions.length() > 60) {
+            this.instructions = instructions.substring(0, 59);
+        } else this.instructions = instructions;
     }
 
     public int getPrescId() {

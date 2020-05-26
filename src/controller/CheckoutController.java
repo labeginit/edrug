@@ -125,7 +125,7 @@ public class CheckoutController implements Initializable {
         Pharmacy pharmacy = pickUpComboBox.getValue();
         pharmacyNameLabel.setText(pharmacy.getStoreName());
         pharmacyAddressLabel.setText(pharmacy.getAddress());
-        zipcode3Label.setText(Integer.toString(pharmacy.getZipcode()));
+        zipcode3Label.setText(pharmacy.getZipCode());
         city2Label.setText(pharmacy.getCity());
         emailLabel.setText(pharmacy.getEmail());
         phoneNumber3Label.setText(pharmacy.getPhoneNumber());
@@ -271,7 +271,7 @@ public class CheckoutController implements Initializable {
         int OCR = rand.nextInt(100000000);
         int id = 1 + commonMethods.getLastId(Order.class);
         java.sql.Date date = new java.sql.Date(Calendar.getInstance().getTime().getTime());
-        Delivery delivery = new Delivery(id,firstName4Label.getText(),lastName4Label.getText(),address4Label.getText(),city4Label.getText(),Integer.parseInt(zipcode4Label.getText()),phoneNumber1TextField.getText(), date);
+        Delivery delivery = new Delivery(id,firstName4Label.getText(),lastName4Label.getText(),address4Label.getText(),city4Label.getText(), zipcode4Label.getText(), phoneNumber1TextField.getText(), date);
         Pharmacy pharmacy = pickUpComboBox.getValue();
         Time time = new Time(Calendar.HOUR,Calendar.MINUTE,Calendar.SECOND);
         String paymentMessage;

@@ -5,19 +5,19 @@ public class Pharmacy {
     private final int storeId;
     private String storeName;
     private String address;
-    private int zipcode;
+    private String zipCode;
     private String city;
     private String phoneNumber;
     private String email;
 
 
-    public Pharmacy(int storeId,String storeName, String address, int zipcode, String city, String phoneNumber, String email) {
-        this.storeName = storeName;
-        this.address = address;
-        this.zipcode = zipcode;
-        this.city = city;
-        this.phoneNumber = phoneNumber;
-        this.email = email;
+    public Pharmacy(int storeId,String storeName, String address, String zipCode, String city, String phoneNumber, String email) {
+        setStoreName(storeName);
+        setAddress(address);
+        setZipCode(zipCode);
+        setCity(city);
+        setPhoneNumber(phoneNumber);
+        setEmail(email);
         this.storeId = storeId;
     }
 
@@ -41,12 +41,12 @@ public class Pharmacy {
         this.address = address;
     }
 
-    public int getZipcode() {
-        return zipcode;
+    public String getZipCode() {
+        return zipCode;
     }
 
-    public void setZipcode(int zipcode) {
-        this.zipcode = zipcode;
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
     }
 
     public String getCity() {
@@ -76,8 +76,8 @@ public class Pharmacy {
     @Override
     public String toString() {
         return
-                 storeName + ' ' +
-                 address + ' ' +
-                 city ;
+                 getStoreName() + ' ' +
+                 getAddress() + ' ' +
+                 getCity() ;
     }
 }
