@@ -155,10 +155,8 @@ public class LoginController implements Initializable {
             Stage stage = (Stage) scene.getWindow();
 
             Parent root = FXMLLoader.load(getClass().getResource("/view/forgottenPasswordView.fxml"));
-            Scene newScene = new Scene(root);
             root.getStylesheets().add(getClass().getResource("../FileUtil/layout.css").toExternalForm());
-
-            stage.setTitle("e-Drugs Password Recovery");
+            Scene newScene = new Scene(root);
             stage.setScene(newScene);
 
         } catch (Exception ex) {

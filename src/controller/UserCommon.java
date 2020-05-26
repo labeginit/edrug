@@ -44,11 +44,10 @@ public class UserCommon {
     public void switchScene(ActionEvent event, String path) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource(path));
         Scene newScene = new Scene(root);
-
-        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        window.setTitle("eDrugs");
-        window.setScene(newScene);
         newScene.getStylesheets().add(getClass().getResource("../FileUtil/layout.css").toExternalForm());
+        Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        window.setTitle("eDrug");
+        window.setScene(newScene);
         window.show();
     }
 

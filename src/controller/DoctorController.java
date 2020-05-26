@@ -233,13 +233,12 @@ public class DoctorController implements Initializable {
             if (Validation.isSSN(sSN_textField.getText(), patientSearchStar) && checkForPatient(sSN_textField.getText())) {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/addPrescription.fxml"));
                 Parent root = loader.load();
-
+                root.getStylesheets().add(getClass().getResource("../FileUtil/layout.css").toExternalForm());
                 AddPrescription addPrescription = loader.getController();
                 addPrescription.receiveData(sSN_textField.getText());
                 Stage stage = (Stage) ((Node) ae.getSource()).getScene().getWindow();
                 stage.setScene(new Scene(root));
                 stage.setTitle("Prescription for: " + sSN_textField.getText());
-                root.getStylesheets().add(getClass().getResource("../FileUtil/layout.css").toExternalForm());
                 stage.show();
             }
         } catch (Exception ex) {

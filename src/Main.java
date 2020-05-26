@@ -16,15 +16,10 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception{
         DBConnection.getInstance();
         Parent root = FXMLLoader.load(getClass().getResource("view/loginView.fxml"));
-        primaryStage.setTitle("e-Drugs");
-        primaryStage.setScene(new Scene(root));
         root.getStylesheets().add(getClass().getResource("FileUtil/layout.css").toExternalForm());
-        
+        primaryStage.setTitle("eDrug");
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
-
-        TestCode tst = new TestCode();
-        tst.code();
-
     }
 
     @Override
@@ -38,8 +33,6 @@ public class Main extends Application {
         }
         super.stop();
     }
-
-
 
     public static void main(String[] args) {launch(args);}
 }
