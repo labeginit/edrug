@@ -28,7 +28,6 @@ public class AddPrescription implements Initializable {
     private List<Prescription> prescrList = commonMethods.getPrescriptionList(currentPatient);
     private Doctor currentDoctor;
     private User temp;
-    private String header = "Add Prescription Error";
 
     @FXML
     private Tab currentPrescriptionTab;
@@ -64,7 +63,7 @@ public class AddPrescription implements Initializable {
     private TableColumn<PrescriptionLine, Integer> aprescrID1, aAmount1;
 
     @FXML
-    private TableColumn<PrescriptionLine, String> aName1;
+    private TableColumn<PrescriptionLine, String> aName1, aInstruction;
 
     @FXML
     private TableColumn<Prescription, Date> aStartDate1, aEndDate1;
@@ -134,6 +133,7 @@ public class AddPrescription implements Initializable {
 
     @FXML
     private void handleAddPrescriptionsButton() {
+        String header = "Add Prescription Error";
         try {
             java.sql.Date startDate = new java.sql.Date(date.getTime());
             java.sql.Date endDate = java.sql.Date.valueOf(endDatePicker.getValue().plusDays(1));
@@ -225,6 +225,7 @@ public class AddPrescription implements Initializable {
         aprescrID1.setCellValueFactory(new PropertyValueFactory<>("prescId"));
         aName1.setCellValueFactory(new PropertyValueFactory<>("name"));
         aAmount1.setCellValueFactory(new PropertyValueFactory<>("quantityPrescribed"));
+        aInstruction.setCellValueFactory(new PropertyValueFactory<>("instructions"));
         ObservableList<PrescriptionLine> prescriptionLineList = FXCollections.observableArrayList(commonMethods.getPrescriptionLineList(0, currentPatient));
 
         prescriptionLineList.removeIf(pl -> !pl.getPatient().getSsn().equals(currentPatient.getSsn()));
