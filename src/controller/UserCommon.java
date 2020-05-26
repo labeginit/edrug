@@ -33,7 +33,6 @@ public class UserCommon {
     @FXML
     public void onLogOutButtonPressed(ActionEvent event) throws IOException {
         try {
-            // Parent tableViewParent = FXMLLoader.load(getClass().getResource("/view/loginView.fxml"));
             switchScene(event, "/view/loginView.fxml");
             currentUser = null;
             UserSingleton.getOurInstance().setUser(currentUser);
@@ -47,7 +46,7 @@ public class UserCommon {
         Scene newScene = new Scene(root);
 
         Stage window = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
+        window.setTitle("eDrugs");
         window.setScene(newScene);
         newScene.getStylesheets().add(getClass().getResource("../FileUtil/layout.css").toExternalForm());
         window.show();

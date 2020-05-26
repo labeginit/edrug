@@ -107,7 +107,7 @@ public class AddPrescription implements Initializable {
                 e.printStackTrace();
             }
         });
-        makeaAmountEditable();
+        makeAmountEditable();
     }
 
     public void receiveData(String ssn) {
@@ -136,7 +136,7 @@ public class AddPrescription implements Initializable {
     private void handleAddPrescriptionsButton() {
         try {
             java.sql.Date startDate = new java.sql.Date(date.getTime());
-            java.sql.Date endDate = java.sql.Date.valueOf(endDatePicker.getValue());
+            java.sql.Date endDate = java.sql.Date.valueOf(endDatePicker.getValue().plusDays(1));
             if (!(prescrLines.isEmpty())) {
                 if (endDate.after(startDate)) {
                     if (!diagnosisTextArea.getText().isEmpty()) {
@@ -231,7 +231,7 @@ public class AddPrescription implements Initializable {
 
         currentPrescriptionLineTable.setItems(prescriptionLineList);
     }
-
+/*
     private boolean checkNewPrescription(List<PrescriptionLine> currentPrescriptions, PrescriptionLine newPrescription) {
         for (PrescriptionLine cP :
                 currentPrescriptions) {
@@ -242,7 +242,7 @@ public class AddPrescription implements Initializable {
         return false;
 
     }
-/*
+
     private int nextPrscID() {
         int i = 1;
         for (Prescription p :
@@ -260,7 +260,7 @@ public class AddPrescription implements Initializable {
         endDatePicker.setValue(null);
     }
 
-    private void makeaAmountEditable() {
+    private void makeAmountEditable() {
 
         addPrescriptionTable.setEditable(true);
         aAmount.setCellFactory(TextFieldTableCell.<Medicine, Integer>forTableColumn(new IntegerStringConverter()));
