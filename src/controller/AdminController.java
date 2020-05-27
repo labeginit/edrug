@@ -268,7 +268,6 @@ public class AdminController implements Initializable {
                                 newMed = new PrescriptionFree(Integer.parseInt(articleMedicine.getText()), prodGroupMedicine.getValue().getId(), nameMedicine.getText(), producerMedicine.getText(), packageMedicine.getText(), descriptionMedicine.getText(), Integer.parseInt(quantityMedicine.getText()),
                                         Double.parseDouble(priceMedicine.getText()), searchTermsMedicine.getText(), true);
                             }
-                            System.out.println(newMed);
                             methods.addMedicine(newMed);
                             clearFieldsAddM();
                             fillStore();
