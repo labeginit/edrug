@@ -137,6 +137,32 @@ public class Validation {
         }
     }
 
+    public static boolean isPriceMedicine(String price, Label starLabel) {
+        double priceDouble = 0.0;
+        try {
+            priceDouble = Double.parseDouble(price);
+            starLabel.setVisible(false);
+            return true;
+        } catch (Exception e) {
+            starLabel.setVisible(true);
+            alertPopup("Not a valid price", "Incorrect input", "Please enter a real price");
+            return false;
+        }
+    }
+
+    public static boolean isQuantityMedicine(String quantity, Label starLabel) {
+        double quantityDouble = 0.0;
+        try {
+            quantityDouble = Integer.parseInt(quantity);
+            starLabel.setVisible(false);
+            return true;
+        } catch (Exception e) {
+            starLabel.setVisible(true);
+            alertPopup("Not a valid amount", "Incorrect input", "Please enter a true quantity");
+            return false;
+        }
+    }
+
     public static boolean isQuantityMedicine(String quantity) {
         double quantityDouble = 0.0;
         try {
@@ -147,6 +173,7 @@ public class Validation {
             return false;
         }
     }
+
     public static boolean isAricleNo(String articleNo) {
         String regex = "^[0-9]{5}+$";
         boolean anArticle = Pattern.compile(regex).matcher(articleNo).find();

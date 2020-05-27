@@ -135,6 +135,28 @@ public class DAOMedicine {
         return temp;
     }
 
+    protected int retrieveLastArticle() {
+        id = 0;
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                resultSet = common.retrieveSet("SELECT MAX(article) AS maxId FROM `Medicine`;");
+            }
+            if (resultSet != null) {
+                while (resultSet.next()) {
+                    return id = resultSet.getInt("maxId");
+                }
+            } else return id;
+
+        } catch (SQLException ex) {
+            System.out.println("Error while working with ResultSet!");
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            return id;
+        }
+    }
+
     protected Medicine retrieveMedicine(String query, int article) {
         medicine = null;
         try {

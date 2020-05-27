@@ -200,7 +200,7 @@ public class CommonMethods {
 
     public int removePharmacy(Pharmacy pharmacy) { return daoPickupPharmacies.removePharmacy(pharmacy); }
 
-    //gives the last used id number for Prescriptions and Orders
+    //gives the last used id number for Prescriptions, Orders, Pharmacy, and Medicine
     public int getLastId(Class myClass){
         int maxId = 0;
         if (myClass.getName().equalsIgnoreCase("model.Prescription")){
@@ -209,6 +209,8 @@ public class CommonMethods {
             maxId = daoOrder.retrieveLastOrderId();
         } else if (myClass.getName().equalsIgnoreCase("model.Pharmacy")) {
             maxId = daoPickupPharmacies.retrieveLastPharmacyId();
+        } else if (myClass.getName().equalsIgnoreCase("model.Medicine")){
+            maxId = daoMedicine.retrieveLastArticle();
         }
         return maxId;
     }

@@ -170,7 +170,7 @@
                                 </ButtonBar>
                                 <ListView focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="447.0" prefWidth="771.0" />
                                 <TextField fx:id="nameMedicine" layoutX="235.0" layoutY="159.0" prefHeight="26.0" prefWidth="440.0" />
-                                <TextField fx:id="articleMedicine" layoutX="235.0" layoutY="72.0" prefHeight="25.0" prefWidth="220.0" />
+                                <TextField fx:id="articleMedicine" editable="false" layoutX="235.0" layoutY="72.0" prefHeight="25.0" prefWidth="220.0" />
                                 <TextField fx:id="packageMedicine" layoutX="235.0" layoutY="204.0" prefHeight="25.0" prefWidth="220.0" />
                                 <TextField fx:id="producerMedicine" layoutX="235.0" layoutY="250.0" prefHeight="26.0" prefWidth="220.0" />
                                 <TextField fx:id="descriptionMedicine" layoutX="235.0" layoutY="291.0" prefHeight="25.0" prefWidth="440.0" />

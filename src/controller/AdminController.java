@@ -93,6 +93,7 @@ public class AdminController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         userCommon.handleHelpMenus( helpMenuEditMedicine, helpEditMedicine, "Double click on the \ninformation you want to edit and then \nsave by pressing enter");
         userCommon.handleHelpMenus(helpMenuEditUser, helpEditUser, "Double click on the \ninformation you want to edit and then \nsave by pressing enter");
+        articleMedicine.setText(String.valueOf(methods.getLastId(Medicine.class) + 1));
 
       setVisible(false);
         setVisibleAdd(false);
@@ -255,28 +256,33 @@ public class AdminController implements Initializable {
 
         saveButtonMedicine.setOnAction(actionEvent -> {
             Medicine newMed = null;
+            articleMedicine.setText(String.valueOf(methods.getLastId(Medicine.class) + 1));
                     try {
-                        if (methods.getMedicine(Integer.parseInt(articleMedicine.getText())) == null) {
-                            boolean prescription;
-                            if (onPrescrMedicine.getValue().equalsIgnoreCase(withP)){
-                                prescription = true;
-                            } else prescription = false;
-                            if (prescription) {
-                                newMed = new OnPrescription(Integer.parseInt(articleMedicine.getText()), prodGroupMedicine.getValue().getId(), nameMedicine.getText(), producerMedicine.getText(), packageMedicine.getText(), descriptionMedicine.getText(), Integer.parseInt(quantityMedicine.getText()),
-                                        Double.parseDouble(priceMedicine.getText()), searchTermsMedicine.getText(), true);
-                            } else {
-                                newMed = new PrescriptionFree(Integer.parseInt(articleMedicine.getText()), prodGroupMedicine.getValue().getId(), nameMedicine.getText(), producerMedicine.getText(), packageMedicine.getText(), descriptionMedicine.getText(), Integer.parseInt(quantityMedicine.getText()),
-                                        Double.parseDouble(priceMedicine.getText()), searchTermsMedicine.getText(), true);
+                        if (!articleMedicine.getText().isEmpty() && onPrescrMedicine.getValue() != null && prodGroupMedicine.getValue() != null && !nameMedicine.getText().isEmpty() && !priceMedicine.getText().isEmpty() && !quantityMedicine.getText().isEmpty()) {
+                            if (Validation.isQuantityMedicine(quantityMedicine.getText(), quantityStar) && Validation.isPriceMedicine(priceMedicine.getText(), priceStar)) {
+                                if (methods.getMedicine(Integer.parseInt(articleMedicine.getText())) == null) {
+                                    boolean prescription;
+                                    if (onPrescrMedicine.getValue().equalsIgnoreCase(withP)) {
+                                        prescription = true;
+                                    } else prescription = false;
+                                    if (prescription) {
+                                        newMed = new OnPrescription(Integer.parseInt(articleMedicine.getText()), prodGroupMedicine.getValue().getId(), nameMedicine.getText(), producerMedicine.getText(), packageMedicine.getText(), descriptionMedicine.getText(), Integer.parseInt(quantityMedicine.getText()),
+                                                Double.parseDouble(priceMedicine.getText()), searchTermsMedicine.getText(), true);
+                                    } else {
+                                        newMed = new PrescriptionFree(Integer.parseInt(articleMedicine.getText()), prodGroupMedicine.getValue().getId(), nameMedicine.getText(), producerMedicine.getText(), packageMedicine.getText(), descriptionMedicine.getText(), Integer.parseInt(quantityMedicine.getText()),
+                                                Double.parseDouble(priceMedicine.getText()), searchTermsMedicine.getText(), true);
+                                    }
+                                    methods.addMedicine(newMed);
+                                    clearFieldsAddM();
+                                    fillStore();
+                                    setVisibleAddM(false);
+                                } else {
+                                    setVisibleAddM(false);
+                                    articleStar.setVisible(true);
+                                    Validation.alertPopup("Medicine with article = " + articleMedicine.getText() + " already exists. It might be inactive.", "Item exists", "Medicine item already exists");
+                                }
                             }
-                            methods.addMedicine(newMed);
-                            clearFieldsAddM();
-                            fillStore();
-                            setVisibleAddM(false);
-                        } else {
-                            setVisibleAddM(false);
-                            articleStar.setVisible(true);
-                            Validation.alertPopup("Medicine with article = " + articleMedicine.getText() + " already exists. It might be inactive.", "Item exists", "Medicine item already exists");
-                        }
+                        } else Validation.alertPopup("At least Article Number, Product Group, Type, Name, Price and Quantity must be filled in.","Please, fill out more fields", "Not enough information");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
