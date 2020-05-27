@@ -3,6 +3,7 @@ package controller;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -41,7 +42,7 @@ public class UserCommon {
         }
     }
 
-    public void switchScene(ActionEvent event, String path) throws IOException {
+    public void switchScene(Event event, String path) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource(path));
         Scene newScene = new Scene(root);
         newScene.getStylesheets().add(getClass().getResource("../FileUtil/layout.css").toExternalForm());

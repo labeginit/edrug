@@ -3,15 +3,10 @@ package controller;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 import model.dBConnection.CommonMethods;
 import model.UserSingleton;
 import model.User;
@@ -148,17 +143,8 @@ public class LoginController implements Initializable {
 
     @FXML
     public void onForgotPasswordPressed(MouseEvent me) {
-
         try {
-            Node node = (Node) me.getSource();
-            Scene scene = node.getScene();
-            Stage stage = (Stage) scene.getWindow();
-
-            Parent root = FXMLLoader.load(getClass().getResource("/view/forgottenPasswordView.fxml"));
-            root.getStylesheets().add(getClass().getResource("../FileUtil/layout.css").toExternalForm());
-            Scene newScene = new Scene(root);
-            stage.setScene(newScene);
-
+            userCommon.switchScene(me, "/view/forgottenPasswordView.fxml");
         } catch (Exception ex) {
             ex.getMessage();
         }
@@ -166,7 +152,6 @@ public class LoginController implements Initializable {
 
     @FXML
     public void onRememberMeCheckBox() {
-
         if (rememberMeCheckBox.isSelected()) {
             try {
                 Path path = Paths.get("login.txt");
