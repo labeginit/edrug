@@ -16,9 +16,8 @@ import java.net.URL;
 import java.security.NoSuchAlgorithmException;
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
+
 import javafx.event.ActionEvent;
 import model.dBConnection.CommonMethods;
 
@@ -32,7 +31,7 @@ public class PatientController implements Initializable {
 
 
     @FXML
-    private ComboBox<String> groupFilter_combo;
+    private ComboBox<ProdGroup> groupFilter_combo;
 
     @FXML
     private Button cartButton, save_button, cancel_button, logOut1_button, logOut2_button, logOut3_button;
@@ -89,19 +88,15 @@ public class PatientController implements Initializable {
     private TableColumn<PrescriptionLine, Integer> c13, c14;
 
 
-    private List<ProdGroup> groups = commonMethods.getProductGroupList();
-    private List<String> groupPaths = new ArrayList<>();
-    private ObservableList<Medicine> medList = FXCollections.observableArrayList(commonMethods.getMedicineList(false)); // here will probably need to add those from Prescriptions
+    private final List<ProdGroup> groups = commonMethods.getProductGroupList();
+    private ObservableList<Medicine> medList = FXCollections.observableArrayList();
 
-    private List<String> fillList(List<ProdGroup> groups) {
-        groupPaths.add("");
-        for (int i = 1; i < groups.size(); i++) {
-            groupPaths.add(groups.get(i).getPath());
-        }
-        return groupPaths;
+    private List<ProdGroup> fillList(List<ProdGroup> groups) {
+        groups.add(0, new ProdGroup(0, "", ""));
+        return groups;
     }
 
-    private ObservableList<String> filters1 = FXCollections.observableArrayList(fillList(groups));
+    private final ObservableList<ProdGroup> filters1 = FXCollections.observableArrayList(fillList(groups));
     ObservableList<Prescription> prescrList = FXCollections.observableArrayList();
     ObservableList<PrescriptionLine> prescrLines = FXCollections.observableArrayList();
 
@@ -111,24 +106,20 @@ public class PatientController implements Initializable {
         List<PrescriptionLine> temp = new ArrayList<>();
         temp.addAll(commonMethods.getPrescriptionLineList(0, currentUser));
 
+        //prepare data for the Shop
+        ArrayList<Medicine> templist = new ArrayList<>(commonMethods.getMedicineList((Patient) currentUser)); // all medicine items from prescriptions (not expired and not consumed)
+        if (!templist.isEmpty() || templist != null) {
+            medList = FXCollections.observableArrayList(templist);
+        }
+        templist.clear();
+        templist.addAll(commonMethods.getMedicineList(false)); // all prescription free medicine items
+        if (!templist.isEmpty() || templist != null) {
+            medList.addAll(templist);
+        }
+        // end of prepare data
 
         userCommon.handleHelpMenus(helpMenuMyPrescriptions, helpMyPrescriptions, "This is the quantity you\nhave, respectively the quantity you\nhave consumed");
-/*
-        //DELETEME
-        System.out.println("______");
-        for (PrescriptionLine lin : temp) {
-            System.out.println(lin.getMedicine());
-        } // for now some records are duplicated (because in prescriptions we have both - prescription free and on prescription types)
-        System.out.println("______");
-        //DELETEME END
-*/
-        for (int i = 0; i < temp.size(); i++) {
-            if ((temp.get(i).getQuantityPrescribed()-temp.get(i).getQuantityConsumed()) > 0){
-                if (temp.get(i).getMedicine().getActive()) {
-                    medList.add(temp.get(i).getMedicine());
-                }
-            }
-        }
+
         FilteredList<Medicine> filteredData = new FilteredList<>(medList, p -> true);
 
         setVisible(false);
@@ -197,23 +188,23 @@ public class PatientController implements Initializable {
         userCommon.medFilter(filteredData, search_textField, tableView);
 
         groupFilter_combo.setOnAction((event) -> {
-            String val = groupFilter_combo.getValue();
+            ProdGroup val = groupFilter_combo.getValue();
             search_textField.setText("");
             maxPrice_text.setText("");
-            if (val.isEmpty()) {
+            if (val.getId() == 0) {
                 userCommon.medFilter(filteredData, search_textField, tableView);
                 return;
+            } else {
+                    filteredData.setPredicate(medicine -> {
+                        if (medicine.getGroup() == val.getId()) {
+                            return true;
+                        }
+                        return false;
+                    });
+                SortedList<Medicine> sortedData = new SortedList<>(filteredData);
+                sortedData.comparatorProperty().bind(tableView.comparatorProperty());
+                tableView.setItems(sortedData);
             }
-            ObservableList<Medicine> newList = FXCollections.observableArrayList(commonMethods.getMedicineByProductGroupPath(val));
-            for (int i = 0; i < newList.size(); i++) {
-                if (newList.get(i).isOnPrescription()) {  //add more here - if these ids are from the prescription - do not delete
-                    newList.remove(i);
-                }
-            }
-            SortedList<Medicine> sortedData2 = new SortedList<>(newList);
-            sortedData2.comparatorProperty().bind(tableView.comparatorProperty());
-            tableView.setItems(sortedData2);
-
         });
 
         maxPrice_text.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -245,10 +236,6 @@ public class PatientController implements Initializable {
         drawPrescriptionTables(prescrList);
 
         //TreeTableView end
-    }
-
-    private ObservableList<String> getFilters1() {
-        return filters1;
     }
 
     @FXML

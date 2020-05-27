@@ -2,6 +2,7 @@ package model.dBConnection;
 
 import model.*;
 
+import javax.xml.transform.Result;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -99,6 +100,29 @@ public class DAOMedicine {
                 if (resultSet != null) {
                     while (resultSet.next()) {
                         medList.add(createMedicineObjects(resultSet));
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error while working with ResultSet!");
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            return medList;
+        }
+    }
+
+    protected List<Medicine> retrieveMedicineList(Patient patient) {
+        medList.clear();
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                ResultSet resultSet1 = common.retrieveSet("select distinct article from Prescription_has_Medicine as pl join Prescription as p on p.id = pl.prescription_id and p.patient_ssn = pl.prescription_patient_ssn\n" +
+                        "where (pl.prescription_patient_ssn = ? and (pl.quantity_prescribed - pl.quantity_consumed) > 0 and p.end_date >= current_date());", patient.getSsn());
+                if (resultSet1 != null) {
+                    while (resultSet1.next()) {
+                        Medicine tmp = getMedicine(resultSet1.getInt("article"));
+                        medList.add(tmp);
                     }
                 }
             }
