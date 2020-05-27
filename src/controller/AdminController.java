@@ -64,7 +64,6 @@ public class AdminController implements Initializable {
 
     public TableColumn<Medicine, CheckBox> isActiveMed;
     public TextField storeSearchTextField;
-    public ComboBox storeFilterCombo;  // LA: this seems to be unused
     public TableView<User> adminTable;
     public TableColumn<User, String> adminSSNtable, adminLastNameTable, adminFirstNameTable, adminPhoneTable, adminEmailTable;
     public TableColumn<User, CheckBox> adminActiveTable;
@@ -431,7 +430,7 @@ public class AdminController implements Initializable {
 
                     ObservableList<Medicine> listOfAllMed = FXCollections.observableArrayList(methods.getMedicineList());
                     FilteredList<Medicine> filteredData = new FilteredList<>(listOfAllMed, p -> true);
-                    storeView.setItems(userCommon.medFilter(filteredData, editSearchTextField, storeView));
+                    storeView.setItems(userCommon.medFilter(filteredData, storeSearchTextField, storeView));
 
                     for (int i = 0; i < filteredData.size(); i++) {
                         if (filteredData.get(i).getActive()) {
