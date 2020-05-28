@@ -232,7 +232,7 @@ public class PatientController implements Initializable {
 
         //TreeTableView begin
         prescrList = FXCollections.observableArrayList(commonMethods.getPrescriptionList(currentUser));
-        prescrLines = FXCollections.observableArrayList();
+        prescrLines = FXCollections.observableArrayList(commonMethods.getPrescriptionLineList(0, currentUser));
         drawPrescriptionTables(prescrList);
 
         //TreeTableView end
@@ -274,7 +274,7 @@ public class PatientController implements Initializable {
             if (element.getCheckBox().isSelected()) {
                 if (!element.isOnPrescription()){
                     available = element.getQuantity();
-                } else {                                                        /// LA: not tested!
+                } else {
                     for (int i = 0; i < prescrLines.size(); i++) {
                         if (prescrLines.get(i).getMedicine().getArticleNo() == element.getArticleNo()) {
                             if (prescrLines.get(i).getQuantityPrescribed() - prescrLines.get(i).getQuantityConsumed() > 0) {
@@ -297,20 +297,26 @@ public class PatientController implements Initializable {
                         cart.add(line);
 
                     }
-                    if(!element.isOnPrescription()) {
-                        qtyReserved = ++qtyReserved;
-                        element.setQuantityReserved(qtyReserved);
-                        line.setQuantity(qtyReserved);
+                    qtyReserved = ++qtyReserved;
+                    element.setQuantityReserved(qtyReserved);
+                    line.setQuantity(qtyReserved);
+                    available--;
 
-                        available--;
+                    if(!element.isOnPrescription()) {
                         element.setQuantity(available);
                         commonMethods.updateQuantity(element);
                     } else {                                        /// LA: not tested!
-                        qtyReserved = ++qtyReserved;
-                        element.setQuantityReserved(qtyReserved);
-                        line.setQuantity(qtyReserved);
+                        for (int i = 0; i < prescrLines.size(); i++) {
+                            if ((element.getArticleNo() == prescrLines.get(i).getArticle() && prescrLines.get(i).getQuantityConsumed() < prescrLines.get(i).getQuantityPrescribed())) {
+                                System.out.println(prescrLines.get(i).getArticle() + " article" );
+                                System.out.println(prescrLines.get(i).getQuantityPrescribed() + " prescribed");
+                                commonMethods.updatePrescriptionLine(prescrLines.get(i), qtyReserved + prescrLines.get(i).getQuantityConsumed());
+                                System.out.println(prescrLines.get(i).getQuantityConsumed() + " consumed");
+                                return;
+                            }
+                            prescriptionLineTableView.refresh();
+                        }
 
-                        available--;
                         element.setQuantity(element.getQuantity() - qtyReserved);
                         commonMethods.updateQuantity(element);
                     }

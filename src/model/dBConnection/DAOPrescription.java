@@ -274,5 +274,29 @@ public class DAOPrescription {
             ex.printStackTrace();
         }
     }
+
+    protected int updatePrescriptionLine(PrescriptionLine line, int quantityConsumed) {
+        int value1;
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                if (line != null) {
+                    article = line.getArticle();
+                    //quantityConsumed = line.getQuantityConsumed();
+
+                    String query = "UPDATE `Prescription_has_Medicine` SET `quantity_consumed` = ? WHERE (`prescription_id` = ?) and (`prescription_patient_ssn` = ?) and (`article` = ?);";
+                    linesAffected = common.updatePrescriptionLine(query, quantityConsumed, line.getPrescId(), line.getPatient().getSsn(), article);
+                } else {
+                    throw new NullPointerException("The user object is null");
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error while working with statement!");
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            return linesAffected;
+        }
+    }
 }
 

@@ -199,6 +199,10 @@ public class CommonMethods {
         return daoPrescription.getPrescriptionList(currentUser);
     }
 
+    public int updatePrescriptionLine(PrescriptionLine line, int quantityConsumed){
+        return daoPrescription.updatePrescriptionLine(line, quantityConsumed);
+    }
+
     //**********************
 
 
