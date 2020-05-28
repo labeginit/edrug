@@ -487,7 +487,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="pharmacyTableView" layoutX="14.0" layoutY="55.0" prefHeight="432.0" prefWidth="756.0">
+                        <TableView fx:id="pharmacyTableView" editable="true" layoutX="14.0" layoutY="55.0" prefHeight="432.0" prefWidth="756.0">
                           <columns>
                             <TableColumn fx:id="p1" prefWidth="50.0" text="ID" />
                             <TableColumn fx:id="p2" prefWidth="171.0" text="Pharmacy Name" />
