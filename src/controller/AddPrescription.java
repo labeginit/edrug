@@ -62,7 +62,7 @@ public class AddPrescription implements Initializable {
     private TableColumn<Medicine, Integer> aArticle, aAmount;
 
     @FXML
-    private TableColumn<PrescriptionLine, Integer> aprescrID1, aAmount1;
+    private TableColumn<PrescriptionLine, Integer> aPrescid, aAmount1;
 
     @FXML
     private TableColumn<PrescriptionLine, String> aName1, aInstruction;
@@ -192,7 +192,7 @@ public class AddPrescription implements Initializable {
                 currentPrescriptionLineTable.getItems().clear();
             }
         } else {
-            Validation.alertPopup("A prescription mus be selected in order to delete it", "Invalid Selection", "Select a valid prescription");
+            Validation.alertPopup("A prescription line must be selected in order to delete it", "Invalid Selection", "Select a valid prescription line");
         }
     }
 
@@ -220,6 +220,7 @@ public class AddPrescription implements Initializable {
         aStartDate1.setCellValueFactory(new PropertyValueFactory<>("startDate"));
         aEndDate1.setCellValueFactory(new PropertyValueFactory<>("endDate"));
         aDiagnosis1.setCellValueFactory(new PropertyValueFactory<>("diagnosis"));
+        aPrescid.setCellValueFactory(new PropertyValueFactory<>("id"));
 
         ObservableList<Prescription> prescriptionList = FXCollections.observableArrayList(commonMethods.getPrescriptionList(currentPatient));
 
@@ -230,7 +231,6 @@ public class AddPrescription implements Initializable {
 
     @FXML
     private void currentPrescriptionLineInitialize(PrescriptionLine pl) {
-        aprescrID1.setCellValueFactory(new PropertyValueFactory<>("prescId"));
         aName1.setCellValueFactory(new PropertyValueFactory<>("name"));
         aAmount1.setCellValueFactory(new PropertyValueFactory<>("quantityPrescribed"));
         aInstruction.setCellValueFactory(new PropertyValueFactory<>("instructions"));
