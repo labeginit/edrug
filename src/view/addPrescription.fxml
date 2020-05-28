@@ -63,27 +63,27 @@
                         <Label layoutX="14.0" layoutY="46.0" text="Name:" />
                         <Label fx:id="ssnLabel1" layoutX="88.0" layoutY="26.0" prefHeight="18.0" prefWidth="148.0" />
                         <Label fx:id="nameLabel1" layoutX="88.0" layoutY="46.0" prefHeight="18.0" prefWidth="148.0" />
-                        <SplitPane dividerPositions="0.41731669266770666" layoutX="6.0" layoutY="65.0" prefHeight="437.0" prefWidth="771.0">
+                        <SplitPane dividerPositions="0.4446177847113884" layoutX="6.0" layoutY="65.0" prefHeight="437.0" prefWidth="771.0">
                           <items>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="436.0" prefWidth="342.0">
                                  <children>
-                                    <TableView fx:id="currentPrescriptionsTable" prefHeight="438.0" prefWidth="319.0">
+                                    <TableView fx:id="currentPrescriptionsTable" prefHeight="438.0" prefWidth="339.0">
                                        <columns>
                                           <TableColumn fx:id="aPrescid" prefWidth="46.00002825260162" text="ID" />
-                                          <TableColumn fx:id="aStartDate1" prefWidth="68.66668701171875" text="Start Date" />
-                                          <TableColumn fx:id="aEndDate1" prefWidth="67.99996185302734" text="End Date" />
-                                          <TableColumn fx:id="aDiagnosis1" prefWidth="149.33340454101562" text="Diagnosis" />
+                                          <TableColumn fx:id="aStartDate1" prefWidth="91.99999618530273" text="Start Date" />
+                                          <TableColumn fx:id="aEndDate1" prefWidth="88.79998779296875" text="End Date" />
+                                          <TableColumn fx:id="aDiagnosis1" prefWidth="111.20002746582031" text="Diagnosis" />
                                        </columns>
                                     </TableView>
                                  </children>
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="436.0" prefWidth="372.0">
                                  <children>
-                                    <TableView fx:id="currentPrescriptionLineTable" layoutX="-1.0" prefHeight="438.0" prefWidth="449.0">
+                                    <TableView fx:id="currentPrescriptionLineTable" layoutX="-1.0" prefHeight="438.0" prefWidth="429.0">
                                       <columns>
                                         <TableColumn fx:id="aName1" prefWidth="205.33335876464844" text="Name" />
                                           <TableColumn fx:id="aAmount1" prefWidth="60.0" text="Qty" />
-                                          <TableColumn fx:id="aInstruction" prefWidth="160.6666259765625" text="Instruction" />
+                                          <TableColumn fx:id="aInstructions1" prefWidth="163.20000610351565" text="Instruction" />
                                       </columns>
                                     </TableView>
                                  </children>
