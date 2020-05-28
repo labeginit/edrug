@@ -322,6 +322,7 @@ public class AdminController implements Initializable {
                                     }
                                     methods.addMedicine(newMed);
                                     clearFieldsAddM();
+
                                     fillStore();
                                     setVisibleAddM(false);
                                 } else {
