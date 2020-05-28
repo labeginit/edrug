@@ -268,11 +268,22 @@ public class PatientController implements Initializable {
 
     @FXML
     private void addToCartButtonHandle(ActionEvent event) {
-        int available;
+        int available = 0;
         int qtyReserved;
         for (Medicine element : tableView.getItems()) {
             if (element.getCheckBox().isSelected()) {
-                available = element.getQuantity();
+                if (!element.isOnPrescription()){
+                    available = element.getQuantity();
+                } else {                                                        /// LA: not tested!
+                    for (int i = 0; i < prescrLines.size(); i++) {
+                        if (prescrLines.get(i).getMedicine().getArticleNo() == element.getArticleNo()) {
+                            if (prescrLines.get(i).getQuantityPrescribed() - prescrLines.get(i).getQuantityConsumed() > 0) {
+                                available = prescrLines.get(i).getQuantityPrescribed() - prescrLines.get(i).getQuantityConsumed();
+                            }
+                        }
+                    }
+
+                }
                 qtyReserved = element.getQuantityReserved();
                 OrderLine line = new OrderLine(0, currentUser, element, element.getPrice(), qtyReserved);
                 line.setArticleNo(element.getArticleNo());
@@ -286,14 +297,23 @@ public class PatientController implements Initializable {
                         cart.add(line);
 
                     }
-                    qtyReserved = ++qtyReserved;
-                    element.setQuantityReserved(qtyReserved);
-                    line.setQuantity(qtyReserved);
+                    if(!element.isOnPrescription()) {
+                        qtyReserved = ++qtyReserved;
+                        element.setQuantityReserved(qtyReserved);
+                        line.setQuantity(qtyReserved);
 
-                    available--;
-                    element.setQuantity(available);
-                    commonMethods.updateQuantity(element);
+                        available--;
+                        element.setQuantity(available);
+                        commonMethods.updateQuantity(element);
+                    } else {                                        /// LA: not tested!
+                        qtyReserved = ++qtyReserved;
+                        element.setQuantityReserved(qtyReserved);
+                        line.setQuantity(qtyReserved);
 
+                        available--;
+                        element.setQuantity(element.getQuantity() - qtyReserved);
+                        commonMethods.updateQuantity(element);
+                    }
                     tableView.refresh();
                 }
                 element.getCheckBox().setSelected(false);
