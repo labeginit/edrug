@@ -27,13 +27,7 @@ import java.util.ResourceBundle;
 
 public class AdminController implements Initializable {
 
-
-    @FXML
-    public TextField patientSearchTextField, doctorSearchTextField, editSearchTextField;
-    public Button confirmAddButton, cancelButton, saveButton, logOutMyButton;
-    public TextField SSNtext, firstNameText, lastNameText, zipText, cityText, addressText, phoneText, emailText;
-    public PasswordField pass1_text;
-    public PasswordField pass2_text;
+    public PasswordField pass1_text,pass1_textAdd, pass2_text, pass2_textAdd;
     public TableView<User> patientTableView;
     public TableColumn<User, String> patientSSNTable, patientPhoneTable, patientEmailTable, patientLastNameTable, patientFirstNameTable;
     public TableColumn<User, Boolean> patientActive;
@@ -44,39 +38,40 @@ public class AdminController implements Initializable {
     public TableColumn<User, CheckBox> changeActive;
     public TableView<User> changeTable;
     public TableColumn<User, Integer> changeRoleTable;
-    public Label BDateStar, firstNameStar, lastNameStar, zipStar, cityStar, addressStar, phoneStar, emailStar, pass2star, pass1star;
-    public Label passwordCheckLabel, passwordCheckAddLabel;
-    public Button saveButtonAdd, cancelButtonAdd, logOutPatButton, logOutDocButton, logOutAddButton, logOutEditButton, logOutMedButton;
-
-    public TextField SSNtextAdd, firstNameTextAdd, lastNameTextAdd, zipTextAdd, cityTextAdd, addressTextAdd, phoneTextAdd, emailTextAdd;
     public DatePicker datePicker;
-    public PasswordField pass1_textAdd;
-    public PasswordField pass2_textAdd;
-    public Label SSNstarAdd, BDateStarAdd, firstNameStarAdd, lastNameStarAdd, zipStarAdd, cityStarAdd, addressStarAdd, phoneStarAdd, emailStarAdd;
-    public Label pass2starAdd, pass1starAdd, roleStarAdd;
-    public TextField roleTextAdd;
+    public Label SSNstarAdd, BDateStarAdd, firstNameStarAdd, lastNameStarAdd, zipStarAdd, cityStarAdd, addressStarAdd, phoneStarAdd, emailStarAdd,
+            pass2starAdd, pass1starAdd, roleStarAdd, pNameStar, pAddressStar, pZipcodeStar, pEmailStar, pPhoneNumberStar, pCityStar, BDateStar,
+            firstNameStar, lastNameStar, zipStar, cityStar, addressStar, phoneStar, emailStar, pass2star, pass1star, passwordCheckLabel, passwordCheckAddLabel,
+             articleStar, prodGroupStar, nameMedicineStar, packageStar, producerStar, descriptionStar, priceStar, quantityStar, searchStar, typeStar, helpEditMedicine, helpEditUser, userListsLabel,
+            addEditUsersLabel, addEditMedicineLabel, addRemovePharmacyLabel, viewOrdersDeliveriesLabel, editMyProfileLabel;
     public DatePicker datePickerAdd;
     public TableView<Medicine> storeView;
     public TableColumn<Medicine, Integer> storeArticle;
     public TableColumn<Medicine, String> storeName, storeSize, storeDescription, storeProducer;
     public TableColumn<Medicine, Double> storePrice;
     public TableColumn<Medicine, Integer> storeAvailability;
-
     public TableColumn<Medicine, CheckBox> isActiveMed;
-    public TextField storeSearchTextField;
     public TableView<User> adminTable;
     public TableColumn<User, String> adminSSNtable, adminLastNameTable, adminFirstNameTable, adminPhoneTable, adminEmailTable;
     public TableColumn<User, CheckBox> adminActiveTable;
-    public Button logOutAdminButton;
-    public TextField adminSearchTextField, articleMedicine, nameMedicine, packageMedicine, producerMedicine, descriptionMedicine, priceMedicine, quantityMedicine, searchTermsMedicine;
+    public TextField adminSearchTextField, articleMedicine, nameMedicine, packageMedicine, producerMedicine, descriptionMedicine, priceMedicine,
+            quantityMedicine, searchTermsMedicine, pNameTextField, pAddressTextField, pCityTextField, pZipcodeTextField, pPhoneNumberTextField, pEmailTextField,
+            SSNtextAdd, firstNameTextAdd, lastNameTextAdd, zipTextAdd, cityTextAdd, addressTextAdd, phoneTextAdd, emailTextAdd, roleTextAdd,
+            patientSearchTextField, doctorSearchTextField, editSearchTextField, storeSearchTextField, pharmacySearch, SSNtext, firstNameText,
+            lastNameText, zipText, cityText, addressText, phoneText, emailText;
     public ChoiceBox<ProdGroup> prodGroupMedicine;
-
     public ChoiceBox<String> onPrescrMedicine;
-    public Button logOutMedicineButton, saveButtonMedicine, cancelButtonMedicine;
-
-    public Label articleStar, prodGroupStar, nameMedicineStar, packageStar, producerStar, descriptionStar, priceStar, quantityStar, searchStar, typeStar;
-    public Label helpEditMedicine, helpEditUser;
+    public Button logOutMedicineButton, saveButtonMedicine, cancelButtonMedicine,logOutAdminButton, cancelButton, saveButton, logOutMyButton
+            , saveButtonAdd, cancelButtonAdd, logOutPatButton, logOutDocButton, logOutAddButton, logOutEditButton, logOutMedButton, logoutButtonMain,
+    mainMenuPatientsButton, mainMenuAdminsButton, mainMenuDoctorsButton, mainMenuAddUserButton, mainMenuEditUserButton, mainMenuAddMedicineButton,
+            mainMenuEditMedicineButton, mainMenuMyProfileButton, deletePharmacyButton;
     public TextArea helpMenuEditMedicine, helpMenuEditUser;
+    @FXML private TabPane tabPane;
+    @FXML private Tab mainMenuTab, listDoctorsTab, listPatientsTab, listAdminsTab, editMedicineTab, addMedicineTab, editUserTab, addUserTab,
+            myProfileTab, editPharmacyTab, addPharmacyTab, ordersTab, deliveriesTab;
+    @FXML private TableView<Pharmacy> pharmacyTableView;
+    @FXML private TableColumn<Pharmacy, Integer> p1;
+    @FXML private TableColumn<Pharmacy, String> p2, p3, p4, p5, p6, p7;
 
 
     private final String withP = "Needs a Prescription";
@@ -94,11 +89,21 @@ public class AdminController implements Initializable {
         userCommon.handleHelpMenus( helpMenuEditMedicine, helpEditMedicine, "Double click on the \ninformation you want to edit and then \nsave by pressing enter");
         userCommon.handleHelpMenus(helpMenuEditUser, helpEditUser, "Double click on the \ninformation you want to edit and then \nsave by pressing enter");
         articleMedicine.setText(String.valueOf(methods.getLastId(Medicine.class) + 1));
+        initialTabs();
+        mainMenuAddMedicineButton.setOnAction(event -> initialTabs());
+        mainMenuAddUserButton.setOnAction(event -> initialTabs());
+        mainMenuEditMedicineButton.setOnAction(event -> initialTabs());
+        mainMenuEditUserButton.setOnAction(event -> initialTabs());
+        mainMenuAdminsButton.setOnAction(event -> initialTabs());
+        mainMenuDoctorsButton.setOnAction(event -> initialTabs());
+        mainMenuPatientsButton.setOnAction(event -> initialTabs());
+        mainMenuMyProfileButton.setOnAction(event -> initialTabs());
 
       setVisible(false);
         setVisibleAdd(false);
         setVisibleAddM(false);
         fillStore();
+        fillPharmacyTable();
         fillPatientTable();
         fillDoctorTable();
         fillAdminTable();
@@ -123,6 +128,14 @@ public class AdminController implements Initializable {
         });
 
         logOutMyButton.setOnAction(event -> {
+            try {
+                userCommon.onLogOutButtonPressed(event);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        logoutButtonMain.setOnAction(event -> {
             try {
                 userCommon.onLogOutButtonPressed(event);
             } catch (IOException e) {
@@ -185,6 +198,41 @@ public class AdminController implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        });
+
+        userListsLabel.setOnMouseClicked(mouseEvent -> {
+            tabPane.getTabs().remove(mainMenuTab);
+            tabPane.getTabs().add(listAdminsTab);
+            tabPane.getTabs().add(listDoctorsTab);
+            tabPane.getTabs().add(listPatientsTab);
+        });
+
+        addEditUsersLabel.setOnMouseClicked(mouseEvent -> {
+            tabPane.getTabs().remove(mainMenuTab);
+            tabPane.getTabs().add(addUserTab);
+            tabPane.getTabs().add(editUserTab);
+        });
+
+        addEditMedicineLabel.setOnMouseClicked(mouseEvent -> {
+            tabPane.getTabs().remove(mainMenuTab);
+            tabPane.getTabs().add(addMedicineTab);
+            tabPane.getTabs().add(editMedicineTab);
+        });
+
+        editMyProfileLabel.setOnMouseClicked(mouseEvent -> {
+            tabPane.getTabs().remove(mainMenuTab);
+            tabPane.getTabs().add(myProfileTab);
+        });
+        addRemovePharmacyLabel.setOnMouseClicked(mouseEvent -> {
+            tabPane.getTabs().remove(mainMenuTab);
+            tabPane.getTabs().add(addPharmacyTab);
+            tabPane.getTabs().add(editPharmacyTab);
+        });
+
+        viewOrdersDeliveriesLabel.setOnMouseClicked(mouseEvent -> {
+            tabPane.getTabs().remove(mainMenuTab);
+            tabPane.getTabs().add(ordersTab);
+            tabPane.getTabs().add(deliveriesTab);
         });
 
         saveButton.setOnAction(actionEvent -> {
@@ -302,6 +350,12 @@ public class AdminController implements Initializable {
         pass1star.setVisible(on);
         pass2star.setVisible(on);
         passwordCheckLabel.setVisible(on);
+        pNameStar.setVisible(on);
+        pAddressStar.setVisible(on);
+        pCityStar.setVisible(on);
+        pZipcodeStar.setVisible(on);
+        pEmailStar.setVisible(on);
+        pPhoneNumberStar.setVisible(on);
     }
 
     private void setVisibleAdd(boolean on) {
@@ -359,6 +413,23 @@ public class AdminController implements Initializable {
         searchTermsMedicine.clear();
     }
 
+    @FXML public void initialTabs() {
+        tabPane.getTabs().remove(mainMenuTab);
+        tabPane.getTabs().add(mainMenuTab);
+        tabPane.getTabs().remove(listPatientsTab);
+        tabPane.getTabs().remove(listDoctorsTab);
+        tabPane.getTabs().remove(listAdminsTab);
+        tabPane.getTabs().remove(editMedicineTab);
+        tabPane.getTabs().remove(addMedicineTab);
+        tabPane.getTabs().remove(editUserTab);
+        tabPane.getTabs().remove(addUserTab);
+        tabPane.getTabs().remove(myProfileTab);
+        tabPane.getTabs().remove(addPharmacyTab);
+        tabPane.getTabs().remove(editPharmacyTab);
+        tabPane.getTabs().remove(ordersTab);
+        tabPane.getTabs().remove(deliveriesTab);
+    }
+
     public void fillPatientTable() {
 
         patientSSNTable.setCellValueFactory(new PropertyValueFactory<>("Ssn"));
@@ -409,6 +480,18 @@ public class AdminController implements Initializable {
             } else changeActive.getCellData(i).setSelected(false);
         }
     }
+    @FXML public void fillPharmacyTable() {
+        p1.setCellValueFactory(new PropertyValueFactory<>("storeId"));
+        p2.setCellValueFactory(new PropertyValueFactory<>("storeName"));
+        p3.setCellValueFactory(new PropertyValueFactory<>("address"));
+        p4.setCellValueFactory(new PropertyValueFactory<>("city"));
+        p5.setCellValueFactory(new PropertyValueFactory<>("zipcode"));
+        p6.setCellValueFactory(new PropertyValueFactory<>("email"));
+        p7.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+
+        ObservableList<Pharmacy> pharmacies = FXCollections.observableArrayList(methods.retrievePharmacyList());
+        pharmacyTableView.setItems(pharmacies);
+    }
     public void fillAdminTable() {
         adminSSNtable.setCellValueFactory(new PropertyValueFactory<>("Ssn"));
         adminFirstNameTable.setCellValueFactory(new PropertyValueFactory<>("firstName"));
@@ -424,379 +507,480 @@ public class AdminController implements Initializable {
     }
 
 
-                public void fillStore() {
-                    storeArticle.setCellValueFactory(new PropertyValueFactory<>("articleNo"));
-                    storeName.setCellValueFactory(new PropertyValueFactory<>("name"));
-                    storeAvailability.setCellValueFactory(new PropertyValueFactory<>("quantity"));
-                    storeDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
-                    storePrice.setCellValueFactory(new PropertyValueFactory<>("price"));
-                    storeProducer.setCellValueFactory(new PropertyValueFactory<>("producer"));
-                    storeSize.setCellValueFactory(new PropertyValueFactory<>("packageSize"));
-                    isActiveMed.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
+    public void fillStore() {
+        storeArticle.setCellValueFactory(new PropertyValueFactory<>("articleNo"));
+        storeName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        storeAvailability.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+        storeDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+        storePrice.setCellValueFactory(new PropertyValueFactory<>("price"));
+        storeProducer.setCellValueFactory(new PropertyValueFactory<>("producer"));
+        storeSize.setCellValueFactory(new PropertyValueFactory<>("packageSize"));
+        isActiveMed.setCellValueFactory(new PropertyValueFactory<>("checkBox"));
 
-                    ObservableList<Medicine> listOfAllMed = FXCollections.observableArrayList(methods.getMedicineList());
-                    FilteredList<Medicine> filteredData = new FilteredList<>(listOfAllMed, p -> true);
-                    storeView.setItems(userCommon.medFilter(filteredData, storeSearchTextField, storeView));
+        ObservableList<Medicine> listOfAllMed = FXCollections.observableArrayList(methods.getMedicineList());
+        FilteredList<Medicine> filteredData = new FilteredList<>(listOfAllMed, p -> true);
+        storeView.setItems(userCommon.medFilter(filteredData, storeSearchTextField, storeView));
 
-                    for (int i = 0; i < filteredData.size(); i++) {
-                        if (filteredData.get(i).getActive()) {
-                            isActiveMed.getCellData(i).setSelected(true);
-                        } else isActiveMed.getCellData(i).setSelected(false);
-                    }
+        for (int i = 0; i < filteredData.size(); i++) {
+            if (filteredData.get(i).getActive()) {
+                isActiveMed.getCellData(i).setSelected(true);
+            } else isActiveMed.getCellData(i).setSelected(false);
+        }
 
-                }
+    }
 
-                public void fillMe() {
-                    SSNtext.setText(currentUser.getSsn());
-                    datePicker.setValue(currentUser.getBDate().toLocalDate());
-                    firstNameText.setText(currentUser.getFirstName());
-                    lastNameText.setText(currentUser.getLastName());
-                    zipText.setText(currentUser.getZipCode());
-                    cityText.setText(currentUser.getCity());
-                    addressText.setText(currentUser.getAddress());
-                    phoneText.setText(currentUser.getPhoneNumber());
-                    emailText.setText(currentUser.getEmail());
-                }
+    public void fillMe() {
+        SSNtext.setText(currentUser.getSsn());
+        datePicker.setValue(currentUser.getBDate().toLocalDate());
+        firstNameText.setText(currentUser.getFirstName());
+        lastNameText.setText(currentUser.getLastName());
+        zipText.setText(currentUser.getZipCode());
+        cityText.setText(currentUser.getCity());
+        addressText.setText(currentUser.getAddress());
+        phoneText.setText(currentUser.getPhoneNumber());
+        emailText.setText(currentUser.getEmail());
+    }
 
-
-                private boolean isItOk() {
-                    if (firstNameText.getText().isEmpty() || lastNameText.getText().isEmpty() || datePicker.getValue() == null
-                            || zipText.getText().isEmpty() || addressText.getText().isEmpty() || emailText.getText().isEmpty() || phoneText.getText().isEmpty()) {
-                        if (firstNameText.getText().isEmpty()) {
-                            firstNameStar.setVisible(true);
-                        }
-                        if (lastNameText.getText().isEmpty()) {
-                            lastNameStar.setVisible(true);
-                        }
-                        if (datePicker.getValue() == null) {
-                            BDateStar.setVisible(true);
-                        }
-                        if (zipText.getText().isEmpty()) {
-                            zipStar.setVisible(true);
-                        }
-                        if (cityText.getText().isEmpty()) {
-                            cityStar.setVisible(true);
-                        }
-                        if (addressText.getText().isEmpty()) {
-                            addressStar.setVisible(true);
-                        }
-                        if (emailText.getText().isEmpty()) {
-                            emailStar.setVisible(true);
-                        }
-                        if (phoneText.getText().isEmpty()) {
-                            phoneStar.setVisible(true);
-                        }
-                        Validation.alertPopup("Please enter your information into all fields", "Empty Fields", "Contains empty fields");
-                        return false;
-                    } else if (!pass1_text.getText().isEmpty() || !pass2_text.getText().isEmpty()) {
-                        if (!pass1_text.getText().equals(pass2_text.getText())) {
-                            pass1star.setVisible(true);
-                            pass2star.setVisible(true);
-                            passwordCheckLabel.setVisible(true);
-                            Validation.alertPopup("Password does not match", "Password Mismatch", "Password doesn't match");
-                            return false;
-                        } else return Validation.isPassword(pass1_text.getText(), pass1star);
-                    } else {
-                        return true;
-                    }
-                }
-
-                private boolean isItOkAdd() {
-                    if (SSNtextAdd.getText().isEmpty() || firstNameTextAdd.getText().isEmpty() || lastNameTextAdd.getText().isEmpty() || datePickerAdd.getValue() == null
-                            || zipTextAdd.getText().isEmpty() || addressTextAdd.getText().isEmpty() || emailTextAdd.getText().isEmpty() || phoneTextAdd.getText().isEmpty()
-                            || roleTextAdd.getText().isEmpty()) {
-
-                        if (SSNtextAdd.getText().isEmpty()) {
-                            SSNstarAdd.setVisible(true);
-                        }
-                        if (firstNameTextAdd.getText().isEmpty()) {
-                            firstNameStarAdd.setVisible(true);
-                        }
-                        if (lastNameTextAdd.getText().isEmpty()) {
-                            lastNameStarAdd.setVisible(true);
-                        }
-                        if (datePickerAdd.getValue() == null) {
-                            BDateStarAdd.setVisible(true);
-                        }
-                        if (zipTextAdd.getText().isEmpty()) {
-                            zipStarAdd.setVisible(true);
-                        }
-                        if (cityTextAdd.getText().isEmpty()) {
-                            cityStarAdd.setVisible(true);
-                        }
-                        if (addressTextAdd.getText().isEmpty()) {
-                            addressStarAdd.setVisible(true);
-                        }
-                        if (emailTextAdd.getText().isEmpty()) {
-                            emailStarAdd.setVisible(true);
-                        }
-                        if (phoneTextAdd.getText().isEmpty()) {
-                            phoneStarAdd.setVisible(true);
-                        }
-                        if (pass1_textAdd.getText().isEmpty()) {
-                            pass1starAdd.setVisible(true);
-                        }
-                        if (pass2_textAdd.getText().isEmpty()) {
-                            pass2starAdd.setVisible(true);
-                        }
-                        if (roleTextAdd.getText().isEmpty()) {
-                            roleStarAdd.setVisible(true);
-                        }
-                        Validation.alertPopup("Please enter your information into all fields", "Empty Fields", "Contains empty fields");
-                        return false;
-                    } else if (!pass1_textAdd.getText().equals(pass2_textAdd.getText())) {
-                        pass1starAdd.setVisible(true);
-                        pass2starAdd.setVisible(true);
-                        Validation.alertPopup("Password does not match", "Password Mismatch", "Password doesn't match");
-                        return false;
-                    } else if (!Validation.isPassword(pass1_textAdd.getText(), pass1starAdd)) {
-                        return false;
-                    } else {
-                        return true;
-                    }
-                }
-
-                public void makeEditable() {
-
-                    changeFirstNameTable.setCellFactory(TextFieldTableCell.forTableColumn());
-                    changeFirstNameTable.setOnEditCommit(
-                            new EventHandler<TableColumn.CellEditEvent<User, String>>() {
-
-                                @Override
-                                public void handle(TableColumn.CellEditEvent<User, String> t) {
-                                    if (Validation.isName(t.getNewValue(), firstNameStar)) {
-                                        firstNameStar.setVisible(false);
-                                        ((User) t.getTableView().getItems().get(
-                                                t.getTablePosition().getRow())
-                                        ).setFirstName(t.getNewValue());
-                                        methods.updateUser(t.getTableView().getItems().get(t.getTablePosition().getRow()));
-                                    }
-                                    fillDoctorTable();
-                                    fillPatientTable();
-                                }
-                            }
-                    );
-                    changeLastNameTable.setCellFactory(TextFieldTableCell.forTableColumn());
-                    changeLastNameTable.setOnEditCommit(
-                            new EventHandler<TableColumn.CellEditEvent<User, String>>() {
-
-                                @Override
-                                public void handle(TableColumn.CellEditEvent<User, String> t) {
-                                    if (Validation.isName(t.getNewValue(), lastNameStar)) {
-                                        lastNameStar.setVisible(false);
-                                        ((User) t.getTableView().getItems().get(
-                                                t.getTablePosition().getRow())
-                                        ).setLastName(t.getNewValue());
-                                        methods.updateUser(t.getTableView().getItems().get(t.getTablePosition().getRow()));
-                                    }
-                                    fillDoctorTable();
-                                    fillPatientTable();
-                                }
-                            }
-                    );
-                    changeEmailTable.setCellFactory(TextFieldTableCell.forTableColumn());
-                    changeEmailTable.setOnEditCommit(
-                            new EventHandler<TableColumn.CellEditEvent<User, String>>() {
-
-                                @Override
-                                public void handle(TableColumn.CellEditEvent<User, String> t) {
-                                    if (Validation.isEmail(t.getNewValue(), emailStar)) {
-                                        emailStar.setVisible(false);
-                                        ((User) t.getTableView().getItems().get(
-                                                t.getTablePosition().getRow())
-                                        ).setEmail(t.getNewValue());
-                                        methods.updateUser(t.getTableView().getItems().get(t.getTablePosition().getRow()));
-                                    }
-                                    fillDoctorTable();
-                                    fillPatientTable();
-                                }
-                            }
-                    );
-                    changePhoneTable.setCellFactory(TextFieldTableCell.forTableColumn());
-                    changePhoneTable.setOnEditCommit(
-                            new EventHandler<TableColumn.CellEditEvent<User, String>>() {
-
-                                @Override
-                                public void handle(TableColumn.CellEditEvent<User, String> t) {
-                                    if (Validation.isPhoneNumber(t.getNewValue(), phoneStar)) {
-                                        phoneStar.setVisible(false);
-                                        ((User) t.getTableView().getItems().get(
-                                                t.getTablePosition().getRow())
-                                        ).setPhoneNumber(t.getNewValue());
-                                        methods.updateUser(t.getTableView().getItems().get(t.getTablePosition().getRow()));
-
-                                    }
-                                    fillDoctorTable();
-                                    fillPatientTable();
-                                }
-                            });
-                    storeSize.setCellFactory(TextFieldTableCell.forTableColumn());
-                    storeSize.setOnEditCommit(
-                            new EventHandler<TableColumn.CellEditEvent<Medicine, String>>() {
-
-                                @Override
-                                public void handle(TableColumn.CellEditEvent<Medicine, String> t) {
-                                    ((Medicine) t.getTableView().getItems().get(
-                                            t.getTablePosition().getRow())
-                                    ).setPackageSize(t.getNewValue());
-                                    methods.updateMedicine(t.getTableView().getItems().get(t.getTablePosition().getRow()));
-
-                                    fillStore();
-                                }
-                            });
-                    storeProducer.setCellFactory(TextFieldTableCell.forTableColumn());
-                    storeProducer.setOnEditCommit(
-                            new EventHandler<TableColumn.CellEditEvent<Medicine, String>>() {
-
-                                @Override
-                                public void handle(TableColumn.CellEditEvent<Medicine, String> t) {
-
-                                    ((Medicine) t.getTableView().getItems().get(
-                                            t.getTablePosition().getRow())
-                                    ).setProducer(t.getNewValue());
-                                    methods.updateMedicine(t.getTableView().getItems().get(t.getTablePosition().getRow()));
-
-                                    fillStore();
-                                }
-                            });
-                    storePrice.setCellFactory(TextFieldTableCell.<Medicine, Double>forTableColumn(new DoubleStringConverter()));
-                    storePrice.setOnEditCommit(
-                            new EventHandler<TableColumn.CellEditEvent<Medicine, Double>>() {
-
-                                @Override
-                                public void handle(TableColumn.CellEditEvent<Medicine, Double> t) {
-                                    if (Validation.isPriceMedicine(t.getNewValue().toString())) {
-
-                                        ((Medicine) t.getTableView().getItems().get(
-                                                t.getTablePosition().getRow())
-                                        ).setPrice(t.getNewValue());
-                                        methods.updateMedicine(t.getTableView().getItems().get(t.getTablePosition().getRow()));
-
-                                        fillStore();
-                                    }
-                                }
-                            });
-                    storeDescription.setCellFactory(TextFieldTableCell.forTableColumn());
-                    storeDescription.setOnEditCommit(
-
-                            new EventHandler<TableColumn.CellEditEvent<Medicine, String>>() {
-
-                                @Override
-                                public void handle(TableColumn.CellEditEvent<Medicine, String> t) {
-
-                                    ((Medicine) t.getTableView().getItems().get(
-                                            t.getTablePosition().getRow())
-                                    ).setDescription(t.getNewValue());
-                                    methods.updateMedicine(t.getTableView().getItems().get(t.getTablePosition().getRow()));
-
-                                    fillStore();
-                                }
-                            });
-                    storeName.setCellFactory(TextFieldTableCell.forTableColumn());
-                    storeName.setOnEditCommit(
-                            new EventHandler<TableColumn.CellEditEvent<Medicine, String>>() {
-
-                                @Override
-                                public void handle(TableColumn.CellEditEvent<Medicine, String> t) {
-
-
-                                    ((Medicine) t.getTableView().getItems().get(
-                                            t.getTablePosition().getRow())
-                                    ).setName(t.getNewValue());
-                                    methods.updateMedicine(t.getTableView().getItems().get(t.getTablePosition().getRow()));
-
-                                    fillStore();
-                                }
-                            });
-
-                    storeAvailability.setCellFactory(TextFieldTableCell.<Medicine, Integer>forTableColumn(new IntegerStringConverter()));
-                    storeAvailability.setOnEditCommit(
-                            new EventHandler<TableColumn.CellEditEvent<Medicine, Integer>>() {
-
-                                @Override
-                                public void handle(TableColumn.CellEditEvent<Medicine, Integer> t) {
-                                    if (Validation.isQuantityMedicine(t.getNewValue().toString())) {
-
-                                        ((Medicine) t.getTableView().getItems().get(
-                                                t.getTablePosition().getRow())
-                                        ).setQuantity(t.getNewValue());
-                                        methods.updateMedicine(t.getTableView().getItems().get(t.getTablePosition().getRow()));
-
-                                        fillStore();
-                                    }
-                                }
-                            });
-                    isActiveMed.setCellFactory(TextFieldTableCell.<Medicine, CheckBox>forTableColumn(new StringConverter<CheckBox>() {
-                        @Override
-                        public String toString(CheckBox checkBox) {
-                            if (checkBox.isSelected()){
-                                return "true";
-                            } else {return "false";}
-                        }
-
-                        @Override
-                        public CheckBox fromString(String s) {
-                            CheckBox checkBox = new CheckBox();
-                            if (s.equalsIgnoreCase("true")){
-                              checkBox.setSelected(true);
-                            } if (s.equalsIgnoreCase("false")) {
-                                    checkBox.setSelected(false);}
-                            else {
-                                Validation.alertPopup("Must be true or false", "Active can only be true or false", "Input error");
-                            }
-                            return checkBox;
-                        }
-                    }));
-                    isActiveMed.setOnEditCommit(
-                            new EventHandler<TableColumn.CellEditEvent<Medicine, CheckBox>>() {
-                                @Override
-                                public void handle(TableColumn.CellEditEvent<Medicine, CheckBox> t) {
-                                        ((Medicine) t.getTableView().getItems().get(
-                                                t.getTablePosition().getRow())
-                                        ).setActive(t.getNewValue().isSelected());
-                                        methods.updateMedicine(t.getTableView().getItems().get(t.getTablePosition().getRow()));
-
-                                        fillStore();
-                                }
-                            });
-
-
-                    changeActive.setCellFactory(TextFieldTableCell.<User, CheckBox>forTableColumn(new StringConverter<CheckBox>() {
-                        @Override
-                        public String toString(CheckBox checkBox) {
-                            if (checkBox.isSelected()){
-                                return "true";
-                            } else {return "false";}
-                        }
-
-                        @Override
-                        public CheckBox fromString(String s) {
-                            CheckBox checkBox = new CheckBox();
-                            if (s.equalsIgnoreCase("true")){
-                                checkBox.setSelected(true);
-                            } if (s.equalsIgnoreCase("false")) {
-                                checkBox.setSelected(false);}
-                            else {
-                                Validation.alertPopup("Must be true or false", "Active can only be true or false", "Input error");
-                            }
-                            return checkBox;
-                        }
-                    }));
-                    changeActive.setOnEditCommit(
-                            new EventHandler<TableColumn.CellEditEvent<User, CheckBox>>() {
-                                @Override
-                                public void handle(TableColumn.CellEditEvent<User, CheckBox> t) {
-                                    ((User) t.getTableView().getItems().get(
-                                            t.getTablePosition().getRow())
-                                    ).setActive(t.getNewValue().isSelected());
-                                    methods.updateUser(t.getTableView().getItems().get(t.getTablePosition().getRow()));
-
-                                   fillDoctorTable();
-                                   fillPatientTable();
-                                }
-                            });
-
-                }
-
+    private boolean isItOk() {
+        if (firstNameText.getText().isEmpty() || lastNameText.getText().isEmpty() || datePicker.getValue() == null
+                || zipText.getText().isEmpty() || addressText.getText().isEmpty() || emailText.getText().isEmpty() || phoneText.getText().isEmpty()) {
+            if (firstNameText.getText().isEmpty()) {
+                firstNameStar.setVisible(true);
             }
+            if (lastNameText.getText().isEmpty()) {
+                lastNameStar.setVisible(true);
+            }
+            if (datePicker.getValue() == null) {
+                BDateStar.setVisible(true);
+            }
+            if (zipText.getText().isEmpty()) {
+                zipStar.setVisible(true);
+            }
+            if (cityText.getText().isEmpty()) {
+                cityStar.setVisible(true);
+            }
+            if (addressText.getText().isEmpty()) {
+                addressStar.setVisible(true);
+            }
+            if (emailText.getText().isEmpty()) {
+                emailStar.setVisible(true);
+            }
+            if (phoneText.getText().isEmpty()) {
+                phoneStar.setVisible(true);
+            }
+            Validation.alertPopup("Please enter your information into all fields", "Empty Fields", "Contains empty fields");
+            return false;
+        } else if (!pass1_text.getText().isEmpty() || !pass2_text.getText().isEmpty()) {
+            if (!pass1_text.getText().equals(pass2_text.getText())) {
+                pass1star.setVisible(true);
+                pass2star.setVisible(true);
+                passwordCheckLabel.setVisible(true);
+                Validation.alertPopup("Password does not match", "Password Mismatch", "Password doesn't match");
+                return false;
+            } else return Validation.isPassword(pass1_text.getText(), pass1star);
+        } else {
+            return true;
+        }
+    }
+
+    private boolean isItOkAdd() {
+        if (SSNtextAdd.getText().isEmpty() || firstNameTextAdd.getText().isEmpty() || lastNameTextAdd.getText().isEmpty() || datePickerAdd.getValue() == null
+                || zipTextAdd.getText().isEmpty() || addressTextAdd.getText().isEmpty() || emailTextAdd.getText().isEmpty() || phoneTextAdd.getText().isEmpty()
+                || roleTextAdd.getText().isEmpty()) {
+
+            if (SSNtextAdd.getText().isEmpty()) {
+                SSNstarAdd.setVisible(true);
+            }
+            if (firstNameTextAdd.getText().isEmpty()) {
+                firstNameStarAdd.setVisible(true);
+            }
+            if (lastNameTextAdd.getText().isEmpty()) {
+                lastNameStarAdd.setVisible(true);
+            }
+            if (datePickerAdd.getValue() == null) {
+                BDateStarAdd.setVisible(true);
+            }
+            if (zipTextAdd.getText().isEmpty()) {
+                zipStarAdd.setVisible(true);
+            }
+            if (cityTextAdd.getText().isEmpty()) {
+                cityStarAdd.setVisible(true);
+            }
+            if (addressTextAdd.getText().isEmpty()) {
+                addressStarAdd.setVisible(true);
+            }
+            if (emailTextAdd.getText().isEmpty()) {
+                emailStarAdd.setVisible(true);
+            }
+            if (phoneTextAdd.getText().isEmpty()) {
+                phoneStarAdd.setVisible(true);
+            }
+            if (pass1_textAdd.getText().isEmpty()) {
+                pass1starAdd.setVisible(true);
+            }
+            if (pass2_textAdd.getText().isEmpty()) {
+                pass2starAdd.setVisible(true);
+            }
+            if (roleTextAdd.getText().isEmpty()) {
+                roleStarAdd.setVisible(true);
+            }
+            Validation.alertPopup("Please enter your information into all fields", "Empty Fields", "Contains empty fields");
+            return false;
+        } else if (!pass1_textAdd.getText().equals(pass2_textAdd.getText())) {
+            pass1starAdd.setVisible(true);
+            pass2starAdd.setVisible(true);
+            Validation.alertPopup("Password does not match", "Password Mismatch", "Password doesn't match");
+            return false;
+        } else if (!Validation.isPassword(pass1_textAdd.getText(), pass1starAdd)) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public void makeEditable() {
+
+        changeFirstNameTable.setCellFactory(TextFieldTableCell.forTableColumn());
+        changeFirstNameTable.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<User, String>>() {
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<User, String> t) {
+                        if (Validation.isName(t.getNewValue(), firstNameStar)) {
+                            firstNameStar.setVisible(false);
+                            ((User) t.getTableView().getItems().get(
+                                    t.getTablePosition().getRow())
+                            ).setFirstName(t.getNewValue());
+                            methods.updateUser(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+                        }
+                        fillDoctorTable();
+                        fillPatientTable();
+                    }
+                }
+                );
+        changeLastNameTable.setCellFactory(TextFieldTableCell.forTableColumn());
+        changeLastNameTable.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<User, String>>() {
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<User, String> t) {
+                        if (Validation.isName(t.getNewValue(), lastNameStar)) {
+                            lastNameStar.setVisible(false);
+                            ((User) t.getTableView().getItems().get(
+                                    t.getTablePosition().getRow())
+                            ).setLastName(t.getNewValue());
+                            methods.updateUser(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+                        }
+                        fillDoctorTable();
+                        fillPatientTable();
+                    }
+                }
+                );
+        changeEmailTable.setCellFactory(TextFieldTableCell.forTableColumn());
+        changeEmailTable.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<User, String>>() {
+
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<User, String> t) {
+                        if (Validation.isEmail(t.getNewValue(), emailStar)) {
+                            emailStar.setVisible(false);
+                            ((User) t.getTableView().getItems().get(
+                                    t.getTablePosition().getRow())
+                            ).setEmail(t.getNewValue());
+                            methods.updateUser(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+                        }
+                        fillDoctorTable();
+                        fillPatientTable();
+                    }
+                }
+                );
+        changePhoneTable.setCellFactory(TextFieldTableCell.forTableColumn());
+        changePhoneTable.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<User, String>>() {
+
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<User, String> t) {
+                        if (Validation.isPhoneNumber(t.getNewValue(), phoneStar)) {
+                            phoneStar.setVisible(false);
+                            ((User) t.getTableView().getItems().get(
+                                    t.getTablePosition().getRow())
+                            ).setPhoneNumber(t.getNewValue());
+                            methods.updateUser(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+
+                        }
+                        fillDoctorTable();
+                        fillPatientTable();
+                    }
+                });
+        storeSize.setCellFactory(TextFieldTableCell.forTableColumn());
+        storeSize.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Medicine, String>>() {
+
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Medicine, String> t) {
+                        ((Medicine) t.getTableView().getItems().get(
+                                t.getTablePosition().getRow())
+                        ).setPackageSize(t.getNewValue());
+                        methods.updateMedicine(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+
+                        fillStore();
+                    }
+                });
+        storeProducer.setCellFactory(TextFieldTableCell.forTableColumn());
+        storeProducer.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Medicine, String>>() {
+
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Medicine, String> t) {
+
+                        ((Medicine) t.getTableView().getItems().get(
+                                t.getTablePosition().getRow())
+                        ).setProducer(t.getNewValue());
+                        methods.updateMedicine(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+
+                        fillStore();
+                    }
+                });
+        storePrice.setCellFactory(TextFieldTableCell.<Medicine, Double>forTableColumn(new DoubleStringConverter()));
+        storePrice.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Medicine, Double>>() {
+
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Medicine, Double> t) {
+                        if (Validation.isPriceMedicine(t.getNewValue().toString())) {
+
+                            ((Medicine) t.getTableView().getItems().get(
+                                    t.getTablePosition().getRow())
+                            ).setPrice(t.getNewValue());
+                            methods.updateMedicine(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+
+                            fillStore();
+                        }
+                    }
+                });
+        storeDescription.setCellFactory(TextFieldTableCell.forTableColumn());
+        storeDescription.setOnEditCommit(
+
+                new EventHandler<TableColumn.CellEditEvent<Medicine, String>>() {
+
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Medicine, String> t) {
+
+                        ((Medicine) t.getTableView().getItems().get(
+                                t.getTablePosition().getRow())
+                        ).setDescription(t.getNewValue());
+                        methods.updateMedicine(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+
+                        fillStore();
+                    }
+                });
+        storeName.setCellFactory(TextFieldTableCell.forTableColumn());
+        storeName.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Medicine, String>>() {
+
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Medicine, String> t) {
+
+
+                        ((Medicine) t.getTableView().getItems().get(
+                                t.getTablePosition().getRow())
+                        ).setName(t.getNewValue());
+                        methods.updateMedicine(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+
+                        fillStore();
+                    }
+                });
+
+        storeAvailability.setCellFactory(TextFieldTableCell.<Medicine, Integer>forTableColumn(new IntegerStringConverter()));
+        storeAvailability.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Medicine, Integer>>() {
+
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Medicine, Integer> t) {
+                        if (Validation.isQuantityMedicine(t.getNewValue().toString())) {
+
+                            ((Medicine) t.getTableView().getItems().get(
+                                    t.getTablePosition().getRow())
+                            ).setQuantity(t.getNewValue());
+                            methods.updateMedicine(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+
+                            fillStore();
+                        }
+                    }
+                });
+        isActiveMed.setCellFactory(TextFieldTableCell.<Medicine, CheckBox>forTableColumn(new StringConverter<CheckBox>() {
+            @Override
+            public String toString(CheckBox checkBox) {
+                if (checkBox.isSelected()){
+                    return "true";
+                } else {return "false";}
+            }
+
+            @Override
+            public CheckBox fromString(String s) {
+                CheckBox checkBox = new CheckBox();
+                if (s.equalsIgnoreCase("true")){
+                    checkBox.setSelected(true);
+                } if (s.equalsIgnoreCase("false")) {
+                    checkBox.setSelected(false);}
+                else {
+                    Validation.alertPopup("Must be true or false", "Active can only be true or false", "Input error");
+                }
+                return checkBox;
+            }
+        }));
+        isActiveMed.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Medicine, CheckBox>>() {
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Medicine, CheckBox> t) {
+                        ((Medicine) t.getTableView().getItems().get(
+                                t.getTablePosition().getRow())
+                        ).setActive(t.getNewValue().isSelected());
+                        methods.updateMedicine(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+
+                        fillStore();
+                    }
+                });
+
+
+        changeActive.setCellFactory(TextFieldTableCell.<User, CheckBox>forTableColumn(new StringConverter<CheckBox>() {
+            @Override
+            public String toString(CheckBox checkBox) {
+                if (checkBox.isSelected()){
+                    return "true";
+                } else {return "false";}
+            }
+
+            @Override
+            public CheckBox fromString(String s) {
+                CheckBox checkBox = new CheckBox();
+                if (s.equalsIgnoreCase("true")){
+                    checkBox.setSelected(true);
+                } if (s.equalsIgnoreCase("false")) {
+                    checkBox.setSelected(false);}
+                else {
+                    Validation.alertPopup("Must be true or false", "Active can only be true or false", "Input error");
+                }
+                return checkBox;
+            }
+        }));
+        changeActive.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<User, CheckBox>>() {
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<User, CheckBox> t) {
+                        ((User) t.getTableView().getItems().get(
+                                t.getTablePosition().getRow())
+                        ).setActive(t.getNewValue().isSelected());
+                        methods.updateUser(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+
+                        fillDoctorTable();
+                        fillPatientTable();
+                    }
+                });
+        p2.setCellFactory(TextFieldTableCell.forTableColumn());
+        p2.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Pharmacy, String>>() {
+
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Pharmacy, String> t) {
+                        if (Validation.isName(t.getNewValue(), firstNameStar)) {
+                            firstNameStar.setVisible(false);
+                            ((Pharmacy) t.getTableView().getItems().get(
+                                    t.getTablePosition().getRow())
+                            ).setStoreName(t.getNewValue());
+                            methods.updatePharmacy(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+                            fillPharmacyTable();
+                        }
+                    }
+                }
+                );
+        p3.setCellFactory(TextFieldTableCell.forTableColumn());
+        p3.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Pharmacy, String>>() {
+
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Pharmacy, String> t) {
+                        firstNameStar.setVisible(false);
+                        ((Pharmacy) t.getTableView().getItems().get(
+                                t.getTablePosition().getRow())
+                        ).setAddress(t.getNewValue());
+                        methods.updatePharmacy(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+
+                        fillPharmacyTable();
+                    }
+                }
+                );
+        p4.setCellFactory(TextFieldTableCell.forTableColumn());
+        p4.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Pharmacy, String>>() {
+
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Pharmacy, String> t) {
+                        if (Validation.isName(t.getNewValue(), firstNameStar)) {
+                            firstNameStar.setVisible(false);
+                            ((Pharmacy) t.getTableView().getItems().get(
+                                    t.getTablePosition().getRow())
+                            ).setCity(t.getNewValue());
+                            methods.updatePharmacy(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+
+                            fillPharmacyTable();
+                        }
+                    }
+                }
+                );
+
+        p5.setCellFactory(TextFieldTableCell.forTableColumn());
+        p5.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Pharmacy, String>>() {
+
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Pharmacy, String> t) {
+                        if (Validation.isZipcode(t.getNewValue(), firstNameStar)) {
+                            firstNameStar.setVisible(false);
+                            ((Pharmacy) t.getTableView().getItems().get(
+                                    t.getTablePosition().getRow())
+                            ).setZipcode(t.getNewValue());
+                            methods.updatePharmacy(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+                            fillPharmacyTable();
+                        }
+                    }
+                }
+                );
+
+        p6.setCellFactory(TextFieldTableCell.forTableColumn());
+        p6.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Pharmacy, String>>() {
+
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Pharmacy, String> t) {
+                        if (Validation.isEmail(t.getNewValue(), firstNameStar)) {
+                            firstNameStar.setVisible(false);
+                            ((Pharmacy) t.getTableView().getItems().get(
+                                    t.getTablePosition().getRow())
+                            ).setEmail(t.getNewValue());
+                            methods.updatePharmacy(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+                            fillPharmacyTable();
+                        }
+                    }
+                }
+                );
+
+        p7.setCellFactory(TextFieldTableCell.forTableColumn());
+        p7.setOnEditCommit(
+                new EventHandler<TableColumn.CellEditEvent<Pharmacy, String>>() {
+
+                    @Override
+                    public void handle(TableColumn.CellEditEvent<Pharmacy, String> t) {
+                        if (Validation.isPhoneNumber(t.getNewValue(), firstNameStar)) {
+                            firstNameStar.setVisible(false);
+                            ((Pharmacy) t.getTableView().getItems().get(
+                                    t.getTablePosition().getRow())
+                            ).setPhoneNumber(t.getNewValue());
+                            methods.updatePharmacy(t.getTableView().getItems().get(t.getTablePosition().getRow()));
+
+                            fillPharmacyTable();
+                        }
+                    }
+                }
+                );
+    }
+}
 

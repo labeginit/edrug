@@ -125,7 +125,7 @@ public class CheckoutController implements Initializable {
         Pharmacy pharmacy = pickUpComboBox.getValue();
         pharmacyNameLabel.setText(pharmacy.getStoreName());
         pharmacyAddressLabel.setText(pharmacy.getAddress());
-        zipcode3Label.setText(pharmacy.getZipCode());
+        zipcode3Label.setText(pharmacy.getZipcode());
         city2Label.setText(pharmacy.getCity());
         emailLabel.setText(pharmacy.getEmail());
         phoneNumber3Label.setText(pharmacy.getPhoneNumber());

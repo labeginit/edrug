@@ -184,6 +184,11 @@ public class CommonMethods {
         daoPrescription.deletePrescription(prescriptionLine, currentUser);
     }
 
+    //will delete all lines and a header of a specified Prescription
+    public void deletePrescription(int prescrId, Patient currentPatient) {
+        daoPrescription.deletePrescription(prescrId, currentPatient);
+    }
+
     //returns all lines of a specific Prescription header (id and user)
     // or all prescriptions (enter 0 as argument #1). For Admin it will return lines without filtering for user.
     public List<PrescriptionLine> getPrescriptionLineList(int prescriptionId, User currentUser){
