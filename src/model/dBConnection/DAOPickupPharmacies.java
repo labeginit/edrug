@@ -15,7 +15,7 @@ public class DAOPickupPharmacies {
     private int storeId;
     private String storeName;
     private String address;
-    private String zipCode;
+    private String zipcode;
     private String city;
     private String phoneNumber;
     private String email;
@@ -72,13 +72,13 @@ public class DAOPickupPharmacies {
     protected Pharmacy createObjects(ResultSet resultSet) throws Exception {
         storeId = resultSet.getInt("id");
         storeName = resultSet.getString("store_name");
-        zipCode = resultSet.getString("zipcode");
+        zipcode = resultSet.getString("zipcode");
         address = resultSet.getString("address");
         city = resultSet.getString("city");
         email = resultSet.getString("email");
         phoneNumber = resultSet.getString("phone_number");
 
-        pharmacy = new Pharmacy(storeId, storeName, address, zipCode, city, phoneNumber, email);
+        pharmacy = new Pharmacy(storeId, storeName, address, zipcode, city, phoneNumber, email);
 
         return pharmacy;
     }
@@ -90,13 +90,13 @@ public class DAOPickupPharmacies {
                     storeId = pharmacy.getStoreId();
                     storeName = pharmacy.getStoreName();
                     city = pharmacy.getCity();
-                    zipCode = pharmacy.getZipCode();
+                    zipcode = pharmacy.getZipcode();
                     address = pharmacy.getAddress();
                     email = pharmacy.getEmail();
                     phoneNumber = pharmacy.getPhoneNumber();
 
                     String query = "INSERT INTO `Pharmacy` ( `id` `store_name`, `address`, `zipcode`, `city`, `phone_number`, `email`) VALUES (?,?, ?, ?, ?, ?, ?);";
-                    linesAffected = common.insertPharmacy(query, storeId, storeName, address, zipCode, city, phoneNumber, email);
+                    linesAffected = common.insertPharmacy(query, storeId, storeName, address, zipcode, city, phoneNumber, email);
                 } else {
                     throw new NullPointerException("The user object is null");
                 }
@@ -119,13 +119,13 @@ public class DAOPickupPharmacies {
                     storeName = pharmacy.getStoreName();
                     address = pharmacy.getAddress();
                     city = pharmacy.getCity();
-                    zipCode = pharmacy.getZipCode();
+                    zipcode = pharmacy.getZipcode();
                     address = pharmacy.getAddress();
                     email = pharmacy.getEmail();
                     phoneNumber = pharmacy.getPhoneNumber();
 
                     String query = "UPDATE `Pharmacy` SET `id` = ?, `store_name` = ?, `address` = ?, `zipcode` = ?, `city` = ?, `phone_number` = ?, `email` = ? WHERE (`id` = ?);";
-                    linesAffected = common.updatePharmacy(query, storeId, storeName, address, zipCode, city, phoneNumber, email);
+                    linesAffected = common.updatePharmacy(query, storeId, storeName, address, zipcode, city, phoneNumber, email);
                 } else {
                     throw new NullPointerException("The user object is null");
                 }

@@ -13,14 +13,60 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.AdminController">
     <children>
-        <TabPane layoutX="7.0" layoutY="7.0" prefHeight="585.0" prefWidth="784.0" tabClosingPolicy="UNAVAILABLE">
+        <TabPane fx:id="tabPane" layoutX="7.0" layoutY="7.0" prefHeight="585.0" prefWidth="784.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
-                <Tab closable="false" text="List of patients">
+            <Tab fx:id="mainMenuTab" text="Main Menu">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ImageView fitHeight="344.0" fitWidth="236.0" layoutX="14.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@image/eDrugLogo.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="userListsLabel" layoutX="326.0" layoutY="102.0" text="User Lists" textFill="#0088ff" underline="true">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="addEditUsersLabel" layoutX="566.0" layoutY="102.0" text="Add/Edit Users" textFill="#0088ff" underline="true">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="addEditMedicineLabel" layoutX="289.0" layoutY="240.0" text="Add/Edit Medicine" textFill="#0088ff" underline="true">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="addRemovePharmacyLabel" layoutX="503.0" layoutY="240.0" text="Add/Remove/View Pharmacy" textFill="#0088ff" underline="true">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="viewOrdersDeliveriesLabel" layoutX="268.0" layoutY="381.0" text="View Orders/Deliveries" textFill="#0088ff" underline="true">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="editMyProfileLabel" layoutX="568.0" layoutY="381.0" text="Edit My Profile" textFill="#0088ff" underline="true">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Button fx:id="logoutButtonMain" layoutX="101.0" layoutY="456.0" mnemonicParsing="false" text="Logout" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+                <Tab fx:id="listPatientsTab" closable="false" text="List of patients">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="425.0" prefWidth="586.0">
                             <children>
@@ -45,7 +91,7 @@
                                         <Label prefHeight="17.0" prefWidth="261.0" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
-                                        <Label prefHeight="17.0" prefWidth="261.0" />
+                              <Button fx:id="mainMenuPatientsButton" mnemonicParsing="false" text="Main Menu" />
                                     </buttons>
                                 </ButtonBar>
                                 <TextField fx:id="patientSearchTextField" layoutX="502.0" layoutY="22.0" prefHeight="26.0" prefWidth="274.0" promptText="enter  name or SSN here" />
@@ -53,7 +99,7 @@
                         </AnchorPane>
                     </content>
                 </Tab>
-                <Tab closable="false" text="List of doctors">
+                <Tab fx:id="listDoctorsTab" closable="false" text="List of doctors">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="555.0" prefWidth="789.0">
                             <children>
@@ -79,6 +125,7 @@
                                         <Label prefHeight="17.0" prefWidth="261.0" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
+                              <Button fx:id="mainMenuDoctorsButton" mnemonicParsing="false" text="Main Menu" />
                                     </buttons>
                                 </ButtonBar>
                                 <TextField fx:id="doctorSearchTextField" layoutX="502.0" layoutY="22.0" prefHeight="26.0" prefWidth="274.0" promptText="enter  name or SSN here" />
@@ -86,7 +133,7 @@
                         </AnchorPane>
                     </content>
                 </Tab>
-                <Tab closable="false" text="List of admins">
+                <Tab fx:id="listAdminsTab" closable="false" text="List of admins">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="555.0" prefWidth="789.0">
                             <children>
@@ -112,6 +159,7 @@
                                         <Label prefHeight="17.0" prefWidth="261.0" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
+                              <Button fx:id="mainMenuAdminsButton" mnemonicParsing="false" text="Main Menu" />
                                     </buttons>
                                 </ButtonBar>
                                 <TextField fx:id="adminSearchTextField" layoutX="502.0" layoutY="22.0" prefHeight="26.0" prefWidth="274.0" promptText="enter  name or SSN here" />
@@ -119,7 +167,7 @@
                         </AnchorPane>
                     </content>
                 </Tab>
-                <Tab closable="false" text="Edit Medicine">
+                <Tab fx:id="editMedicineTab" closable="false" text="Edit Medicine">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="379.0" prefWidth="586.0">
                             <children>
@@ -130,6 +178,7 @@
                                         <Label prefHeight="17.0" prefWidth="261.0" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
+                              <Button fx:id="mainMenuEditMedicineButton" mnemonicParsing="false" text="Main Menu" />
                                     </buttons></ButtonBar>
                                 <TableView fx:id="storeView" editable="true" focusTraversable="false" layoutX="6.0" layoutY="55.0" prefHeight="447.0" prefWidth="771.0">
                                     <columns>
@@ -155,13 +204,14 @@
                         </AnchorPane>
                     </content>
                 </Tab>
-                <Tab closable="false" text="Add Medicine">
+                <Tab fx:id="addMedicineTab" closable="false" text="Add Medicine">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="200.0">
                             <children>
                                 <ButtonBar layoutX="6.0" layoutY="501.0" prefHeight="54.0" prefWidth="770.0">
                                     <buttons>
                                         <Button id="logOutButton" fx:id="logOutMedicineButton" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Logout" />
+                              <Button fx:id="mainMenuAddMedicineButton" mnemonicParsing="false" text="Main Menu" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
                                         <Button id="saveButton" fx:id="saveButtonMedicine" minWidth="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="184.0" text="Add Medicine" />
@@ -248,7 +298,7 @@
                         </AnchorPane>
                     </content>
                 </Tab>
-                <Tab closable="false" text="Edit User">
+                <Tab fx:id="editUserTab" closable="false" text="Edit User">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="555.0" prefWidth="789.0">
                             <children>
@@ -275,6 +325,7 @@
                                         <Label prefHeight="17.0" prefWidth="261.0" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
+                              <Button fx:id="mainMenuEditUserButton" mnemonicParsing="false" text="Main Menu" />
                                     </buttons>
                                 </ButtonBar>
                                 <TextField fx:id="editSearchTextField" layoutX="502.0" layoutY="22.0" prefHeight="26.0" prefWidth="274.0" promptText="enter  name or SSN here" />
@@ -287,13 +338,14 @@
                         </AnchorPane>
                     </content>
                 </Tab>
-                <Tab closable="false" text="Add User">
+                <Tab fx:id="addUserTab" closable="false" text="Add User">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="200.0">
                             <children>
                                 <ButtonBar layoutX="6.0" layoutY="501.0" prefHeight="54.0" prefWidth="770.0">
                                     <buttons>
                                         <Button id="logOutButton" fx:id="logOutAddButton" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Logout" />
+                              <Button fx:id="mainMenuAddUserButton" mnemonicParsing="false" text="Main Menu" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
                                         <Button id="addUserButton" fx:id="saveButtonAdd" minWidth="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="184.0" text="Add user" />
@@ -391,13 +443,90 @@
                         </AnchorPane>
                     </content>
                 </Tab>
-                <Tab closable="false" text="My Profile">
+            <Tab fx:id="addPharmacyTab" text="Add Pharmacy">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <ButtonBar layoutX="9.0" layoutY="498.0" prefHeight="40.0" prefWidth="753.0">
+                          <buttons>
+                              <Button fx:id="logoutAddPharmacyButton" mnemonicParsing="false" text="Logout" />
+                              <Button fx:id="mainMenuAddPharmacyButton" mnemonicParsing="false" text="Main Menu" />
+                              <Label />
+                            <Button fx:id="addPharmacyButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="139.0" text="Add Pharmacy" />
+                              <Button fx:id="cancelPharmacyButton" mnemonicParsing="false" text="Cancel" />
+                          </buttons>
+                        </ButtonBar>
+                        <ImageView fitHeight="335.0" fitWidth="227.0" layoutX="14.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@image/eDrugLogo.png" />
+                           </image>
+                        </ImageView>
+                        <Label layoutX="268.0" layoutY="139.0" text="Pharmacy Name: " />
+                        <Label layoutX="268.0" layoutY="195.0" text="Pharmacy Address: " />
+                        <Label layoutX="268.0" layoutY="249.0" text="City:" />
+                        <Label layoutX="550.0" layoutY="249.0" text="Zipcode: " />
+                        <Label layoutX="268.0" layoutY="304.0" text="Email: " />
+                        <Label layoutX="268.0" layoutY="358.0" text="Phone Number: " />
+                        <Label fx:id="pNameStar" layoutX="382.0" layoutY="139.0" text="*" textFill="RED" />
+                        <Label fx:id="pAddressStar" layoutX="398.0" layoutY="195.0" text="*" textFill="RED" />
+                        <Label fx:id="pPhoneNumberStar" layoutX="371.0" layoutY="358.0" text="*" textFill="RED" />
+                        <Label fx:id="pEmailStar" layoutX="310.0" layoutY="304.0" text="*" textFill="RED" />
+                        <Label fx:id="pZipcodeStar" layoutX="608.0" layoutY="249.0" text="*" textFill="RED" />
+                        <Label fx:id="pCityStar" layoutX="298.0" layoutY="249.0" text="*" textFill="RED" />
+                        <TextField fx:id="pNameTextField" layoutX="398.0" layoutY="134.0" prefHeight="26.0" prefWidth="273.0" />
+                        <TextField fx:id="pAddressTextField" layoutX="413.0" layoutY="190.0" prefHeight="26.0" prefWidth="273.0" />
+                        <TextField fx:id="pCityTextField" layoutX="313.0" layoutY="244.0" prefHeight="26.0" prefWidth="219.0" />
+                        <TextField fx:id="pZipcodeTextField" layoutX="615.0" layoutY="244.0" prefHeight="26.0" prefWidth="153.0" />
+                        <TextField fx:id="pEmailTextField" layoutX="328.0" layoutY="299.0" prefHeight="26.0" prefWidth="266.0" />
+                        <TextField fx:id="pPhoneNumberTextField" layoutX="384.0" layoutY="353.0" prefHeight="26.0" prefWidth="298.0" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab fx:id="editPharmacyTab" text="Edit/Remove Pharmacy">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView fx:id="pharmacyTableView" layoutX="14.0" layoutY="55.0" prefHeight="432.0" prefWidth="756.0">
+                          <columns>
+                            <TableColumn fx:id="p1" prefWidth="50.0" text="ID" />
+                            <TableColumn fx:id="p2" prefWidth="171.0" text="Pharmacy Name" />
+                              <TableColumn fx:id="p3" prefWidth="135.0" text="Address" />
+                              <TableColumn fx:id="p4" prefWidth="105.0" text="City" />
+                              <TableColumn fx:id="p5" prefWidth="92.0" text="Zipcode" />
+                              <TableColumn fx:id="p6" prefWidth="84.0" text="Email" />
+                              <TableColumn fx:id="p7" prefWidth="117.0" text="Phone Number" />
+                          </columns>
+                        </TableView>
+                        <Label layoutX="14.0" layoutY="29.0" text="Here you can view edit and delete pharmacies" />
+                        <TextField fx:id="pharmacySearch" layoutX="577.0" layoutY="16.0" promptText="Enter Pharmacy ID" />
+                        <ButtonBar layoutX="3.0" layoutY="498.0" prefHeight="40.0" prefWidth="760.0">
+                          <buttons>
+                            <Button fx:id="deletePharmacyButton" mnemonicParsing="false" text="Delete" />
+                          </buttons>
+                        </ButtonBar>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab fx:id="ordersTab" text="Orders">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+            <Tab fx:id="deliveriesTab" text="Deliveries">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+                <Tab fx:id="myProfileTab" closable="false" text="My Profile">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="200.0">
                             <children>
                                 <ButtonBar layoutX="6.0" layoutY="501.0" prefHeight="54.0" prefWidth="770.0">
                                     <buttons>
                                         <Button id="logOutButton" fx:id="logOutMyButton" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Logout" />
+                              <Button fx:id="mainMenuMyProfileButton" mnemonicParsing="false" text="Main Menu " />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
                                         <Button id="saveButton" fx:id="saveButton" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" text="Save" />
