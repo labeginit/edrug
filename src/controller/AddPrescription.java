@@ -179,20 +179,31 @@ public class AddPrescription implements Initializable {
 
     @FXML
     private void handleDeletePrescriptionButton() {
-        PrescriptionLine pl = currentPrescriptionLineTable.getSelectionModel().getSelectedItem();
-        if (pl != null) {
-            if (commonMethods.getPrescriptionLineList(pl.getPrescId(), currentPatient).size() != 1) {
-                commonMethods.deletePrescriptionLine(pl);
-                currentPrescriptionInitialize();
-                currentPrescriptionLineInitialize(pl);
+        if (currentPrescriptionsTable.getSelectionModel().getSelectedItem() != null || currentPrescriptionLineTable.getSelectionModel().getSelectedItem() != null) {
+            PrescriptionLine pl = currentPrescriptionLineTable.getSelectionModel().getSelectedItem();
+            if (pl != null) {
+                if (commonMethods.getPrescriptionLineList(pl.getPrescId(), currentPatient).size() != 1) {
+                    commonMethods.deletePrescriptionLine(pl);
+                    currentPrescriptionInitialize();
+                    currentPrescriptionLineInitialize(pl);
+                } else {
+                    commonMethods.deletePrescriptionLine(pl);
+                    commonMethods.deletePrescription(pl, currentUser);
+                    currentPrescriptionInitialize();
+                    currentPrescriptionLineTable.getItems().clear();
+                }
             } else {
-                commonMethods.deletePrescriptionLine(pl);
-                commonMethods.deletePrescription(pl, currentUser);
-                currentPrescriptionInitialize();
-                currentPrescriptionLineTable.getItems().clear();
+                Prescription p = currentPrescriptionsTable.getSelectionModel().getSelectedItem();
+                if (p != null) {
+                    commonMethods.deletePrescription(p.getId(), currentPatient);
+                    currentPrescriptionLineTable.refresh();
+                    currentPrescriptionsTable.refresh();
+                    currentPrescriptionInitialize();
+                    currentPrescriptionLineTable.getItems().clear();
+                }
             }
-        } else {
-            Validation.alertPopup("A prescription line must be selected in order to delete it", "Invalid Selection", "Select a valid prescription line");
+        } else{
+            Validation.alertPopup("A prescription header or a line must be selected in order to delete it", "Nothing is Selected", "Select a prescription");
         }
     }
 
@@ -251,29 +262,6 @@ public class AddPrescription implements Initializable {
         }
     }
 
-    /*
-        private boolean checkNewPrescription(List<PrescriptionLine> currentPrescriptions, PrescriptionLine newPrescription) {
-            for (PrescriptionLine cP :
-                    currentPrescriptions) {
-                if (cP.getQuantityPrescribed() != newPrescription.getQuantityPrescribed()) {
-                    return true;
-                }
-            }
-            return false;
-
-        }
-
-        private int nextPrscID() {
-            int i = 1;
-            for (Prescription p :
-                    prescrList) {
-                System.out.println(p);
-                i++;
-            }
-            i++;
-            return i;
-        }
-    */
     private void setEmpty() {
         prescriptionInitialize();
         diagnosisTextArea.setText("");
