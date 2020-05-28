@@ -4,15 +4,15 @@ public class Pharmacy {
     private final int storeId;
     private String storeName;
     private String address;
-    private String zipCode;
+    private String zipcode;
     private String city;
     private String phoneNumber;
     private String email;
 
-    public Pharmacy(int storeId,String storeName, String address, String zipCode, String city, String phoneNumber, String email) {
+    public Pharmacy(int storeId,String storeName, String address, String zipcode, String city, String phoneNumber, String email) {
         setStoreName(storeName);
         setAddress(address);
-        setZipCode(zipCode);
+        setZipcode(zipcode);
         setCity(city);
         setPhoneNumber(phoneNumber);
         setEmail(email);
@@ -43,14 +43,14 @@ public class Pharmacy {
         } else this.address = address;
     }
 
-    public String getZipCode() {
-        return zipCode;
+    public String getZipcode() {
+        return zipcode;
     }
 
-    public void setZipCode(String zipCode) {
-        if (zipCode.length() > 6) {
-            this.zipCode = zipCode.substring(0, 5);
-        } else this.zipCode = zipCode;
+    public void setZipcode(String zipcode) {
+        if (zipcode.length() > 6) {
+            this.zipcode = zipcode.substring(0, 5);
+        } else this.zipcode = zipcode;
     }
 
     public String getCity() {
