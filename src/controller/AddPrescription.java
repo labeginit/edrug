@@ -23,7 +23,6 @@ public class AddPrescription implements Initializable {
     private CommonMethods commonMethods = new CommonMethods();
     private UserCommon userCommon = new UserCommon();
     private java.util.Date date = new java.util.Date();
-    private int i = 1;
     private Patient currentPatient;
     private List<PrescriptionLine> prescrLines = FXCollections.observableArrayList();
     private List<Prescription> prescrList = commonMethods.getPrescriptionList(currentPatient);
