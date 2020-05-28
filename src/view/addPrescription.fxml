@@ -73,7 +73,6 @@
                                           <TableColumn fx:id="aStartDate1" prefWidth="68.66668701171875" text="Start Date" />
                                           <TableColumn fx:id="aEndDate1" prefWidth="67.99996185302734" text="End Date" />
                                           <TableColumn fx:id="aDiagnosis1" prefWidth="149.33340454101562" text="Diagnosis" />
->>>>>>> 5c9c2d48a97bd58c337e2682484afa10fbf4da08
                                        </columns>
                                     </TableView>
                                  </children>
@@ -85,7 +84,6 @@
                                         <TableColumn fx:id="aName1" prefWidth="205.33335876464844" text="Name" />
                                           <TableColumn fx:id="aAmount1" prefWidth="60.0" text="Qty" />
                                           <TableColumn fx:id="aInstruction" prefWidth="160.6666259765625" text="Instruction" />
->>>>>>> 5c9c2d48a97bd58c337e2682484afa10fbf4da08
                                       </columns>
                                     </TableView>
                                  </children>
