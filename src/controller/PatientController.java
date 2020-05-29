@@ -191,10 +191,7 @@ public class PatientController implements Initializable {
             ProdGroup val = groupFilter_combo.getValue();
             search_textField.setText("");
             maxPrice_text.setText("");
-            if (val.getId() == 0) {
-                userCommon.medFilter(filteredData, search_textField, tableView);
-                return;
-            } else {
+            if (val.getId() > 0) {
                     filteredData.setPredicate(medicine -> {
                         if (medicine.getGroup() == val.getId()) {
                             return true;
@@ -204,6 +201,8 @@ public class PatientController implements Initializable {
                 SortedList<Medicine> sortedData = new SortedList<>(filteredData);
                 sortedData.comparatorProperty().bind(tableView.comparatorProperty());
                 tableView.setItems(sortedData);
+            } else {
+                userCommon.medFilter(filteredData, search_textField, tableView);
             }
         });
 
@@ -309,7 +308,7 @@ public class PatientController implements Initializable {
                             element.setQuantity(element.getQuantity() - line.getMedicine().getQuantityReserved());
                             commonMethods.updateMedicine(element);
                             prescriptionLineTableView.refresh();
-                        }
+                        } else Validation.alertPopup("The prescribed quantity has been consumed", "Operation not permitted", "You cannot buy more of this item");
                     }
                     tableView.refresh();
                 }
