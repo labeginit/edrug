@@ -253,5 +253,26 @@ public class DAOPrescription {
             ex.printStackTrace();
         }
     }
+
+    protected void deletePrescription(int prescrId, Patient patient) {
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                if (prescrId != 0) {
+                    patientSSN = patient.getSsn();
+                    String query1 = "DELETE FROM Prescription_has_Medicine WHERE (prescription_id = ?) and (prescription_patient_ssn = ?);";
+                    common.deletePrescriptionHasMedicine(query1, id, patientSSN);
+                    String query2 = "DELETE FROM Prescription WHERE (id = ?) and (patient_ssn = ?);";
+                    common.deletePrescription(query2, id, patientSSN);
+                } else {
+                    throw new NullPointerException("The user object is null");
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error while working with statement!");
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 }
 

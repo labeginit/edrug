@@ -240,8 +240,9 @@ public class DAOCommon {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
                 prepStmt.setInt(1, id);
                 prepStmt.setString(2, patientSsn);
-                prepStmt.setInt(3, article);
-
+                if (article != 0) {
+                    prepStmt.setInt(3, article);
+                }
                 prepStmt.executeUpdate();
             }
         } catch (SQLException | NullPointerException ex) {
@@ -252,14 +253,19 @@ public class DAOCommon {
         }
     }
 
+    protected void deletePrescriptionHasMedicine(String queryString, int id, String patientSsn) {
+        deletePrescriptionHasMedicine(queryString, id, patientSsn, 0);
+    }
+
     protected void deletePrescription(String queryString, int id, String patientSsn, String currentUserSsn) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
                 prepStmt.setInt(1, id);
                 prepStmt.setString(2, patientSsn);
-                prepStmt.setString(3, currentUserSsn);
-
+                if (!currentUserSsn.isEmpty()) {
+                    prepStmt.setString(3, currentUserSsn);
+                }
                 prepStmt.executeUpdate();
             }
         } catch (SQLException | NullPointerException ex) {
@@ -268,6 +274,10 @@ public class DAOCommon {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+    }
+
+    protected void deletePrescription(String queryString, int id, String patientSsn) {
+        deletePrescription(queryString, id, patientSsn, "");
     }
 
     protected int updateMedicineQuantity(String queryString, int quantityAvailable, int article) {
