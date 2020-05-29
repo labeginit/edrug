@@ -141,6 +141,11 @@ public class CommonMethods {
         return daoMedicine.retrieveMedicineList(onPrescription, isActive);
     }
 
+    //returns medicine ever prescribed to a patient that is not consumed and not expired by today
+    public List<Medicine> getMedicineList(Patient patient){
+        return daoMedicine.retrieveMedicineList(patient);
+    }
+
     //**********************
 
     public int addMedicine(Medicine medicine){
@@ -194,6 +199,14 @@ public class CommonMethods {
         return daoPrescription.getPrescriptionList(currentUser);
     }
 
+    public int updatePrescriptionLine(PrescriptionLine line, int quantityConsumed){
+        return daoPrescription.updatePrescriptionLine(line, quantityConsumed);
+    }
+
+    // will return actual values from the table for comparison with the current object
+    public PrescriptionLine getPrescriptionLineUpdate(PrescriptionLine prescrLine){
+        return daoPrescription.retrievePrescriptionLine(prescrLine);
+    }
     //**********************
 
 

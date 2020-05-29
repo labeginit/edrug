@@ -280,6 +280,27 @@ public class DAOCommon {
         deletePrescription(queryString, id, patientSsn, "");
     }
 
+    protected int updatePrescriptionLine(String queryString, int quantityConsumed, int prescId, String patientSsn, int article) {
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
+
+                prepStmt.setInt(1, quantityConsumed);
+                prepStmt.setInt(2, prescId);
+                prepStmt.setString(3, patientSsn);
+                prepStmt.setInt(4, article);
+                linesAffected = prepStmt.executeUpdate();
+                prepStmt.close();
+            }
+        } catch (SQLException | NullPointerException ex) {
+            System.out.println("Error when executing statement!");
+            System.out.println(ex.getMessage());
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        return linesAffected;
+    }
+
     protected int updateMedicineQuantity(String queryString, int quantityAvailable, int article) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
