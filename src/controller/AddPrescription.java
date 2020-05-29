@@ -61,7 +61,7 @@ public class AddPrescription implements Initializable {
     private TableColumn<Medicine, Integer> aArticle, aAmount;
 
     @FXML
-    private TableColumn<PrescriptionLine, Integer> aPrescid, aAmount1;
+    private TableColumn<PrescriptionLine, Integer> aAmount1, aArticle1;
 
     @FXML
     private TableColumn<PrescriptionLine, String> aName1, aInstructions1;
@@ -71,6 +71,9 @@ public class AddPrescription implements Initializable {
 
     @FXML
     private TableColumn<Prescription, String> aDiagnosis1;
+
+    @FXML
+    private TableColumn<Prescription, Integer> aPrescid;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -246,6 +249,7 @@ public class AddPrescription implements Initializable {
 
     @FXML
     private void currentPrescriptionLineInitialize(PrescriptionLine pl) {
+        aArticle1.setCellValueFactory(new PropertyValueFactory<>("article"));
         aName1.setCellValueFactory(new PropertyValueFactory<>("name"));
         aAmount1.setCellValueFactory(new PropertyValueFactory<>("quantityPrescribed"));
         aInstructions1.setCellValueFactory(new PropertyValueFactory<>("instructions"));

@@ -67,7 +67,7 @@
                           <items>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="436.0" prefWidth="342.0">
                                  <children>
-                                    <TableView fx:id="currentPrescriptionsTable" prefHeight="438.0" prefWidth="339.0">
+                                    <TableView fx:id="currentPrescriptionsTable" prefHeight="435.3333333333333" prefWidth="339.3333333333333" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                        <columns>
                                           <TableColumn fx:id="aPrescid" prefWidth="46.00002825260162" text="ID" />
                                           <TableColumn fx:id="aStartDate1" prefWidth="91.99999618530273" text="Start Date" />
@@ -79,11 +79,12 @@
                               </AnchorPane>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="436.0" prefWidth="372.0">
                                  <children>
-                                    <TableView fx:id="currentPrescriptionLineTable" layoutX="-1.0" prefHeight="438.0" prefWidth="429.0">
+                                    <TableView fx:id="currentPrescriptionLineTable" layoutX="-1.0" prefHeight="435.3333333333333" prefWidth="424.6666666666667" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                       <columns>
-                                        <TableColumn fx:id="aName1" prefWidth="205.33335876464844" text="Name" />
-                                          <TableColumn fx:id="aAmount1" prefWidth="60.0" text="Qty" />
-                                          <TableColumn fx:id="aInstructions1" prefWidth="163.20000610351565" text="Instruction" />
+                                          <TableColumn fx:id="aArticle1" prefWidth="54.66668701171875" text="Article" />
+                                        <TableColumn fx:id="aName1" prefWidth="178.00003051757812" text="Name" />
+                                          <TableColumn fx:id="aAmount1" prefWidth="45.3333740234375" text="Qty" />
+                                          <TableColumn fx:id="aInstructions1" prefWidth="147.99995930989581" text="Instruction" />
                                       </columns>
                                     </TableView>
                                  </children>
