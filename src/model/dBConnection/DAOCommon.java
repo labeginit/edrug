@@ -320,12 +320,12 @@ public class DAOCommon {
         }
         return linesAffected;
     }
-    protected int insertPharmacy(String queryString, int storeId, String store_name, String address, String zipCode, String city, String phoneNumber, String email) {
+    protected int insertPharmacy(String queryString, int storeId, String storeName, String address, String zipCode, String city, String phoneNumber, String email) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
                 prepStmt.setInt(1, storeId);
-                prepStmt.setString(2, store_name);
+                prepStmt.setString(2, storeName);
                 prepStmt.setString(3, address);
                 prepStmt.setString(4, zipCode);
                 prepStmt.setString(5, city);
@@ -345,12 +345,12 @@ public class DAOCommon {
         }
         return linesAffected;
     }
-    protected int updatePharmacy(String queryString, int storeId, String store_name, String address, String zipCode, String city, String phoneNumber, String email) {
+    protected int updatePharmacy(String queryString, int storeId, String storeName, String address, String zipCode, String city, String phoneNumber, String email) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
                 prepStmt.setInt(1, storeId);
-                prepStmt.setString(2, store_name);
+                prepStmt.setString(2, storeName);
                 prepStmt.setString(3, address);
                 prepStmt.setString(4, zipCode);
                 prepStmt.setString(5, city);
@@ -411,32 +411,6 @@ public class DAOCommon {
         return linesAffected;
     }
 
-    protected int insertOrderDelivery(String queryString, int id, String userSSN, Date date, Order.DeliveryMethod deliveryMethod, Order.PaymentMethod paymentMethod, double totalSum, double totalVAT, Integer deliveryId) {
-        try {
-            if (!DBConnection.dbConnection.isClosed()) {
-                PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
-                prepStmt.setInt(1, id);
-                prepStmt.setString(2, userSSN);
-                prepStmt.setDate(3, date);
-                prepStmt.setString(4,deliveryMethod.toString());
-                prepStmt.setString(5,paymentMethod.toString());
-                prepStmt.setDouble(6, totalSum);
-                prepStmt.setDouble(7,totalVAT);
-                prepStmt.setInt(8,deliveryId);
-
-                linesAffected = prepStmt.executeUpdate();
-                prepStmt.close();
-            }
-        } catch (SQLException | NullPointerException ex) {
-            System.out.println("Error when executing statement!");
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-        } catch (Exception ex) {
-            System.out.println(ex.getMessage());
-            ex.printStackTrace();
-        }
-        return linesAffected;
-    }
 
     protected int insertOrderPharmacy(String queryString, int id, String userSSN, Date date, Order.DeliveryMethod deliveryMethod, Order.PaymentMethod paymentMethod, double totalSum, double totalVAT, Integer pharmacyId ) {
         try {

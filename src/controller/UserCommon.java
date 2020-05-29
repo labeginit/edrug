@@ -11,10 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import model.Medicine;
-import model.OrderLine;
-import model.User;
-import model.UserSingleton;
+import model.*;
 import model.dBConnection.CommonMethods;
 
 
@@ -146,5 +143,31 @@ public class UserCommon {
         md.update(temp.getBytes(StandardCharsets.UTF_8));
         byte[] digest = md.digest();
         return String.format("%064x", new BigInteger(1, digest));
+    }
+
+    public SortedList<Pharmacy> pharmaciesFilter(FilteredList<Pharmacy> filteredData, TextField field, TableView<Pharmacy> tableView) {
+        field.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(pharmacy -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String id = String.valueOf(pharmacy.getStoreId());
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (pharmacy.getStoreName().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (pharmacy.getCity().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (id.toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                }
+                return false;
+            });
+        });
+        SortedList<Pharmacy> sortedData = new SortedList<>(filteredData);
+
+        sortedData.comparatorProperty().bind(tableView.comparatorProperty());
+        tableView.setItems(sortedData);
+        return sortedData;
     }
 }

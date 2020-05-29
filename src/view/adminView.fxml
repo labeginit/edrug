@@ -26,7 +26,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ImageView fitHeight="344.0" fitWidth="236.0" layoutX="14.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="216.0" fitWidth="179.0" layoutX="47.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@image/eDrugLogo.png" />
                            </image>
@@ -61,7 +61,15 @@
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Button fx:id="logoutButtonMain" layoutX="101.0" layoutY="456.0" mnemonicParsing="false" text="Logout" />
+                        <ButtonBar layoutX="6.0" layoutY="501.0" prefHeight="54.0" prefWidth="770.0">
+                          <buttons>
+                              <Button fx:id="logoutButtonMain" mnemonicParsing="false" text="Logout" />
+                              <Label prefHeight="17.0" prefWidth="261.0" />
+                              <Label prefHeight="17.0" prefWidth="261.0" />
+                              <Label prefHeight="17.0" prefWidth="261.0" />
+                              <Label prefHeight="17.0" prefWidth="261.0" />
+                          </buttons>
+                        </ButtonBar>
                      </children>
                   </AnchorPane>
               </content>
@@ -124,7 +132,6 @@
                                         <Label prefHeight="17.0" prefWidth="261.0" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
-                                        <Label prefHeight="17.0" prefWidth="261.0" />
                               <Button fx:id="mainMenuDoctorsButton" mnemonicParsing="false" text="Main Menu" />
                                     </buttons>
                                 </ButtonBar>
@@ -158,7 +165,6 @@
                                         <Label prefHeight="17.0" prefWidth="261.0" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
-                                        <Label prefHeight="17.0" prefWidth="261.0" />
                               <Button fx:id="mainMenuAdminsButton" mnemonicParsing="false" text="Main Menu" />
                                     </buttons>
                                 </ButtonBar>
@@ -174,7 +180,6 @@
                                 <ButtonBar layoutX="6.0" layoutY="501.0" prefHeight="54.0" prefWidth="770.0">
                                     <buttons>
                                         <Button id="logOutButton" fx:id="logOutMedButton" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Logout" />
-                                        <Label prefHeight="17.0" prefWidth="261.0" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
@@ -212,7 +217,6 @@
                                     <buttons>
                                         <Button id="logOutButton" fx:id="logOutMedicineButton" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Logout" />
                               <Button fx:id="mainMenuAddMedicineButton" mnemonicParsing="false" text="Main Menu" />
-                                        <Label prefHeight="17.0" prefWidth="261.0" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
                                         <Button id="saveButton" fx:id="saveButtonMedicine" minWidth="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="184.0" text="Add Medicine" />
                                         <Button id="cancelButton" fx:id="cancelButtonMedicine" mnemonicParsing="false" text="Cancel" />
@@ -324,7 +328,6 @@
                                         <Label prefHeight="17.0" prefWidth="261.0" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
-                                        <Label prefHeight="17.0" prefWidth="261.0" />
                               <Button fx:id="mainMenuEditUserButton" mnemonicParsing="false" text="Main Menu" />
                                     </buttons>
                                 </ButtonBar>
@@ -346,7 +349,6 @@
                                     <buttons>
                                         <Button id="logOutButton" fx:id="logOutAddButton" minWidth="64.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="64.0" text="Logout" />
                               <Button fx:id="mainMenuAddUserButton" mnemonicParsing="false" text="Main Menu" />
-                                        <Label prefHeight="17.0" prefWidth="261.0" />
                                         <Label prefHeight="17.0" prefWidth="261.0" />
                                         <Button id="addUserButton" fx:id="saveButtonAdd" minWidth="10.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="184.0" text="Add user" />
                                         <Button id="cancelButton" fx:id="cancelButtonAdd" mnemonicParsing="false" text="Cancel" />
@@ -447,7 +449,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ButtonBar layoutX="9.0" layoutY="498.0" prefHeight="40.0" prefWidth="753.0">
+                        <ButtonBar layoutX="6.0" layoutY="501.0" prefHeight="54.0" prefWidth="770.0">
                           <buttons>
                               <Button fx:id="logoutAddPharmacyButton" mnemonicParsing="false" text="Logout" />
                               <Button fx:id="mainMenuAddPharmacyButton" mnemonicParsing="false" text="Main Menu" />
@@ -456,29 +458,29 @@
                               <Button fx:id="cancelPharmacyButton" mnemonicParsing="false" text="Cancel" />
                           </buttons>
                         </ButtonBar>
-                        <ImageView fitHeight="335.0" fitWidth="227.0" layoutX="14.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="216.0" fitWidth="179.0" layoutX="47.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@image/eDrugLogo.png" />
                            </image>
                         </ImageView>
                         <Label layoutX="268.0" layoutY="139.0" text="Pharmacy Name: " />
                         <Label layoutX="268.0" layoutY="195.0" text="Pharmacy Address: " />
-                        <Label layoutX="268.0" layoutY="249.0" text="City:" />
-                        <Label layoutX="550.0" layoutY="249.0" text="Zipcode: " />
+                        <Label layoutX="480.0" layoutY="249.0" text="City:" />
+                        <Label layoutX="268.0" layoutY="249.0" text="Zipcode: " />
                         <Label layoutX="268.0" layoutY="304.0" text="Email: " />
                         <Label layoutX="268.0" layoutY="358.0" text="Phone Number: " />
                         <Label fx:id="pNameStar" layoutX="382.0" layoutY="139.0" text="*" textFill="RED" />
-                        <Label fx:id="pAddressStar" layoutX="398.0" layoutY="195.0" text="*" textFill="RED" />
-                        <Label fx:id="pPhoneNumberStar" layoutX="371.0" layoutY="358.0" text="*" textFill="RED" />
-                        <Label fx:id="pEmailStar" layoutX="310.0" layoutY="304.0" text="*" textFill="RED" />
-                        <Label fx:id="pZipcodeStar" layoutX="608.0" layoutY="249.0" text="*" textFill="RED" />
-                        <Label fx:id="pCityStar" layoutX="298.0" layoutY="249.0" text="*" textFill="RED" />
+                        <Label fx:id="pAddressStar" layoutX="382.0" layoutY="195.0" text="*" textFill="RED" />
+                        <Label fx:id="pPhoneNumberStar" layoutX="383.0" layoutY="358.0" text="*" textFill="RED" />
+                        <Label fx:id="pEmailStar" layoutX="383.0" layoutY="304.0" text="*" textFill="RED" />
+                        <Label fx:id="pZipcodeStar" layoutX="383.0" layoutY="249.0" text="*" textFill="RED" />
+                        <Label fx:id="pCityStar" layoutX="510.0" layoutY="249.0" text="*" textFill="RED" />
                         <TextField fx:id="pNameTextField" layoutX="398.0" layoutY="134.0" prefHeight="26.0" prefWidth="273.0" />
-                        <TextField fx:id="pAddressTextField" layoutX="413.0" layoutY="190.0" prefHeight="26.0" prefWidth="273.0" />
-                        <TextField fx:id="pCityTextField" layoutX="313.0" layoutY="244.0" prefHeight="26.0" prefWidth="219.0" />
-                        <TextField fx:id="pZipcodeTextField" layoutX="615.0" layoutY="244.0" prefHeight="26.0" prefWidth="153.0" />
-                        <TextField fx:id="pEmailTextField" layoutX="328.0" layoutY="299.0" prefHeight="26.0" prefWidth="266.0" />
-                        <TextField fx:id="pPhoneNumberTextField" layoutX="384.0" layoutY="353.0" prefHeight="26.0" prefWidth="298.0" />
+                        <TextField fx:id="pAddressTextField" layoutX="398.0" layoutY="190.0" prefHeight="26.0" prefWidth="273.0" />
+                        <TextField fx:id="pCityTextField" layoutX="525.0" layoutY="244.0" prefHeight="26.0" prefWidth="146.0" />
+                        <TextField fx:id="pZipcodeTextField" layoutX="398.0" layoutY="244.0" prefHeight="26.0" prefWidth="73.0" />
+                        <TextField fx:id="pEmailTextField" layoutX="398.0" layoutY="299.0" prefHeight="26.0" prefWidth="273.0" />
+                        <TextField fx:id="pPhoneNumberTextField" layoutX="398.0" layoutY="353.0" prefHeight="26.0" prefWidth="273.0" />
                      </children>
                   </AnchorPane>
               </content>
@@ -487,7 +489,7 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="pharmacyTableView" editable="true" layoutX="14.0" layoutY="55.0" prefHeight="432.0" prefWidth="756.0">
+                        <TableView fx:id="pharmacyTableView" editable="true" layoutX="6.0" layoutY="55.0" prefHeight="447.0" prefWidth="771.0">
                           <columns>
                             <TableColumn fx:id="p1" prefWidth="50.0" text="ID" />
                             <TableColumn fx:id="p2" prefWidth="171.0" text="Pharmacy Name" />
@@ -499,10 +501,14 @@
                           </columns>
                         </TableView>
                         <Label layoutX="14.0" layoutY="29.0" text="Here you can view edit and delete pharmacies" />
-                        <TextField fx:id="pharmacySearch" layoutX="577.0" layoutY="16.0" promptText="Enter Pharmacy ID" />
-                        <ButtonBar layoutX="3.0" layoutY="498.0" prefHeight="40.0" prefWidth="760.0">
+                        <TextField fx:id="pharmacySearch" layoutX="498.0" layoutY="16.0" prefHeight="26.0" prefWidth="250.0" promptText="Enter Pharmacy ID, Name, or City" />
+                        <ButtonBar layoutX="6.0" layoutY="501.0" prefHeight="54.0" prefWidth="770.0">
                           <buttons>
-                            <Button fx:id="deletePharmacyButton" mnemonicParsing="false" text="Delete" />
+                              <Button fx:id="logoutPharmacyListButton" mnemonicParsing="false" text="Logout" />
+                              <Button fx:id="mainMenuPharmacyListButton" mnemonicParsing="false" text="Main Menu" />
+                              <Label prefHeight="16.0" prefWidth="246.0" />
+                              <Label prefHeight="17.0" prefWidth="261.0" />
+                            <Button fx:id="deletePharmacyButton" mnemonicParsing="false" prefHeight="26.0" prefWidth="387.0" text="Delete" />
                           </buttons>
                         </ButtonBar>
                      </children>

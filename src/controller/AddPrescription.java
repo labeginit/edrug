@@ -40,7 +40,7 @@ public class AddPrescription implements Initializable {
     private Button addPrescriptionsButton, deletePrescriptionsButton, cancelButton, cancelButton1;
 
     @FXML
-    private TextArea diagnosisTextArea;
+    private TextArea diagnosisTextArea, instructionsTextArea;
 
     @FXML
     private DatePicker endDatePicker;
@@ -61,16 +61,19 @@ public class AddPrescription implements Initializable {
     private TableColumn<Medicine, Integer> aArticle, aAmount;
 
     @FXML
-    private TableColumn<PrescriptionLine, Integer> aPrescid, aAmount1;
+    private TableColumn<PrescriptionLine, Integer> aAmount1, aArticle1;
 
     @FXML
-    private TableColumn<PrescriptionLine, String> aName1, aInstruction;
+    private TableColumn<PrescriptionLine, String> aName1, aInstructions1;
 
     @FXML
     private TableColumn<Prescription, Date> aStartDate1, aEndDate1;
 
     @FXML
     private TableColumn<Prescription, String> aDiagnosis1;
+
+    @FXML
+    private TableColumn<Prescription, Integer> aPrescid;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -147,19 +150,24 @@ public class AddPrescription implements Initializable {
             if (!(prescrLines.isEmpty())) {
                 if (endDate.after(startDate)) {
                     if (!diagnosisTextArea.getText().isEmpty()) {
-                        try {
-                            int id = commonMethods.getLastId(Prescription.class) + 1;
-                            for (PrescriptionLine pl :
-                                    prescrLines) {
-                                pl.setPrescId(id);
-                            }
-                            Prescription p = new Prescription(id, currentDoctor, currentPatient, startDate, endDate, diagnosisTextArea.getText(), prescrLines);
-                            commonMethods.addPrescription(p);
+                        if(!instructionsTextArea.getText().isEmpty()) {
+                            try {
+                                int id = commonMethods.getLastId(Prescription.class) + 1;
+                                for (PrescriptionLine pl :
+                                        prescrLines) {
+                                    pl.setInstructions(instructionsTextArea.getText());
+                                    pl.setPrescId(id);
+                                }
+                                Prescription p = new Prescription(id, currentDoctor, currentPatient, startDate, endDate, diagnosisTextArea.getText(), prescrLines);
+                                commonMethods.addPrescription(p);
 
-                            currentPrescriptionInitialize();
-                            setEmpty();
-                        } catch (Exception ex) {
-                            ex.printStackTrace();
+                                currentPrescriptionInitialize();
+                                setEmpty();
+                            } catch (Exception ex) {
+                                ex.printStackTrace();
+                            }
+                        } else {
+                            Validation.alertPopup("Unable to add prescription without adding instructions", "Create patient instructions", header);
                         }
                     } else {
                         Validation.alertPopup("Unable to add prescription without adding diagnosis", "Create a diagnosis message.", header);
@@ -241,9 +249,10 @@ public class AddPrescription implements Initializable {
 
     @FXML
     private void currentPrescriptionLineInitialize(PrescriptionLine pl) {
+        aArticle1.setCellValueFactory(new PropertyValueFactory<>("article"));
         aName1.setCellValueFactory(new PropertyValueFactory<>("name"));
         aAmount1.setCellValueFactory(new PropertyValueFactory<>("quantityPrescribed"));
-        aInstruction.setCellValueFactory(new PropertyValueFactory<>("instructions"));
+        aInstructions1.setCellValueFactory(new PropertyValueFactory<>("instructions"));
 
         try {
             int prescrID;
@@ -264,6 +273,7 @@ public class AddPrescription implements Initializable {
     private void setEmpty() {
         prescriptionInitialize();
         diagnosisTextArea.setText("");
+        instructionsTextArea.setText("");
         endDatePicker.setValue(null);
     }
 
