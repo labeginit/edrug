@@ -203,6 +203,7 @@ public class CommonMethods {
         return daoPrescription.updatePrescriptionLine(line, quantityConsumed);
     }
 
+    // will return actual values from the table for comparison with the current object
     public PrescriptionLine getPrescriptionLineUpdate(PrescriptionLine prescrLine){
         return daoPrescription.retrievePrescriptionLine(prescrLine);
     }
