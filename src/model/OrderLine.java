@@ -11,6 +11,8 @@ public class OrderLine implements Serializable {
     private User user;
     private double price;
     private int quantity;
+    private String pharmacyId;
+    private String pharmacyName;
     private CheckBox checkBox;
 
     public OrderLine(int orderId, User user, Medicine medicine, double price, int quantity){
@@ -20,6 +22,14 @@ public class OrderLine implements Serializable {
         setPrice(price);
         setQuantity(quantity);
 
+    }
+
+    public OrderLine(int articleNo, String name, int quantity, String pharmacyId, String pharmacyName) {
+        this.articleNo = articleNo;
+        this.name = name;
+        this.quantity = quantity;
+        this.pharmacyId = pharmacyId;
+        this.pharmacyName = pharmacyName;
     }
 
     public void setOrderId(int orderId) {
@@ -84,6 +94,22 @@ public class OrderLine implements Serializable {
 
     public CheckBox getCheckBox() {
         return checkBox;
+    }
+
+    public String getPharmacyId() {
+        return pharmacyId;
+    }
+
+    public void setPharmacyId(String pharmacyId) {
+        this.pharmacyId = pharmacyId;
+    }
+
+    public String getPharmacyName() {
+        return pharmacyName;
+    }
+
+    public void setPharmacyName(String pharmacyName) {
+        this.pharmacyName = pharmacyName;
     }
 
     @Override

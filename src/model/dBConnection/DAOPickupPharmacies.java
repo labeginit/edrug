@@ -161,4 +161,43 @@ public class DAOPickupPharmacies {
             return linesAffected;
         }
     }
+
+    private Pharmacy retrievePharmacy(String query, int pharmacyId) {
+        pharmacy = null;
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                resultSet = common.retrieveSet(query);
+                if (resultSet != null) {
+                    if (resultSet.first()) {
+                        return pharmacy = createObjects(resultSet);
+                    }
+                } else {
+                    System.out.println("Empty resultSet");
+                    return pharmacy;
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error while working with ResultSet!");
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                resultSet.close();
+            }catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            return pharmacy;
+        }
+    }
+    protected Pharmacy getPharmacy(int pharmacyId) {
+        Pharmacy temp = null;
+        String query = "SELECT * FROM Pharmacy where id = " + pharmacyId +";";
+        try {
+            temp = retrievePharmacy(query, pharmacyId);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return temp;
+    }
 }

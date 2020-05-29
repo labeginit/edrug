@@ -10,14 +10,15 @@ import java.util.List;
 
 public class DAOOrder {
     private ResultSet resultSet = null;
+    private ResultSet resultSet2 = null;
     private int id;
-    private User user = null;
+    private User user;
     private Date date;
     private Order.DeliveryMethod deliveryMethod;
     private Order.PaymentMethod paymentMethod;
     private double totalSum;
     private double totalVAT;
-    private List<OrderLine> specification;
+    private List<OrderLine> specification = new ArrayList<>();
     private List<Order> orders = new ArrayList<>();
     private int linesAffected = 0;
     private DAOCommon common = new DAOCommon();
@@ -29,7 +30,9 @@ public class DAOOrder {
     private int quantity;
     private Delivery delivery;
     private Integer pharmacyId;
-
+    DAOUser daoUser = new DAOUser();
+    DAOMedicine daoMedicine = new DAOMedicine();
+    DAODelivery daoDelivery = new DAODelivery();
 
     protected int retrieveLastOrderId() {
         id = 0;
@@ -83,30 +86,31 @@ public class DAOOrder {
 
     protected Order createObjects(ResultSet resultSet) throws Exception {
         id = resultSet.getInt("id");
-        user.setSsn((resultSet.getString("user_ssn")));
+        user = daoUser.getUser(((resultSet.getString("user_ssn"))));
         date = resultSet.getDate("date");
         deliveryMethod = Order.DeliveryMethod.valueOf(resultSet.getString("delivery_method"));
         paymentMethod = Order.PaymentMethod.valueOf(resultSet.getString("payment_method"));
         totalSum = resultSet.getDouble("total");
         totalVAT = resultSet.getDouble("total_VAT");
         specification = retrieveOrderSpecification(id);
-        delivery = getDelivery(id);
         pharmacyId = resultSet.getInt("pharmacy_id");
-
+        if (pharmacyId == 0) {
+            delivery = daoDelivery.getDelivery(id);
+        }
         Order order = new Order(id, user, date, deliveryMethod, paymentMethod, specification, totalSum, totalVAT, delivery, pharmacyId);
         return order;
     }
 
     protected List<OrderLine> retrieveOrderSpecification(int id) {
-        resultSet = null;
+        resultSet2 = null;
         specification.clear();
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 String queryString = "SELECT * FROM Order_has_Medicine WHERE `order_id` =" + id +";";
-                resultSet = common.retrieveSet(queryString);
-                if (resultSet != null) {
-                    while (resultSet.next()) {
-                        specification.add(createObjectsSpecification(resultSet));
+                resultSet2 = common.retrieveSet(queryString);
+                if (resultSet2 != null) {
+                    while (resultSet2.next()) {
+                        specification.add(createObjectsSpecification(resultSet2));
                     }
                 } else throw new Exception("Empty resultSet");
 
@@ -118,7 +122,7 @@ public class DAOOrder {
             ex.printStackTrace();
         } finally {
             try {
-                resultSet.close();
+                resultSet2.close();
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -128,7 +132,7 @@ public class DAOOrder {
     protected OrderLine createObjectsSpecification(ResultSet resultSet) throws Exception {
         orderId = id;
         articleNo = resultSet.getInt("article");
-        medicine.setArticleNo(articleNo);
+        medicine = daoMedicine.getMedicine(articleNo);
         name = medicine.getName();
         price = resultSet.getDouble("price");
         quantity = resultSet.getInt("quantity");
@@ -188,16 +192,6 @@ public class DAOOrder {
         return temp;
     }
 
-    protected Delivery getDelivery(int id) {
-        Delivery temp = null;
-        String query = "SELECT * FROM Order WHERE id = " + id + ";";
-        try {
-            temp = retrieveDelivery(query, id);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        return temp;
-    }
 
     private Order retrieveOrder(String query, int id) {
         Order order = null;
@@ -207,15 +201,17 @@ public class DAOOrder {
                 if (resultSet != null) {
                     if (resultSet.first()) {
                         this.id = resultSet.getInt("id");
-                        user.setSsn((resultSet.getString("user_ssn")));
+                        user = daoUser.getUser((resultSet.getString("user_ssn")));
                         date = resultSet.getDate("date");
                         deliveryMethod = Order.DeliveryMethod.valueOf(resultSet.getString("delivery_method"));
                         paymentMethod = Order.PaymentMethod.valueOf(resultSet.getString("payment_method"));
                         totalSum = resultSet.getDouble("total");
                         totalVAT = resultSet.getDouble("total_VAT");
                         specification = retrieveOrderSpecification(id);
-                        delivery = getDelivery(id);
                         pharmacyId = resultSet.getInt("pharmacy_id");
+                        if (pharmacyId == 0) {
+                            delivery = daoDelivery.getDelivery(id);
+                        }
 
                         order = new Order(id, user, date, deliveryMethod, paymentMethod, specification, totalSum, totalVAT, delivery, pharmacyId);
                         return order;
@@ -237,44 +233,6 @@ public class DAOOrder {
                 ex.printStackTrace();
             }
             return order;
-        }
-    }
-
-    private Delivery retrieveDelivery(String query, int orderId) {
-        Delivery delivery = null;
-        try {
-            if (!DBConnection.dbConnection.isClosed()) {
-                resultSet = common.retrieveSet(query);
-                if (resultSet != null) {
-                    if (resultSet.first()) {
-                        this.orderId = resultSet.getInt("delivery_id");
-                        String firstName = resultSet.getString("first_name");
-                        String lastName = resultSet.getString("last_name");
-                        String address = resultSet.getString("address");
-                        String city = resultSet.getString("city");
-                        String zipCode = resultSet.getString("zipcode");
-                        String phoneNumber = resultSet.getString("phone_number");
-                        Date shipDate = resultSet.getDate("ship_date");
-
-                        delivery = new Delivery(orderId, firstName, lastName, address, city, zipCode, phoneNumber, shipDate);
-                    }
-                } else {
-                    System.out.println("Empty resultSet");
-                    return delivery;
-                }
-            }
-        } catch (SQLException ex) {
-            System.out.println("Error while working with ResultSet!");
-            ex.printStackTrace();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        } finally {
-            try {
-                resultSet.close();
-            }catch (Exception ex) {
-                ex.printStackTrace();
-            }
-            return delivery;
         }
     }
 }

@@ -166,19 +166,6 @@ public abstract class User {
 
     @Override
     public String toString() {
-        return "User{" +
-                "sSN='" + getSsn() + '\'' +
-                ", userType=" + getUserType() +
-                ", firstName='" + getFirstName() + '\'' +
-                ", lastName='" + getLastName() + '\'' +
-                ", bDate=" + getBDate() +
-                ", zipCode='" + getZipCode() + '\'' +
-                ", city='" + getCity() + '\'' +
-                ", address='" + getAddress() + '\'' +
-                ", email='" + getEmail() + '\'' +
-                ", phoneNumber='" + getPhoneNumber() + '\'' +
-                ", password='" + getPassword() + '\'' +
-                ", isActive=" + getActive() +
-                '}';
+        return getSsn();
     }
 }

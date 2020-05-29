@@ -92,4 +92,53 @@ public class DAODelivery {
             return linesAffected;
         }
     }
+
+    private Delivery retrieveDelivery(String query, int orderId) {
+        Delivery delivery = null;
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                resultSet = common.retrieveSet(query);
+                if (resultSet != null) {
+                    if (resultSet.first()) {
+                        this.orderId = orderId;
+                        String firstName = resultSet.getString("first_name");
+                        String lastName = resultSet.getString("last_name");
+                        String address = resultSet.getString("address");
+                        String city = resultSet.getString("city");
+                        String zipCode = resultSet.getString("zipcode");
+                        String phoneNumber = resultSet.getString("phone_number");
+                        Date shipDate = resultSet.getDate("ship_date");
+
+                        delivery = new Delivery(orderId, firstName, lastName, address, city, zipCode, phoneNumber, shipDate);
+                    }
+                } else {
+                    System.out.println("Empty resultSet");
+                    return delivery;
+                }
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error while working with ResultSet!");
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+              //  resultSet.close();
+            }catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            return delivery;
+        }
+    }
+
+    protected Delivery getDelivery(int id) {
+        Delivery temp = null;
+        String query = "SELECT * FROM edrugs_test.Delivery WHERE order_id = " + id + ";";
+        try {
+            temp = retrieveDelivery(query, id);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return temp;
+    }
 }

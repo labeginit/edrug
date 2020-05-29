@@ -1,5 +1,7 @@
 package controller;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -22,6 +24,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -58,14 +61,14 @@ public class AdminController implements Initializable {
             quantityMedicine, searchTermsMedicine, pNameTextField, pAddressTextField, pCityTextField, pZipcodeTextField, pPhoneNumberTextField, pEmailTextField,
             SSNtextAdd, firstNameTextAdd, lastNameTextAdd, zipTextAdd, cityTextAdd, addressTextAdd, phoneTextAdd, emailTextAdd, roleTextAdd,
             patientSearchTextField, doctorSearchTextField, editSearchTextField, storeSearchTextField, pharmacySearch, SSNtext, firstNameText,
-            lastNameText, zipText, cityText, addressText, phoneText, emailText;
+            lastNameText, zipText, cityText, addressText, phoneText, emailText, orderSearchTextField, searchDeliveries;
     public ChoiceBox<ProdGroup> prodGroupMedicine;
     public ChoiceBox<String> onPrescrMedicine;
     public Button logOutMedicineButton, saveButtonMedicine, cancelButtonMedicine,logOutAdminButton, cancelButton, saveButton, logOutMyButton
             , saveButtonAdd, cancelButtonAdd, logOutPatButton, logOutDocButton, logOutAddButton, logOutEditButton, logOutMedButton, logoutButtonMain,
         mainMenuPatientsButton, mainMenuAdminsButton, mainMenuDoctorsButton, mainMenuAddUserButton, mainMenuEditUserButton, mainMenuAddMedicineButton,
             mainMenuEditMedicineButton, mainMenuMyProfileButton, deletePharmacyButton, logoutAddPharmacyButton, mainMenuAddPharmacyButton, addPharmacyButton,
-            cancelPharmacyButton, logoutPharmacyListButton, mainMenuPharmacyListButton;
+            cancelPharmacyButton, logoutPharmacyListButton, mainMenuPharmacyListButton, logoutOrderButton, mainMenuOrderButton, mainMenuDeliveriesButton, logoutDeliveriesButton;
     public TextArea helpMenuEditMedicine, helpMenuEditUser;
     @FXML private TabPane tabPane;
     @FXML private Tab mainMenuTab, listDoctorsTab, listPatientsTab, listAdminsTab, editMedicineTab, addMedicineTab, editUserTab, addUserTab,
@@ -73,6 +76,21 @@ public class AdminController implements Initializable {
     @FXML private TableView<Pharmacy> pharmacyTableView;
     @FXML private TableColumn<Pharmacy, Integer> p1;
     @FXML private TableColumn<Pharmacy, String> p2, p3, p4, p5, p6, p7;
+    @FXML private TableView<Order> order1TableView;
+    @FXML private TableColumn<Order, User> o2;
+    @FXML private TableColumn<Order, Integer> o1;
+    @FXML private TableColumn<Order, Enum>  o3, o4;
+    @FXML private TableColumn<Order, Double> o5, o6;
+    @FXML private TableColumn<Order, Date> o7;
+    @FXML private TableView<OrderLine> order2TableView;
+    @FXML private TableColumn<OrderLine, Integer> o8, o10;
+    @FXML private TableColumn<OrderLine, String> o9;
+    @FXML private TableColumn<OrderLine, String> o11;
+    @FXML private TableColumn<OrderLine, String> o12;
+    @FXML private TableView<Delivery> deliveriesTableView;
+    @FXML private TableColumn<Delivery, Integer> d1;
+    @FXML private TableColumn<Delivery, String> d2,d3,d4,d5,d6,d8;
+    @FXML private TableColumn<Delivery, Date> d7;
 
 
     private final String withP = "Needs a Prescription";
@@ -101,17 +119,12 @@ public class AdminController implements Initializable {
         mainMenuMyProfileButton.setOnAction(event -> initialTabs());
         mainMenuAddPharmacyButton.setOnAction(event -> initialTabs());
         mainMenuPharmacyListButton.setOnAction(event -> initialTabs());
-
+        mainMenuOrderButton.setOnAction(event -> initialTabs());
+        mainMenuDeliveriesButton.setOnAction(event -> initialTabs());
       setVisible(false);
         setVisibleAdd(false);
         setVisibleAddM(false);
-        fillStore();
-        fillPharmacyTable();
-        fillPatientTable();
-        fillDoctorTable();
-        fillAdminTable();
-        fillEditTable();
-        fillMe();
+        fillOrder();
         makeEditable();
         prodGroupMedicine.setItems(groupsObserve);
         onPrescrMedicine.setItems(typeObserve);
@@ -203,6 +216,14 @@ public class AdminController implements Initializable {
             }
         });
 
+        logoutOrderButton.setOnAction(event -> {
+            try {
+                userCommon.onLogOutButtonPressed(event);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
         logOutMedicineButton.setOnAction(event -> {
             try {
                 userCommon.onLogOutButtonPressed(event);
@@ -219,39 +240,55 @@ public class AdminController implements Initializable {
             }
         });
 
+        logoutDeliveriesButton.setOnAction(event -> {
+            try {
+                userCommon.onLogOutButtonPressed(event);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
         userListsLabel.setOnMouseClicked(mouseEvent -> {
             tabPane.getTabs().remove(mainMenuTab);
             tabPane.getTabs().add(listAdminsTab);
             tabPane.getTabs().add(listDoctorsTab);
             tabPane.getTabs().add(listPatientsTab);
+            fillPatientTable();
+            fillDoctorTable();
+            fillAdminTable();
         });
 
         addEditUsersLabel.setOnMouseClicked(mouseEvent -> {
             tabPane.getTabs().remove(mainMenuTab);
             tabPane.getTabs().add(addUserTab);
             tabPane.getTabs().add(editUserTab);
+            fillEditTable();
         });
 
         addEditMedicineLabel.setOnMouseClicked(mouseEvent -> {
             tabPane.getTabs().remove(mainMenuTab);
             tabPane.getTabs().add(addMedicineTab);
             tabPane.getTabs().add(editMedicineTab);
+            fillStore();
         });
 
         editMyProfileLabel.setOnMouseClicked(mouseEvent -> {
             tabPane.getTabs().remove(mainMenuTab);
             tabPane.getTabs().add(myProfileTab);
+            fillMe();
         });
         addRemovePharmacyLabel.setOnMouseClicked(mouseEvent -> {
             tabPane.getTabs().remove(mainMenuTab);
             tabPane.getTabs().add(addPharmacyTab);
             tabPane.getTabs().add(editPharmacyTab);
+            fillPharmacyTable();
         });
 
         viewOrdersDeliveriesLabel.setOnMouseClicked(mouseEvent -> {
             tabPane.getTabs().remove(mainMenuTab);
             tabPane.getTabs().add(ordersTab);
             tabPane.getTabs().add(deliveriesTab);
+            fillDeliveries();
         });
 
         saveButton.setOnAction(actionEvent -> {
@@ -393,6 +430,35 @@ public class AdminController implements Initializable {
             Pharmacy selectedRow = pharmacyTableView.getSelectionModel().getSelectedItem();
             methods.removePharmacy(selectedRow);
             fillPharmacyTable();
+        });
+
+        order1TableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observableValue, Object oldValue, Object newValue) {
+
+                Order currentOrder = methods.getOrder(order1TableView.getSelectionModel().getSelectedItem().getId());
+                List<OrderLine> orderLines = new ArrayList<>();
+                Pharmacy pharmacy = methods.retrievePharmacy(currentOrder.getPharmacyId());
+                for (OrderLine order : currentOrder.getSpecification()) {
+                    if (currentOrder.getPharmacyId() == 0){
+                        OrderLine orderLine = new OrderLine(order.getMedicine().getArticleNo(), order.getMedicine().getName(), order.getMedicine().getQuantity(), "-", "-");
+                        orderLines.add(orderLine);
+                    } else {
+                        OrderLine orderLine = new OrderLine(order.getMedicine().getArticleNo(), order.getMedicine().getName(), order.getMedicine().getQuantity(), String.valueOf(pharmacy.getStoreId()), pharmacy.getStoreName());
+                        orderLines.add(orderLine);
+                    }
+                }
+                o8.setCellValueFactory(new PropertyValueFactory<>("articleNo"));
+                o9.setCellValueFactory(new PropertyValueFactory<>("name"));
+                o10.setCellValueFactory(new PropertyValueFactory<>("quantity"));
+                o11.setCellValueFactory(new PropertyValueFactory<>("pharmacyId"));
+                o12.setCellValueFactory(new PropertyValueFactory<>("pharmacyName"));
+
+                ObservableList<OrderLine> orders = FXCollections.observableArrayList(orderLines);
+                order2TableView.setItems(orders);
+
+
+            }
         });
     }
 
@@ -586,6 +652,37 @@ public class AdminController implements Initializable {
             } else isActiveMed.getCellData(i).setSelected(false);
         }
 
+    }
+
+    @FXML public void fillOrder() {
+        o1.setCellValueFactory(new PropertyValueFactory<>("id"));
+        o2.setCellValueFactory(new PropertyValueFactory<>("user"));
+        o3.setCellValueFactory(new PropertyValueFactory<>("DeliveryMethod"));
+        o4.setCellValueFactory(new PropertyValueFactory<>("PaymentMethod"));
+        o5.setCellValueFactory(new PropertyValueFactory<>("totalVAT"));
+        o6.setCellValueFactory(new PropertyValueFactory<>("totalSum"));
+        o7.setCellValueFactory(new PropertyValueFactory<>("date"));
+
+        ObservableList<Order> orders = FXCollections.observableArrayList(methods.retrieveOrderList());
+        FilteredList<Order> filterData = new FilteredList<>(orders, p -> true);
+        order1TableView.setItems(userCommon.ordersFilter(filterData, orderSearchTextField, order1TableView));
+
+
+    }
+
+    @FXML public void fillDeliveries() {
+        d1.setCellValueFactory(new PropertyValueFactory<>("orderId"));
+        d2.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+        d8.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+        d3.setCellValueFactory(new PropertyValueFactory<>("address"));
+        d4.setCellValueFactory(new PropertyValueFactory<>("city"));
+        d5.setCellValueFactory(new PropertyValueFactory<>("zipCode"));
+        d6.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+        d7.setCellValueFactory(new PropertyValueFactory<>("date"));
+
+        ObservableList<Delivery> deliveries = FXCollections.observableArrayList(methods.retrieveDeliveryList());
+        FilteredList<Delivery> filterData = new FilteredList<>(deliveries, p -> true);
+        deliveriesTableView.setItems(userCommon.deliveriesFilter(filterData, searchDeliveries, deliveriesTableView));
     }
 
     public void fillMe() {

@@ -170,4 +170,56 @@ public class UserCommon {
         tableView.setItems(sortedData);
         return sortedData;
     }
+
+    public SortedList<Order> ordersFilter(FilteredList<Order> filteredData, TextField field, TableView<Order> tableView) {
+        field.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(order -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String id = String.valueOf(order.getId());
+                String date = order.getDate().toString();
+                String lowerCaseFilter = newValue.toLowerCase();
+
+                if (order.getUser().getSsn().toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (id.toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (date.toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                }
+                return false;
+            });
+        });
+        SortedList<Order> sortedData = new SortedList<>(filteredData);
+
+        sortedData.comparatorProperty().bind(tableView.comparatorProperty());
+        tableView.setItems(sortedData);
+        return sortedData;
+    }
+
+    public SortedList<Delivery> deliveriesFilter(FilteredList<Delivery> filteredData, TextField field, TableView<Delivery> tableView) {
+        field.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData.setPredicate(delivery -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String id = String.valueOf(delivery.getOrderId());
+                String date = delivery.getDate().toString();
+                String lowerCaseFilter = newValue.toLowerCase();
+
+               if (id.toLowerCase().contains(lowerCaseFilter)) {
+                    return true;
+                } else if (date.toLowerCase().contains(lowerCaseFilter)){
+                    return true;
+                }
+                return false;
+            });
+        });
+        SortedList<Delivery> sortedData = new SortedList<>(filteredData);
+
+        sortedData.comparatorProperty().bind(tableView.comparatorProperty());
+        tableView.setItems(sortedData);
+        return sortedData;
+    }
 }

@@ -205,6 +205,8 @@ public class CommonMethods {
 
     public int removePharmacy(Pharmacy pharmacy) { return daoPickupPharmacies.removePharmacy(pharmacy); }
 
+    public Pharmacy retrievePharmacy(int pharmacyId)  { return daoPickupPharmacies.getPharmacy(pharmacyId); }
+
     //gives the last used id number for Prescriptions, Orders, Pharmacy, and Medicine
     public int getLastId(Class myClass){
         int maxId = 0;
@@ -228,25 +230,11 @@ public class CommonMethods {
 
     public List<Order> retrieveOrderList() {
          List <Order> orders = daoOrder.retrieveOrderList();
-        for (int i = 0; i < orders.size(); i++) {
-            orders.get(i).setUser(getUser(orders.get(i).getUser().getSsn()));
-            for (int j = 0; j < orders.get(i).getSpecification().size(); j++) {
-                orders.get(i).getSpecification().get(j).setMedicine(getMedicine(orders.get(i).getSpecification().get(j).getArticleNo()));
-                orders.get(i).getSpecification().get(j).setUser(getUser(orders.get(i).getUser().getSsn()));
-                orders.get(i).getSpecification().get(j).setName(orders.get(i).getSpecification().get(j).getMedicine().getName());
-            }
-        }
          return orders;
     }
 
     public Order getOrder(int id) {
         Order order = daoOrder.getOrder(id);
-        order.setUser(getUser(order.getUser().getSsn()));
-        for (int j = 0; j < order.getSpecification().size(); j++) {
-            order.getSpecification().get(j).setMedicine(getMedicine(order.getSpecification().get(j).getArticleNo()));
-            order.getSpecification().get(j).setUser(getUser(order.getUser().getSsn()));
-            order.getSpecification().get(j).setName(order.getSpecification().get(j).getMedicine().getName());
-        }
         return order;
     }
 
