@@ -277,8 +277,8 @@ public class PatientController implements Initializable {
                 } else {
                     for (int i = 0; i < prescrLines.size(); i++) {
                         if (prescrLines.get(i).getMedicine().getArticleNo() == element.getArticleNo()) {
-                            if (prescrLines.get(i).getQuantityPrescribed() - prescrLines.get(i).getQuantityConsumed() > 0) {
-                                available = prescrLines.get(i).getQuantityPrescribed() - prescrLines.get(i).getQuantityConsumed();
+                            if ((prescrLines.get(i).getQuantityPrescribed() - prescrLines.get(i).getQuantityConsumed()) > 0) {
+                                available = commonMethods.getPrescriptionLineUpdate(prescrLines.get(i)).getQuantityPrescribed() - commonMethods.getPrescriptionLineUpdate(prescrLines.get(i)).getQuantityConsumed();
                             }
                         }
                     }
@@ -288,7 +288,6 @@ public class PatientController implements Initializable {
                 OrderLine line = new OrderLine(0, currentUser, element, element.getPrice(), qtyReserved);
                 line.setArticleNo(element.getArticleNo());
                 line.setName(element.getName());
-
 
                 if (available > 0) {
                     if (cart.size() == 0) {
@@ -305,20 +304,12 @@ public class PatientController implements Initializable {
                     if(!element.isOnPrescription()) {
                         element.setQuantity(available);
                         commonMethods.updateQuantity(element);
-                    } else {                                        /// LA: not tested!
-                        for (int i = 0; i < prescrLines.size(); i++) {
-                            if ((element.getArticleNo() == prescrLines.get(i).getArticle() && prescrLines.get(i).getQuantityConsumed() < prescrLines.get(i).getQuantityPrescribed())) {
-                                System.out.println(prescrLines.get(i).getArticle() + " article" );
-                                System.out.println(prescrLines.get(i).getQuantityPrescribed() + " prescribed");
-                                commonMethods.updatePrescriptionLine(prescrLines.get(i), qtyReserved + prescrLines.get(i).getQuantityConsumed());
-                                System.out.println(prescrLines.get(i).getQuantityConsumed() + " consumed");
-                                return;
-                            }
+                    } else {
+                        if (isQuantityPossible(element, prescrLines, qtyReserved)){
+                            element.setQuantity(element.getQuantity() - line.getMedicine().getQuantityReserved());
+                            commonMethods.updateMedicine(element);
                             prescriptionLineTableView.refresh();
                         }
-
-                        element.setQuantity(element.getQuantity() - qtyReserved);
-                        commonMethods.updateQuantity(element);
                     }
                     tableView.refresh();
                 }
@@ -327,6 +318,16 @@ public class PatientController implements Initializable {
         }
     }
 
+    private boolean isQuantityPossible (Medicine item, List<PrescriptionLine> prescriptionLines, int qtyReserved){
+        boolean isPossible = false;
+        for (int i = 0; i < prescriptionLines.size(); i++) {
+            if ((item.getArticleNo() == prescriptionLines.get(i).getArticle() && prescriptionLines.get(i).getQuantityConsumed() < prescriptionLines.get(i).getQuantityPrescribed())) {
+                commonMethods.updatePrescriptionLine(prescriptionLines.get(i), qtyReserved + prescriptionLines.get(i).getQuantityConsumed());
+                return true;
+            }
+        }
+        return isPossible;
+    }
 
     private boolean cartElementPresenceCheck(Medicine selectedElement) {
         for (int i = 0; i < cart.size(); i++) {

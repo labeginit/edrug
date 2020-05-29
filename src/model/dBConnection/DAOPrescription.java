@@ -276,13 +276,10 @@ public class DAOPrescription {
     }
 
     protected int updatePrescriptionLine(PrescriptionLine line, int quantityConsumed) {
-        int value1;
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 if (line != null) {
                     article = line.getArticle();
-                    //quantityConsumed = line.getQuantityConsumed();
-
                     String query = "UPDATE `Prescription_has_Medicine` SET `quantity_consumed` = ? WHERE (`prescription_id` = ?) and (`prescription_patient_ssn` = ?) and (`article` = ?);";
                     linesAffected = common.updatePrescriptionLine(query, quantityConsumed, line.getPrescId(), line.getPatient().getSsn(), article);
                 } else {
@@ -298,5 +295,27 @@ public class DAOPrescription {
             return linesAffected;
         }
     }
-}
 
+    protected PrescriptionLine retrievePrescriptionLine(PrescriptionLine prescrLine) {
+        PrescriptionLine prescriptionLine = null;
+        try {
+            if (!DBConnection.dbConnection.isClosed()) {
+                if (prescrLine != null) {
+                    resultSet = common.retrieveSet("SELECT * FROM Prescription_has_Medicine WHERE prescription_id = ? and prescription_patient_ssn = ? and article = ?;", String.valueOf(prescrLine.getPrescId()), prescrLine.getPatient().getSsn(), String.valueOf(prescrLine.getArticle()));
+                    if (resultSet != null) {
+                        if (resultSet.first()) {
+                            prescriptionLine = createPrescriptionLineObject(resultSet);
+                        }
+                    }
+                }
+
+            }
+        } catch (SQLException ex) {
+            System.out.println("Error while working with ResultSet!");
+            ex.printStackTrace();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return prescriptionLine;
+    }
+}

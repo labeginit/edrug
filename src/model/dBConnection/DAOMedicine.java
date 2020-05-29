@@ -118,7 +118,7 @@ public class DAOMedicine {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 ResultSet resultSet1 = common.retrieveSet("select distinct article from Prescription_has_Medicine as pl join Prescription as p on p.id = pl.prescription_id and p.patient_ssn = pl.prescription_patient_ssn\n" +
-                        "where (pl.prescription_patient_ssn = ? and (pl.quantity_prescribed - pl.quantity_consumed) > 0 and p.end_date >= current_date());", patient.getSsn());
+                        "where (pl.prescription_patient_ssn = ? and (pl.quantity_prescribed - pl.quantity_consumed) > 0 and p.end_date >= current_date()) order by article;", patient.getSsn());
                 if (resultSet1 != null) {
                     while (resultSet1.next()) {
                         Medicine tmp = getMedicine(resultSet1.getInt("article"));
