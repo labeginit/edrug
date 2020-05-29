@@ -63,8 +63,9 @@ public class AdminController implements Initializable {
     public ChoiceBox<String> onPrescrMedicine;
     public Button logOutMedicineButton, saveButtonMedicine, cancelButtonMedicine,logOutAdminButton, cancelButton, saveButton, logOutMyButton
             , saveButtonAdd, cancelButtonAdd, logOutPatButton, logOutDocButton, logOutAddButton, logOutEditButton, logOutMedButton, logoutButtonMain,
-    mainMenuPatientsButton, mainMenuAdminsButton, mainMenuDoctorsButton, mainMenuAddUserButton, mainMenuEditUserButton, mainMenuAddMedicineButton,
-            mainMenuEditMedicineButton, mainMenuMyProfileButton, deletePharmacyButton;
+        mainMenuPatientsButton, mainMenuAdminsButton, mainMenuDoctorsButton, mainMenuAddUserButton, mainMenuEditUserButton, mainMenuAddMedicineButton,
+            mainMenuEditMedicineButton, mainMenuMyProfileButton, deletePharmacyButton, logoutAddPharmacyButton, mainMenuAddPharmacyButton, addPharmacyButton,
+            cancelPharmacyButton, logoutPharmacyListButton, mainMenuPharmacyListButton;
     public TextArea helpMenuEditMedicine, helpMenuEditUser;
     @FXML private TabPane tabPane;
     @FXML private Tab mainMenuTab, listDoctorsTab, listPatientsTab, listAdminsTab, editMedicineTab, addMedicineTab, editUserTab, addUserTab,
@@ -77,9 +78,9 @@ public class AdminController implements Initializable {
     private final String withP = "Needs a Prescription";
     private final String withoutP = "No Prescription required";
 
-    public CommonMethods methods = new CommonMethods();
+    private CommonMethods methods = new CommonMethods();
     private UserCommon userCommon = new UserCommon();
-    public User currentUser = UserSingleton.getOurInstance().getUser();
+    private User currentUser = UserSingleton.getOurInstance().getUser();
     private List<ProdGroup> groups = methods.getProductGroupList();
     private ObservableList<ProdGroup> groupsObserve = FXCollections.observableArrayList(groups);
     private ObservableList<String> typeObserve = FXCollections.observableArrayList(withP, withoutP);
@@ -98,6 +99,8 @@ public class AdminController implements Initializable {
         mainMenuDoctorsButton.setOnAction(event -> initialTabs());
         mainMenuPatientsButton.setOnAction(event -> initialTabs());
         mainMenuMyProfileButton.setOnAction(event -> initialTabs());
+        mainMenuAddPharmacyButton.setOnAction(event -> initialTabs());
+        mainMenuPharmacyListButton.setOnAction(event -> initialTabs());
 
       setVisible(false);
         setVisibleAdd(false);
@@ -136,6 +139,14 @@ public class AdminController implements Initializable {
         });
 
         logoutButtonMain.setOnAction(event -> {
+            try {
+                userCommon.onLogOutButtonPressed(event);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        logoutAddPharmacyButton.setOnAction(event -> {
             try {
                 userCommon.onLogOutButtonPressed(event);
             } catch (IOException e) {
@@ -193,6 +204,14 @@ public class AdminController implements Initializable {
         });
 
         logOutMedicineButton.setOnAction(event -> {
+            try {
+                userCommon.onLogOutButtonPressed(event);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+        logoutPharmacyListButton.setOnAction(event -> {
             try {
                 userCommon.onLogOutButtonPressed(event);
             } catch (IOException e) {
@@ -334,6 +353,45 @@ public class AdminController implements Initializable {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+        });
+
+        addPharmacyButton.setOnAction(event -> {
+            if (fieldsEmpty()) {
+                if (Validation.isName(pNameTextField.getText(), pNameStar) && Validation.isName(pCityTextField.getText(), pCityStar) &&
+                Validation.isZipcode(pZipcodeTextField.getText(), pZipcodeStar) && Validation.isEmail(pEmailTextField.getText(), pEmailStar) &&
+                Validation.isPhoneNumber(pPhoneNumberTextField.getText(), pPhoneNumberStar)) {
+                    int storeId = 1 + methods.getLastId(Pharmacy.class);
+                    Pharmacy pharmacy = new Pharmacy(storeId, pNameTextField.getText(), pAddressTextField.getText(), pZipcodeTextField.getText(),
+                    pCityTextField.getText(), pPhoneNumberTextField.getText(), pEmailTextField.getText());
+                    methods.addPharmacy(pharmacy);
+                    pNameTextField.setText("");
+                    pAddressTextField.setText("");
+                    pZipcodeTextField.setText("");
+                    pCityTextField.setText("");
+                    pPhoneNumberTextField.setText("");
+                    pEmailTextField.setText("");
+                    Validation.alertPopup("The Pharmacy has been added to the Database", "Successfully Added", "Pharmacy added to Database");
+                    initialTabs();
+                }
+            } else {
+                Validation.alertPopup("Please fill in all text fields", "Empty TextFields", "Your form is incomplete");
+            }
+        });
+
+        cancelPharmacyButton.setOnAction(event -> {
+            pNameTextField.setText("");
+            pAddressTextField.setText("");
+            pZipcodeTextField.setText("");
+            pCityTextField.setText("");
+            pPhoneNumberTextField.setText("");
+            pEmailTextField.setText("");
+            initialTabs();
+        });
+
+        deletePharmacyButton.setOnAction(event -> {
+            Pharmacy selectedRow = pharmacyTableView.getSelectionModel().getSelectedItem();
+            methods.removePharmacy(selectedRow);
+            fillPharmacyTable();
         });
     }
 
@@ -489,7 +547,8 @@ public class AdminController implements Initializable {
         p7.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
 
         ObservableList<Pharmacy> pharmacies = FXCollections.observableArrayList(methods.retrievePharmacyList());
-        pharmacyTableView.setItems(pharmacies);
+        FilteredList<Pharmacy> filteredData = new FilteredList<>(pharmacies, p -> true);
+        pharmacyTableView.setItems(userCommon.pharmaciesFilter(filteredData, pharmacySearch, pharmacyTableView));
     }
     public void fillAdminTable() {
         adminSSNtable.setCellValueFactory(new PropertyValueFactory<>("Ssn"));
@@ -635,6 +694,28 @@ public class AdminController implements Initializable {
         } else {
             return true;
         }
+    }
+
+    @FXML public boolean fieldsEmpty() {
+        if (pNameTextField.getText().isEmpty() || pAddressTextField.getText().isEmpty() || pCityTextField.getText().isEmpty() ||
+        pZipcodeTextField.getText().isEmpty() || pEmailTextField.getText().isEmpty() || pPhoneNumberTextField.getText().isEmpty()) {
+            if (pNameTextField.getText().isEmpty()) {
+                pNameStar.setVisible(true);
+            } if (pAddressTextField.getText().isEmpty()) {
+                pAddressStar.setVisible(true);
+            } if (pCityTextField.getText().isEmpty()) {
+                pCityStar.setVisible(true);
+            } if (pZipcodeTextField.getText().isEmpty()) {
+                pZipcodeStar.setVisible(true);
+            } if (pEmailTextField.getText().isEmpty()) {
+                pEmailStar.setVisible(true);
+            } if (pPhoneNumberTextField.getText().isEmpty()) {
+                pPhoneNumberStar.setVisible(true);
+            }
+
+            return false;
+        } else
+            return true;
     }
 
     public void makeEditable() {

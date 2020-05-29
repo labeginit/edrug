@@ -95,7 +95,7 @@ public class DAOPickupPharmacies {
                     email = pharmacy.getEmail();
                     phoneNumber = pharmacy.getPhoneNumber();
 
-                    String query = "INSERT INTO `Pharmacy` ( `id` `store_name`, `address`, `zipcode`, `city`, `phone_number`, `email`) VALUES (?,?, ?, ?, ?, ?, ?);";
+                    String query = "INSERT INTO `Pharmacy` ( `id`, `store_name`, `address`, `zipcode`, `city`, `phone_number`, `email`) VALUES (?,?, ?, ?, ?, ?, ?);";
                     linesAffected = common.insertPharmacy(query, storeId, storeName, address, zipcode, city, phoneNumber, email);
                 } else {
                     throw new NullPointerException("The user object is null");
@@ -146,7 +146,7 @@ public class DAOPickupPharmacies {
                 if (pharmacy != null) {
                     storeId = pharmacy.getStoreId();
 
-                    String query = "DELETE `Pharmacy` WHERE (`id` = ?);";
+                    String query = "DELETE FROM `Pharmacy` WHERE (`id` = ?);";
                     linesAffected = common.removePharmacy(query, storeId);
                 } else {
                     throw new NullPointerException("The user object is null");
