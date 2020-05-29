@@ -324,12 +324,12 @@ public class DAOCommon {
         }
         return linesAffected;
     }
-    protected int updatePharmacy(String queryString, int storeId, String store_name, String address, String zipCode, String city, String phoneNumber, String email) {
+    protected int updatePharmacy(String queryString, int storeId, String storeName, String address, String zipCode, String city, String phoneNumber, String email) {
         try {
             if (!DBConnection.dbConnection.isClosed()) {
                 PreparedStatement prepStmt = DBConnection.getConnection().prepareStatement(queryString);
                 prepStmt.setInt(1, storeId);
-                prepStmt.setString(2, store_name);
+                prepStmt.setString(2, storeName);
                 prepStmt.setString(3, address);
                 prepStmt.setString(4, zipCode);
                 prepStmt.setString(5, city);

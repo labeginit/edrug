@@ -124,7 +124,7 @@ public class DAOPickupPharmacies {
                     email = pharmacy.getEmail();
                     phoneNumber = pharmacy.getPhoneNumber();
 
-                    String query = "UPDATE `Pharmacy` SET `id` = ?, `store_name` = ?, `address` = ?, `zipcode` = ?, `city` = ?, `phone_number` = ?, `email` = ? WHERE (`id` = ?);";
+                    String query = "UPDATE `Pharmacy` SET `id` = ?, `store_name` = ?, `address` = ?, `zipcode` = ?, `city` = ?, `phone_number` = ?, `email` = ? WHERE (`id` = " + storeId +");";
                     linesAffected = common.updatePharmacy(query, storeId, storeName, address, zipcode, city, phoneNumber, email);
                 } else {
                     throw new NullPointerException("The user object is null");
