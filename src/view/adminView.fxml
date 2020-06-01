@@ -583,7 +583,7 @@
                             <Button fx:id="mainMenuDeliveriesButton" mnemonicParsing="false" prefHeight="26.0" text="Main Menu" />
                           </buttons>
                         </ButtonBar>
-                        <Label layoutX="21.0" layoutY="24.0" prefHeight="16.0" prefWidth="207.0" text="View and Edit deliveries" />
+                        <Label layoutX="21.0" layoutY="24.0" prefHeight="16.0" prefWidth="207.0" text="View deliveries" />
                         <TextField fx:id="searchDeliveries" layoutX="535.0" layoutY="19.0" prefHeight="26.0" prefWidth="239.0" promptText="Order ID, or Date" />
                      </children></AnchorPane>
               </content>
