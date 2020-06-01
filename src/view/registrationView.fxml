@@ -49,7 +49,7 @@
             <Image url="@image/30.gif" />
          </image>
       </ImageView>
-      <Label alignment="CENTER" layoutX="14.0" layoutY="28.0" prefHeight="26.0" prefWidth="230.0" text="Register with e-Drugs" textAlignment="CENTER">
+      <Label alignment="CENTER" layoutX="14.0" layoutY="28.0" prefHeight="26.0" prefWidth="230.0" text="Register with eDrug" textAlignment="CENTER">
          <font>
             <Font size="17.0" />
          </font></Label>
