@@ -46,15 +46,15 @@
                               <TableColumn fx:id="c8" prefWidth="38.4000244140625" text="Buy" />
                           </columns>
                         </TableView>
-                        <Label layoutX="14.0" layoutY="26.0" prefHeight="17.0" prefWidth="84.0" text="Search terms:">
+                        <Label layoutX="14.0" layoutY="26.0" prefHeight="17.0" prefWidth="107.0" text="Search terms:">
                            <font>
                               <Font size="13.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="search_textField" alignment="CENTER_RIGHT" layoutX="100.0" layoutY="22.0" prefHeight="26.0" prefWidth="222.0" promptText="enter active ingredient etc. here" />
+                        <TextField fx:id="search_textField" alignment="CENTER_RIGHT" layoutX="135.0" layoutY="23.0" prefHeight="26.0" prefWidth="222.0" promptText="enter active ingredient etc. here" />
                         <ComboBox fx:id="groupFilter_combo" layoutX="607.0" layoutY="22.0" prefHeight="25.0" prefWidth="170.0" promptText="Select group here" />
                         <TextField fx:id="maxPrice_text" alignment="CENTER_RIGHT" layoutX="499.0" layoutY="22.0" prefHeight="25.0" prefWidth="99.0" promptText="00.00" />
-                        <Label layoutX="431.0" layoutY="26.0" prefHeight="19.0" prefWidth="67.0" text="Max Price:">
+                        <Label layoutX="414.0" layoutY="27.0" prefHeight="19.0" prefWidth="86.0" text="Max Price:">
                            <font>
                               <Font size="13.0" />
                            </font>
